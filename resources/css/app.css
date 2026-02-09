@@ -21,6 +21,11 @@
     --shadow-lg: 0 25px 50px -12px rgba(0, 59, 92, 0.12);
 }
 
+html {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background: var(--bg-main);
     background-image: radial-gradient(at 100% 0%, rgba(0, 139, 75, 0.02) 0px, transparent 50%),
@@ -95,6 +100,7 @@ body {
 /* Fix Header Overlaps */
 .header-titles {
     margin-bottom: 3.5rem;
+    padding-top: 1.5rem;
     position: relative;
     z-index: 10;
 }

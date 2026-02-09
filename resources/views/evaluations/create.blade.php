@@ -1,235 +1,390 @@
 @extends('layouts.app')
 
-@section('title', 'Individual Project Evaluation')
-@section('header_title', 'New Project Evaluation')
+@section('title', 'Institutional Audit')
+@section('header_title', 'Performance Evaluation')
 
 @section('content')
-<div class="card">
-    <form action="{{ route('evaluations.store') }}" method="POST" id="evaluationForm">
-        @csrf
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; background: #f8fafc; padding: 2.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
-            <!-- Project Selection -->
-            <div>
-                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Target Project</label>
-                <select name="project_id" id="project_id" required style="width: 100%; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1.1rem; background: white; font-weight: 600;">
-                    <option value="">-- Choose Registered Project --</option>
-                    @foreach($projects as $proj)
-                        <option value="{{ $proj->id }}" 
-                                data-pi="{{ $proj->pi->full_name }}" 
-                                data-pi-id="{{ $proj->pi_id }}"
-                                data-dir="{{ $proj->directorate->name }}"
-                                {{ ($selected_project_id ?? old('project_id')) == $proj->id ? 'selected' : '' }}>
-                            {{ $proj->research_title }}
-                        </option>
-                    @endforeach
-                </select>
-                <div id="projectDetails" style="margin-top: 1.5rem; font-size: 0.95rem; display: none; background: white; padding: 1rem; border-radius: 8px; border: 1px solid #edf2f7;">
-                    <div style="margin-bottom: 0.5rem;"><strong style="color: var(--text-muted);">Principal Investigator:</strong> <span id="display_pi" style="font-weight: 700; color: var(--primary-navy);"></span></div>
-                    <div><strong style="color: var(--text-muted);">Directorate:</strong> <span id="display_dir" style="font-weight: 700; color: var(--primary-navy);"></span></div>
-                </div>
-                @error('project_id')
-                    <div style="color: #b91c1c; font-size: 0.85rem; margin-top: 0.75rem; font-weight: 600;">{{ $message }}</div>
-                @enderror
-            </div>
+<div style="max-width: 1200px; margin: 0 auto; padding-bottom: 4rem;">
+    
+    <!-- Identity Header (Matching Project Theme) -->
+    <div class="identity-header-eval">
+        <div class="header-badge">NEW PERFORMANCE AUDIT</div>
+        <h1 id="header-project-title">Select a Project to Evaluate</h1>
+        <div class="header-meta">
+            <span id="header-pi">Lead Investigator</span>
+            <span class="dot">•</span>
+            <span id="header-dir">Department</span>
+        </div>
+    </div>
 
-            <!-- Evaluator Identity -->
-            <div>
-                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Evaluating Staff Identity</label>
-                <div style="background: white; padding: 1rem 1.5rem; border: 1px solid #cbd5e1; border-radius: 8px; display: flex; align-items: center; gap: 1rem;">
-                    <div style="width: 44px; height: 44px; background: var(--primary-navy); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem;">
-                        {{ substr($employee->full_name, 0, 1) }}
+    <!-- Premium Form Card -->
+    <div class="premium-card">
+        <form action="{{ route('evaluations.store') }}" method="POST" id="evaluationForm">
+            @csrf
+            
+            <!-- Step 1: Context Selection -->
+            <div class="form-section">
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
+                    <div>
+                        <label class="section-label">Target Research Initiative</label>
+                        <div class="input-wrapper">
+                            <select name="project_id" id="project_id" required onchange="handleProjectChange(this)">
+                                <option value="">-- Choose Registered Project --</option>
+                                @foreach($projects as $proj)
+                                    <option value="{{ $proj->id }}" 
+                                            data-pi="{{ $proj->pi->full_name }}" 
+                                            data-dir="{{ $proj->directorate->name }}"
+                                            {{ ($selected_project_id ?? old('project_id')) == $proj->id ? 'selected' : '' }}>
+                                        {{ $proj->research_title }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div class="input-icon">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                        </div>
                     </div>
                     <div>
-                        <div style="font-weight: 800; color: var(--primary-navy); font-size: 1.1rem;">{{ $employee->full_name }}</div>
-                        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">{{ $employee->position }} | {{ $employee->directorate->name }}</div>
+                        <label class="section-label">Assigned Auditor</label>
+                        <div class="auditor-badge">
+                            <div class="auditor-avatar">{{ substr($employee->full_name, 0, 1) }}</div>
+                            <div>
+                                <div class="auditor-name">{{ $employee->full_name }}</div>
+                                <div class="auditor-role">Institutional Evaluator</div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="evaluator_id" value="{{ $employee->id }}">
                     </div>
                 </div>
-                <input type="hidden" name="evaluator_id" value="{{ $employee->id }}">
-                <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); font-style: italic;">
-                    💡 You are submitting an individual evaluation. This will be averaged with other submissions for this project.
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Step 2: Rating Engine -->
+            <div class="form-section">
+                <label class="section-label" style="margin-bottom: 2rem;">Audit Metrics & Key Performance Indicators</label>
+                
+                <table class="evaluation-table">
+                    <thead>
+                        <tr>
+                            <th>Performance Metric</th>
+                            <th style="width: 100px; text-align: center;">Weight</th>
+                            <th style="width: 180px; text-align: center;">Rating (1-5)</th>
+                            <th style="width: 100px; text-align: right;">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="criteria-row" data-weight="20">
+                            <td>
+                                <div class="metric-title">Priority Alignment</div>
+                                <div class="metric-desc">Strategic synchronization with institutional thematic priorities.</div>
+                            </td>
+                            <td class="weight-cell">20%</td>
+                            <td>
+                                <select name="thematic_area_mark" class="rating-engine-select" required onchange="calculateAudit()">
+                                    <option value="">-- Select --</option>
+                                    <option value="5">5 - Excellent</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="1">1 - Poor</option>
+                                </select>
+                            </td>
+                            <td class="points-cell">0.00</td>
+                        </tr>
+                        <tr class="criteria-row" data-weight="25">
+                            <td>
+                                <div class="metric-title">Socio-Economic Impact</div>
+                                <div class="metric-desc">Potential for community benefit and industrial application.</div>
+                            </td>
+                            <td class="weight-cell">25%</td>
+                            <td>
+                                <select name="relevance_mark" class="rating-engine-select" required onchange="calculateAudit()">
+                                    <option value="">-- Select --</option>
+                                    <option value="5">5 - Excellent</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="1">1 - Poor</option>
+                                </select>
+                            </td>
+                            <td class="points-cell">0.00</td>
+                        </tr>
+                        <tr class="criteria-row" data-weight="25">
+                            <td>
+                                <div class="metric-title">Methodological Rigor</div>
+                                <div class="metric-desc">Scientific design, sampling accuracy, and data architecture.</div>
+                            </td>
+                            <td class="weight-cell">25%</td>
+                            <td>
+                                <select name="methodology_mark" class="rating-engine-select" required onchange="calculateAudit()">
+                                    <option value="">-- Select --</option>
+                                    <option value="5">5 - Excellent</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="1">1 - Poor</option>
+                                </select>
+                            </td>
+                            <td class="points-cell">0.00</td>
+                        </tr>
+                        <tr class="criteria-row" data-weight="20">
+                            <td>
+                                <div class="metric-title">Technical Feasibility</div>
+                                <div class="metric-desc">Availability of resources and robustness of preliminary data.</div>
+                            </td>
+                            <td class="weight-cell">20%</td>
+                            <td>
+                                <select name="feasibility_mark" class="rating-engine-select" required onchange="calculateAudit()">
+                                    <option value="">-- Select --</option>
+                                    <option value="5">5 - Excellent</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="1">1 - Poor</option>
+                                </select>
+                            </td>
+                            <td class="points-cell">0.00</td>
+                        </tr>
+                        <tr class="criteria-row" data-weight="10">
+                            <td>
+                                <div class="metric-title">Presentation Excellence</div>
+                                <div class="metric-desc">Clarity of documentation and articulation of research value.</div>
+                            </td>
+                            <td class="weight-cell">10%</td>
+                            <td>
+                                <select name="overall_proposal_mark" class="rating-engine-select" required onchange="calculateAudit()">
+                                    <option value="">-- Select --</option>
+                                    <option value="5">5 - Excellent</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="1">1 - Poor</option>
+                                </select>
+                            </td>
+                            <td class="points-cell">0.00</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Cumulative Performance Score</td>
+                            <td id="final-audit-score">0.0%</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Step 3: Narrative Feedback -->
+            <div class="form-section">
+                <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem;">
+                    <div>
+                        <label class="section-label">Institutional Feedback & Narrative Justification</label>
+                        <div class="input-wrapper">
+                            <textarea name="comments" rows="6" placeholder="Provide detailed audit findings and recommendations for the PI..."></textarea>
+                            <div class="input-icon textarea-icon">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="verdict-display">
+                        <div class="verdict-label">Audit Outcome</div>
+                        <div id="verdict-badge">Waiting for Input</div>
+                        <div class="verdict-guide">Score > 70% for Satisfaction</div>
+                        <button type="submit" class="btn-audit-submit">Commit Evaluation</button>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Rating Scale Helper -->
-        <div style="background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-around; align-items: center;">
-                <div style="text-align: center;">
-                    <div style="width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; margin: 0 auto 0.25rem;">5</div>
-                    <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Excellent</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="width: 32px; height: 32px; background: #34d399; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; margin: 0 auto 0.25rem;">4</div>
-                    <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Very Good</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="width: 32px; height: 32px; background: #f59e0b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; margin: 0 auto 0.25rem;">3</div>
-                    <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Good</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; margin: 0 auto 0.25rem;">2</div>
-                    <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Fair</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="width: 32px; height: 32px; background: #ef4444; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; margin: 0 auto 0.25rem;">1</div>
-                    <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Poor</div>
-                </div>
-            </div>
-        </div>
-
-        <table style="width: 100%; margin-bottom: 3rem;">
-            <thead>
-                <tr>
-                    <th style="width: 60%;">Evaluation Criteria</th>
-                    <th style="text-align: center;">Weight (%)</th>
-                    <th style="text-align: center;">Your Rating (1-5)</th>
-                    <th style="text-align: right;">Weighted Mark</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="criteria-row" data-weight="20">
-                    <td>1. Thematic area alignment with the priority area</td>
-                    <td style="text-align: center;">20</td>
-                    <td>
-                        <select name="thematic_area_mark" class="rating-select" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 700;">
-                            <option value="">--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
-                        </select>
-                    </td>
-                    <td class="actual-mark" style="text-align: right; font-weight: 800; color: var(--primary-navy);">0.00</td>
-                </tr>
-                <tr class="criteria-row" data-weight="25">
-                    <td>2. Relevance to the socio-economic needs/priorities</td>
-                    <td style="text-align: center;">25</td>
-                    <td>
-                        <select name="relevance_mark" class="rating-select" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 700;">
-                            <option value="">--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
-                        </select>
-                    </td>
-                    <td class="actual-mark" style="text-align: right; font-weight: 800; color: var(--primary-navy);">0.00</td>
-                </tr>
-                <tr class="criteria-row" data-weight="25">
-                    <td>3. Research Methodology (Design, data collection, sampling...)</td>
-                    <td style="text-align: center;">25</td>
-                    <td>
-                        <select name="methodology_mark" class="rating-select" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 700;">
-                            <option value="">--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
-                        </select>
-                    </td>
-                    <td class="actual-mark" style="text-align: right; font-weight: 800; color: var(--primary-navy);">0.00</td>
-                </tr>
-                <tr class="criteria-row" data-weight="20">
-                    <td>4. Feasibility and Preliminary Results</td>
-                    <td style="text-align: center;">20</td>
-                    <td>
-                        <select name="feasibility_mark" class="rating-select" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 700;">
-                            <option value="">--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
-                        </select>
-                    </td>
-                    <td class="actual-mark" style="text-align: right; font-weight: 800; color: var(--primary-navy);">0.00</td>
-                </tr>
-                <tr class="criteria-row" data-weight="10">
-                    <td>5. Overall Proposal/Presentation Quality</td>
-                    <td style="text-align: center;">10</td>
-                    <td>
-                        <select name="overall_proposal_mark" class="rating-select" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 700;">
-                            <option value="">--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
-                        </select>
-                    </td>
-                    <td class="actual-mark" style="text-align: right; font-weight: 800; color: var(--primary-navy);">0.00</td>
-                </tr>
-                <tr style="background: #f1f5f9; border-top: 2px solid var(--primary-navy);">
-                    <td colspan="3" style="text-align: right; padding: 1.5rem; font-weight: 800; text-transform: uppercase;">Your Total Evaluation Score</td>
-                    <td id="totalScore" style="text-align: right; padding: 1.5rem; font-size: 1.6rem; font-weight: 900; color: var(--primary-navy);">0.00</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; align-items: start;">
-            <div>
-                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Evaluator's Comments and Justification</label>
-                <textarea name="comments" rows="6" style="width: 100%; padding: 1.25rem; border: 1px solid var(--border-color); border-radius: 12px; font-size: 1rem; line-height: 1.6; background: #fdfdfd;" placeholder="Please provide detailed feedback on the project's strengths and weaknesses..."></textarea>
-            </div>
-            <div style="padding: 2rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; text-align: center;">
-                <div style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">Your Verdict</div>
-                <div id="decisionBadge" style="display: inline-block; padding: 0.75rem 2rem; border-radius: 50px; font-weight: 900; font-size: 1.1rem; background: #e2e8f0; color: #64748b; margin-bottom: 1.5rem; transition: all 0.3s ease;">
-                    PENDING RATING
-                </div>
-                <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
-                    Submitting this will complete your portion of the evaluation for this project.
-                </div>
-            </div>
-        </div>
-
-        <div style="margin-top: 4rem; display: flex; justify-content: center; border-top: 1px solid #e2e8f0; padding-top: 3rem;">
-            <button type="submit" class="btn btn-primary" style="padding: 1.25rem 5rem; font-size: 1.25rem; font-weight: 800; box-shadow: 0 10px 15px -3px rgba(30, 41, 59, 0.25);">
-                Submit My Evaluation
-            </button>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
+<style>
+    /* Premium Theming mirroring other pages */
+    .identity-header-eval {
+        background: linear-gradient(135deg, var(--brand-blue), #1e293b);
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        text-align: center;
+        color: white;
+        margin-bottom: -40px;
+        position: relative;
+        z-index: 10;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    .header-badge {
+        display: inline-block;
+        background: rgba(0, 139, 75, 0.3);
+        color: #dcfce7;
+        padding: 0.4rem 1.25rem;
+        border-radius: 99px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(0, 139, 75, 0.4);
+    }
+
+    #header-project-title { font-size: 2rem; font-weight: 900; margin: 0 0 0.75rem; }
+    .header-meta { font-size: 1rem; opacity: 0.8; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
+    .header-meta .dot { font-size: 0.5rem; opacity: 0.5; }
+
+    .premium-card {
+        background: white;
+        border-radius: 20px;
+        padding: 5rem 3.5rem 3.5rem;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.05);
+        border: 1px solid #f1f5f9;
+        position: relative;
+        z-index: 5;
+    }
+
+    .section-label { font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 1rem; }
+    
+    .input-wrapper { position: relative; }
+    .input-wrapper select, .input-wrapper textarea {
+        width: 100%;
+        padding: 0.85rem 1.25rem 0.85rem 3.25rem;
+        background: #f8fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1e293b;
+        transition: all 0.2s;
+    }
+    .input-wrapper select:focus, .input-wrapper textarea:focus { border-color: var(--brand-blue); background: white; outline: none; }
+
+    .input-icon { position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+    .textarea-icon { top: 1.25rem; transform: none; }
+
+    .auditor-badge {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f1f5f9;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+    }
+    .auditor-avatar { width: 42px; height: 42px; background: var(--brand-blue); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+    .auditor-name { font-weight: 800; color: #1e293b; font-size: 1rem; }
+    .auditor-role { font-size: 0.75rem; color: #64748b; font-weight: 700; }
+
+    .divider { height: 1px; background: #f1f5f9; margin: 3rem 0; }
+
+    /* Table Styles */
+    .evaluation-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .evaluation-table th { text-align: left; padding: 1.5rem 1rem; border-bottom: 2px solid #f1f5f9; font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
+    .evaluation-table td { padding: 1.5rem 1rem; vertical-align: middle; border-bottom: 1px solid #f8fafc; }
+    
+    .metric-title { font-weight: 800; color: var(--brand-blue); font-size: 1.1rem; margin-bottom: 0.25rem; }
+    .metric-desc { font-size: 0.85rem; color: #64748b; font-weight: 500; }
+    
+    .weight-cell { font-weight: 800; color: #1e293b; text-align: center; }
+    .points-cell { font-weight: 950; color: var(--brand-blue); text-align: right; font-size: 1.25rem; font-family: 'Courier New', monospace; }
+
+    .rating-engine-select {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-weight: 800;
+        color: #1e293b;
+        background: white;
+    }
+
+    tfoot td { padding: 2rem 1rem; font-weight: 950; text-transform: uppercase; font-size: 1.25rem; color: #1e293b; background: #f8fafc; border-top: 2px solid var(--brand-blue); }
+    #final-audit-score { text-align: right; color: var(--brand-green); font-size: 2rem; }
+
+    /* Verdict Display */
+    .verdict-display {
+        background: #f1f5f9;
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid #e2e8f0;
+    }
+    .verdict-label { font-size: 0.75rem; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 1rem; }
+    #verdict-badge { 
+        display: inline-block; 
+        padding: 0.75rem 2rem; 
+        border-radius: 99px; 
+        background: white; 
+        color: #94a3b8; 
+        font-weight: 950; 
+        font-size: 1.25rem; 
+        margin-bottom: 1rem; 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        transition: all 0.3s;
+    }
+    .verdict-guide { font-size: 0.8rem; color: #94a3b8; font-weight: 700; margin-bottom: 2rem; }
+    .btn-audit-submit {
+        width: 100%;
+        background: var(--brand-blue);
+        color: white;
+        padding: 1rem;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 1.1rem;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(0, 59, 92, 0.2);
+        transition: all 0.2s;
+    }
+    .btn-audit-submit:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0, 59, 92, 0.3); }
+</style>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const projectSelect = document.getElementById('project_id');
-        const projectDetails = document.getElementById('projectDetails');
-        const displayPi = document.getElementById('display_pi');
-        const displayDir = document.getElementById('display_dir');
-        const decisionBadge = document.getElementById('decisionBadge');
+    function handleProjectChange(el) {
+        const opt = el.options[el.selectedIndex];
+        if (opt.value) {
+            document.getElementById('header-project-title').innerText = opt.text;
+            document.getElementById('header-pi').innerText = opt.dataset.pi;
+            document.getElementById('header-dir').innerText = opt.dataset.dir;
+        } else {
+            document.getElementById('header-project-title').innerText = 'Select a Project to Evaluate';
+        }
+    }
 
-        projectSelect.addEventListener('change', () => {
-            const selected = projectSelect.options[projectSelect.selectedIndex];
-            if (selected && selected.value) {
-                displayPi.textContent = selected.dataset.pi;
-                displayDir.textContent = selected.dataset.dir;
-                projectDetails.style.display = 'block';
-            } else {
-                projectDetails.style.display = 'none';
-            }
+    function calculateAudit() {
+        let total = 0;
+        document.querySelectorAll('.criteria-row').forEach(row => {
+            const weight = parseFloat(row.dataset.weight);
+            const mark = parseFloat(row.querySelector('.rating-engine-select').value) || 0;
+            const points = (mark / 5) * weight;
+            row.querySelector('.points-cell').innerText = points.toFixed(2);
+            total += points;
         });
 
-        if (projectSelect.value) {
-            projectSelect.dispatchEvent(new Event('change'));
+        const finalScore = document.getElementById('final-audit-score');
+        const badge = document.getElementById('verdict-badge');
+        
+        finalScore.innerText = total.toFixed(1) + '%';
+        
+        if (total >= 70) {
+            badge.innerText = 'SATISFACTORY';
+            badge.style.background = 'var(--brand-green)';
+            badge.style.color = 'white';
+        } else if (total > 0) {
+            badge.innerText = 'UNSATISFACTORY';
+            badge.style.background = '#ef4444';
+            badge.style.color = 'white';
+        } else {
+            badge.innerText = 'WAITING FOR INPUT';
+            badge.style.background = 'white';
+            badge.style.color = '#94a3b8';
         }
+    }
 
-        const ratingSelects = document.querySelectorAll('.rating-select');
-        const totalScoreDisplay = document.getElementById('totalScore');
-
-        function updateCalculations() {
-            let total = 0;
-            document.querySelectorAll('.criteria-row').forEach(row => {
-                const weight = parseFloat(row.dataset.weight);
-                const mark = parseFloat(row.querySelector('.rating-select').value) || 0;
-                const actual = (mark / 5) * weight;
-                row.querySelector('.actual-mark').textContent = actual.toFixed(2);
-                total += actual;
-            });
-
-            totalScoreDisplay.textContent = total.toFixed(2);
-
-            if (total > 0) {
-                if (total >= 70) {
-                    decisionBadge.textContent = 'SATISFACTORY';
-                    decisionBadge.style.background = '#dcfce7';
-                    decisionBadge.style.color = '#15803d';
-                    decisionBadge.style.transform = 'scale(1.05)';
-                } else {
-                    decisionBadge.textContent = 'UNSATISFACTORY';
-                    decisionBadge.style.background = '#fee2e2';
-                    decisionBadge.style.color = '#b91c1c';
-                    decisionBadge.style.transform = 'scale(1.05)';
-                }
-            } else {
-                decisionBadge.textContent = 'PENDING RATING';
-                decisionBadge.style.background = '#e2e8f0';
-                decisionBadge.style.color = '#64748b';
-                decisionBadge.style.transform = 'scale(1)';
-            }
-        }
-
-        ratingSelects.forEach(select => {
-            select.addEventListener('change', updateCalculations);
-        });
+    // Trigger initial load check
+    window.addEventListener('DOMContentLoaded', () => {
+        const select = document.getElementById('project_id');
+        if (select.value) handleProjectChange(select);
     });
 </script>
 @endsection

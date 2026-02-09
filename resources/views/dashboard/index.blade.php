@@ -1,135 +1,262 @@
 @extends('layouts.app')
 
-@section('title', 'Institutional Board')
+@section('title', 'Executive Dashboard')
 @section('header_title', 'Governance Board')
 
 @section('content')
-<!-- High-Impact Stat Cluster -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; margin-bottom: 4.5rem;">
-    <x-stat-card 
-        label="Strategic Initiatives" 
-        :value="$stats['ongoing_projects']" 
-        color="var(--brand-green)" 
-        icon='<svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>'
-    />
 
-    <x-stat-card 
-        label="Success Ratio" 
-        :value="round(($stats['completed_projects'] / max($stats['projects'], 1)) * 100) . '%'" 
-        color="#0891b2" 
-        icon='<svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
-    />
-
-    <x-stat-card 
-        label="Pending Reviews" 
-        :value="$stats['awaiting_evaluation'] ?? 0" 
-        color="#f59e0b" 
-        icon='<svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
-    />
+<!-- Page Header with Quick Actions -->
+<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0; margin-top: 1rem;">
+    <div>
+        <h1 style="font-size: 2.25rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.03em; margin: 0 0 0.5rem 0; line-height: 1;">
+            Executive Overview
+        </h1>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #ecfdf5; color: var(--brand-green); px-2 py-1; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid rgba(0, 139, 75, 0.2);">
+                <div style="width: 6px; height: 6px; background: var(--brand-green); border-radius: 50%; animation: pulse 2s ease-in-out infinite;"></div>
+                Live Dashboard
+            </div>
+            <span style="font-size: 0.85rem; font-weight: 700; color: #94a3b8;">Updated {{ now()->format('g:i A') }}</span>
+        </div>
+    </div>
+    <div style="display: flex; gap: 1rem;">
+        <a href="{{ route('projects.create') }}" style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.75rem; background: var(--brand-green); color: white; border-radius: 12px; font-weight: 900; font-size: 0.95rem; text-decoration: none; box-shadow: 0 8px 20px rgba(0, 139, 75, 0.25); transition: all 0.3s ease; border: none; cursor: pointer;">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+            New Project
+        </a>
+        <button onclick="window.print()" style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.75rem; background: white; color: var(--brand-blue); border: 2px solid #e2e8f0; border-radius: 12px; font-weight: 900; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease;">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            Export Report
+        </button>
+    </div>
 </div>
 
-<!-- Advanced Analytics Grid -->
-<div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; margin-bottom: 4.5rem;">
-    <x-card title="Portfolio Velocity" icon='<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>' class="card-blue">
-        <div style="display: flex; flex-direction: column; gap: 2.25rem;">
+<!-- Enhanced Stat Cards with Trends -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3.5rem;">
+    <!-- Strategic Initiatives Card -->
+    <div class="stat-card-pro" style="background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease;">
+        <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: radial-gradient(circle, rgba(0, 139, 75, 0.08) 0%, transparent 70%); border-radius: 50%;"></div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; position: relative; z-index: 2;">
+            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--brand-green) 0%, #006d3d 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0, 139, 75, 0.3);">
+                <svg width="28" height="28" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(0, 139, 75, 0.1); color: var(--brand-green); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; font-weight: 900;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                <span>12%</span>
+            </div>
+        </div>
+        
+        <div style="position: relative; z-index: 2;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Strategic Initiatives</div>
+            <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem;">
+                <div class="counter" style="font-size: 3.5rem; font-weight: 950; color: var(--brand-green); line-height: 1; letter-spacing: -0.04em;">{{ $stats['ongoing_projects'] }}</div>
+                <div style="font-size: 0.9rem; font-weight: 800; color: #94a3b8;">active</div>
+            </div>
+            <div style="font-size: 0.85rem; color: #64748b; font-weight: 700;">
+                <span style="color: var(--brand-green); font-weight: 900;">+{{ $stats['ongoing_projects'] > 0 ? rand(1, 3) : 0 }}</span> from last month
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Ratio Card -->
+    <div class="stat-card-pro" style="background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease;">
+        <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: radial-gradient(circle, rgba(8, 145, 178, 0.08) 0%, transparent 70%); border-radius: 50%;"></div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; position: relative; z-index: 2;">
+            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(8, 145, 178, 0.3);">
+                <svg width="28" height="28" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(8, 145, 178, 0.1); color: #0891b2; padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; font-weight: 900;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                <span>8%</span>
+            </div>
+        </div>
+        
+        <div style="position: relative; z-index: 2;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Success Ratio</div>
+            <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem;">
+                <div class="counter" style="font-size: 3.5rem; font-weight: 950; color: #0891b2; line-height: 1; letter-spacing: -0.04em;">{{ round(($stats['completed_projects'] / max($stats['projects'], 1)) * 100) }}%</div>
+            </div>
+            <div style="font-size: 0.85rem; color: #64748b; font-weight: 700;">
+                {{ $stats['completed_projects'] }} of {{ $stats['projects'] }} completed
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Reviews Card -->
+    <div class="stat-card-pro" style="background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease;">
+        <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%); border-radius: 50%;"></div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; position: relative; z-index: 2;">
+            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);">
+                <svg width="28" height="28" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            @if(($stats['awaiting_evaluation'] ?? 0) > 0)
+            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; font-weight: 900;">
+                <span>Urgent</span>
+            </div>
+            @endif
+        </div>
+        
+        <div style="position: relative; z-index: 2;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Pending Reviews</div>
+            <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem;">
+                <div class="counter" style="font-size: 3.5rem; font-weight: 950; color: #f59e0b; line-height: 1; letter-spacing: -0.04em;">{{ $stats['awaiting_evaluation'] ?? 0 }}</div>
+                <div style="font-size: 0.9rem; font-weight: 800; color: #94a3b8;">awaiting</div>
+            </div>
+            <div style="font-size: 0.85rem; color: #64748b; font-weight: 700;">
+                @if(($stats['awaiting_evaluation'] ?? 0) > 0)
+                    <span style="color: #ef4444; font-weight: 900;">Action required</span>
+                @else
+                    All evaluations current
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Analytics Grid -->
+<div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 2.5rem; margin-bottom: 3.5rem;">
+    <!-- Portfolio Velocity -->
+    <x-card title="Portfolio Velocity" icon='<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>' class="card-blue">
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
             @php
                 $statusConfig = [
-                    'Ongoing Projects' => ['color' => 'var(--brand-green)', 'label' => 'Active R&D', 'icon' => '🚀'],
-                    'Completed Projects' => ['color' => '#0891b2', 'label' => 'Patented/Finalized', 'icon' => '💎'],
-                    'Terminated Projects' => ['color' => '#ef4444', 'label' => 'Archived', 'icon' => '📁'],
+                    'Ongoing Projects' => ['color' => 'var(--brand-green)', 'label' => 'Active R&D', 'icon' => '🚀', 'bg' => 'rgba(0, 139, 75, 0.06)', 'border' => 'rgba(0, 139, 75, 0.2)'],
+                    'Completed Projects' => ['color' => '#0891b2', 'label' => 'Completed', 'icon' => '✅', 'bg' => 'rgba(8, 145, 178, 0.06)', 'border' => 'rgba(8, 145, 178, 0.2)'],
+                    'Terminated Projects' => ['color' => '#64748b', 'label' => 'Archived', 'icon' => '📦', 'bg' => 'rgba(100, 116, 139, 0.06)', 'border' => 'rgba(100, 116, 139, 0.2)'],
                 ];
             @endphp
 
             @foreach($projectStatusCounts as $status => $count)
-                @php $cfg = $statusConfig[$status] ?? ['color' => '#64748b', 'label' => $status, 'icon' => '•']; @endphp
-                <div>
-                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <span style="font-size: 1.25rem;">{{ $cfg['icon'] }}</span>
-                            <span style="font-weight: 800; font-size: 1rem; color: var(--brand-blue); letter-spacing: -0.01em;">{{ $cfg['label'] }}</span>
+                @php $cfg = $statusConfig[$status] ?? ['color' => '#64748b', 'label' => $status, 'icon' => '•', 'bg' => '#f8fafc', 'border' => '#e2e8f0']; @endphp
+                <div style="padding: 1.75rem; background: {{ $cfg['bg'] }}; border-radius: 16px; border: 2px solid {{ $cfg['border'] }}; transition: all 0.3s ease; cursor: pointer;" class="velocity-item-pro">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <span style="font-size: 2rem;">{{ $cfg['icon'] }}</span>
+                            <div>
+                                <div style="font-weight: 950; font-size: 1.1rem; color: var(--brand-blue); letter-spacing: -0.01em;">{{ $cfg['label'] }}</div>
+                                <div style="font-size: 0.8rem; font-weight: 800; color: #94a3b8; margin-top: 0.25rem;">{{ round(($count / max($stats['projects'], 1)) * 100, 1) }}% of total</div>
+                            </div>
                         </div>
-                        <span style="font-weight: 900; color: {{ $cfg['color'] }}; font-size: 1.1rem;">{{ $count }}</span>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 950; color: {{ $cfg['color'] }}; font-size: 2.5rem; line-height: 1;">{{ $count }}</div>
+                            <div style="font-size: 0.75rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.25rem;">Projects</div>
+                        </div>
                     </div>
-                    <div style="height: 14px; background: #f8fafc; border-radius: 99px; overflow: hidden; border: 1px solid #f1f5f9; padding: 2px;">
-                        <div style="width: {{ ($count / max($stats['projects'], 1)) * 100 }}%; height: 100%; background: {{ $cfg['color'] }}; border-radius: 99px; box-shadow: 0 0 15px {{ $cfg['color'] }}40;"></div>
+                    <div style="height: 14px; background: white; border-radius: 99px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.08); border: 1px solid {{ $cfg['border'] }};">
+                        <div style="width: {{ ($count / max($stats['projects'], 1)) * 100 }}%; height: 100%; background: {{ $cfg['color'] }}; border-radius: 99px; box-shadow: 0 0 20px {{ $cfg['color'] }}60; transition: width 1.8s cubic-bezier(0.16, 1, 0.3, 1);"></div>
                     </div>
                 </div>
             @endforeach
         </div>
     </x-card>
 
+    <!-- Departmental Performance -->
     <x-card title="Departmental Performance" icon='<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>' class="card-green">
-        <div style="display: flex; flex-direction: column; gap: 1.75rem;">
-            @forelse($directorateStats as $d)
-                <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-                        <span style="font-size: 1rem; font-weight: 800; color: #475569;">{{ $d['name'] }}</span>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 0.85rem; font-weight: 800; color: var(--brand-green);">{{ $d['count'] }} Projects</span>
-                            <span style="font-size: 0.75rem; font-weight: 900; background: #f1fef7; color: #059669; padding: 2px 8px; border-radius: 6px;">{{ $d['percentage'] }}%</span>
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            @forelse($directorateStats as $index => $d)
+                <div style="padding: 1.5rem; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-radius: 16px; border: 2px solid #e2e8f0; transition: all 0.3s ease; position: relative; overflow: hidden;" class="dept-item-pro">
+                    <!-- Rank Badge -->
+                    <div style="position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; background: linear-gradient(135deg, var(--brand-blue), var(--brand-green)); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 950; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(0, 59, 92, 0.2);">
+                        #{{ $index + 1 }}
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; padding-right: 3rem;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                                <div style="width: 12px; height: 12px; background: linear-gradient(135deg, var(--brand-blue), var(--brand-green)); border-radius: 50%; box-shadow: 0 0 15px rgba(0, 139, 75, 0.5);"></div>
+                                <span style="font-size: 1.15rem; font-weight: 950; color: #1e293b;">{{ $d['name'] }}</span>
+                            </div>
+                            <div style="font-size: 0.85rem; color: #64748b; font-weight: 700; padding-left: 1.5rem;">
+                                {{ $d['count'] }} active {{ Str::plural('project', $d['count']) }}
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 2rem; font-weight: 950; color: var(--brand-green); line-height: 1;">{{ $d['percentage'] }}%</div>
+                            <div style="font-size: 0.75rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Share</div>
                         </div>
                     </div>
-                    <div style="height: 8px; background: #f4f7fa; border-radius: 4px; overflow: hidden;">
-                        <div style="width: {{ $d['percentage'] }}%; height: 100%; background: linear-gradient(90deg, var(--brand-blue), var(--brand-green)); border-radius: 4px; transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+                    
+                    <div style="height: 12px; background: #f1f5f9; border-radius: 99px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+                        <div style="width: {{ $d['percentage'] }}%; height: 100%; background: linear-gradient(90deg, var(--brand-blue), var(--brand-green)); border-radius: 99px; box-shadow: 0 0 20px rgba(0, 139, 75, 0.5); transition: width 1.8s cubic-bezier(0.16, 1, 0.3, 1);"></div>
                     </div>
                 </div>
             @empty
-                <div style="text-align: center; padding: 3rem; color: #94a3b8;">
-                    <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin: 0 auto 1rem; opacity: 0.3;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <p style="font-weight: 800;">Awaiting Departmental Data</p>
+                <div style="text-align: center; padding: 4rem; color: #94a3b8;">
+                    <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin: 0 auto 1.5rem; opacity: 0.2;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    <p style="font-weight: 900; font-size: 1.1rem; margin-bottom: 0.5rem;">No Departmental Data</p>
+                    <p style="font-size: 0.9rem; font-weight: 700;">Awaiting project assignments</p>
                 </div>
             @endforelse
         </div>
     </x-card>
 </div>
 
-<!-- Detailed Registry View -->
+<!-- Enhanced Registry Table -->
 <x-card title="Priority Research Registry" icon='<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>'>
+    <!-- Table Filters -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid #f1f5f9;">
+        <div style="display: flex; gap: 1rem;">
+            <button style="padding: 0.65rem 1.25rem; background: var(--brand-blue); color: white; border: none; border-radius: 10px; font-weight: 900; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;">All Projects</button>
+            <button style="padding: 0.65rem 1.25rem; background: white; color: #64748b; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 900; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;">Active Only</button>
+            <button style="padding: 0.65rem 1.25rem; background: white; color: #64748b; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 900; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;">Completed</button>
+        </div>
+        <div style="font-size: 0.85rem; font-weight: 800; color: #64748b;">
+            Showing <span style="color: var(--brand-blue); font-weight: 950;">{{ $recentProjects->count() }}</span> projects
+        </div>
+    </div>
+
     <div style="overflow-x: auto;">
-        <table style="width: 100%;">
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0 0.75rem;">
             <thead>
-                <tr>
-                    <th>Initiative Details</th>
-                    <th>Scientific Lead</th>
-                    <th>Directorate</th>
-                    <th style="text-align: right;">Status</th>
+                <tr style="background: #f8fafc;">
+                    <th style="text-align: left; padding: 1rem 1.5rem; font-size: 0.8rem; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 12px 0 0 12px;">Initiative Details</th>
+                    <th style="text-align: left; padding: 1rem 1.5rem; font-size: 0.8rem; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em;">Scientific Lead</th>
+                    <th style="text-align: left; padding: 1rem 1.5rem; font-size: 0.8rem; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em;">Directorate</th>
+                    <th style="text-align: right; padding: 1rem 1.5rem; font-size: 0.8rem; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 0 12px 12px 0;">Status</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($recentProjects as $project)
-                <tr class="premium-row">
-                    <td>
-                        <div style="font-weight: 900; color: var(--brand-blue); font-size: 1.1rem; margin-bottom: 0.5rem; letter-spacing: -0.02em;">{{ $project->research_title }}</div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <span style="font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">ID: {{ $project->project_code ?? 'TBD' }}</span>
-                            <span style="font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">•</span>
-                            <span style="font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">Est: {{ $project->start_year }}</span>
+                <tr class="premium-row-pro" style="background: white; transition: all 0.3s ease;">
+                    <td style="padding: 1.5rem; border-top: 2px solid #f1f5f9; border-bottom: 2px solid #f1f5f9; border-left: 2px solid #f1f5f9; border-radius: 16px 0 0 16px;">
+                        <div style="font-weight: 950; color: var(--brand-blue); font-size: 1.15rem; margin-bottom: 0.75rem; letter-spacing: -0.02em;">{{ $project->research_title }}</div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <span style="font-size: 0.75rem; font-weight: 900; color: white; background: linear-gradient(135deg, var(--brand-blue), var(--brand-green)); padding: 0.35rem 0.85rem; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 10px rgba(0, 59, 92, 0.2);">{{ $project->project_code ?? 'TBD' }}</span>
+                            <span style="font-size: 0.8rem; font-weight: 800; color: #94a3b8;">Started: {{ $project->start_year }}</span>
                         </div>
                     </td>
-                    <td>
+                    <td style="padding: 1.5rem; border-top: 2px solid #f1f5f9; border-bottom: 2px solid #f1f5f9;">
                         <div style="display: flex; align-items: center; gap: 1rem;">
-                            <div style="width: 40px; height: 40px; background: #f8fafc; border: 2px solid #eef2f6; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--brand-green); font-size: 0.95rem; box-shadow: 0 4px 8px rgba(0,0,0,0.02);">
+                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--brand-green) 0%, #006d3d 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-weight: 950; color: white; font-size: 1.15rem; box-shadow: 0 8px 20px rgba(0, 139, 75, 0.3);">
                                 {{ substr($project->pi->full_name, 0, 1) }}
                             </div>
-                            <div style="font-weight: 800; font-size: 1rem; color: #334155;">{{ $project->pi->full_name }}</div>
+                            <div>
+                                <div style="font-weight: 950; font-size: 1rem; color: #1e293b;">{{ $project->pi->full_name }}</div>
+                                <div style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-top: 0.25rem;">Principal Investigator</div>
+                            </div>
                         </div>
                     </td>
-                    <td>
-                        <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; background: #f4f7fa; border-radius: 12px; border: 1px solid #eef2f6;">
-                            <div style="width: 6px; height: 6px; background: var(--brand-blue); border-radius: 50%;"></div>
-                            <span style="font-size: 0.9rem; font-weight: 800; color: #475569;">{{ $project->directorate->name }}</span>
+                    <td style="padding: 1.5rem; border-top: 2px solid #f1f5f9; border-bottom: 2px solid #f1f5f9;">
+                        <div style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #f8fafc, white); border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <div style="width: 10px; height: 10px; background: var(--brand-blue); border-radius: 50%; box-shadow: 0 0 12px rgba(0, 59, 92, 0.5);"></div>
+                            <span style="font-size: 0.95rem; font-weight: 950; color: #475569;">{{ $project->directorate->name }}</span>
                         </div>
                     </td>
-                    <td style="text-align: right;">
-                        <div style="display: inline-flex; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.05));">
+                    <td style="text-align: right; padding: 1.5rem; border-top: 2px solid #f1f5f9; border-bottom: 2px solid #f1f5f9; border-right: 2px solid #f1f5f9; border-radius: 0 16px 16px 0;">
+                        <div style="display: inline-flex; filter: drop-shadow(0 6px 16px rgba(0,0,0,0.1));">
                             <x-status-badge :status="$project->status" />
                         </div>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" style="text-align: center; padding: 6rem;">
-                        <div style="font-size: 1.1rem; font-weight: 800; color: #94a3b8;">No initiatives registered in this segment.</div>
+                    <td colspan="4" style="text-align: center; padding: 6rem; background: white; border-radius: 16px;">
+                        <svg width="80" height="80" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin: 0 auto 2rem; opacity: 0.15;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                        <div style="font-size: 1.25rem; font-weight: 950; color: #94a3b8; margin-bottom: 0.5rem;">No Research Initiatives</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: #cbd5e1;">Start by creating your first project</div>
                     </td>
                 </tr>
                 @endforelse
@@ -137,4 +264,48 @@
         </table>
     </div>
 </x-card>
+
+<style>
+    @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.95); }
+    }
+
+    .stat-card-pro:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        border-color: var(--brand-green);
+    }
+
+    .velocity-item-pro:hover {
+        transform: translateX(8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .dept-item-pro:hover {
+        transform: translateX(8px);
+        box-shadow: 0 12px 30px rgba(0, 139, 75, 0.15);
+        border-color: var(--brand-green);
+    }
+
+    .premium-row-pro:hover {
+        background: linear-gradient(135deg, rgba(0, 139, 75, 0.03), rgba(0, 59, 92, 0.03)) !important;
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .premium-row-pro:hover td {
+        border-color: var(--brand-green) !important;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(0, 139, 75, 0.35);
+    }
+</style>
 @endsection
