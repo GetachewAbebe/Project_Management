@@ -117,47 +117,31 @@
         </div>
 
         <nav class="nav-container">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard*') ? 'active' : '' }}">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                Dashboard
-            </a>
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard*') ? 'active' : '' }}">Dashboard</a>
 
             @if(auth()->user()->isAdmin())
-            <a href="{{ route('directorates.index') }}" class="nav-link {{ request()->routeIs('directorates.*') ? 'active' : '' }}">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                Directorates
-            </a>
-            <a href="{{ route('employees.index') }}" class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                Staff Registry
-            </a>
+            <a href="{{ route('directorates.index') }}" class="nav-link {{ request()->routeIs('directorates.*') ? 'active' : '' }}">Directorates</a>
+            <a href="{{ route('employees.index') }}" class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">Staff Registry</a>
             @endif
 
-            <a href="{{ route('projects.index') }}" class="nav-link {{ request()->routeIs('projects.*') ? 'active' : '' }}">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                Projects
-            </a>
-            <a href="{{ route('evaluations.index') }}" class="nav-link {{ request()->routeIs('evaluations.*') ? 'active' : '' }}">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                Evaluations
-            </a>
+            <a href="{{ route('projects.index') }}" class="nav-link {{ request()->routeIs('projects.*') ? 'active' : '' }}">Projects</a>
+            <a href="{{ route('evaluations.index') }}" class="nav-link {{ request()->routeIs('evaluations.*') ? 'active' : '' }}">Evaluations</a>
         </nav>
 
         <div class="user-actions">
             <div class="profile-badge">
                 <div style="text-align: right;">
-                    <div style="font-weight: 900; color: var(--brand-blue); font-size: 0.95rem; line-height: 1;">{{ auth()->user()->name }}</div>
-                    <div style="font-size: 0.7rem; font-weight: 800; color: var(--brand-green); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px;">{{ auth()->user()->role }}</div>
+                    <div style="font-weight: 950; color: var(--brand-blue); font-size: 0.95rem; line-height: 1;">{{ auth()->user()->name }}</div>
+                    <div style="font-size: 0.72rem; font-weight: 900; color: var(--brand-green); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;">{{ auth()->user()->role }}</div>
                 </div>
-                <div style="width: 36px; height: 36px; background: var(--brand-blue); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem;">
+                <div style="width: 38px; height: 38px; background: linear-gradient(135deg, var(--brand-blue) 0%, #002d4a 100%); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0, 59, 92, 0.2);">
                     {{ substr(auth()->user()->name, 0, 1) }}
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
                 @csrf
-                <button type="submit" class="logout-pill">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                <button type="submit" class="logout-pill" style="padding: 0.75rem 1.4rem; border: 1px solid rgba(239, 68, 68, 0.15);">
                     Logout
                 </button>
             </form>
@@ -173,9 +157,12 @@
             </div>
         @endif
 
-        <div style="margin-bottom: 4rem;">
-            <h1 style="font-size: 2.5rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.05em; margin: 0;">@yield('header_title', 'System Management')</h1>
-            <p style="color: #64748b; font-weight: 700; font-size: 1.1rem; margin-top: 0.5rem;">{{ now()->format('l, F j, Y') }} — Bio and Emerging Technology Institute</p>
+        <div class="header-titles">
+            <h1>@yield('header_title', 'System Management')</h1>
+            <p>
+                <span style="width: 8px; height: 8px; background: var(--brand-green); border-radius: 50%;"></span>
+                {{ now()->format('l, F j, Y') }} — Bio and Emerging Technology Institute
+            </p>
         </div>
 
         @yield('content')
