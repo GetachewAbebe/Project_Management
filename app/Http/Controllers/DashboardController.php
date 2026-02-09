@@ -27,6 +27,7 @@ class DashboardController extends Controller
 
         $totalProjects = $projectQuery->count();
         $totalEvaluations = $evaluationQuery->count();
+        $distinctEvaluated = (clone $evaluationQuery)->distinct('project_id')->count('project_id');
         
         $stats = [
             'projects' => $totalProjects,
@@ -38,7 +39,7 @@ class DashboardController extends Controller
             })->count(),
             'completed_projects' => (clone $projectQuery)->where('status', 'like', '%COMPLETED%')->count(),
             'terminated_projects' => (clone $projectQuery)->whereIn('status', ['TERMINATED', 'EVALUATED'])->count(),
-            'performance_index' => $totalProjects > 0 ? round(($totalEvaluations / $totalProjects) * 100, 1) : 0,
+            'performance_index' => $totalProjects > 0 ? round(($distinctEvaluated / $totalProjects) * 100, 1) : 0,
         ];
 
         // Consolidate Research Status Distribution into 3 categories

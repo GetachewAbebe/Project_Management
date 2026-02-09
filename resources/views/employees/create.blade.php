@@ -55,6 +55,7 @@
             <select name="system_role" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; background: white;">
                 <option value="employee">Registry Only (No Login)</option>
                 <option value="director">Department Director (Management Access)</option>
+                <option value="evaluator">Evaluator (New Project Reviewer)</option>
             </select>
             @error('system_role')<span style="color: #b91c1c; font-size: 0.8rem;">{{ $message }}</span>@enderror
         </div>
@@ -65,7 +66,7 @@
             </div>
             <div>
                 <div style="font-weight: 700; color: #1e40af; font-size: 0.9rem;">Identity Provisioning Protocol</div>
-                <p style="font-size: 0.8rem; color: #1e40af; opacity: 0.8; line-height: 1.4; margin-top: 0.25rem;">Selecting <strong>"Department Director"</strong> will trigger a secure registration invitation to the staff member's formal email address.</p>
+                <p style="font-size: 0.8rem; color: #1e40af; opacity: 0.8; line-height: 1.4; margin-top: 0.25rem;">Selecting <strong>"Department Director"</strong> or <strong>"Evaluator"</strong> will trigger a secure registration invitation to the staff member's formal email address.</p>
             </div>
         </div>
         

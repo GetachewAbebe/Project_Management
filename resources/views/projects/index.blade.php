@@ -1,78 +1,96 @@
 @extends('layouts.app')
 
-@section('title', 'Projects')
+@section('title', 'Project Portfolio')
 @section('header_title', 'Research Portfolio')
 
 @section('content')
-<div style="display: flex; justify-content: flex-end; margin-bottom: 2rem;">
-    <a href="{{ route('projects.create') }}" class="btn btn-primary">
-        + Register Project
-    </a>
-</div>
+<div class="card animate-up">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 2rem;">
+        <div>
+            <h3 style="font-size: 1.75rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.04em; margin: 0;">Registry <span style="color: var(--brand-green);">Database</span></h3>
+            <p style="font-size: 0.95rem; color: #64748b; font-weight: 700; margin-top: 0.5rem;">Accessing institutional research assets</p>
+        </div>
+        @can('create', App\Models\Project::class)
+        <a href="{{ route('projects.create') }}" class="btn-primary" style="text-decoration: none; padding: 1.1rem 2.25rem; font-size: 0.95rem;">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 0.75rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
+            Register New Initiative
+        </a>
+        @endcan
+    </div>
 
-<div class="card">
-    <table>
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>PI</th>
-                <th>Title</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
-                <th>Code</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($projects as $proj)
-            <tr>
-                <td style="font-weight: 700; color: var(--text-muted); font-size: 0.85rem; width: 40px;">{{ $loop->iteration }}</td>
-                <td>{{ $proj->pi->full_name }}</td>
-                <td style="font-weight: 700;">
-                    <a href="{{ route('projects.show', $proj->id) }}" style="color: var(--primary-navy); text-decoration: none; border-bottom: 2px solid #e2e8f0; padding-bottom: 2px; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--primary-green)'" onmouseout="this.style.borderColor='#e2e8f0'">
-                        {{ $proj->research_title }}
-                    </a>
-                </td>
-                <td>{{ $proj->start_year ?? '-' }}</td>
-                <td>{{ $proj->end_year ?? '-' }}</td>
-                <td>
-                    @php
-                        $statusColors = [
-                            'REGISTERED' => ['bg' => '#f1f5f9', 'text' => '#64748b', 'label' => 'NEW'],
-                            'ONGOING' => ['bg' => '#dcfce7', 'text' => '#166534', 'label' => 'ONGOING'],
-                            'COMPLETED' => ['bg' => '#dbeafe', 'text' => '#1e40af', 'label' => 'COMPLETED'],
-                            'EVALUATED' => ['bg' => '#f5f3ff', 'text' => '#5b21b6', 'label' => 'EVALUATED'],
-                        ];
-                        $st = $statusColors[strtoupper($proj->status)] ?? ['bg' => '#f1f5f9', 'text' => '#64748b', 'label' => $proj->status];
-                    @endphp
-                    <span class="status-pill" style="background: {{ $st['bg'] }}; color: {{ $st['text'] }}; font-weight: 800; font-size: 0.7rem;">
-                        {{ $st['label'] }}
-                    </span>
-                </td>
-                <td style="font-family: monospace; font-size: 0.8rem;">{{ $proj->project_code }}</td>
-                <td>
-                    @php
-                        $user = auth()->user();
-                        $canManage = $user->isAdmin() || ($user->isDirector() && $proj->directorate_id == $user->directorate_id);
-                    @endphp
-
-                    @if($canManage)
-                        @if($proj->status === 'REGISTERED')
-                            <a href="{{ route('evaluations.create', ['project_id' => $proj->id]) }}" style="color: var(--primary-green); font-weight: 700; text-decoration: none; margin-right: 1rem;">Evaluate</a>
-                        @endif
-                        <a href="{{ route('projects.edit', $proj->id) }}" style="color: var(--primary-navy); font-weight: 400; text-decoration: none; margin-right: 1rem;">Edit</a>
-                    @else
-                        <span style="font-size: 0.7rem; color: var(--text-muted); font-style: italic; font-weight: 600;">Read Only</span>
-                    @endif
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 3rem;">No projects registered yet.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-spacing: 0 1rem; border-collapse: separate;">
+            <thead>
+                <tr>
+                    <th style="padding-left: 1.5rem;">Reference</th>
+                    <th>Title & Meta</th>
+                    <th>Lead Investigator</th>
+                    <th>Directorate</th>
+                    <th style="text-align: right;">Status</th>
+                    <th style="text-align: right; padding-right: 1.5rem;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($projects as $proj)
+                <tr class="premium-row">
+                    <td style="padding-left: 1.5rem;">
+                        <span style="font-family: inherit; font-weight: 900; color: var(--brand-blue); background: #f4f7fa; padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.85rem; border: 1px solid #eef2f6;">
+                            {{ $proj->project_code ?? 'NEW' }}
+                        </span>
+                    </td>
+                    <td>
+                        <div style="max-width: 450px;">
+                            <div style="font-weight: 900; color: var(--brand-blue); font-size: 1.05rem; line-height: 1.3; margin-bottom: 0.5rem; letter-spacing: -0.01em;">{{ $proj->research_title }}</div>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #94a3b8;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 800; text-transform: uppercase;">{{ $proj->start_year }} - {{ $proj->end_year }}</span>
+                                </div>
+                                <span style="width: 4px; height: 4px; background: #cbd5e1; border-radius: 50%;"></span>
+                                <span style="font-size: 0.8rem; color: var(--brand-green); font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em;">Validated Registry</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 42px; height: 42px; background: #f8fafc; border: 2px solid #eef2f6; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--brand-blue); font-size: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.02);">
+                                {{ substr($proj->pi->full_name, 0, 1) }}
+                            </div>
+                            <div style="font-weight: 800; font-size: 1rem; color: #334155;">{{ $proj->pi->full_name }}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; background: #f4f7fa; border-radius: 12px; border: 1px solid #eef2f6;">
+                            <div style="width: 6px; height: 6px; background: var(--brand-blue); border-radius: 50%;"></div>
+                            <span style="font-size: 0.9rem; font-weight: 800; color: #475569;">{{ $proj->directorate->name }}</span>
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <x-status-badge :status="$proj->status" />
+                    </td>
+                    <td style="text-align: right; padding-right: 1.5rem;">
+                        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; align-items: center;">
+                            @can('update', $proj)
+                            <a href="{{ route('projects.edit', $proj->id) }}" class="btn-secondary" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; text-decoration: none;">Edit Plan</a>
+                            @endcan
+                            
+                            @if($proj->status === 'REGISTERED')
+                            @can('create', App\Models\Evaluation::class)
+                            <a href="{{ route('evaluations.create', ['project_id' => $proj->id]) }}" class="btn-primary" style="padding: 0.67rem 1.4rem; font-size: 0.85rem; text-decoration: none; background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%); box-shadow: 0 8px 16px rgba(8, 145, 178, 0.3);">Run Evaluation</a>
+                            @endcan
+                            @endif
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 7rem;">
+                        <div style="font-size: 1.25rem; font-weight: 800; color: #94a3b8;">No projects currently registered in the system.</div>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

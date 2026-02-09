@@ -4,66 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Directorate;
-use App\Models\Project;
-use App\Models\Evaluation;
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Mail;
-use App\Mail\DirectorInvitation;
+use App\Services\EmployeeService;
+use App\Http\Requests\StoreEmployeeRequest;
 
 class EmployeeController extends Controller
 {
+
+    protected $employeeService;
+
+    public function __construct(EmployeeService $employeeService)
+    {
+        $this->employeeService = $employeeService;
+    }
+
     public function index()
     {
+        $this->authorize('viewAny', Employee::class);
         $employees = Employee::with('directorate')->get();
-        $stats = [
-            'directorates' => Directorate::count(),
-            'employees' => $employees->count(),
-            'projects' => Project::count(),
-            'evaluations' => Evaluation::count()
-        ];
-        return view('employees.index', compact('employees', 'stats'));
+        return view('employees.index', compact('employees'));
     }
 
     public function create()
     {
+        $this->authorize('create', Employee::class);
         $directorates = Directorate::all();
-        $stats = [
-            'directorates' => Directorate::count(),
-            'employees' => Employee::count(),
-            'projects' => Project::count(),
-            'evaluations' => Evaluation::count()
-        ];
-        return view('employees.create', compact('directorates', 'stats'));
+        return view('employees.create', compact('directorates'));
     }
 
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
-        $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'directorate_id' => 'required|exists:directorates,id',
-            'institutional_id' => 'nullable|string|unique:employees|max:255',
-            'email' => 'required|email|unique:employees|unique:users,email',
-            'position' => 'required|string|max:255',
-            'system_role' => 'required|string|in:employee,director',
-        ]);
-
-        $employee = Employee::create($validated);
+        $this->authorize('create', Employee::class);
+        $this->employeeService->createEmployee($request->validated());
 
         $msg = 'Employee registered successfully.';
-
-        // Handle Secure Invitation based on System Role
-        if ($validated['system_role'] === 'director') {
-            $token = \Illuminate\Support\Str::random(40);
-            $invitation = \App\Models\Invitation::create([
-                'email' => $validated['email'],
-                'directorate_id' => $validated['directorate_id'],
-                'employee_id' => $employee->id,
-                'token' => $token,
-                'expires_at' => now()->addDays(2),
-            ]);
-            
-            Mail::to($validated['email'])->send(new DirectorInvitation($invitation));
+        if ($request->system_role === 'director') {
             $msg .= ' A secure registration invitation has been dispatched to their email.';
         }
 
@@ -72,45 +46,18 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
+        $this->authorize('update', $employee);
         $directorates = Directorate::all();
-        $stats = [
-            'directorates' => Directorate::count(),
-            'employees' => Employee::count(),
-            'projects' => Project::count(),
-            'evaluations' => Evaluation::count()
-        ];
-        return view('employees.edit', compact('employee', 'directorates', 'stats'));
+        return view('employees.edit', compact('employee', 'directorates'));
     }
 
-    public function update(Request $request, Employee $employee)
+    public function update(StoreEmployeeRequest $request, Employee $employee)
     {
-        $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'directorate_id' => 'required|exists:directorates,id',
-            'institutional_id' => 'nullable|string|unique:employees,institutional_id,' . $employee->id . '|max:255',
-            'email' => 'required|email|unique:employees,email,' . $employee->id . '|unique:users,email,' . optional($employee->user)->id,
-            'position' => 'required|string|max:255',
-            'system_role' => 'required|string|in:employee,director',
-        ]);
-
-        $employee->update($validated);
+        $this->authorize('update', $employee);
+        $this->employeeService->updateEmployee($employee, $request->validated());
 
         $msg = 'Employee information updated.';
-
-        // Handle Invitation if explicit role is Director and User doesn't exist
-        if ($validated['system_role'] === 'director' && !$employee->user) {
-            $token = \Illuminate\Support\Str::random(40);
-            $invitation = \App\Models\Invitation::updateOrCreate(
-                ['email' => $validated['email']],
-                [
-                    'directorate_id' => $validated['directorate_id'],
-                    'employee_id' => $employee->id,
-                    'token' => $token,
-                    'expires_at' => now()->addDays(2),
-                ]
-            );
-            
-            Mail::to($validated['email'])->send(new DirectorInvitation($invitation));
+        if ($request->system_role === 'director' && !$employee->user) {
             $msg .= ' A secure registration invitation has been dispatched to their email.';
         }
 
@@ -119,7 +66,9 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee)
     {
+        $this->authorize('delete', $employee);
         $employee->delete();
-        return redirect()->route('employees.index')->with('success', 'Staff record and all associated identity credentials have been completely purged.');
+        return redirect()->route('employees.index')
+            ->with('success', 'Staff record and all associated identity credentials have been completely purged.');
     }
 }

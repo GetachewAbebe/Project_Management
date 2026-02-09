@@ -62,6 +62,7 @@
             <select name="system_role" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; background: white;">
                 <option value="employee" {{ (old('system_role', $employee->system_role) == 'employee') ? 'selected' : '' }}>Registry Only (No Login)</option>
                 <option value="director" {{ (old('system_role', $employee->system_role) == 'director') ? 'selected' : '' }}>Department Director (Management Access)</option>
+                <option value="evaluator" {{ (old('system_role', $employee->system_role) == 'evaluator') ? 'selected' : '' }}>Evaluator (New Project Reviewer)</option>
             </select>
             @error('system_role')<span style="color: #b91c1c; font-size: 0.8rem;">{{ $message }}</span>@enderror
         </div>
@@ -72,7 +73,7 @@
             </div>
             <div>
                 <div style="font-weight: 700; color: var(--primary-navy); font-size: 0.9rem;">Identity Sync Protocol</div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-top: 0.25rem;">Granting <strong>"Department Director"</strong> access will trigger a secure registration invitation if the staff member does not yet have an active system account.</p>
+                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-top: 0.25rem;">Granting <strong>"Department Director"</strong> or <strong>"Evaluator"</strong> access will trigger a secure registration invitation if the staff member does not yet have an active system account.</p>
             </div>
         </div>
         

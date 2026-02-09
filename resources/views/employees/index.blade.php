@@ -1,83 +1,100 @@
 @extends('layouts.app')
 
-@section('title', 'Employees')
-@section('header_title', 'Staff Management')
+@section('title', 'Institutional Registry')
+@section('header_title', 'Personnel Directory')
 
 @section('content')
-<div style="display: flex; justify-content: flex-end; margin-bottom: 2rem;">
-    <a href="{{ route('employees.create') }}" class="btn btn-primary">
-        + Enroll New Staff Member
-    </a>
+<div class="card animate-up">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 2rem;">
+        <div>
+            <h3 style="font-size: 1.75rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.04em; margin: 0;">Staff <span style="color: var(--brand-green);">Directory</span></h3>
+            <p style="font-size: 0.95rem; color: #64748b; font-weight: 700; margin-top: 0.5rem;">Managing human capital and institutional access</p>
+        </div>
+        @can('create', App\Models\User::class)
+        <a href="{{ route('employees.create') }}" class="btn-primary" style="text-decoration: none; padding: 1.1rem 2.25rem; font-size: 0.95rem;">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 0.75rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+            Onboard Professional
+        </a>
+        @endcan
+    </div>
+
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-spacing: 0 1rem; border-collapse: separate;">
+            <thead>
+                <tr>
+                    <th style="padding-left: 1.5rem;">Professional</th>
+                    <th>Contact & ID</th>
+                    <th>Directorate</th>
+                    <th>Access Level</th>
+                    <th style="text-align: right;">System Status</th>
+                    <th style="text-align: right; padding-right: 1.5rem;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($employees as $emp)
+                <tr class="premium-row">
+                    <td style="padding-left: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1.25rem;">
+                            <div style="width: 54px; height: 54px; background: linear-gradient(135deg, var(--brand-blue) 0%, #002d4a 100%); color: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.25rem; box-shadow: 0 4px 12px rgba(0, 59, 92, 0.15);">
+                                {{ substr($emp->full_name, 0, 1) }}
+                            </div>
+                            <div>
+                                <div style="font-weight: 900; color: var(--brand-blue); font-size: 1.1rem; letter-spacing: -0.01em;">{{ $emp->full_name }}</div>
+                                <div style="font-size: 0.8rem; color: var(--brand-green); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px;">{{ $emp->job_title ?? 'Professional Staff' }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="font-weight: 800; font-size: 0.95rem; color: #334155; margin-bottom: 0.4rem;">{{ $emp->email }}</div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 0.75rem; color: #94a3b8; font-weight: 800; text-transform: uppercase;">ID:</span>
+                            <span style="font-size: 0.8rem; background: #f4f7fa; color: var(--brand-blue); font-weight: 900; padding: 2px 8px; border-radius: 6px; border: 1px solid #eef2f6;">{{ $emp->institutional_id }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; background: rgba(0, 139, 75, 0.05); border-radius: 12px; border: 1px solid rgba(0, 139, 75, 0.1);">
+                            <div style="width: 6px; height: 6px; background: var(--brand-green); border-radius: 50%;"></div>
+                            <span style="font-size: 0.9rem; font-weight: 800; color: var(--brand-green);">{{ $emp->directorate->name }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.5rem 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--brand-blue);"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            <span style="font-size: 0.8rem; font-weight: 900; color: var(--brand-blue); text-transform: uppercase;">{{ $emp->user->role ?? 'Staff' }}</span>
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <span style="display: inline-flex; align-items: center; gap: 0.5rem; color: #059669; font-weight: 900; font-size: 0.75rem; background: #ecfdf5; padding: 0.5rem 1.25rem; border-radius: 30px; letter-spacing: 0.05em; border: 1px solid rgba(5, 150, 105, 0.1);">
+                            <span style="width: 6px; height: 6px; background: #059669; border-radius: 50%; animation: pulse 2s infinite;"></span>
+                            AUTHENTICATED
+                        </span>
+                    </td>
+                    <td style="text-align: right; padding-right: 1.5rem;">
+                        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; align-items: center;">
+                            @can('update', $emp)
+                            <a href="{{ route('employees.edit', $emp->id) }}" class="btn-secondary" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; text-decoration: none;">Update Info</a>
+                            @endcan
+                            @can('delete', $emp)
+                            <form action="{{ route('employees.destroy', $emp->id) }}" method="POST" onsubmit="return confirm('Archive this record?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" style="background: rgba(239, 68, 68, 0.05); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 0.6rem 1.25rem; border-radius: 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.03em;">Archive</button>
+                            </form>
+                            @endcan
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<div class="card">
-    <table>
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Full Name</th>
-                <th>Department</th>
-                <th>Position</th>
-                <th>Employee ID</th>
-                <th>System Access</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($employees as $emp)
-            <tr>
-                <td style="font-weight: 700; color: var(--text-muted); font-size: 0.85rem; width: 40px;">{{ $loop->iteration }}</td>
-                <td>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <div style="width: 32px; height: 32px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--primary-navy); font-size: 0.75rem;">
-                            {{ substr($emp->full_name, 0, 1) }}
-                        </div>
-                        <div>
-                            <div style="font-weight: 700; color: var(--primary-navy); font-size: 0.9rem;">{{ $emp->full_name }}</div>
-                            <div style="font-size: 0.7rem; color: var(--text-muted);">{{ $emp->email }}</div>
-                        </div>
-                    </div>
-                </td>
-                <td style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">{{ $emp->directorate->name }}</td>
-                <td style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">{{ $emp->position ?? 'Staff' }}</td>
-                <td style="font-size: 0.8rem; font-family: monospace; color: var(--text-muted);">{{ $emp->institutional_id ?? '---' }}</td>
-                <td>
-                    @if($emp->system_role === 'director')
-                        <span style="font-size: 0.65rem; background: #eff6ff; color: #1e40af; padding: 2px 8px; border-radius: 12px; font-weight: 800; text-transform: uppercase;">Director Access</span>
-                    @else
-                        <span style="font-size: 0.65rem; background: #f1f5f9; color: #64748b; padding: 2px 8px; border-radius: 12px; font-weight: 800; text-transform: uppercase;">Registry Only</span>
-                    @endif
-                    
-                    @if($emp->user)
-                        <div style="font-size: 0.6rem; color: #166534; font-weight: 700; margin-top: 4px; display: flex; align-items: center; gap: 4px;">
-                            <div style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%;"></div>
-                            Portal Active
-                        </div>
-                    @elseif($emp->system_role === 'director')
-                        <div style="font-size: 0.6rem; color: #94a3b8; font-weight: 700; margin-top: 4px; display: flex; align-items: center; gap: 4px;">
-                            <div style="width: 6px; height: 6px; background: #cbd5e1; border-radius: 50%;"></div>
-                            Invitation Pending
-                        </div>
-                    @endif
-                </td>
-                <td>
-                    <a href="{{ route('employees.edit', $emp->id) }}" style="color: var(--primary-navy); font-weight: 700; text-decoration: none; margin-right: 1rem; font-size: 0.85rem;">Edit</a>
-                    <form action="{{ route('employees.destroy', $emp->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" style="color: #b91c1c; font-weight: 700; background: none; border: none; cursor: pointer; font-size: 0.85rem;" onclick="return confirm('Completely remove this staff member and all associated system credentials?')">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 4rem;">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="48" style="opacity: 0.2; margin-bottom: 1rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                    <div>No staff members enrolled in the institutional registry.</div>
-                </td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
+<style>
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
+</style>
 @endsection

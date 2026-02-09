@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Enums\UserRole;
 
 class User extends Authenticatable
 {
@@ -27,17 +28,27 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role === 'admin';
+        return $this->role === UserRole::ADMIN;
     }
 
     public function isDirector()
     {
-        return $this->role === 'director';
+        return $this->role === UserRole::DIRECTOR;
+    }
+
+    public function isEvaluator()
+    {
+        return $this->role === UserRole::EVALUATOR;
     }
 
     public function directorate()
     {
         return $this->belongsTo(Directorate::class);
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'email', 'email');
     }
 
     /**
@@ -60,6 +71,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRole::class,
         ];
     }
 }

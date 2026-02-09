@@ -42,7 +42,7 @@ class InvitationController extends Controller
             'name' => $employee->full_name,
             'email' => $invitation->email,
             'password' => Hash::make($request->password),
-            'role' => 'director',
+            'role' => $employee->system_role,
             'directorate_id' => $invitation->directorate_id,
         ]);
 

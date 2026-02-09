@@ -7,23 +7,7 @@ use App\Http\Controllers\DirectorateController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Schema;
 
-// Maintenance Routes (Delete after initial setup)
-Route::get('/maintenance/migrate', function () {
-    try {
-        Artisan::call('migrate', ['--force' => true]);
-        return "Migrations successful!<br><pre>" . Artisan::output() . "</pre>";
-    } catch (\Exception $e) {
-        return "Error during migrations: " . $e->getMessage();
-    }
-});
-
-Route::get('/maintenance/clear', function () {
-    Artisan::call('optimize:clear');
-    return "Cache cleared successfully!";
-});
 
 // Redirect root to Dashboard (protected by middleware inside group)
 Route::get('/', function () {
