@@ -171,11 +171,17 @@
 
         /* Main Content Area */
         .main-content {
-            margin-left: var(--sidebar-width);
-            margin-top: calc(var(--institutional-header-height) + var(--topbar-height));
-            padding: 3rem;
-            min-height: calc(100vh - var(--institutional-header-height) - var(--topbar-height));
-            max-width: 1600px;
+            @auth
+                margin-left: var(--sidebar-width);
+                margin-top: calc(var(--institutional-header-height) + var(--topbar-height));
+                padding: 3rem;
+                min-height: calc(100vh - var(--institutional-header-height) - var(--topbar-height));
+            @else
+                margin: 0 !important;
+                padding: 0 !important;
+                min-height: 100vh;
+                max-width: none !important;
+            @endauth
         }
 
         /* User Profile Badge */

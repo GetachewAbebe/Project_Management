@@ -3,7 +3,7 @@
 @section('title', 'Secure Login - BETIn')
 
 @section('content')
-<div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); margin: -3.5rem -5rem -8rem -5rem; position: relative; font-family: 'Outfit', sans-serif;">
+<div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); position: relative; font-family: 'Outfit', sans-serif; overflow: hidden;">
     
     <!-- Animated gradient orbs -->
     <div style="position: absolute; top: 10%; left: 5%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0, 139, 75, 0.08) 0%, transparent 70%); border-radius: 50%; filter: blur(60px); animation: float 8s ease-in-out infinite;"></div>
@@ -12,37 +12,37 @@
     <!-- Subtle institutional pattern -->
     <div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0, 59, 92, 0.015) 35px, rgba(0, 59, 92, 0.015) 70px); opacity: 0.6;"></div>
     
-    <div class="login-container" style="width: 100%; max-width: 1100px; display: flex; background: white; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 70px rgba(0, 59, 92, 0.15); z-index: 10; border: 1px solid rgba(226, 232, 240, 0.8); animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);">
+    <div class="login-container" style="width: 90%; max-width: 1000px; display: flex; background: white; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 70px rgba(0, 59, 92, 0.15); z-index: 10; border: 1px solid rgba(226, 232, 240, 0.8); animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);">
         
         <!-- Institutional Branding Panel -->
-        <div style="flex: 1; padding: 5rem 4rem; background: linear-gradient(165deg, var(--brand-blue) 0%, #001f35 100%); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;">
+        <div style="flex: 1; padding: 4rem 3rem; background: linear-gradient(165deg, var(--brand-blue) 0%, #001f35 100%); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;">
             
             <!-- Decorative elements -->
             <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; border: 40px solid rgba(0, 139, 75, 0.08); border-radius: 50%;"></div>
             <div style="position: absolute; bottom: -80px; left: -80px; width: 250px; height: 250px; background: rgba(0, 139, 75, 0.05); border-radius: 50%;"></div>
             
             <!-- Official Seal/Logo -->
-            <div class="logo-card" style="background: white; border-radius: 24px; padding: 2.5rem; margin-bottom: 3rem; box-shadow: 0 15px 40px rgba(0,0,0,0.2); position: relative; z-index: 2; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                <x-logo width="280" height="auto" />
+            <div class="logo-card" style="background: white; border-radius: 20px; padding: 2rem; margin-bottom: 2.5rem; box-shadow: 0 15px 40px rgba(0,0,0,0.2); position: relative; z-index: 2; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                <x-logo width="240" height="auto" />
             </div>
             
             <!-- Official Title -->
             <div style="position: relative; z-index: 2;">
-                <h1 style="color: white; font-size: 2.25rem; font-weight: 950; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1.5rem;">
+                <h1 style="font-size: 2rem; color: white; font-weight: 950; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1.25rem;">
                     Bio and Emerging<br/>Technology Institute
                 </h1>
-                <div style="width: 60px; height: 4px; background: var(--brand-green); margin-bottom: 1.5rem; border-radius: 2px; box-shadow: 0 0 20px rgba(0, 139, 75, 0.4);"></div>
-                <p style="color: rgba(255,255,255,0.8); font-size: 1.05rem; line-height: 1.6; font-weight: 600;">
+                <div style="width: 50px; height: 4px; background: var(--brand-green); margin-bottom: 1.25rem; border-radius: 2px; box-shadow: 0 0 20px rgba(0, 139, 75, 0.4);"></div>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
                     Federal Democratic Republic of Ethiopia<br/>
                     Ministry of Innovation and Technology
                 </p>
             </div>
             
             <!-- Official Footer -->
-            <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 2rem; margin-top: 3rem; position: relative; z-index: 2;">
+            <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1.5rem; margin-top: 2.5rem; position: relative; z-index: 2;">
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
                     <div style="width: 8px; height: 8px; background: var(--brand-green); border-radius: 50%; box-shadow: 0 0 12px rgba(0, 139, 75, 0.6); animation: pulse 2s ease-in-out infinite;"></div>
-                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
                         Authorized Personnel Only
                     </p>
                 </div>
@@ -50,13 +50,12 @@
         </div>
 
         <!-- Login Form Panel -->
-        <div style="flex: 1.2; background: #ffffff; padding: 5rem 4.5rem; display: flex; flex-direction: column; justify-content: center;">
+        <div style="flex: 1.2; background: #ffffff; padding: 4rem 3.5rem; display: flex; flex-direction: column; justify-content: center;">
             
             <!-- Form Header -->
-            <div style="margin-bottom: 3.5rem;">
-                <div style="width: 50px; height: 4px; background: var(--brand-green); margin-bottom: 1.25rem; border-radius: 2px;"></div>
-                <h2 style="font-size: 2.25rem; font-weight: 950; color: var(--brand-blue); margin-bottom: 0.75rem; letter-spacing: -0.03em;">System Access</h2>
-                <p style="color: #64748b; font-weight: 700; font-size: 1rem;">Enter your institutional credentials to continue.</p>
+            <div style="margin-bottom: 2.5rem;">
+                <div style="width: 40px; height: 4px; background: var(--brand-green); margin-bottom: 1rem; border-radius: 2px;"></div>
+                <h2 style="font-size: 2.25rem; font-weight: 950; color: var(--brand-blue); margin: 0; letter-spacing: -0.03em;">Login</h2>
             </div>
 
             <!-- Error Messages -->
