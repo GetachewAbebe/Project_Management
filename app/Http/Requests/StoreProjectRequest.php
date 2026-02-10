@@ -21,7 +21,7 @@ class StoreProjectRequest extends FormRequest
             'objective' => 'nullable|string',
             'start_year' => 'required|integer|min:1900|max:2100',
             'end_year' => 'nullable|integer|min:1900|max:2100',
-            'project_code' => 'nullable|string|unique:projects,project_code' . ($projectId ? ",$projectId" : ""),
+            'project_code' => 'nullable|string',
             'status' => $projectId ? 'required|string' : 'nullable|string',
         ];
     }
