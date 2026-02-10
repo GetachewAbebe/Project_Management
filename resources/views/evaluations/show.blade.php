@@ -104,9 +104,10 @@
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-top: 6rem;">
         <div style="text-align: center;">
-            <div style="border-bottom: 2px solid #334155; height: 50px; margin-bottom: 1rem;"></div>
+            <div style="border-bottom: 2px solid #334155; height: 50px; margin-bottom: 1rem; line-height: 70px; font-weight: 800; color: var(--text-main);">
+                {{ $evaluation->evaluator->full_name }}
+            </div>
             <div style="font-weight: 900; text-transform: uppercase; font-size: 0.8rem; color: var(--primary-navy);">Evaluator's Signature</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">{{ $evaluation->evaluator->full_name }}</div>
         </div>
         <div style="text-align: center;">
             <div style="border-bottom: 2px solid #334155; height: 50px; margin-bottom: 1rem; line-height: 70px; font-weight: 800; color: var(--text-main);">{{ $evaluation->created_at->format('M d, Y') }}</div>
