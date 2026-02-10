@@ -21,6 +21,16 @@
             </div>
         @endif
 
+        @if(session('warning'))
+            <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1.25rem; border-radius: 8px; margin-bottom: 2rem; color: #92400e; font-weight: 700; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                <div>
+                    <div style="font-size: 1rem; margin-bottom: 0.2rem;">System Notification</div>
+                    <div style="font-size: 0.9rem; font-weight: 600; opacity: 0.9;">{{ session('warning') }}</div>
+                </div>
+            </div>
+        @endif
+
         <div class="premium-card-shared" style="background: white; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; overflow: hidden;">
             <table style="width: 100%; border-collapse: collapse;">
                 <thead style="background: #f8fafc; border-bottom: 1px solid #f1f5f9;">

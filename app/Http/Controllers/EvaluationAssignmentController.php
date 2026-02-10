@@ -77,12 +77,20 @@ class EvaluationAssignmentController extends Controller
             'status' => 'PENDING'
         ]);
 
-        // Send Email
-        \Illuminate\Support\Facades\Mail::to($assignment->evaluator->email)
-            ->send(new \App\Mail\EvaluationLinkMail($assignment));
+        // Send Email with graceful failure handling
+        try {
+            \Illuminate\Support\Facades\Mail::to($assignment->evaluator->email)
+                ->send(new \App\Mail\EvaluationLinkMail($assignment));
+            
+            return redirect()->route('evaluation-assignments.index')
+                ->with('success', 'Evaluation link generated and successfully sent to ' . $assignment->evaluator->email);
+        } catch (\Exception $e) {
+            // Log the error for technical review but don't crash the session
+            \Illuminate\Support\Facades\Log::error('SMTP Dispatch Failure: ' . $e->getMessage());
 
-        return redirect()->route('evaluation-assignments.index')
-            ->with('success', 'Evaluation link generated and sent to ' . $assignment->evaluator->email);
+            return redirect()->route('evaluation-assignments.index')
+                ->with('warning', 'Assignment created, but the invitation email could not be delivered to ' . $assignment->evaluator->email . '. Please share the link manually.');
+        }
     }
 
     public function destroy(EvaluationAssignment $evaluationAssignment)
