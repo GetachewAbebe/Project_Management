@@ -127,66 +127,81 @@
             <table class="premium-table">
                 <thead>
                     <tr>
-                        <th style="width: 30%;">Research Initiative</th>
-                        <th style="width: 15%;">Directorate</th>
-                        <th style="width: 20%;">Evaluator</th>
-                        <th style="width: 15%;">Evaluation Score</th>
-                        <th style="width: 12%;">Submission</th>
+                        <th style="width: 25%;">Research Initiative</th>
+                        <th style="width: 10%;">Directorate</th>
+                        <th style="width: 30%;">Scientific Reviews (Side-by-Side)</th>
+                        <th style="width: 15%;">Aggregate Score</th>
+                        <th style="width: 12%;">Outcome</th>
                         <th style="width: 8%; text-align: right;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($evaluations as $eval)
+                    @forelse($evaluatedProjects as $project)
                     <tr>
                         <td>
-                            <a href="{{ route('projects.show', $eval->project->id) }}" class="project-title-link">
-                                <div class="project-title">{{ $eval->project->research_title }}</div>
+                            <a href="{{ route('projects.show', $project->id) }}" class="project-title-link">
+                                <div class="project-title" style="font-size: 0.9rem;">{{ $project->research_title }}</div>
                             </a>
                             <div class="project-meta">
-                                <span style="font-size: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">By: {{ $eval->project->pi->full_name }}</span>
+                                <span style="font-size: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">By: {{ $project->pi->full_name }}</span>
                             </div>
                         </td>
                         <td>
-                            <div class="directorate-pill">
-                                {{ $eval->project->directorate->code }}
+                            <div class="directorate-pill" style="font-size: 0.7rem; padding: 0.25rem 0.5rem;">
+                                {{ $project->directorate->code }}
                             </div>
                         </td>
                         <td>
-                            <div class="user-cell">
-                                <div class="user-avatar" style="background: linear-gradient(135deg, var(--brand-blue), #1e293b);">
-                                    {{ substr($eval->evaluator->full_name, 0, 1) }}
+                            <div style="display: flex; gap: 0.75rem;">
+                                @foreach($project->evaluations as $eval)
+                                <div style="flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; position: relative;" title="Evaluator: {{ $eval->evaluator->full_name }}">
+                                    <div style="font-size: 0.65rem; color: #64748b; font-weight: 800; text-transform: uppercase; margin-bottom: 0.2rem;">Expert {{ $loop->iteration }}</div>
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <div style="font-weight: 900; color: #1e293b; font-size: 0.9rem;">{{ number_format($eval->total_score, 1) }}%</div>
+                                        <div style="width: 4px; height: 16px; border-radius: 2px; background: {{ $eval->decision === 'SATISFACTORY' ? '#10b981' : '#ef4444' }};"></div>
+                                    </div>
+                                    <div style="font-size: 0.6rem; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">{{ $eval->evaluator->full_name }}</div>
                                 </div>
-                                <div class="user-name">{{ $eval->evaluator->full_name }}</div>
+                                @endforeach
+                                @if($project->evaluations->count() < 1)
+                                    <div style="flex: 1; border: 1px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #94a3b8; font-weight: 600;">Awaiting...</div>
+                                @endif
+                                @if($project->evaluations->count() < 2)
+                                    <div style="flex: 1; border: 1px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #94a3b8; font-weight: 600;">Slot 2 Empty</div>
+                                @endif
                             </div>
                         </td>
                         <td>
+                            @php $avg = $project->evaluations->avg('total_score'); @endphp
                             <div class="score-display">
-                                <span class="score-number">{{ number_format($eval->total_score, 1) }}%</span>
-                                <div class="score-bar-bg"><div class="score-bar-fill" style="width: {{ $eval->total_score }}%;"></div></div>
+                                <span class="score-number" style="color: {{ $avg >= 70 ? '#10b981' : '#64748b' }};">{{ number_format($avg, 1) }}%</span>
+                                <div class="score-bar-bg"><div class="score-bar-fill" style="width: {{ $avg }}%; background: {{ $avg >= 70 ? '#10b981' : '#94a3b8' }};"></div></div>
                             </div>
                         </td>
                         <td>
-                            <div class="submission-date">
-                                <div class="date-main">{{ $eval->created_at->format('M d, Y') }}</div>
-                                <div class="date-sub">{{ $eval->created_at->format('h:i A') }}</div>
+                            @php
+                                $status = $project->status_details;
+                            @endphp
+                            <div style="display: inline-block; padding: 0.35rem 0.75rem; border-radius: 8px; background: {{ $status['bg'] }}; color: {{ $status['text'] }}; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em;">
+                                {{ $status['label'] }}
                             </div>
                         </td>
                         <td style="text-align: right;">
                             <div class="actions-cell">
-                                <a href="{{ route('evaluations.show', $eval->id) }}" class="action-btn highlight" title="View Details">
-                                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                <a href="{{ route('projects.show', $project->id) }}" class="action-btn highlight" title="Full Scientific Comparison">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                                 </a>
                             </div>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 6rem 2rem;">
+                        <td colspan="7" style="text-align: center; padding: 6rem 2rem;">
                             <div style="margin-bottom: 1.5rem;">
                                 <svg width="64" height="64" fill="none" stroke="#e2e8f0" viewBox="0 0 24 24" style="margin: 0 auto;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                             </div>
-                            <div style="font-size: 1.25rem; font-weight: 800; color: #475569; margin-bottom: 0.5rem;">No institutional evaluations found.</div>
-                            <p style="color: #64748b; font-weight: 600; max-width: 400px; margin: 0 auto 2rem auto;">You haven't submitted any performance evaluations yet. Registered projects are waiting for your expert review.</p>
+                            <div style="font-size: 1.25rem; font-weight: 800; color: #475569; margin-bottom: 0.5rem;">No evaluated projects yet.</div>
+                            <p style="color: #64748b; font-weight: 600; max-width: 400px; margin: 0 auto 2rem auto;">Projects that have received at least one scientific evaluation will appear here with institutional consensus data.</p>
                             @can('create', App\Models\Evaluation::class)
                             <a href="{{ route('evaluations.create') }}" class="btn-primary" style="display: inline-flex; width: auto; text-decoration: none;">
                                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 0.5rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>

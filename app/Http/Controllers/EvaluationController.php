@@ -26,13 +26,18 @@ class EvaluationController extends Controller
         $user = auth()->user();
         $employee = $user->employee;
         
-        $query = Evaluation::with(['project.pi', 'project.directorate', 'evaluator']);
+        $projectQuery = Project::whereHas('evaluations', function($q) use ($user, $employee) {
+            if ($user->isEvaluator() && $employee) {
+                // If I am an evaluator, I see projects I participated in
+                $q->where('evaluator_id', $employee->id);
+            }
+        })->with(['pi', 'directorate', 'evaluations.evaluator']);
 
-        if ($user->isEvaluator() && $employee) {
-            $query->where('evaluator_id', $employee->id);
+        if ($user->isDirector() && $user->directorate_id) {
+            $projectQuery->where('directorate_id', $user->directorate_id);
         }
 
-        $evaluations = $query->latest()->get();
+        $evaluatedProjects = $projectQuery->latest()->get();
 
         // Fetch projects awaiting evaluation by this specific user
         $pendingProjects = collect();
@@ -58,7 +63,7 @@ class EvaluationController extends Controller
             }
         }
         
-        return view('evaluations.index', compact('evaluations', 'pendingProjects'));
+        return view('evaluations.index', compact('evaluatedProjects', 'pendingProjects'));
     }
 
     public function create(Request $request)
