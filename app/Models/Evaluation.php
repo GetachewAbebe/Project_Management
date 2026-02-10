@@ -18,7 +18,8 @@ class Evaluation extends Model
         'overall_proposal_mark',
         'total_score',
         'decision',
-        'comments'
+        'comments',
+        'critical_issues'
     ];
 
     public function project()

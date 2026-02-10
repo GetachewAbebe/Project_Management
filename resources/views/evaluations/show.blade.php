@@ -99,7 +99,17 @@
             </div>
         </div>
         <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;">Detailed Feedback</div>
-        <p style="white-space: pre-wrap; font-size: 1rem; line-height: 1.7; color: var(--text-main); font-style: italic; background: #fdfdfd; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1;">{{ $evaluation->comments ?: 'The evaluator has not provided specific commentary for this project.' }}</p>
+        <p style="white-space: pre-wrap; font-size: 1rem; line-height: 1.7; color: var(--text-main); font-style: italic; background: #fdfdfd; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1; margin-bottom: 2rem;">{{ $evaluation->comments ?: 'The evaluator has not provided specific commentary for this project.' }}</p>
+
+        @if($evaluation->critical_issues)
+        <div style="background: #fff5f5; border: 2px solid #feb2b2; border-radius: 12px; padding: 1.5rem; margin-top: 2rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: #c53030; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.75rem;">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                Critical Management Alert
+            </div>
+            <p style="white-space: pre-wrap; font-size: 1rem; line-height: 1.6; color: #742a2a; font-weight: 700;">{{ $evaluation->critical_issues }}</p>
+        </div>
+        @endif
     </div>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-top: 6rem;">

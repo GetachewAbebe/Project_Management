@@ -51,7 +51,7 @@
             @if(auth()->user()->isAdmin())
             <a href="{{ route('evaluation-assignments.index') }}" style="text-decoration: none; padding: 0.6rem 1.25rem; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; color: #475569; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s ease;">
                 <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-                Manage Sent Links
+                Manage Evaluation Links
             </a>
             @endif
         </div>
@@ -95,7 +95,7 @@
                         <td style="text-align: right;">
                              <a href="{{ auth()->user()->isAdmin() ? route('evaluation-assignments.create', ['project_id' => $proj->id]) : route('evaluations.create', ['project_id' => $proj->id]) }}" class="btn-primary" style="background: #6366f1; font-size: 0.8rem; padding: 0.6rem 1rem; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);">
                                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 0.3rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-                                {{ auth()->user()->isAdmin() ? 'Send Review Link' : 'Evaluate Now' }}
+                                {{ auth()->user()->isAdmin() ? 'Send Evaluation Link' : 'Evaluate Now' }}
                              </a>
                         </td>
                     </tr>

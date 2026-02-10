@@ -5,8 +5,8 @@
     <div class="max-w-7xl mx-auto">
         <div class="card-header-flex" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
             <div>
-                <h1 style="font-size: 2rem; font-weight: 950; color: #1e293b; letter-spacing: -0.025em;">External Review Links</h1>
-                <p style="color: #64748b; font-weight: 600;">Active and historical evaluation assignments.</p>
+                <h1 style="font-size: 2rem; font-weight: 950; color: #1e293b; letter-spacing: -0.025em;">Secure Evaluation Links</h1>
+                <p style="color: #64748b; font-weight: 600;">Managing authorized access for scientific project reviews.</p>
             </div>
             <a href="{{ route('evaluation-assignments.create') }}" class="btn-primary-shared" style="text-decoration: none; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #6366f1, #4f46e5); border-radius: 10px; color: white; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);">
                 <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
@@ -25,7 +25,7 @@
             <table style="width: 100%; border-collapse: collapse;">
                 <thead style="background: #f8fafc; border-bottom: 1px solid #f1f5f9;">
                     <tr>
-                        <th style="padding: 1.25rem; text-align: left; color: #64748b; font-weight: 800; text-transform: uppercase; font-size: 0.75rem;">Project & Expert</th>
+                        <th style="padding: 1.25rem; text-align: left; color: #64748b; font-weight: 800; text-transform: uppercase; font-size: 0.75rem;">Evaluation Assignment</th>
                         <th style="padding: 1.25rem; text-align: left; color: #64748b; font-weight: 800; text-transform: uppercase; font-size: 0.75rem;">Secure Evaluation Link</th>
                         <th style="padding: 1.25rem; text-align: center; color: #64748b; font-weight: 800; text-transform: uppercase; font-size: 0.75rem;">Status</th>
                         <th style="padding: 1.25rem; text-align: right; color: #64748b; font-weight: 800; text-transform: uppercase; font-size: 0.75rem;">Actions</th>

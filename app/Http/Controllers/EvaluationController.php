@@ -133,7 +133,8 @@ class EvaluationController extends Controller
             'methodology_mark' => 'required|integer|min:1|max:5',
             'feasibility_mark' => 'required|integer|min:1|max:5',
             'overall_proposal_mark' => 'required|integer|min:1|max:5',
-            'comments' => 'nullable|string'
+            'comments' => 'nullable|string',
+            'critical_issues' => 'nullable|string'
         ]);
 
         $project = Project::findOrFail($validated['project_id']);

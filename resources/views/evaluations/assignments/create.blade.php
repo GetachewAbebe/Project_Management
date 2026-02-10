@@ -5,7 +5,7 @@
     <div class="max-w-4xl mx-auto">
         <div class="card-header-flex" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
             <div>
-                <h1 style="font-size: 2rem; font-weight: 950; color: #1e293b; letter-spacing: -0.025em;">Generate Review Link</h1>
+                <h1 style="font-size: 2rem; font-weight: 950; color: #1e293b; letter-spacing: -0.025em;">Generate Evaluation Link</h1>
                 <p style="color: #64748b; font-weight: 600;">Assign expert evaluators to institutional projects.</p>
             </div>
             <a href="{{ route('evaluation-assignments.index') }}" class="btn-secondary-shared" style="text-decoration: none; padding: 0.75rem 1.5rem; background: white; border: 1px solid #e2e8f0; border-radius: 10px; color: #475569; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
@@ -52,7 +52,7 @@
 
                 <button type="submit" class="btn-primary-shared" style="width: 100%; background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; padding: 1.25rem; border-radius: 15px; font-weight: 900; font-size: 1.1rem; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.75rem; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25);">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-                    Generate & Authorize Review Link
+                    Generate & Authorize Evaluation Link
                 </button>
             </form>
         </div>
