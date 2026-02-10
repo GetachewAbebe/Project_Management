@@ -49,7 +49,7 @@ class EvaluationPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Evaluation $evaluation): bool
+    public function update(User $user, Evaluation $evaluation = null): bool
     {
         // Typically evaluations are immutable once submitted, but admins might need to edit.
         return $user->isAdmin();
@@ -58,7 +58,7 @@ class EvaluationPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Evaluation $evaluation): bool
+    public function delete(User $user, Evaluation $evaluation = null): bool
     {
         return $user->isAdmin();
     }
