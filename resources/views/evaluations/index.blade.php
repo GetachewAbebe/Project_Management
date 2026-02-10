@@ -148,7 +148,7 @@
                         </td>
                         <td>
                             <div class="directorate-pill" style="font-size: 0.7rem; padding: 0.25rem 0.5rem;">
-                                {{ $project->directorate->code }}
+                                {{ $project->directorate->name }}
                             </div>
                         </td>
                         <td>
