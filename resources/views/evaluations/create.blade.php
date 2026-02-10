@@ -48,13 +48,18 @@
                     <div>
                         <label class="section-label">Assigned Evaluator</label>
                         <div class="evaluator-badge-shared">
-                            <div class="badge-avatar">{{ substr($employee->full_name, 0, 1) }}</div>
+                            @php
+                                $displayName = $employee ? $employee->full_name : auth()->user()->name;
+                                $displayRole = $employee ? 'Institutional Evaluator' : 'System Administrator';
+                                $initial = substr($displayName, 0, 1);
+                            @endphp
+                            <div class="badge-avatar">{{ $initial }}</div>
                             <div class="badge-info">
-                                <div class="badge-name">{{ $employee->full_name }}</div>
-                                <div class="badge-role">Institutional Evaluator</div>
+                                <div class="badge-name">{{ $displayName }}</div>
+                                <div class="badge-role">{{ $displayRole }}</div>
                             </div>
                         </div>
-                        <input type="hidden" name="evaluator_id" value="{{ $employee->id }}">
+                        <input type="hidden" name="evaluator_id" value="{{ $employee?->id }}">
                     </div>
                 </div>
             </div>

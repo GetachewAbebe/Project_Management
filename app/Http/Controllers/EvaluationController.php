@@ -68,7 +68,7 @@ class EvaluationController extends Controller
 
         $this->authorize('create', Evaluation::class);
 
-        if (!$employee) {
+        if (!$employee && !$user->isAdmin()) {
             return redirect()->route('dashboard')->with('error', 'Your user account is not linked to an employee record.');
         }
 
@@ -86,11 +86,12 @@ class EvaluationController extends Controller
         // 1. Project must have < 2 evaluations total
         // 2. Evaluator must NOT be the PI
         // 3. Evaluator must NOT have already evaluated this project
-        $evaluatedByMeIds = Evaluation::where('evaluator_id', $employee->id)->pluck('project_id');
+        $evaluatorId = $employee?->id;
+        $evaluatedByMeIds = $evaluatorId ? Evaluation::where('evaluator_id', $evaluatorId)->pluck('project_id') : collect();
         
-        $projects = $projectQuery->get()->filter(function($p) use ($employee, $evaluatedByMeIds) {
+        $projects = $projectQuery->get()->filter(function($p) use ($evaluatorId, $evaluatedByMeIds) {
             return $p->evaluations_count < 2 && 
-                   $p->pi_id != $employee->id && 
+                   ($evaluatorId === null || $p->pi_id != $evaluatorId) && 
                    !$evaluatedByMeIds->contains($p->id);
         });
 
