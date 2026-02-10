@@ -122,8 +122,8 @@
                                 
                                 @can('create', App\Models\Evaluation::class)
                                     @if($proj->status === 'REGISTERED')
-                                        <a href="{{ route('evaluations.create', ['project_id' => $proj->id]) }}" class="action-btn highlight" title="Run Evaluation">
-                                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                                        <a href="{{ auth()->user()->isAdmin() ? route('evaluation-assignments.create', ['project_id' => $proj->id]) : route('evaluations.create', ['project_id' => $proj->id]) }}" class="action-btn highlight" title="{{ auth()->user()->isAdmin() ? 'Assign Evaluator & Link' : 'Evaluate Project' }}">
+                                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
                                         </a>
                                     @endif
                                 @endcan

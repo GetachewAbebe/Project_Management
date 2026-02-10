@@ -18,6 +18,10 @@ Route::get('/', function () {
 Route::get('/register/invited/{token}', [App\Http\Controllers\InvitationController::class, 'showRegistrationForm'])->name('register.invited');
 Route::post('/register/invited', [App\Http\Controllers\InvitationController::class, 'register'])->name('register.invited.submit');
 
+// Public Evaluation Access
+Route::get('/evaluate/{token}', [App\Http\Controllers\PublicEvaluationController::class, 'show'])->name('evaluate.public');
+Route::post('/evaluate/{token}', [App\Http\Controllers\PublicEvaluationController::class, 'store'])->name('evaluate.public.submit');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     // Official Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -32,6 +36,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/evaluations/create', [EvaluationController::class, 'create'])->name('evaluations.create');
     Route::get('/evaluations/{evaluation}', [EvaluationController::class, 'show'])->name('evaluations.show');
     Route::post('/evaluations', [EvaluationController::class, 'store'])->name('evaluations.store');
+
+    // NEW: Evaluation Assignments (Admin-only managed via Policy)
+    Route::resource('evaluation-assignments', App\Http\Controllers\EvaluationAssignmentController::class);
 
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

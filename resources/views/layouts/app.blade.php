@@ -308,9 +308,6 @@
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                     </div>
                     <span style="flex: 1;">Dashboard</span>
-                    @if(request()->routeIs('dashboard*'))
-                    <div style="width: 6px; height: 6px; background: white; border-radius: 50%; box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);"></div>
-                    @endif
                 </a>
             </div>
 
@@ -324,9 +321,6 @@
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     </div>
                     <span style="flex: 1;">Directorates</span>
-                    @if(request()->routeIs('directorates.*'))
-                    <div style="width: 6px; height: 6px; background: white; border-radius: 50%; box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);"></div>
-                    @endif
                 </a>
 
                 <a href="{{ route('employees.index') }}" class="nav-item {{ request()->routeIs('employees.*') ? 'active' : '' }}">
@@ -334,15 +328,12 @@
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                     </div>
                     <span style="flex: 1;">Staff Registry</span>
-                    @if(request()->routeIs('employees.*'))
-                    <div style="width: 6px; height: 6px; background: white; border-radius: 50%; box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);"></div>
-                    @endif
                 </a>
             </div>
             @endif
 
             <!-- Research Section -->
-            <div>
+            <div style="margin-bottom: 2rem;">
                 <div style="padding: 0 1.25rem 0.75rem; font-size: 0.7rem; font-weight: 900; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; letter-spacing: 0.15em;">Research</div>
                 
                 <a href="{{ route('projects.index') }}" class="nav-item {{ request()->routeIs('projects.*') ? 'active' : '' }}">
@@ -350,11 +341,10 @@
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                     </div>
                     <span style="flex: 1;">Projects</span>
-                    <div style="background: rgba(0, 139, 75, 0.2); color: var(--brand-green); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 900; border: 1px solid rgba(0, 139, 75, 0.3);">{{ \App\Models\Project::where('status', 'ONGOING')->count() }}</div>
                 </a>
 
-                <a href="{{ route('evaluations.index') }}" class="nav-item {{ request()->routeIs('evaluations.*') ? 'active' : '' }}">
-                    <div style="width: 40px; height: 40px; background: {{ request()->routeIs('evaluations.*') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.08)' }}; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                <a href="{{ route('evaluations.index') }}" class="nav-item {{ request()->routeIs('evaluations.index') ? 'active' : '' }}">
+                    <div style="width: 40px; height: 40px; background: {{ request()->routeIs('evaluations.index') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.08)' }}; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                     </div>
                     <span style="flex: 1;">Evaluations</span>
@@ -362,7 +352,7 @@
                         $pendingCount = \App\Models\Project::where('status', 'REGISTERED')->whereDoesntHave('evaluations')->count();
                     @endphp
                     @if($pendingCount > 0)
-                    <div style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 900; border: 1px solid rgba(245, 158, 11, 0.3); animation: pulse 2s ease-in-out infinite;">{{ $pendingCount }}</div>
+                        <div style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 900; border: 1px solid rgba(245, 158, 11, 0.3); animation: pulse 2s ease-in-out infinite;">{{ $pendingCount }}</div>
                     @endif
                 </a>
             </div>
