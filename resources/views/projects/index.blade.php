@@ -33,6 +33,7 @@
                         <th style="width: 25%;">Project Title</th>
                         <th style="width: 20%;">Lead Investigator</th>
                         <th style="width: 15%;">Directorate</th>
+                        <th style="width: 10%;">Rating</th>
                         <th style="width: 10%;">Status</th>
                         <th style="width: 10%; text-align: right;">Actions</th>
                     </tr>
@@ -56,16 +57,35 @@
                         </td>
                         <td>
                             <div class="user-cell">
+                                @php
+                                    $rawName = $proj->pi?->full_name ?? 'Staff';
+                                    $cleanName = preg_replace('/^(Dr\.|Mr\.|Ms\.|Mrs\.)\s+/i', '', $rawName);
+                                    $initial = substr($cleanName, 0, 1);
+                                @endphp
                                 <div class="user-avatar" style="background: linear-gradient(135deg, {{ $loop->even ? '#6366f1, #4f46e5' : '#0ea5e9, #0284c7' }});">
-                                    {{ substr($proj->pi->full_name, 0, 1) }}
+                                    {{ $initial }}
                                 </div>
-                                <div class="user-name">{{ $proj->pi->full_name }}</div>
+                                <div class="user-name">{{ $rawName }}</div>
                             </div>
                         </td>
                         <td>
                             <div class="directorate-pill">
-                                {{ $proj->directorate->code }}
+                                {{ $proj->directorate?->name ?? 'N/A' }}
                             </div>
+                        </td>
+                        <td>
+                            @php
+                                $evalCount = $proj->evaluations()->count();
+                                $avgScore = $proj->evaluations()->avg('total_score');
+                            @endphp
+                            @if($evalCount > 0)
+                                <div class="score-display">
+                                    <div class="score-value">{{ number_format($avgScore, 1) }}%</div>
+                                    <div class="score-meta">{{ $evalCount === 1 ? 'Single Review' : 'Peer Consensus' }}</div>
+                                </div>
+                            @else
+                                <span style="color: #cbd5e1; font-size: 0.75rem; font-weight: 700;">PENDING</span>
+                            @endif
                         </td>
                         <td>
                             @php
@@ -401,5 +421,9 @@
         cursor: pointer;
         padding: 0;
     }
+    .score-display { text-align: center; }
+    .score-value { font-weight: 950; color: var(--brand-blue); font-size: 1.1rem; line-height: 1; }
+    .score-meta { font-size: 0.65rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; margin-top: 2px; }
+
 </style>
 @endsection

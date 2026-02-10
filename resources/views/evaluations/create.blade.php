@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'Institutional Audit')
+@section('title', 'Project Evaluation')
 @section('header_title', 'Performance Evaluation')
 
 @section('content')
 <div style="max-width: 1200px; margin: 0 auto; padding-bottom: 4rem;">
     
-    <!-- Identity Header (Matching Project Theme) -->
-    <div class="identity-header-eval">
-        <div class="header-badge">NEW PERFORMANCE AUDIT</div>
-        <h1 id="header-project-title">Select a Project to Evaluate</h1>
-        <div class="header-meta">
+    <!-- Intelligent Header Card (Mirroring Project Registration) -->
+    <div class="header-preview-card">
+        <div class="preview-badge">NEW PROJECT EVALUATION</div>
+        <h2 id="header-project-title" style="color:white; margin:0;">Select a Project to Evaluate</h2>
+        <div class="preview-meta">
             <span id="header-pi">Lead Investigator</span>
-            <span class="dot">•</span>
-            <span id="header-dir">Department</span>
+            <span>•</span>
+            <span id="header-dir">Scientific Directorate</span>
         </div>
     </div>
 
@@ -22,18 +22,19 @@
         <form action="{{ route('evaluations.store') }}" method="POST" id="evaluationForm">
             @csrf
             
-            <!-- Step 1: Context Selection -->
+            <!-- Context Selection -->
             <div class="form-section">
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
-                    <div>
-                        <label class="section-label">Target Research Initiative</label>
+                    <div class="form-group">
+                        <label class="section-label">Target Research Initiative <span class="required">*</span></label>
                         <div class="input-wrapper">
                             <select name="project_id" id="project_id" required onchange="handleProjectChange(this)">
                                 <option value="">-- Choose Registered Project --</option>
                                 @foreach($projects as $proj)
                                     <option value="{{ $proj->id }}" 
-                                            data-pi="{{ $proj->pi->full_name }}" 
-                                            data-dir="{{ $proj->directorate->name }}"
+                                            data-pi="{{ $proj->pi?->full_name ?? 'N/A' }}" 
+                                            data-pi-id="{{ $proj->pi_id }}"
+                                            data-dir="{{ $proj->directorate?->name ?? 'N/A' }}"
                                             {{ ($selected_project_id ?? old('project_id')) == $proj->id ? 'selected' : '' }}>
                                         {{ $proj->research_title }}
                                     </option>
@@ -45,12 +46,12 @@
                         </div>
                     </div>
                     <div>
-                        <label class="section-label">Assigned Auditor</label>
-                        <div class="auditor-badge">
-                            <div class="auditor-avatar">{{ substr($employee->full_name, 0, 1) }}</div>
-                            <div>
-                                <div class="auditor-name">{{ $employee->full_name }}</div>
-                                <div class="auditor-role">Institutional Evaluator</div>
+                        <label class="section-label">Assigned Evaluator</label>
+                        <div class="evaluator-badge-shared">
+                            <div class="badge-avatar">{{ substr($employee->full_name, 0, 1) }}</div>
+                            <div class="badge-info">
+                                <div class="badge-name">{{ $employee->full_name }}</div>
+                                <div class="badge-role">Institutional Evaluator</div>
                             </div>
                         </div>
                         <input type="hidden" name="evaluator_id" value="{{ $employee->id }}">
@@ -60,9 +61,12 @@
 
             <div class="divider"></div>
 
-            <!-- Step 2: Rating Engine -->
+            <!-- Rating Engine -->
             <div class="form-section">
-                <label class="section-label" style="margin-bottom: 2rem;">Audit Metrics & Key Performance Indicators</label>
+                <div class="section-header-shared">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    <h4>Evaluation Metrics & Key Performance Indicators</h4>
+                </div>
                 
                 <table class="evaluation-table">
                     <thead>
@@ -74,15 +78,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="criteria-row" data-weight="20">
+                        @php
+                            $metrics = [
+                                ['Priority Alignment', 'thematic_area_mark', '20', 'Strategic synchronization with institutional thematic priorities.'],
+                                ['Socio-Economic Impact', 'relevance_mark', '25', 'Potential for community benefit and industrial application.'],
+                                ['Methodological Rigor', 'methodology_mark', '25', 'Scientific design, sampling accuracy, and data architecture.'],
+                                ['Technical Feasibility', 'feasibility_mark', '20', 'Availability of resources and robustness of preliminary data.'],
+                                ['Presentation Excellence', 'overall_proposal_mark', '10', 'Clarity of documentation and articulation of research value.']
+                            ];
+                        @endphp
+                        @foreach($metrics as $m)
+                        <tr class="criteria-row" data-weight="{{ $m[2] }}">
                             <td>
-                                <div class="metric-title">Priority Alignment</div>
-                                <div class="metric-desc">Strategic synchronization with institutional thematic priorities.</div>
+                                <div class="metric-title">{{ $m[0] }}</div>
+                                <div class="metric-desc">{{ $m[3] }}</div>
                             </td>
-                            <td class="weight-cell">20%</td>
+                            <td class="weight-cell">{{ $m[2] }}%</td>
                             <td>
-                                <select name="thematic_area_mark" class="rating-engine-select" required onchange="calculateAudit()">
-                                    <option value="">-- Select --</option>
+                                <select name="{{ $m[1] }}" class="rating-engine-select" required onchange="calculateEvaluation()">
+                                    <option value="">-- Rate --</option>
                                     <option value="5">5 - Excellent</option>
                                     <option value="4">4 - Very Good</option>
                                     <option value="3">3 - Good</option>
@@ -92,83 +106,12 @@
                             </td>
                             <td class="points-cell">0.00</td>
                         </tr>
-                        <tr class="criteria-row" data-weight="25">
-                            <td>
-                                <div class="metric-title">Socio-Economic Impact</div>
-                                <div class="metric-desc">Potential for community benefit and industrial application.</div>
-                            </td>
-                            <td class="weight-cell">25%</td>
-                            <td>
-                                <select name="relevance_mark" class="rating-engine-select" required onchange="calculateAudit()">
-                                    <option value="">-- Select --</option>
-                                    <option value="5">5 - Excellent</option>
-                                    <option value="4">4 - Very Good</option>
-                                    <option value="3">3 - Good</option>
-                                    <option value="2">2 - Fair</option>
-                                    <option value="1">1 - Poor</option>
-                                </select>
-                            </td>
-                            <td class="points-cell">0.00</td>
-                        </tr>
-                        <tr class="criteria-row" data-weight="25">
-                            <td>
-                                <div class="metric-title">Methodological Rigor</div>
-                                <div class="metric-desc">Scientific design, sampling accuracy, and data architecture.</div>
-                            </td>
-                            <td class="weight-cell">25%</td>
-                            <td>
-                                <select name="methodology_mark" class="rating-engine-select" required onchange="calculateAudit()">
-                                    <option value="">-- Select --</option>
-                                    <option value="5">5 - Excellent</option>
-                                    <option value="4">4 - Very Good</option>
-                                    <option value="3">3 - Good</option>
-                                    <option value="2">2 - Fair</option>
-                                    <option value="1">1 - Poor</option>
-                                </select>
-                            </td>
-                            <td class="points-cell">0.00</td>
-                        </tr>
-                        <tr class="criteria-row" data-weight="20">
-                            <td>
-                                <div class="metric-title">Technical Feasibility</div>
-                                <div class="metric-desc">Availability of resources and robustness of preliminary data.</div>
-                            </td>
-                            <td class="weight-cell">20%</td>
-                            <td>
-                                <select name="feasibility_mark" class="rating-engine-select" required onchange="calculateAudit()">
-                                    <option value="">-- Select --</option>
-                                    <option value="5">5 - Excellent</option>
-                                    <option value="4">4 - Very Good</option>
-                                    <option value="3">3 - Good</option>
-                                    <option value="2">2 - Fair</option>
-                                    <option value="1">1 - Poor</option>
-                                </select>
-                            </td>
-                            <td class="points-cell">0.00</td>
-                        </tr>
-                        <tr class="criteria-row" data-weight="10">
-                            <td>
-                                <div class="metric-title">Presentation Excellence</div>
-                                <div class="metric-desc">Clarity of documentation and articulation of research value.</div>
-                            </td>
-                            <td class="weight-cell">10%</td>
-                            <td>
-                                <select name="overall_proposal_mark" class="rating-engine-select" required onchange="calculateAudit()">
-                                    <option value="">-- Select --</option>
-                                    <option value="5">5 - Excellent</option>
-                                    <option value="4">4 - Very Good</option>
-                                    <option value="3">3 - Good</option>
-                                    <option value="2">2 - Fair</option>
-                                    <option value="1">1 - Poor</option>
-                                </select>
-                            </td>
-                            <td class="points-cell">0.00</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="3">Cumulative Performance Score</td>
-                            <td id="final-audit-score">0.0%</td>
+                            <td id="final-evaluation-score">0.0%</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -176,23 +119,26 @@
 
             <div class="divider"></div>
 
-            <!-- Step 3: Narrative Feedback -->
+            <!-- Narrative Feedback -->
             <div class="form-section">
                 <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem;">
-                    <div>
+                    <div class="form-group">
                         <label class="section-label">Institutional Feedback & Narrative Justification</label>
                         <div class="input-wrapper">
-                            <textarea name="comments" rows="6" placeholder="Provide detailed audit findings and recommendations for the PI..."></textarea>
+                            <textarea name="comments" rows="6" placeholder="Provide detailed evaluation findings and recommendations for the PI..."></textarea>
                             <div class="input-icon textarea-icon">
                                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                             </div>
                         </div>
                     </div>
-                    <div class="verdict-display">
-                        <div class="verdict-label">Audit Outcome</div>
+                    <div class="verdict-display-shared">
+                        <div class="verdict-label">Evaluation Outcome</div>
                         <div id="verdict-badge">Waiting for Input</div>
-                        <div class="verdict-guide">Score > 70% for Satisfaction</div>
-                        <button type="submit" class="btn-audit-submit">Commit Evaluation</button>
+                        <div class="verdict-guide">Target Score: > 70% for Satisfaction</div>
+                        <button type="submit" class="btn-primary-shared">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Commit Evaluation
+                        </button>
                     </div>
                 </div>
             </div>
@@ -201,143 +147,89 @@
 </div>
 
 <style>
-    /* Premium Theming mirroring other pages */
-    .identity-header-eval {
-        background: linear-gradient(135deg, var(--brand-blue), #1e293b);
-        border-radius: 20px;
-        padding: 3rem 2rem;
-        text-align: center;
-        color: white;
+    /* Shared Theme Classes */
+    .header-preview-card {
+        background: linear-gradient(135deg, var(--brand-blue), #004e8d);
+        border-radius: 24px;
+        padding: 2.5rem;
         margin-bottom: -40px;
         position: relative;
         z-index: 10;
-        width: 90%;
+        box-shadow: 0 25px 50px rgba(0, 59, 92, 0.25);
+        color: white;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        width: 92%;
         margin-left: auto;
         margin-right: auto;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     }
 
-    .header-badge {
-        display: inline-block;
-        background: rgba(0, 139, 75, 0.3);
-        color: #dcfce7;
-        padding: 0.4rem 1.25rem;
+    .preview-badge {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 900;
+        letter-spacing: 0.15em;
+        padding: 0.35rem 1rem;
         border-radius: 99px;
-        font-size: 0.75rem;
-        font-weight: 800;
+        display: inline-block;
         margin-bottom: 1rem;
-        border: 1px solid rgba(0, 139, 75, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(4px);
     }
 
-    #header-project-title { font-size: 2rem; font-weight: 900; margin: 0 0 0.75rem; }
-    .header-meta { font-size: 1rem; opacity: 0.8; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
-    .header-meta .dot { font-size: 0.5rem; opacity: 0.5; }
+    .header-preview-card h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .preview-meta { font-size: 1rem; opacity: 0.9; font-weight: 600; display: flex; gap: 0.75rem; align-items: center; justify-content: center; }
 
     .premium-card {
         background: white;
         border-radius: 20px;
-        padding: 5rem 3.5rem 3.5rem;
-        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.05);
-        border: 1px solid #f1f5f9;
-        position: relative;
+        padding: 5rem 3rem 3rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.02);
         z-index: 5;
     }
 
-    .section-label { font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 1rem; }
+    .form-section { background: #fdfdfd; border: 1px solid #f3f4f6; border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; }
     
+    .section-label { font-weight: 800; color: #64748b; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 1rem; }
+    .section-header-shared { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem; color: var(--brand-blue); }
+    .section-header-shared h4 { margin: 0; font-size: 1.1rem; font-weight: 850; text-transform: uppercase; }
+
     .input-wrapper { position: relative; }
     .input-wrapper select, .input-wrapper textarea {
-        width: 100%;
-        padding: 0.85rem 1.25rem 0.85rem 3.25rem;
-        background: #f8fafc;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        font-size: 1rem;
-        font-weight: 700;
-        color: #1e293b;
-        transition: all 0.2s;
+        width: 100%; padding: 0.85rem 1rem 0.85rem 3rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; font-weight: 700; color: #1e293b; background: #f8fafc; transition: all 0.2s;
     }
-    .input-wrapper select:focus, .input-wrapper textarea:focus { border-color: var(--brand-blue); background: white; outline: none; }
+    .input-wrapper select:focus, .input-wrapper textarea:focus { border-color: var(--brand-blue); background: white; outline: none; box-shadow: 0 0 0 4px rgba(0, 59, 92, 0.05); }
 
-    .input-icon { position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+    .input-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8; }
     .textarea-icon { top: 1.25rem; transform: none; }
 
-    .auditor-badge {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem;
-        background: #f1f5f9;
-        border-radius: 14px;
-        border: 1px solid #e2e8f0;
-    }
-    .auditor-avatar { width: 42px; height: 42px; background: var(--brand-blue); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; }
-    .auditor-name { font-weight: 800; color: #1e293b; font-size: 1rem; }
-    .auditor-role { font-size: 0.75rem; color: #64748b; font-weight: 700; }
+    .divider { height: 1px; background: #f1f5f9; margin: 2rem 0; }
 
-    .divider { height: 1px; background: #f1f5f9; margin: 3rem 0; }
-
-    /* Table Styles */
     .evaluation-table { width: 100%; border-collapse: separate; border-spacing: 0; }
-    .evaluation-table th { text-align: left; padding: 1.5rem 1rem; border-bottom: 2px solid #f1f5f9; font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
+    .evaluation-table th { text-align: left; padding: 1.5rem 1rem; border-bottom: 2px solid #f1f5f9; font-size: 0.75rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
     .evaluation-table td { padding: 1.5rem 1rem; vertical-align: middle; border-bottom: 1px solid #f8fafc; }
     
-    .metric-title { font-weight: 800; color: var(--brand-blue); font-size: 1.1rem; margin-bottom: 0.25rem; }
+    .metric-title { font-weight: 850; color: var(--brand-blue); font-size: 1.05rem; margin-bottom: 0.25rem; }
     .metric-desc { font-size: 0.85rem; color: #64748b; font-weight: 500; }
     
-    .weight-cell { font-weight: 800; color: #1e293b; text-align: center; }
+    .rating-engine-select { width: 100%; padding: 0.6rem 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; font-weight: 800; color: #1e293b; background: #f8fafc; }
     .points-cell { font-weight: 950; color: var(--brand-blue); text-align: right; font-size: 1.25rem; font-family: 'Courier New', monospace; }
 
-    .rating-engine-select {
-        width: 100%;
-        padding: 0.6rem 1rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 10px;
-        font-weight: 800;
-        color: #1e293b;
-        background: white;
-    }
+    tfoot td { padding: 2rem 1rem; font-weight: 950; text-transform: uppercase; font-size: 1.25rem; color: #1e293b; background: #f8fafc; border-top: 2px solid var(--brand-blue); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+    #final-evaluation-score { text-align: right; color: var(--brand-green); font-size: 2.25rem; }
 
-    tfoot td { padding: 2rem 1rem; font-weight: 950; text-transform: uppercase; font-size: 1.25rem; color: #1e293b; background: #f8fafc; border-top: 2px solid var(--brand-blue); }
-    #final-audit-score { text-align: right; color: var(--brand-green); font-size: 2rem; }
+    .verdict-display-shared { background: #f1f5f9; border-radius: 16px; padding: 2rem; text-align: center; border: 1px solid #e2e8f0; }
+    .verdict-label { font-size: 0.8rem; font-weight: 900; color: #64748b; text-transform: uppercase; margin-bottom: 1rem; }
+    #verdict-badge { display: inline-block; padding: 0.75rem 2rem; border-radius: 99px; background: white; color: #94a3b8; font-weight: 950; font-size: 1.25rem; margin-bottom: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s; }
+    .verdict-guide { font-size: 0.85rem; color: #64748b; font-weight: 700; margin-bottom: 2rem; }
 
-    /* Verdict Display */
-    .verdict-display {
-        background: #f1f5f9;
-        border-radius: 16px;
-        padding: 2rem;
-        text-align: center;
-        border: 1px solid #e2e8f0;
+    .btn-primary-shared {
+        width: 100%; background: linear-gradient(135deg, var(--brand-green), #059669); color: white; padding: 1rem; border-radius: 12px; font-weight: 900; font-size: 1.1rem; border: none; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 139, 75, 0.25); display: flex; align-items: center; justify-content: center; gap: 0.75rem; transition: all 0.2s ease;
     }
-    .verdict-label { font-size: 0.75rem; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 1rem; }
-    #verdict-badge { 
-        display: inline-block; 
-        padding: 0.75rem 2rem; 
-        border-radius: 99px; 
-        background: white; 
-        color: #94a3b8; 
-        font-weight: 950; 
-        font-size: 1.25rem; 
-        margin-bottom: 1rem; 
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        transition: all 0.3s;
-    }
-    .verdict-guide { font-size: 0.8rem; color: #94a3b8; font-weight: 700; margin-bottom: 2rem; }
-    .btn-audit-submit {
-        width: 100%;
-        background: var(--brand-blue);
-        color: white;
-        padding: 1rem;
-        border-radius: 12px;
-        font-weight: 800;
-        font-size: 1.1rem;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 10px 25px rgba(0, 59, 92, 0.2);
-        transition: all 0.2s;
-    }
-    .btn-audit-submit:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0, 59, 92, 0.3); }
-</style>
+    .btn-primary-shared:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0, 139, 75, 0.35); }
+@endstyle
 
 <script>
     function handleProjectChange(el) {
@@ -348,10 +240,12 @@
             document.getElementById('header-dir').innerText = opt.dataset.dir;
         } else {
             document.getElementById('header-project-title').innerText = 'Select a Project to Evaluate';
+            document.getElementById('header-pi').innerText = 'Lead Investigator';
+            document.getElementById('header-dir').innerText = 'Scientific Directorate';
         }
     }
 
-    function calculateAudit() {
+    function calculateEvaluation() {
         let total = 0;
         document.querySelectorAll('.criteria-row').forEach(row => {
             const weight = parseFloat(row.dataset.weight);
@@ -361,7 +255,7 @@
             total += points;
         });
 
-        const finalScore = document.getElementById('final-audit-score');
+        const finalScore = document.getElementById('final-evaluation-score');
         const badge = document.getElementById('verdict-badge');
         
         finalScore.innerText = total.toFixed(1) + '%';

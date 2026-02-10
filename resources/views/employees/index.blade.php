@@ -10,10 +10,10 @@
             <h3 style="font-size: 1.75rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.04em; margin: 0;">Staff <span style="color: var(--brand-green);">Directory</span></h3>
             <p style="font-size: 0.95rem; color: #64748b; font-weight: 700; margin-top: 0.5rem;">Managing human capital and institutional access</p>
         </div>
-        @can('create', App\Models\User::class)
+        @can('create', App\Models\Employee::class)
         <a href="{{ route('employees.create') }}" class="btn-primary" style="text-decoration: none; padding: 1.1rem 2.25rem; font-size: 0.95rem;">
             <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 0.75rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
-            Onboard Professional
+            Register New Staff
         </a>
         @endcan
     </div>

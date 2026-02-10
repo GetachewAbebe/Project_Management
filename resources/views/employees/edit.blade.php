@@ -29,7 +29,7 @@
             </div>
             <div>
                 <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Professional Email</label>
-                <input type="email" name="email" value="{{ old('email', $employee->email) }}" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem;">
+                <input type="email" name="email" value="{{ old('email', $employee->email) }}" style="width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem;">
                 @error('email')<span style="color: #b91c1c; font-size: 0.8rem;">{{ $message }}</span>@enderror
             </div>
         </div>
@@ -42,7 +42,7 @@
             </div>
             <div>
                 <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Position / Title</label>
-                <input type="text" name="position" value="{{ old('position', $employee->position) }}" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem;">
+                <input type="text" name="position" value="{{ old('position', $employee->position) }}" style="width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem;">
                 @error('position')<span style="color: #b91c1c; font-size: 0.8rem;">{{ $message }}</span>@enderror
             </div>
         </div>

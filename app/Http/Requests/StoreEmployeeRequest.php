@@ -20,10 +20,10 @@ class StoreEmployeeRequest extends FormRequest
             'full_name' => 'required|string|max:255',
             'directorate_id' => 'required|exists:directorates,id',
             'institutional_id' => 'nullable|string|max:255|unique:employees,institutional_id' . ($employeeId ? ",$employeeId" : ""),
-            'email' => 'required|email|max:255' . 
+            'email' => 'required_if:system_role,director,evaluator|nullable|email|max:255' . 
                        '|unique:employees,email' . ($employeeId ? ",$employeeId" : "") . 
                        '|unique:users,email' . ($user ? ",$user->id" : ""),
-            'position' => 'required|string|max:255',
+            'position' => 'nullable|string|max:255',
             'system_role' => 'required|string|in:employee,director,evaluator',
         ];
     }

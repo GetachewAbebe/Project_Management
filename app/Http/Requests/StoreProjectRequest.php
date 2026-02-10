@@ -18,7 +18,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'research_title' => 'required|string|max:255',
             'pi_id' => 'required|exists:employees,id',
-            'objective' => 'required|string',
+            'objective' => 'nullable|string',
             'start_year' => 'required|integer|min:1900|max:2100',
             'end_year' => 'nullable|integer|min:1900|max:2100',
             'project_code' => 'nullable|string|unique:projects,project_code' . ($projectId ? ",$projectId" : ""),

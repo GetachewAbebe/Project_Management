@@ -24,16 +24,41 @@ class EvaluationController extends Controller
     {
         $this->authorize('viewAny', Evaluation::class);
         $user = auth()->user();
-        $query = Evaluation::with(['project', 'evaluator']);
+        $employee = $user->employee;
+        
+        $query = Evaluation::with(['project.pi', 'project.directorate', 'evaluator']);
 
-        if ($user->isEvaluator()) {
-            $employee = $user->employee;
+        if ($user->isEvaluator() && $employee) {
             $query->where('evaluator_id', $employee->id);
         }
 
         $evaluations = $query->latest()->get();
+
+        // Fetch projects awaiting evaluation by this specific user
+        $pendingProjects = collect();
+        if ($user->isAdmin() || $user->isEvaluator() || $user->isDirector()) {
+            $projectQuery = Project::where('status', 'REGISTERED')->with(['pi', 'directorate']);
+            
+            if ($user->isDirector() && $user->directorate_id) {
+                $projectQuery->where('directorate_id', $user->directorate_id);
+            }
+            
+            if ($employee) {
+                // Filter out projects already evaluated by 2 people OR by ME
+                $projectQuery->withCount('evaluations');
+                
+                $pendingProjects = $projectQuery->get()->filter(function($p) use ($employee) {
+                    $alreadyEvaluatedByMe = $p->evaluations()->where('evaluator_id', $employee->id)->exists();
+                    return $p->evaluations_count < 2 && 
+                           $p->pi_id != $employee->id && 
+                           !$alreadyEvaluatedByMe;
+                });
+            } else {
+                $pendingProjects = $projectQuery->get();
+            }
+        }
         
-        return view('evaluations.index', compact('evaluations'));
+        return view('evaluations.index', compact('evaluations', 'pendingProjects'));
     }
 
     public function create(Request $request)
@@ -49,19 +74,31 @@ class EvaluationController extends Controller
 
         $selected_project_id = $request->project_id;
         
-        $projectQuery = Project::where('status', 'REGISTERED');
+        $projectQuery = Project::where('status', 'REGISTERED')
+            ->with(['pi', 'directorate'])
+            ->withCount('evaluations');
+
         if ($user->isDirector()) {
             $projectQuery->where('directorate_id', $user->directorate_id);
         }
         
-        // Remove projects already evaluated by this specific person
-        $evaluatedProjects = Evaluation::where('evaluator_id', $employee->id)->pluck('project_id');
-        $projects = $projectQuery->whereNotIn('id', $evaluatedProjects)->get();
+        // Rules:
+        // 1. Project must have < 2 evaluations total
+        // 2. Evaluator must NOT be the PI
+        // 3. Evaluator must NOT have already evaluated this project
+        $evaluatedByMeIds = Evaluation::where('evaluator_id', $employee->id)->pluck('project_id');
+        
+        $projects = $projectQuery->get()->filter(function($p) use ($employee, $evaluatedByMeIds) {
+            return $p->evaluations_count < 2 && 
+                   $p->pi_id != $employee->id && 
+                   !$evaluatedByMeIds->contains($p->id);
+        });
 
-        $selected_project = $selected_project_id ? Project::find($selected_project_id) : null;
+        $selected_project = $selected_project_id ? Project::with('evaluations')->find($selected_project_id) : null;
         
         return view('evaluations.create', compact('projects', 'employee', 'selected_project_id', 'selected_project'));
     }
+
 
     public function show(Evaluation $evaluation)
     {
@@ -73,35 +110,39 @@ class EvaluationController extends Controller
         return view('evaluations.show', compact('evaluation'));
     }
 
-    public function store(StoreEvaluationRequest $request)
+    public function store(Request $request)
     {
+        $this->authorize('create', Evaluation::class);
         $user = auth()->user();
         $employee = $user->employee;
 
-        $this->authorize('create', Evaluation::class);
-
         if (!$employee) {
-             abort(403, 'User identity not linked to staff record.');
+            return back()->with('error', 'User identity not linked to staff record.');
         }
 
-        $project = Project::findOrFail($request->project_id);
+        $validated = $request->validate([
+            'project_id' => 'required|exists:projects,id',
+            'thematic_area_mark' => 'required|integer|min:1|max:5',
+            'relevance_mark' => 'required|integer|min:1|max:5',
+            'methodology_mark' => 'required|integer|min:1|max:5',
+            'feasibility_mark' => 'required|integer|min:1|max:5',
+            'overall_proposal_mark' => 'required|integer|min:1|max:5',
+            'comments' => 'nullable|string'
+        ]);
 
-        // Security check for Directors
+        $project = Project::findOrFail($validated['project_id']);
 
-        // Conflict of Interest check via Service
+        // Final safety check
         $conflict = $this->evaluationService->checkConflictOfInterest($project, $employee->id);
-
         if ($conflict) {
             return back()->withErrors(['project_id' => $conflict])->withInput();
         }
 
-        // Ensure evaluator_id in data is the logged in person
-        $data = $request->validated();
-        $data['evaluator_id'] = $employee->id;
-
-        $this->evaluationService->submitEvaluation($data);
+        $validated['evaluator_id'] = $employee->id;
+        $this->evaluationService->submitEvaluation($validated);
 
         return redirect()->route('evaluations.index')
-            ->with('success', 'Your evaluation for "' . $project->research_title . '" has been submitted.');
+            ->with('success', 'Evaluation submitted successfully for "' . $project->research_title . '".');
     }
+
 }

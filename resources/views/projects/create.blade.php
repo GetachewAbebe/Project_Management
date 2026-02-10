@@ -87,9 +87,9 @@
             <!-- Section: Objectives -->
             <div class="form-section">
                 <div class="form-group">
-                    <label for="objective">General Objectives <span class="required">*</span></label>
+                    <label for="objective">General Objectives</label>
                     <div class="input-wrapper">
-                        <textarea  name="objective" id="objective" rows="5" required placeholder="Outline the primary goals and intended impact of this research..."></textarea>
+                        <textarea  name="objective" id="objective" rows="5" placeholder="Outline the primary goals and intended impact of this research...">{{ old('objective') }}</textarea>
                         <div class="input-icon textarea-icon">
                             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
                         </div>

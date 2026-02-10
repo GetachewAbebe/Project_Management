@@ -350,7 +350,7 @@
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                     </div>
                     <span style="flex: 1;">Projects</span>
-                    <div style="background: rgba(0, 139, 75, 0.2); color: var(--brand-green); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 900; border: 1px solid rgba(0, 139, 75, 0.3);">{{ \App\Models\Project::where('status', 'Ongoing Projects')->count() }}</div>
+                    <div style="background: rgba(0, 139, 75, 0.2); color: var(--brand-green); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 900; border: 1px solid rgba(0, 139, 75, 0.3);">{{ \App\Models\Project::where('status', 'ONGOING')->count() }}</div>
                 </a>
 
                 <a href="{{ route('evaluations.index') }}" class="nav-item {{ request()->routeIs('evaluations.*') ? 'active' : '' }}">
@@ -359,7 +359,7 @@
                     </div>
                     <span style="flex: 1;">Evaluations</span>
                     @php
-                        $pendingCount = \App\Models\Project::whereDoesntHave('evaluations')->count();
+                        $pendingCount = \App\Models\Project::where('status', 'REGISTERED')->whereDoesntHave('evaluations')->count();
                     @endphp
                     @if($pendingCount > 0)
                     <div style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 900; border: 1px solid rgba(245, 158, 11, 0.3); animation: pulse 2s ease-in-out infinite;">{{ $pendingCount }}</div>
@@ -426,9 +426,160 @@
         {{ $slot ?? '' }}
 
         @auth
-        <footer style="margin-top: 8rem; padding: 3rem 0; border-top: 2px solid #e2e8f0; text-align: center; color: #94a3b8; font-size: 0.9rem; font-weight: 700;">
-            <p>&copy; {{ date('Y') }} Bio and Emerging Technology Institute. All Rights Reserved.</p>
+        <footer class="app-footer">
+            <div class="footer-grid">
+                <!-- Column 1: Institutional Info -->
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <div class="brand-line"></div>
+                        <div>
+                            <h3>BETIn Digital</h3>
+                            <div class="motto-text">Transforming Ideas into Impacts</div>
+                        </div>
+                    </div>
+                    <p class="footer-text">
+                        Bio and Emerging Technology Institute. Leading the frontier of innovation and excellence in research and technology development for Ethiopia.
+                    </p>
+                    <div class="institutional-badge">
+                        Federal Democratic Republic of Ethiopia
+                    </div>
+                </div>
+
+                <!-- Column 2: Navigation -->
+                <div class="footer-col">
+                    <h4 class="col-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{ route('dashboard') }}">Control Center</a></li>
+                        <li><a href="{{ route('projects.index') }}">Research Projects</a></li>
+                        <li><a href="{{ route('evaluations.index') }}">Evaluation Metrics</a></li>
+                        @if(auth()->user()->isAdmin())
+                            <li><a href="{{ route('employees.index') }}">Staff Directory</a></li>
+                        @endif
+                    </ul>
+                </div>
+
+                <!-- Column 3: Support & Info -->
+                <div class="footer-col">
+                    <h4 class="col-title">Connect</h4>
+                    <div class="contact-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span>Addis Ababa, Ethiopia</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <span>support@betin.gov.et</span>
+                    </div>
+                    <div class="system-status">
+                        <div class="status-pulse"></div>
+                        <span>System Protocol V2.1 - Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; {{ date('Y') }} Bio and Emerging Technology Institute. <span class="rights">All Rights Reserved.</span>
+                </div>
+            </div>
         </footer>
+
+        <style>
+            .app-footer {
+                margin-top: 8rem;
+                padding: 5rem 0 3rem;
+                border-top: 1px solid #e2e8f0;
+                background: linear-gradient(to bottom, #ffffff, #f8fafc);
+            }
+            
+            .footer-grid {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1.2fr;
+                gap: 5rem;
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            .footer-brand { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+            .brand-line { width: 30px; height: 3px; background: var(--brand-green); border-radius: 2px; }
+            .footer-brand h3 { margin: 0; font-size: 1.25rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.02em; line-height: 1; }
+            .motto-text { font-size: 0.7rem; font-weight: 800; color: var(--brand-green); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.25rem; font-style: italic; }
+            
+            .footer-text { font-size: 0.95rem; color: #64748b; line-height: 1.7; margin-bottom: 2rem; font-weight: 600; }
+            
+            .institutional-badge {
+                display: inline-block;
+                background: #f1f5f9;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                font-size: 0.75rem;
+                font-weight: 800;
+                color: #475569;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                border: 1px solid #e2e8f0;
+            }
+
+            .col-title { font-size: 0.8rem; font-weight: 900; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2rem; }
+            
+            .footer-links { list-style: none; padding: 0; margin: 0; }
+            .footer-links li { margin-bottom: 0.75rem; }
+            .footer-links a { text-decoration: none; color: #64748b; font-size: 0.95rem; font-weight: 700; transition: all 0.2s; }
+            .footer-links a:hover { color: var(--brand-green); transform: translateX(5px); display: inline-block; }
+
+            .contact-item { display: flex; align-items: center; gap: 0.75rem; color: #64748b; font-weight: 700; font-size: 0.95rem; margin-bottom: 1rem; }
+            .contact-item svg { color: var(--brand-green); }
+
+            .system-status {
+                margin-top: 2.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0.75rem 1.25rem;
+                background: white;
+                border-radius: 12px;
+                border: 1px solid #e2e8f0;
+                width: fit-content;
+                font-size: 0.8rem;
+                font-weight: 800;
+                color: #1e293b;
+            }
+
+            .status-pulse {
+                width: 8px;
+                height: 8px;
+                background: #22c55e;
+                border-radius: 50%;
+                box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+                animation: footerPulse 2s infinite;
+            }
+
+            @keyframes footerPulse {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.2); opacity: 0.6; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+
+            .footer-bottom {
+                margin-top: 5rem;
+                padding-top: 2rem;
+                border-top: 1px solid #f1f5f9;
+                text-align: center;
+                max-width: 1400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .copyright { font-size: 0.85rem; color: #94a3b8; font-weight: 700; }
+            .rights { color: #cbd5e1; font-weight: 500; }
+
+            @media (max-width: 1024px) {
+                .footer-grid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+                .footer-brand, .system-status { justify-content: center; margin-left: auto; margin-right: auto; }
+                .contact-item { justify-content: center; }
+                .footer-links a:hover { transform: translateY(-2px); }
+            }
+        </style>
         @endauth
     </main>
 
