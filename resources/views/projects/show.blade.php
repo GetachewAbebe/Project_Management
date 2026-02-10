@@ -85,27 +85,114 @@
             </div>
         </div>
 
-        @if($project->evaluations && $project->evaluations->count() > 0)
+        @if($project->evaluations->count() > 0)
         <div class="divider"></div>
         
-        <!-- Evaluations -->
+        <!-- Scientific Review Panel -->
         <div class="content-section">
-            <label>Evaluations & Feedback</label>
-            <div class="evaluations-list">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+                <div>
+                    <label style="margin-bottom: 0.25rem;">Consolidated Scientific Review</label>
+                    <h3 style="font-size: 1.5rem; font-weight: 900; color: #1e293b; letter-spacing: -0.02em;">Panel Comparison</h3>
+                </div>
+                @if($project->evaluations->count() >= 2)
+                    <div style="background: #e0f2fe; padding: 1rem 1.5rem; border-radius: 12px; text-align: right; border: 1px solid #bae6fd;">
+                        <div style="font-size: 0.7rem; font-weight: 800; color: #0369a1; text-transform: uppercase; margin-bottom: 0.25rem;">Aggregate Institutional Score</div>
+                        <div style="font-size: 1.8rem; font-weight: 950; color: #0c4a6e; line-height: 1;">{{ number_format($project->evaluations->avg('total_score'), 1) }}%</div>
+                    </div>
+                @endif
+            </div>
+
+            @if($project->evaluations->count() >= 2)
+            <!-- Multi-Reviewer Comparison Table -->
+            <div style="background: #f8fafc; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 3rem;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: white; border-bottom: 2px solid #e2e8f0;">
+                            <th style="padding: 1.25rem; text-align: left; font-size: 0.75rem; font-weight: 900; color: #64748b; text-transform: uppercase; width: 40%;">Evaluation Benchmarks</th>
+                            @foreach($project->evaluations as $index => $eval)
+                                <th style="padding: 1.25rem; text-align: center; font-size: 0.75rem; font-weight: 950; color: #475569; text-transform: uppercase;">
+                                    Expert {{ $index + 1 }}
+                                    <div style="font-size: 0.65rem; font-weight: 600; color: #94a3b8; text-transform: none; margin-top: 0.2rem;">{{ $eval->evaluator->full_name }}</div>
+                                </th>
+                            @endforeach
+                            <th style="padding: 1.25rem; text-align: center; font-size: 0.75rem; font-weight: 950; color: #008B4B; text-transform: uppercase; background: #f0fdf4;">Average</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-weight: 700;">
+                        @php
+                            $benchmarks = [
+                                ['Alignment', 'thematic_area_mark', 20],
+                                ['Relevance', 'relevance_mark', 25],
+                                ['Methodology', 'methodology_mark', 25],
+                                ['Feasibility', 'feasibility_mark', 20],
+                                ['Presentation', 'overall_proposal_mark', 10],
+                            ];
+                        @endphp
+                        @foreach($benchmarks as $bench)
+                        <tr style="border-bottom: 1px solid #f1f5f9; background: white;">
+                            <td style="padding: 1.25rem; color: #475569;">
+                                {{ $bench[0] }}
+                                <span style="font-size: 0.7rem; color: #94a3b8; margin-left: 0.5rem; font-weight: 500;">(W: {{ $bench[2] }}%)</span>
+                            </td>
+                            @php $rowSum = 0; @endphp
+                            @foreach($project->evaluations as $eval)
+                                @php $rowSum += $eval->{$bench[1]}; @endphp
+                                <td style="padding: 1.25rem; text-align: center; color: #1e293b; font-size: 1.1rem;">
+                                    {{ $eval->{$bench[1]} }}<span style="font-size: 0.7rem; color: #cbd5e1;">/5</span>
+                                </td>
+                            @endforeach
+                            <td style="padding: 1.25rem; text-align: center; color: #166534; font-size: 1.1rem; background: #f8fafc; font-weight: 900;">
+                                {{ number_format($rowSum / $project->evaluations->count(), 1) }}
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: #f8fafc; border-top: 2px solid #e2e8f0;">
+                            <td style="padding: 1.5rem 1.25rem; font-weight: 900; color: #1e293b; text-transform: uppercase; font-size: 0.85rem;">Total Weighted Outcome</td>
+                            @foreach($project->evaluations as $eval)
+                                <td style="padding: 1.5rem 1.25rem; text-align: center; font-size: 1.3rem; font-weight: 950; color: #334155;">
+                                    {{ number_format($eval->total_score, 1) }}%
+                                </td>
+                            @endforeach
+                            <td style="padding: 1.5rem 1.25rem; text-align: center; font-size: 1.5rem; font-weight: 950; color: #166534; background: #f0fdf4;">
+                                {{ number_format($project->evaluations->avg('total_score'), 1) }}%
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            @endif
+
+            <!-- Individual Qualitative Reviews -->
+            <label style="margin-bottom: 1.5rem;">Expert Qualitative Commentary</label>
+            <div class="evaluations-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem;">
                 @foreach($project->evaluations as $eval)
-                <div class="evaluation-card">
+                <div class="evaluation-card" style="margin-bottom: 0; background: #fff; border: 2px solid #f1f5f9; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top:0; right:0; padding: 0.5rem 1rem; background: {{ $eval->decision === 'SATISFACTORY' ? '#dcfce7' : '#fee2e2' }}; color: {{ $eval->decision === 'SATISFACTORY' ? '#15803d' : '#b91c1c' }}; font-size: 0.65rem; font-weight: 900; border-radius: 0 0 0 12px; text-transform: uppercase; letter-spacing: 0.1em;">
+                        {{ $eval->decision }}
+                    </div>
                     <div class="eval-header">
                         <div class="evaluator-info">
-                            <div class="eval-avatar">E</div>
+                            <div class="eval-avatar" style="background: {{ $loop->index == 0 ? '#e0f2fe' : '#f0fdf4' }}; color: {{ $loop->index == 0 ? '#0369a1' : '#166534' }};">
+                                {{ substr($eval->evaluator->full_name, 0, 1) }}
+                            </div>
                             <div>
-                                <div class="eval-name">{{ $eval->evaluator_name }}</div>
+                                <div class="eval-name">{{ $eval->evaluator->full_name }}</div>
                                 <div class="eval-date">{{ $eval->created_at->format('M d, Y') }}</div>
                             </div>
                         </div>
-                        <div class="eval-rating">Score: {{ $eval->score ?? 'N/A' }}</div>
                     </div>
-                    <div class="eval-body">
-                        {{ $eval->feedback }}
+                    <div class="eval-body" style="font-style: italic; color: #475569; position: relative; padding-left: 1.5rem;">
+                        <span style="position: absolute; left: 0; top: 0; font-size: 3rem; color: #f1f5f9; font-serif; line-height: 1; z-index: -1;">"</span>
+                        {{ $eval->comments ?: 'No qualitative feedback provided.' }}
+                    </div>
+                    <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+                        <a href="{{ route('evaluations.show', $eval->id) }}" style="font-size: 0.75rem; font-weight: 800; color: #6366f1; text-decoration: none; display: flex; align-items: center; gap: 0.25rem;">
+                            View Full Report 
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
                     </div>
                 </div>
                 @endforeach

@@ -37,7 +37,7 @@
                         <select name="evaluator_id" class="form-input-shared" required style="width: 100%; padding: 1rem; border-radius: 12px; border: 2px solid #f1f5f9; background: #f8fafc; font-weight: 600; font-size: 1rem; color: #1e293b; appearance: none;">
                             <option value="">Select an expert...</option>
                             @foreach($employees as $employee)
-                                <option value="{{ $employee->id }}">{{ $employee->full_name }} ({{ $employee->directorate->name ?? 'N/A' }})</option>
+                                <option value="{{ $employee->id }}">{{ $employee->full_name }} — {{ $employee->email }} ({{ $employee->directorate->name ?? 'N/A' }})</option>
                             @endforeach
                         </select>
                         @error('evaluator_id') <p style="color: #ef4444; font-size: 0.8rem; margin-top: 0.5rem; font-weight: 600;">{{ $message }}</p> @enderror
