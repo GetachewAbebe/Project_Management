@@ -33,8 +33,7 @@
                 </h1>
                 <div style="width: 50px; height: 4px; background: var(--brand-green); margin-bottom: 1.25rem; border-radius: 2px; box-shadow: 0 0 20px rgba(0, 139, 75, 0.4);"></div>
                 <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">
-                    Federal Democratic Republic of Ethiopia<br/>
-                    Ministry of Innovation and Technology
+                    Transforming Ideas into Impacts!
                 </p>
             </div>
             

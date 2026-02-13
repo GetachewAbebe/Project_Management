@@ -50,7 +50,7 @@
         </div>
         <div class="footer">
             <div>© {{ date('Y') }} Bio and Emerging Technology Institute</div>
-            <div>Federal Democratic Republic of Ethiopia</div>
+            <div>Transforming Ideas into Impacts!</div>
             <div class="legal">This is an automated institutional message. Please do not reply directly to this email.</div>
         </div>
     </div>
