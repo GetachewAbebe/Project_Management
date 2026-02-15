@@ -331,6 +331,13 @@
                     </div>
                     <span style="flex: 1;">Staff Registry</span>
                 </a>
+
+                <a href="{{ route('backups.index') }}" class="nav-item {{ request()->routeIs('backups.*') ? 'active' : '' }}">
+                    <div style="width: 40px; height: 40px; background: {{ request()->routeIs('backups.*') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.08)' }}; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+                    </div>
+                    <span style="flex: 1;">System Backups</span>
+                </a>
             </div>
             @endif
 

@@ -40,6 +40,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // NEW: Evaluation Assignments (Admin-only managed via Policy)
     Route::resource('evaluation-assignments', App\Http\Controllers\EvaluationAssignmentController::class);
 
+    // Database Backups (Admin-only)
+    Route::get('/backups', [App\Http\Controllers\BackupController::class, 'index'])->name('backups.index');
+    Route::post('/backups', [App\Http\Controllers\BackupController::class, 'create'])->name('backups.create');
+    Route::get('/backups/download/{filename}', [App\Http\Controllers\BackupController::class, 'download'])->name('backups.download');
+    Route::delete('/backups/{filename}', [App\Http\Controllers\BackupController::class, 'destroy'])->name('backups.destroy');
+
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
