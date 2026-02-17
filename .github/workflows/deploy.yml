@@ -53,5 +53,9 @@ jobs:
     steps:
       - name: 🚀 Call Deployment Webhook
         run: |
+          if [ -z "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}" ]; then
+            echo "❌ Error: CPANEL_DEPLOY_WEBHOOK secret is not set in GitHub Settings."
+            exit 1
+          fi
           curl -X GET "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}"
 
