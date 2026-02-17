@@ -317,27 +317,6 @@ php artisan test
 
 This project is proprietary software developed for the Bio and Emerging Technology Institute (BETIn). All rights reserved.
 
----
-
-## 📞 Support
-
-For technical support or inquiries:
-
-- **Institution:** Bio and Emerging Technology Institute
-- **Email:** support@betin.gov.et
-- **Website:** [www.betin.gov.et](http://www.betin.gov.et)
-
----
-
-## 🙏 Acknowledgments
-
-- **Ministry of Innovation and Technology** - For institutional support
-- **BETIn Leadership** - For project vision and guidance
-- **Development Team** - For dedication and expertise
-- **Laravel Community** - For the excellent framework and resources
-
----
-
 **© 2026 Bio and Emerging Technology Institute. All Rights Reserved.**
 
 *Transforming Ideas into Impacts!*
