@@ -46,47 +46,12 @@ jobs:
       - name: 🔍 Static Analysis (PHPStan)
         run: composer phpstan
 
-  web-deploy:
-    name: Deploy
+  trigger-deployment:
+    name: Trigger cPanel Deployment
     runs-on: ubuntu-latest
     needs: [quality-check]
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v4
-
-      - name: 📂 Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, hash, pdo_mysql
-
-      - name: 🔨 Install Dependencies (Composer)
-        run: composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
-
-      - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: 📦 Install NPM dependencies & Build
+      - name: 🚀 Call Deployment Webhook
         run: |
-          npm install
-          npm run build
+          curl -X GET "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}"
 
-      - name: 🚀 Sync Files via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ./
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/tests/**
-            **/.env
-            **/storage/framework/cache/**
-            **/storage/framework/sessions/**
-            **/storage/framework/views/**
-            **/storage/logs/**
