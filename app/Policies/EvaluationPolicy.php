@@ -43,7 +43,7 @@ class EvaluationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isEvaluator() || $user->isDirector();
+        return $user->isEvaluator() || $user->isDirector();
     }
 
     /**
