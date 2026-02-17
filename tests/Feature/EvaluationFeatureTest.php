@@ -2,15 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use App\Models\User;
 use App\Enums\UserRole;
-use App\Models\Employee;
 use App\Models\Directorate;
+use App\Models\Employee;
 use App\Models\Project;
-use App\Models\Evaluation;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class EvaluationFeatureTest extends TestCase
 {
@@ -20,7 +18,7 @@ class EvaluationFeatureTest extends TestCase
     {
         $evaluator = User::factory()->create(['role' => UserRole::EVALUATOR]);
         $employee = Employee::factory()->create(['email' => $evaluator->email]);
-        
+
         $response = $this->actingAs($evaluator)->get(route('evaluations.index'));
 
         $response->assertStatus(200);
@@ -33,12 +31,12 @@ class EvaluationFeatureTest extends TestCase
         $evaluator = User::factory()->create(['role' => UserRole::EVALUATOR]);
         $employee = Employee::factory()->create([
             'email' => $evaluator->email,
-            'directorate_id' => $directorate->id
+            'directorate_id' => $directorate->id,
         ]);
-        
+
         $project = Project::factory()->create([
             'status' => 'REGISTERED',
-            'directorate_id' => $directorate->id
+            'directorate_id' => $directorate->id,
         ]);
 
         $evaluationData = [
@@ -49,11 +47,11 @@ class EvaluationFeatureTest extends TestCase
             'methodology_mark' => 4,
             'feasibility_mark' => 4,
             'overall_proposal_mark' => 4,
-            'comments' => 'Great project'
+            'comments' => 'Great project',
         ];
 
         $response = $this->actingAs($evaluator)->post(route('evaluations.store'), $evaluationData);
-        
+
         if ($response->status() === 419) {
             $response = $this->withoutMiddleware()->actingAs($evaluator)->post(route('evaluations.store'), $evaluationData);
         }
@@ -76,11 +74,11 @@ class EvaluationFeatureTest extends TestCase
             'methodology_mark' => 5,
             'feasibility_mark' => 5,
             'overall_proposal_mark' => 5,
-            'comments' => 'Admin trying to evaluate'
+            'comments' => 'Admin trying to evaluate',
         ];
 
         $response = $this->actingAs($admin)->post(route('evaluations.store'), $evaluationData);
-        
+
         if ($response->status() === 419) {
             $response = $this->withoutMiddleware()->actingAs($admin)->post(route('evaluations.store'), $evaluationData);
         }

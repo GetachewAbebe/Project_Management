@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->foreignId('evaluator_id')->constrained('employees')->onDelete('cascade');
-            
+
             $table->integer('thematic_area_mark');
             $table->integer('relevance_mark');
             $table->integer('methodology_mark');
             $table->integer('feasibility_mark');
             $table->integer('overall_proposal_mark');
-            
+
             $table->decimal('total_score', 5, 2);
             $table->string('decision');
             $table->text('comments')->nullable();

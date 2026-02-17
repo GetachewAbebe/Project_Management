@@ -16,7 +16,7 @@ class StoreDirectorateRequest extends FormRequest
         $directorateId = $this->route('directorate') ? $this->route('directorate')->id : null;
 
         return [
-            'name' => 'required|string|max:255|unique:directorates,name' . ($directorateId ? ",$directorateId" : ""),
+            'name' => 'required|string|max:255|unique:directorates,name'.($directorateId ? ",$directorateId" : ''),
         ];
     }
 }

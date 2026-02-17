@@ -40,8 +40,8 @@ jobs:
       - name: 🧪 Run Tests
         run: php artisan test
 
-      - name: 🎨 Check Code Style (Fix only, non-blocking)
-        run: ./vendor/bin/pint
+      - name: 🎨 Check Code Style (Strict)
+        run: ./vendor/bin/pint --test
 
       - name: 🔍 Static Analysis (PHPStan)
         run: composer phpstan

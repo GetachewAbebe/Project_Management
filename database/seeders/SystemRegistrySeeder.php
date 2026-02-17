@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Enums\UserRole;
 use App\Models\Directorate;
 use App\Models\Employee;
-use App\Models\User;
 use App\Models\Project;
-use App\Enums\UserRole;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class SystemRegistrySeeder extends Seeder
@@ -20,7 +20,7 @@ class SystemRegistrySeeder extends Seeder
             'Agricultural Biotechnology',
             'Health Biotechnology',
             'Industrial Biotechnology',
-            'Bio-Informatics & Emerging Tech'
+            'Bio-Informatics & Emerging Tech',
         ];
 
         foreach ($directorates as $name) {
@@ -57,7 +57,7 @@ class SystemRegistrySeeder extends Seeder
                 'directorate_id' => $envDir->id,
                 'institutional_id' => 'BETIN-ENV-001',
                 'position' => 'Senior Researcher',
-                'system_role' => 'staff'
+                'system_role' => 'staff',
             ]
         );
 
@@ -68,7 +68,7 @@ class SystemRegistrySeeder extends Seeder
                 'directorate_id' => $agriDir->id,
                 'institutional_id' => 'BETIN-AGR-005',
                 'position' => 'Lead Scientist',
-                'system_role' => 'staff'
+                'system_role' => 'staff',
             ]
         );
 
@@ -81,7 +81,7 @@ class SystemRegistrySeeder extends Seeder
                 'directorate_id' => $envDir->id,
                 'start_year' => 2024,
                 'end_year' => 2026,
-                'status' => 'ONGOING'
+                'status' => 'ONGOING',
             ]
         );
 
@@ -93,7 +93,7 @@ class SystemRegistrySeeder extends Seeder
                 'directorate_id' => $agriDir->id,
                 'start_year' => 2024,
                 'end_year' => 2025,
-                'status' => 'REGISTERED'
+                'status' => 'REGISTERED',
             ]
         );
 
@@ -105,7 +105,7 @@ class SystemRegistrySeeder extends Seeder
                 'directorate_id' => $envDir->id,
                 'start_year' => 2023,
                 'end_year' => 2024,
-                'status' => 'COMPLETED'
+                'status' => 'COMPLETED',
             ]
         );
     }

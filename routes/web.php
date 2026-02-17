@@ -1,13 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\DirectorateController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
-
 
 // Redirect root to Dashboard (protected by middleware inside group)
 Route::get('/', function () {
@@ -30,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('directorates', DirectorateController::class);
     Route::resource('employees', EmployeeController::class);
     Route::resource('projects', ProjectController::class);
-    
+
     // Evaluation Module
     Route::get('/evaluations', [EvaluationController::class, 'index'])->name('evaluations.index');
     Route::get('/evaluations/create', [EvaluationController::class, 'create'])->name('evaluations.create');

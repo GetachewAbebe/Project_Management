@@ -23,7 +23,7 @@ class EmployeePolicy
      */
     public function view(User $user, Employee $employee): bool
     {
-        return $user->isAdmin() || 
+        return $user->isAdmin() ||
                ($user->isDirector() && $employee->directorate_id === $user->directorate_id) ||
                ($user->employee?->id === $employee->id);
     }
@@ -41,7 +41,7 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee): bool
     {
-        return $user->isAdmin() || 
+        return $user->isAdmin() ||
                ($user->isDirector() && $employee->directorate_id === $user->directorate_id);
         // Note: Individual employees cannot edit their own HR record, only Directors/Admins
     }
@@ -51,7 +51,7 @@ class EmployeePolicy
      */
     public function delete(User $user, Employee $employee): bool
     {
-        return $user->isAdmin() || 
+        return $user->isAdmin() ||
                ($user->isDirector() && $employee->directorate_id === $user->directorate_id);
     }
 }

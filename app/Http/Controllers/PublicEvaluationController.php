@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\EvaluationAssignment;
-use App\Models\Evaluation;
-use App\Models\Project;
 use App\Services\EvaluationService;
 use Illuminate\Http\Request;
 
@@ -49,7 +47,7 @@ class PublicEvaluationController extends Controller
             'feasibility_mark' => 'required|integer|min:1|max:5',
             'overall_proposal_mark' => 'required|integer|min:1|max:5',
             'comments' => 'nullable|string',
-            'critical_issues' => 'nullable|string'
+            'critical_issues' => 'nullable|string',
         ]);
 
         $evalData = $validated;

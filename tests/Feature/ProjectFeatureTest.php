@@ -2,14 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use App\Models\User;
 use App\Enums\UserRole;
-use App\Models\Employee;
 use App\Models\Directorate;
-use App\Models\Project;
+use App\Models\Employee;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ProjectFeatureTest extends TestCase
 {
@@ -30,7 +28,7 @@ class ProjectFeatureTest extends TestCase
         $directorate = Directorate::factory()->create();
         $director = User::factory()->create([
             'role' => UserRole::DIRECTOR,
-            'directorate_id' => $directorate->id
+            'directorate_id' => $directorate->id,
         ]);
         $pi = Employee::factory()->create(['directorate_id' => $directorate->id]);
 
@@ -40,12 +38,12 @@ class ProjectFeatureTest extends TestCase
             'objective' => 'To revolutionize AI',
             'start_year' => 2026,
             'end_year' => 2027,
-            'status' => 'REGISTERED'
+            'status' => 'REGISTERED',
         ];
 
         // Using withoutMiddleware to avoid CSRF issues in tests if actingAs doesn't handle it
         $response = $this->actingAs($director)->post(route('projects.store'), $projectData);
-        
+
         if ($response->status() === 419) {
             $response = $this->withoutMiddleware()->actingAs($director)->post(route('projects.store'), $projectData);
         }
@@ -58,12 +56,12 @@ class ProjectFeatureTest extends TestCase
     {
         $myDirectorate = Directorate::factory()->create();
         $otherDirectorate = Directorate::factory()->create();
-        
+
         $director = User::factory()->create([
             'role' => UserRole::DIRECTOR,
-            'directorate_id' => $myDirectorate->id
+            'directorate_id' => $myDirectorate->id,
         ]);
-        
+
         // PI belongs to a different directorate
         $pi = Employee::factory()->create(['directorate_id' => $otherDirectorate->id]);
 
@@ -73,15 +71,15 @@ class ProjectFeatureTest extends TestCase
             'objective' => 'This should fail',
             'start_year' => 2026,
             'end_year' => 2027,
-            'status' => 'REGISTERED'
+            'status' => 'REGISTERED',
         ];
 
         $response = $this->actingAs($director)->post(route('projects.store'), $projectData);
-        
+
         if ($response->status() === 419) {
-             $response = $this->withoutMiddleware()->actingAs($director)->post(route('projects.store'), $projectData);
+            $response = $this->withoutMiddleware()->actingAs($director)->post(route('projects.store'), $projectData);
         }
-        
+
         $response->assertSessionHasErrors(['pi_id']);
         $this->assertDatabaseMissing('projects', ['research_title' => 'Unauthorized Project']);
     }
@@ -95,15 +93,15 @@ class ProjectFeatureTest extends TestCase
             'research_title' => 'Evaluator Project',
             'pi_id' => $pi->id,
             'objective' => 'Should be forbidden',
-            'start_year' => 2026
+            'start_year' => 2026,
         ];
 
         $response = $this->actingAs($evaluator)->post(route('projects.store'), $projectData);
-        
+
         if ($response->status() === 419) {
-             $response = $this->withoutMiddleware()->actingAs($evaluator)->post(route('projects.store'), $projectData);
+            $response = $this->withoutMiddleware()->actingAs($evaluator)->post(route('projects.store'), $projectData);
         }
-        
+
         $response->assertStatus(403);
     }
 }

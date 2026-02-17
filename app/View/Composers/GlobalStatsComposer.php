@@ -4,8 +4,8 @@ namespace App\View\Composers;
 
 use App\Models\Directorate;
 use App\Models\Employee;
-use App\Models\Project;
 use App\Models\Evaluation;
+use App\Models\Project;
 use Illuminate\View\View;
 
 class GlobalStatsComposer

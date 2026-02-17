@@ -29,7 +29,7 @@ class UpdateProjectRequest extends FormRequest
             'objective' => 'nullable|string',
             'start_year' => 'required|integer|min:1900|max:2100',
             'end_year' => 'nullable|integer|gt:start_year',
-            'project_code' => 'nullable|string|unique:projects,project_code' . ($projectId ? ",$projectId" : ""),
+            'project_code' => 'nullable|string|unique:projects,project_code'.($projectId ? ",$projectId" : ''),
             'status' => 'required|string|in:REGISTERED,ONGOING,COMPLETED,TERMINATED,EVALUATED',
         ];
     }

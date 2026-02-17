@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('methodology_mark_2')->after('methodology_mark_1')->nullable();
             $table->integer('feasibility_mark_2')->after('feasibility_mark_1')->nullable();
             $table->integer('overall_proposal_mark_2')->after('overall_proposal_mark_1')->nullable();
-            
+
             // Allow total_score to be decimal (already is 5,2)
         });
     }
@@ -43,10 +43,10 @@ return new class extends Migration
                 'relevance_mark_2',
                 'methodology_mark_2',
                 'feasibility_mark_2',
-                'overall_proposal_mark_2'
+                'overall_proposal_mark_2',
             ]);
         });
-        
+
         Schema::table('evaluations', function (Blueprint $table) {
             $table->renameColumn('thematic_area_mark_1', 'thematic_area_mark');
             $table->renameColumn('relevance_mark_1', 'relevance_mark');

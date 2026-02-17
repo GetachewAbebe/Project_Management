@@ -30,7 +30,7 @@ return new class extends Migration
                 'relevance_mark_2',
                 'methodology_mark_2',
                 'feasibility_mark_2',
-                'overall_proposal_mark_2'
+                'overall_proposal_mark_2',
             ]);
         });
     }

@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
+use App\Mail\DirectorInvitation;
 use App\Models\Employee;
 use App\Models\Invitation;
-use App\Mail\DirectorInvitation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 class EmployeeService
 {
@@ -35,7 +35,7 @@ class EmployeeService
         return DB::transaction(function () use ($employee, $data) {
             $employee->update($data);
 
-            if (in_array($data['system_role'], ['director', 'evaluator']) && !$employee->user) {
+            if (in_array($data['system_role'], ['director', 'evaluator']) && ! $employee->user) {
                 $this->sendDirectorInvitation($employee);
             }
 
@@ -49,7 +49,7 @@ class EmployeeService
     protected function sendDirectorInvitation(Employee $employee): void
     {
         $token = Str::random(40);
-        
+
         $invitation = Invitation::updateOrCreate(
             ['email' => $employee->email],
             [
@@ -59,7 +59,7 @@ class EmployeeService
                 'expires_at' => now()->addDays(2),
             ]
         );
-        
+
         Mail::to($employee->email)->send(new DirectorInvitation($invitation));
     }
 }

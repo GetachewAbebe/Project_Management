@@ -42,8 +42,8 @@ class ProjectPolicy
         if ($user->isAdmin()) {
             return true;
         }
-        
-        return !$user->isEvaluator();
+
+        return ! $user->isEvaluator();
     }
 
     /**

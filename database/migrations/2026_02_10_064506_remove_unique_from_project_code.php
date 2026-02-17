@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            // Drop the unique index. 
+            // Drop the unique index.
             // In Laravel/Postgres, the default name for unique index on project_code is usually 'projects_project_code_unique'
             $table->dropUnique(['project_code']);
         });

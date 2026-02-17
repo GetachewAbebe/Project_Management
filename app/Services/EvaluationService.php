@@ -62,7 +62,7 @@ class EvaluationService
             $project->update(['status' => $newStatus]);
         } else {
             // Still in evaluation phase if only one evaluator has submitted
-            $project->update(['status' => 'REGISTERED']); 
+            $project->update(['status' => 'REGISTERED']);
         }
     }
 
@@ -72,16 +72,16 @@ class EvaluationService
     public function checkConflictOfInterest(Project $project, int $evaluatorId): ?string
     {
         if ($project->pi_id == $evaluatorId) {
-            return "Conflict of Interest: The Principal Investigator cannot evaluate their own project.";
+            return 'Conflict of Interest: The Principal Investigator cannot evaluate their own project.';
         }
-        
+
         // Also check if this evaluator already evaluated this project
         $existing = Evaluation::where('project_id', $project->id)
             ->where('evaluator_id', $evaluatorId)
             ->first();
-            
+
         if ($existing) {
-            return "Duplicate Evaluation: You have already submitted an evaluation for this project.";
+            return 'Duplicate Evaluation: You have already submitted an evaluation for this project.';
         }
 
         return null;

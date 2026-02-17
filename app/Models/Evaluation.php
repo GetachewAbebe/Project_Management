@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Evaluation extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'project_id',
         'evaluator_id',
@@ -19,7 +20,7 @@ class Evaluation extends Model
         'total_score',
         'decision',
         'comments',
-        'critical_issues'
+        'critical_issues',
     ];
 
     public function project()

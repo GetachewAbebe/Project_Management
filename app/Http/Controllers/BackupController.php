@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
 
 class BackupController extends Controller
 {
     public function index()
     {
-        if (!auth()->user()->isAdmin()) {
+        if (! auth()->user()->isAdmin()) {
             abort(403);
         }
 
@@ -25,7 +22,7 @@ class BackupController extends Controller
                     $path = "{$backupDir}/{$file}";
                     $backups[] = [
                         'name' => $file,
-                        'size' => number_format(filesize($path) / 1024 / 1024, 2) . ' MB',
+                        'size' => number_format(filesize($path) / 1024 / 1024, 2).' MB',
                         'created_at' => date('Y-m-d H:i:s', filemtime($path)),
                     ];
                 }
@@ -37,27 +34,28 @@ class BackupController extends Controller
 
     public function create()
     {
-        if (!auth()->user()->isAdmin()) {
+        if (! auth()->user()->isAdmin()) {
             abort(403);
         }
 
         try {
             Artisan::call('db:backup');
+
             return redirect()->back()->with('success', 'Database backup created successfully!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Backup failed: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Backup failed: '.$e->getMessage());
         }
     }
 
     public function download($filename)
     {
-        if (!auth()->user()->isAdmin()) {
+        if (! auth()->user()->isAdmin()) {
             abort(403);
         }
 
         $path = storage_path("app/backups/{$filename}");
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             abort(404);
         }
 
@@ -66,7 +64,7 @@ class BackupController extends Controller
 
     public function destroy($filename)
     {
-        if (!auth()->user()->isAdmin()) {
+        if (! auth()->user()->isAdmin()) {
             abort(403);
         }
 
@@ -74,6 +72,7 @@ class BackupController extends Controller
 
         if (file_exists($path)) {
             unlink($path);
+
             return redirect()->back()->with('success', 'Backup deleted successfully!');
         }
 

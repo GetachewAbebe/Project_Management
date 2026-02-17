@@ -1,0 +1,241 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#1 \$user of class Illuminate\\Auth\\Events\\Verified constructor expects Illuminate\\Contracts\\Auth\\MustVerifyEmail, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Http/Controllers/Auth/VerifyEmailController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Directorate\:\:\$projects_count\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Project\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Models\\Directorate\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Relation ''directorate'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Relation ''pi'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Relation ''project'' is not found in App\\Models\\Evaluation model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Employee\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/EmployeeController.php
+
+		-
+			message: '#^Relation ''directorate'' is not found in App\\Models\\Employee model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/EmployeeController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\EvaluationAssignment\:\:\$evaluator\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Http/Controllers/EvaluationAssignmentController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Project\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Project\>\:\:\$evaluations_count\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/EvaluationAssignmentController.php
+
+		-
+			message: '#^Relation ''evaluator'' is not found in App\\Models\\EvaluationAssignment model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/EvaluationAssignmentController.php
+
+		-
+			message: '#^Relation ''project'' is not found in App\\Models\\EvaluationAssignment model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/EvaluationAssignmentController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Project\:\:\$evaluations_count\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/EvaluationController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$employee\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Http/Controllers/EvaluationController.php
+
+		-
+			message: '#^Relation ''directorate'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: app/Http/Controllers/EvaluationController.php
+
+		-
+			message: '#^Relation ''evaluations'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 3
+			path: app/Http/Controllers/EvaluationController.php
+
+		-
+			message: '#^Relation ''pi'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: app/Http/Controllers/EvaluationController.php
+
+		-
+			message: '#^Relation ''directorate'' is not found in App\\Models\\Employee model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: app/Http/Controllers/ProjectController.php
+
+		-
+			message: '#^Relation ''directorate'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/ProjectController.php
+
+		-
+			message: '#^Relation ''evaluations'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/ProjectController.php
+
+		-
+			message: '#^Relation ''pi'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/ProjectController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\EvaluationAssignment\:\:\$evaluator\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/PublicEvaluationController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\EvaluationAssignment\:\:\$project\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/PublicEvaluationController.php
+
+		-
+			message: '#^Relation ''project'' is not found in App\\Models\\EvaluationAssignment model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/PublicEvaluationController.php
+
+		-
+			message: '#^Cannot access property \$user on object\|string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Requests/StoreEmployeeRequest.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and App\\Enums\\UserRole\:\:ADMIN will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and App\\Enums\\UserRole\:\:DIRECTOR will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and App\\Enums\\UserRole\:\:EVALUATOR will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$employee\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Policies/EmployeePolicy.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Evaluation\:\:\$project\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Policies/EvaluationPolicy.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$employee\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Policies/EvaluationPolicy.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Employee\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/EmployeeService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Project\:\:\$evaluations\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/EvaluationService.php
+
+		-
+			message: '#^Relation ''evaluations'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Services/EvaluationService.php
+
+		-
+			message: '#^Trait App\\Traits\\HasGlobalStats is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: app/Traits/HasGlobalStats.php
+
+		-
+			message: '#^Binary operation "\+" between string and 1 results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: database/factories/ProjectFactory.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 7
+			path: tests/Feature/EvaluationFeatureTest.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 7
+			path: tests/Feature/ProjectFeatureTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/ExampleTest.php

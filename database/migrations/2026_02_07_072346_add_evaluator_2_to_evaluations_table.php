@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('evaluations', function (Blueprint $table) {
             $table->renameColumn('evaluator_id', 'evaluator_1_id');
         });
-        
+
         Schema::table('evaluations', function (Blueprint $table) {
             $table->foreignId('evaluator_2_id')->after('evaluator_1_id')->nullable()->constrained('employees')->onDelete('cascade');
         });

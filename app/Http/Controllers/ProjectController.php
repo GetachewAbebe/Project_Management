@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
-use App\Models\Employee;
-use App\Models\Directorate;
-use App\Models\Evaluation;
-use App\Services\ProjectService;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
-use Illuminate\Http\Request;
-
+use App\Models\Employee;
+use App\Models\Project;
+use App\Services\ProjectService;
 
 class ProjectController extends Controller
 {
-
     protected $projectService;
 
     public function __construct(ProjectService $projectService)
@@ -25,12 +20,13 @@ class ProjectController extends Controller
     public function index()
     {
         $query = Project::with(['pi', 'directorate', 'evaluations']);
-        
+
         if (auth()->user()->isEvaluator()) {
             $query->where('status', 'REGISTERED');
         }
 
         $projects = $query->get();
+
         return view('projects.index', compact('projects'));
     }
 
@@ -38,6 +34,7 @@ class ProjectController extends Controller
     {
         $this->authorize('create', Project::class);
         $employees = Employee::with('directorate')->get();
+
         return view('projects.create', compact('employees'));
     }
 
@@ -62,6 +59,7 @@ class ProjectController extends Controller
         $this->authorize('update', $project);
 
         $employees = Employee::with('directorate')->get();
+
         return view('projects.edit', compact('project', 'employees'));
     }
 
@@ -86,7 +84,7 @@ class ProjectController extends Controller
         $this->authorize('delete', $project);
 
         $project->delete();
+
         return redirect()->route('projects.index')->with('success', 'Project removed.');
     }
-
 }

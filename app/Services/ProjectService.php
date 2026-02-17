@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Project;
 use App\Models\Employee;
+use App\Models\Project;
 
 class ProjectService
 {

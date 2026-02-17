@@ -4,8 +4,8 @@ namespace App\Traits;
 
 use App\Models\Directorate;
 use App\Models\Employee;
-use App\Models\Project;
 use App\Models\Evaluation;
+use App\Models\Project;
 
 trait HasGlobalStats
 {
@@ -18,7 +18,7 @@ trait HasGlobalStats
             'directorates' => Directorate::count(),
             'employees' => Employee::count(),
             'projects' => Project::count(),
-            'evaluations' => Evaluation::count()
+            'evaluations' => Evaluation::count(),
         ];
     }
 }

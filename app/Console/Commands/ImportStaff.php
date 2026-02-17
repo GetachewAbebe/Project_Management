@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Imports\StaffImport;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ImportStaff extends Command
 {
@@ -30,8 +30,9 @@ class ImportStaff extends Command
     {
         $filePath = $this->argument('file');
 
-        if (!File::exists($filePath)) {
+        if (! File::exists($filePath)) {
             $this->error("File not found at: {$filePath}");
+
             return 1;
         }
 
@@ -39,9 +40,10 @@ class ImportStaff extends Command
 
         try {
             Excel::import(new StaffImport, $filePath);
-            $this->info("✅ Staff records imported successfully!");
+            $this->info('✅ Staff records imported successfully!');
         } catch (\Exception $e) {
-            $this->error("❌ Import failed: " . $e->getMessage());
+            $this->error('❌ Import failed: '.$e->getMessage());
+
             return 1;
         }
 

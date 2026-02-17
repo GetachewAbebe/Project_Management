@@ -16,13 +16,13 @@ class StoreEvaluationRequest extends FormRequest
         return [
             'project_id' => 'required|exists:projects,id',
             'evaluator_id' => 'required|exists:employees,id',
-            
+
             'thematic_area_mark' => 'required|integer|min:1|max:5',
             'relevance_mark' => 'required|integer|min:1|max:5',
             'methodology_mark' => 'required|integer|min:1|max:5',
             'feasibility_mark' => 'required|integer|min:1|max:5',
             'overall_proposal_mark' => 'required|integer|min:1|max:5',
-            
+
             'comments' => 'nullable|string',
         ];
     }

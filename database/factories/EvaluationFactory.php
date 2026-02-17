@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Project;
 use App\Models\Employee;
+use App\Models\Project;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EvaluationFactory extends Factory
 {

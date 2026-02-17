@@ -12,13 +12,15 @@ class ImportExcelProjects extends Command
      * @var string
      */
     protected $signature = 'app:import-projects {file}';
+
     protected $description = 'Import projects from an Excel file';
 
     public function handle()
     {
         $file = $this->argument('file');
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             $this->error("File not found: $file");
+
             return 1;
         }
 
@@ -30,20 +32,20 @@ class ImportExcelProjects extends Command
 
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file);
             $worksheet = $spreadsheet->getActiveSheet();
-            
+
             $highestRow = $worksheet->getHighestRow();
             $count = 0;
             $currentDirectorate = null;
 
             for ($row = 1; $row <= $highestRow; $row++) {
-                $valA = trim($worksheet->getCell('A' . $row)->getValue() ?? '');
-                $valB = trim($worksheet->getCell('B' . $row)->getValue() ?? '');
+                $valA = trim($worksheet->getCell('A'.$row)->getValue() ?? '');
+                $valB = trim($worksheet->getCell('B'.$row)->getValue() ?? '');
 
                 // 1. Check for Directorate Section Header
                 if ($valA !== '' && $valB === '') {
-                    if (strtoupper($valA) !== 'S/NO.' && !is_numeric($valA)) {
+                    if (strtoupper($valA) !== 'S/NO.' && ! is_numeric($valA)) {
                         $directorateName = trim($valA);
-                        
+
                         $map = [
                             'Computional Sciences and Intelligence Systems' => 'Computational Science and Intelligent Systems',
                             'Nano Technology' => 'Nanotechnology',
@@ -55,6 +57,7 @@ class ImportExcelProjects extends Command
 
                         $currentDirectorate = \App\Models\Directorate::firstOrCreate(['name' => $directorateName]);
                         $this->info("Switching to Directorate: $directorateName");
+
                         continue;
                     }
                 }
@@ -63,9 +66,9 @@ class ImportExcelProjects extends Command
                     continue;
                 }
 
-                if (!empty($valB) && $currentDirectorate) {
-                    $piName    = $valB;
-                    
+                if (! empty($valB) && $currentDirectorate) {
+                    $piName = $valB;
+
                     // Normalize PI Name
                     $piMap = [
                         'Dr. Zekarias Gebreeyesus' => 'Dr. Zekarias Gebreyes',
@@ -84,18 +87,20 @@ class ImportExcelProjects extends Command
                         $targetDirectorate = \App\Models\Directorate::firstOrCreate(['name' => $dirOverrideMap[$piName]]);
                     }
 
-                    $title     = trim($worksheet->getCell('C' . $row)->getValue() ?? '');
-                    
-                    if (empty($title)) continue;
+                    $title = trim($worksheet->getCell('C'.$row)->getValue() ?? '');
+
+                    if (empty($title)) {
+                        continue;
+                    }
 
                     // Fetch calculated values to resolve formulas
-                    $cellObj = $worksheet->getCell('D' . $row);
+                    $cellObj = $worksheet->getCell('D'.$row);
                     $objective = $cellObj->getOldCalculatedValue() ?: $cellObj->getCalculatedValue();
-                    
-                    $startDate = $worksheet->getCell('E' . $row)->getCalculatedValue();
-                    $endDate   = $worksheet->getCell('F' . $row)->getCalculatedValue();
-                    $status    = strtoupper(trim($worksheet->getCell('G' . $row)->getCalculatedValue() ?? 'REGISTERED'));
-                    $code      = trim($worksheet->getCell('H' . $row)->getCalculatedValue() ?? '');
+
+                    $startDate = $worksheet->getCell('E'.$row)->getCalculatedValue();
+                    $endDate = $worksheet->getCell('F'.$row)->getCalculatedValue();
+                    $status = strtoupper(trim($worksheet->getCell('G'.$row)->getCalculatedValue() ?? 'REGISTERED'));
+                    $code = trim($worksheet->getCell('H'.$row)->getCalculatedValue() ?? '');
 
                     // Update or create PI
                     $employee = \App\Models\Employee::updateOrCreate(
@@ -110,8 +115,8 @@ class ImportExcelProjects extends Command
                             'pi_id' => $employee->id,
                             'directorate_id' => $targetDirectorate->id,
                             'objective' => $objective,
-                            'start_year' => is_numeric($startDate) ? (int)$startDate : null,
-                            'end_year' => is_numeric($endDate) ? (int)$endDate : null,
+                            'start_year' => is_numeric($startDate) ? (int) $startDate : null,
+                            'end_year' => is_numeric($endDate) ? (int) $endDate : null,
                             'status' => $status ?: 'REGISTERED',
                             'project_code' => $code ?: null,
                         ]
@@ -122,9 +127,11 @@ class ImportExcelProjects extends Command
             }
 
             $this->info("Successfully imported/updated $count projects across multiple directorates.");
+
             return 0;
         } catch (\Exception $e) {
-            $this->error("Error: " . $e->getMessage());
+            $this->error('Error: '.$e->getMessage());
+
             return 1;
         }
     }

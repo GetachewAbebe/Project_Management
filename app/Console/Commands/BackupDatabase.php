@@ -3,9 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Process\Process;
 
 class BackupDatabase extends Command
 {
@@ -33,9 +32,9 @@ class BackupDatabase extends Command
 
         $date = now()->format('Y-m-d_H-i-s');
         $filename = $this->option('filename') ?: "backup_{$connection}_{$date}.sql";
-        
+
         $backupDir = storage_path('app/backups');
-        if (!file_exists($backupDir)) {
+        if (! file_exists($backupDir)) {
             mkdir($backupDir, 0755, true);
         }
 
@@ -50,15 +49,17 @@ class BackupDatabase extends Command
                 $this->backupPostgres($dbConfig, $filePath);
             } else {
                 $this->error("Backup for driver '{$dbConfig['driver']}' is not supported yet.");
+
                 return 1;
             }
 
             $this->info("Backup successfully created: {$filePath}");
-            $this->info("Size: " . number_format(filesize($filePath) / 1024 / 1024, 2) . " MB");
-            
+            $this->info('Size: '.number_format(filesize($filePath) / 1024 / 1024, 2).' MB');
+
             return 0;
         } catch (\Exception $e) {
-            $this->error("Backup failed: " . $e->getMessage());
+            $this->error('Backup failed: '.$e->getMessage());
+
             return 1;
         }
     }
@@ -97,7 +98,7 @@ class BackupDatabase extends Command
         $process->setTimeout(300); // 5 minutes
         $process->run();
 
-        if (!$process->isSuccessful()) {
+        if (! $process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
     }

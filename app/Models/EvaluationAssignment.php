@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class EvaluationAssignment extends Model
@@ -15,7 +15,7 @@ class EvaluationAssignment extends Model
         'evaluator_id',
         'token',
         'status',
-        'expires_at'
+        'expires_at',
     ];
 
     protected $casts = [
