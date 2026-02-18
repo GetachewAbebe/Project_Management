@@ -1145,7 +1145,7 @@
                     <div class="stat-label">Expected Attendees</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">10</div>
+                    <div class="stat-num">10<sup>+</sup></div>
                     <div class="stat-label">Research Tracks</div>
                 </div>
                 <div class="stat-item">
