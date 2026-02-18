@@ -85,14 +85,6 @@
             display: flex; flex-direction: column; gap: 2rem;
             position: relative; overflow: hidden;
         }
-        /* Subtle DNA pattern overlay in sidebar */
-        .sidebar::before {
-            content: '';
-            position: absolute; inset: 0;
-            background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-            background-size: 24px 24px;
-            pointer-events: none;
-        }
 
         .step-list { display: flex; flex-direction: column; gap: 3rem; margin-top: 1rem; position: relative; }
         .step-list::before { content: ''; position: absolute; top: 14px; left: 13px; bottom: 14px; width: 2px; background: rgba(255,255,255,0.1); transform: translateX(-50%); }
@@ -192,24 +184,8 @@
 
             {{-- Sidebar --}}
             <aside class="sidebar">
-                {{-- DNA Helix Watermark --}}
-                <svg style="position:absolute; bottom:-20px; right:-20px; width:180px; height:auto; opacity:0.07; pointer-events:none; z-index:0;" viewBox="0 0 200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M60,0 C100,50 20,100 60,150 C100,200 20,250 60,300 C100,350 20,400 60,450 C100,500 20,550 60,600" stroke="white" stroke-width="4" fill="none"/>
-                    <path d="M140,0 C100,50 180,100 140,150 C100,200 180,250 140,300 C100,350 180,400 140,450 C100,500 180,550 140,600" stroke="white" stroke-width="4" fill="none"/>
-                    <line x1="60" y1="30" x2="140" y2="30" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="75" x2="140" y2="75" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="120" x2="140" y2="120" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="180" x2="140" y2="180" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="225" x2="140" y2="225" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="270" x2="140" y2="270" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="330" x2="140" y2="330" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="375" x2="140" y2="375" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="420" x2="140" y2="420" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="480" x2="140" y2="480" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="525" x2="140" y2="525" stroke="white" stroke-width="2"/>
-                    <line x1="60" y1="570" x2="140" y2="570" stroke="white" stroke-width="2"/>
-                </svg>
                 <div style="font-family: 'Outfit', sans-serif; position: relative; z-index: 1;">
+
                     <div style="display: inline-block; background: var(--emerald); color: white; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1.25rem;">BETin</div>
                     <h2 style="font-size: 2.6rem; font-weight: 900; line-height: 1; letter-spacing: -0.04em; margin-bottom: 1rem;">
                         8<sup style="font-size:1.2rem; vertical-align:super;">th</sup> Annual<br><span style="color: var(--emerald);">Review</span>

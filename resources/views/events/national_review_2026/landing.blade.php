@@ -1029,36 +1029,9 @@
             <div class="orb orb-1"></div>
             <div class="orb orb-2"></div>
             <div class="orb orb-3"></div>
-            {{-- DNA Helix Watermark (BETin brand motif) --}}
-            <svg style="position:absolute; right:2%; top:5%; width:420px; height:auto; opacity:0.045; pointer-events:none; z-index:3;" viewBox="0 0 200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Left strand -->
-                <path d="M60,0 C100,50 20,100 60,150 C100,200 20,250 60,300 C100,350 20,400 60,450 C100,500 20,550 60,600" stroke="#1a7a3c" stroke-width="3" fill="none"/>
-                <!-- Right strand -->
-                <path d="M140,0 C100,50 180,100 140,150 C100,200 180,250 140,300 C100,350 180,400 140,450 C100,500 180,550 140,600" stroke="#1a4a6b" stroke-width="3" fill="none"/>
-                <!-- Rungs -->
-                <line x1="60" y1="30" x2="140" y2="30" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="75" x2="140" y2="75" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="120" x2="140" y2="120" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="180" x2="140" y2="180" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="225" x2="140" y2="225" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="270" x2="140" y2="270" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="330" x2="140" y2="330" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="375" x2="140" y2="375" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="420" x2="140" y2="420" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="480" x2="140" y2="480" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="525" x2="140" y2="525" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <line x1="60" y1="570" x2="140" y2="570" stroke="white" stroke-width="1.5" opacity="0.6"/>
-                <!-- Node dots -->
-                <circle cx="60" cy="30" r="4" fill="#1a7a3c"/><circle cx="140" cy="30" r="4" fill="#1a4a6b"/>
-                <circle cx="60" cy="150" r="4" fill="#1a7a3c"/><circle cx="140" cy="150" r="4" fill="#1a4a6b"/>
-                <circle cx="60" cy="300" r="4" fill="#1a7a3c"/><circle cx="140" cy="300" r="4" fill="#1a4a6b"/>
-                <circle cx="60" cy="450" r="4" fill="#1a7a3c"/><circle cx="140" cy="450" r="4" fill="#1a4a6b"/>
-                <circle cx="60" cy="600" r="4" fill="#1a7a3c"/><circle cx="140" cy="600" r="4" fill="#1a4a6b"/>
-            </svg>
         </div>
 
 
-        {{-- Nav --}}
         <nav class="hero-nav">
             <div class="nav-brand">
                 <div class="nav-logo-box">
