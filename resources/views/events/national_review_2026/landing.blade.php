@@ -1450,7 +1450,7 @@
             this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
 
             var self = this;
-            var delta = 100 - Math.random() * 50; // Faster typing for directorates
+            var delta = 100 - Math.random() * 50;
 
             if (this.isDeleting) { delta /= 2; }
 
@@ -1485,6 +1485,31 @@
             for (var i=0; i<elements.length; i++) {
                 new TxtType(elements[i], toRotate, 2500);
             }
+        }
+
+        // Pathfinder 3.0 Timer Logic: Targeting February 27, 2026
+        function updatePathfinderTimer() {
+            const timerEl = document.getElementById('pathfinderTimer');
+            if (!timerEl) return;
+            
+            const target = new Date(2026, 1, 27, 23, 59, 59); // February 27, 2026 (Month is 0-indexed)
+            
+            const update = () => {
+                const now = new Date();
+                const diff = target - now;
+                if (diff <= 0) {
+                    timerEl.innerHTML = `00<span class="timer-unit">d</span> 00<span class="timer-unit">h</span> 00<span class="timer-unit">m</span>`;
+                    return;
+                }
+
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                timerEl.innerHTML = `${d.toString().padStart(2, '0')}<span class="timer-unit">d</span> ${h.toString().padStart(2, '0')}<span class="timer-unit">h</span> ${m.toString().padStart(2, '0')}<span class="timer-unit">m</span>`;
+            };
+            setInterval(update, 60000);
+            update();
         }
 
         window.addEventListener('load', () => {
