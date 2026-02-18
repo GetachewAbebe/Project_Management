@@ -27,6 +27,6 @@ class ReviewRegistration extends Model
         'available_on_date',
         'discovery_source',
         'support_letter_path',
-        'questions'
+        'questions',
     ];
 }

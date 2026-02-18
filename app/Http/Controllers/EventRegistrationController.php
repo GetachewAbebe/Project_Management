@@ -56,7 +56,7 @@ class EventRegistrationController extends Controller
             $validated['support_letter_path'] = $request->file('support_letter')->store('events/national_review_2026/support_letters', 'public');
         }
 
-        $validated['reference_code'] = 'BETI-2026-' . strtoupper(Str::random(6));
+        $validated['reference_code'] = 'BETI-2026-'.strtoupper(Str::random(6));
         $validated['status'] = 'pending';
 
         $registration = ReviewRegistration::create($validated);
@@ -70,6 +70,7 @@ class EventRegistrationController extends Controller
     public function confirmation($reference)
     {
         $registration = ReviewRegistration::where('reference_code', $reference)->firstOrFail();
+
         return view('events.national_review_2026.confirmation', compact('registration'));
     }
 
@@ -80,6 +81,7 @@ class EventRegistrationController extends Controller
     {
         // This will be protected by middleware in routes/web.php
         $registrations = ReviewRegistration::latest()->get();
+
         return view('events.national_review_2026.results', compact('registrations'));
     }
 }

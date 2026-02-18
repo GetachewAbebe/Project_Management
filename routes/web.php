@@ -63,7 +63,7 @@ Route::prefix('national-review-2026')->group(function () {
     Route::get('/register', [EventRegistrationController::class, 'create'])->name('event.register');
     Route::post('/register', [EventRegistrationController::class, 'store'])->name('event.register.store');
     Route::get('/confirmation/{reference}', [EventRegistrationController::class, 'confirmation'])->name('event.confirmation');
-    
+
     // Protected Admin Routes (Results)
     Route::middleware(['auth'])->group(function () {
         Route::get('/results', [EventRegistrationController::class, 'results'])->name('event.results');

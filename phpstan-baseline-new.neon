@@ -1,0 +1,13 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property App\\Models\\Project\:\:\$evaluations\.$#'
+			identifier: property.notFound
+			count: 16
+			path: app/Http/Controllers/EvaluationController.php
+
+		-
+			message: '#^Relation ''evaluations'' is not found in App\\Models\\Project model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: app/Http/Controllers/EvaluationController.php

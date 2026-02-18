@@ -15,13 +15,14 @@ class GlobalStatsComposer
      */
     public function compose(View $view): void
     {
-        // Registration Trend (Last 6 Months)
-        $trend = Project::selectRaw("to_char(created_at, 'Mon') as month, count(*) as count, min(created_at) as sort")
-                        ->where('created_at', '>=', now()->subMonths(6))
-                        ->groupBy('month')
-                        ->orderBy('sort')
-                        ->get()
-                        ->pluck('count', 'month');
+        // Registration Trend (Last 6 Months) - Database Agnostic
+        $trend = Project::where('created_at', '>=', now()->subMonths(6))
+            ->orderBy('created_at')
+            ->get()
+            ->groupBy(function ($project) {
+                return $project->created_at->format('M');
+            })
+            ->map(fn ($group) => $group->count());
 
         $view->with('globalStats', [
             'directorates' => Directorate::count(),
@@ -33,17 +34,17 @@ class GlobalStatsComposer
             'distinct_projects' => Evaluation::distinct('project_id')->count(),
             'passed_evaluations' => Evaluation::where('decision', 'SATISFACTORY')->count(),
             'searchable_projects' => Project::select('id', 'project_code', 'research_title')->get(),
-            
+
             // Advanced Analytics for Dashboard 2.0
             'projects_by_directorate' => Directorate::withCount('projects')
-                                            ->get()
-                                            ->pluck('projects_count', 'name'),
-            
+                ->get()
+                ->pluck('projects_count', 'name'),
+
             'registration_trend' => $trend,
-            
+
             'status_distribution' => Project::selectRaw('status, count(*) as count')
-                                        ->groupBy('status')
-                                        ->pluck('count', 'status')
+                ->groupBy('status')
+                ->pluck('count', 'status'),
         ]);
     }
 }
