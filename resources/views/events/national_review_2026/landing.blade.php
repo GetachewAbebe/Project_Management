@@ -676,23 +676,48 @@
         .footer-tiny span { color: var(--emerald); }
 
         @media (max-width: 1024px) {
-            .hero-nav, .hero-body, .hero-bottom, .section, .admin-section, .cta-section, .footer {
+            .hero-nav, .hero-body, .section, .admin-section, .cta-section, .hero-footer {
                 padding-left: 2rem;
                 padding-right: 2rem;
             }
-            .hero-body { flex-direction: column; gap: 3rem; padding-top: 4rem; }
-            .hero-right { min-width: unset; width: 100%; }
-            .about-grid { grid-template-columns: 1fr; }
-            .admin-stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .stat-row { gap: 2rem; }
+            .hero-body { 
+                flex-direction: column; 
+                gap: 4rem; 
+                padding-top: 6rem; 
+                padding-bottom: 6rem;
+                height: auto;
+                min-height: 100vh;
+                overflow-y: auto;
+            }
+            .hero-left { max-width: 100%; text-align: center; }
+            .hero-cta-group { justify-content: center; }
+            .hero-right { min-width: unset; width: 100%; max-width: 500px; margin: 0 auto; }
+            .stat-bar { padding: 2rem; }
+            .stat-row { flex-wrap: wrap; gap: 2rem; justify-content: center; border-radius: 32px; padding: 2rem; }
+            .hero { height: auto; min-height: 100vh; overflow-y: auto; }
+            body { height: auto; overflow-y: auto; }
+        }
+
+        @media (max-width: 900px) {
+            .modal-container { grid-template-columns: 1fr; border-radius: 0; min-height: 100vh; max-height: none; }
+            .modal-sidebar { display: none; }
+            .modal-content { padding: 5rem 2rem 3rem; }
+            .modal-overlay { padding: 0; align-items: stretch; }
+            .modal-close { top: 1rem; right: 1rem; background: var(--obsidian); color: white; }
         }
 
         @media (max-width: 640px) {
-            .hero-title { font-size: 3rem; }
-            .nav-title { display: none; }
-            .admin-stats-grid { grid-template-columns: 1fr 1fr; }
-            .hero-bottom { flex-direction: column; gap: 1.5rem; }
+            .hero-title { font-size: clamp(3rem, 12vw, 4rem); }
+            .nav-brand { gap: 0.75rem; }
+            .nav-logo-box { width: 60px; padding: 0.35rem; }
+            .nav-title { font-size: 0.7rem; }
+            .nav-title span { font-size: 0.55rem; }
+            .nav-btn { padding: 0.5rem 1rem; font-size: 0.75rem; }
+            .hero-subtitle { font-size: 1rem; margin-bottom: 2.5rem; }
+            .hero-body { gap: 3rem; }
+            .info-card { padding: 1rem 1.5rem; }
         }
+        
         /* Modal Overlay */
         .modal-overlay {
             position: fixed; inset: 0; z-index: 1000;
@@ -711,7 +736,7 @@
             position: relative; overflow: hidden;
             box-shadow: 0 50px 100px rgba(0,0,0,0.5);
             display: grid; grid-template-columns: 350px 1fr;
-            min-height: 700px;
+            min-height: 80vh; max-height: 90vh;
             transform: scale(0.95); transition: transform 0.5s var(--ease);
         }
         .modal-overlay.active .modal-container { transform: scale(1); }
@@ -737,7 +762,10 @@
         .modal-close:hover { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
 
         /* Pathfinder logic ported from register page */
-        .modal-content { padding: 4rem; position: relative; }
+        .modal-content { 
+            padding: 4rem; position: relative; 
+            overflow-y: auto; max-height: 90vh;
+        }
         .step-content { display: none; }
         .step-content.active { display: block; animation: slideIn 0.8s var(--ease) forwards; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
@@ -748,9 +776,16 @@
         .input-well:focus-within { border-color: var(--emerald); background: white; box-shadow: 0 10px 25px rgba(0, 163, 108, 0.08); }
         input, select, textarea { width: 100%; border: none; background: transparent; font-family: inherit; font-size: 1rem; font-weight: 600; color: var(--obsidian); outline: none; padding: 0.75rem 0; }
         
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+        .grid { 
+            display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; 
+        }
         .col-12 { grid-column: span 12; }
         .col-6 { grid-column: span 6; }
+
+        @media (max-width: 768px) {
+            .col-6 { grid-column: span 12; }
+            .grid { gap: 1rem; }
+        }
 
         .modal-nav { margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 2rem; }
         .btn-modal { padding: 1rem 2.5rem; border-radius: 100px; font-weight: 800; cursor: pointer; transition: all 0.3s; border: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
@@ -869,10 +904,10 @@
         }
         .timer-unit { font-size: 0.6rem; font-weight: 700; opacity: 0.5; }
 
-        @media (max-width: 900px) {
-            .modal-container { grid-template-columns: 1fr; }
-            .modal-sidebar { display: none; }
-            .modal-content { padding: 2rem; }
+        /* Ultra-Wide Correction */
+        @media (min-width: 2000px) {
+            .modal-container { max-width: 1400px; }
+            .hero-body { max-width: 1600px; margin: 0 auto; }
         }
     </style>
 </head>
@@ -1104,9 +1139,6 @@
                     <div class="window-timer" id="pathfinderTimer">
                         00<span class="timer-unit">d</span> 00<span class="timer-unit">h</span> 00<span class="timer-unit">m</span>
                     </div>
-                    <div style="font-size: 0.5rem; color: rgba(255,255,255,0.2); margin-top: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em;">
-                        Status: <span style="color: var(--emerald);">Awaiting Payload</span>
-                    </div>
                 </div>
             </aside>
 
@@ -1306,12 +1338,12 @@
         // Close on escape
         document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
 
-        // Pathfinder 3.0 Timer Logic: Targeting April 27, 2026
+        // Pathfinder 3.0 Timer Logic: Targeting February 27, 2026
         function updatePathfinderTimer() {
             const timerEl = document.getElementById('pathfinderTimer');
             if (!timerEl) return;
             
-            const target = new Date(2026, 3, 27, 23, 59, 59); // April 27, 2026 (Month is 0-indexed, so 3 is April)
+            const target = new Date(2026, 1, 27, 23, 59, 59); // February 27, 2026 (Month is 0-indexed, so 1 is February)
             
             const update = () => {
                 const now = new Date();
