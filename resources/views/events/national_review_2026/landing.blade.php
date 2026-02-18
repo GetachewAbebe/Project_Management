@@ -941,7 +941,7 @@
                     </div>
                     <div>
                         <div class="info-label">Event Date</div>
-                        <div class="info-value">March 2026 · Addis Ababa</div>
+                        <div class="info-value">March 11 – 13, 2026 · Addis Ababa</div>
                     </div>
                 </div>
                 <div class="info-card">
@@ -975,7 +975,7 @@
                     </div>
                     <div>
                         <div class="info-label">Submission Deadline</div>
-                        <div class="info-value">Open — Register Early</div>
+                        <div class="info-value">April 27, 2026</div>
                     </div>
                 </div>
             </div>
@@ -1306,19 +1306,20 @@
         // Close on escape
         document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
 
-        // Pathfinder 3.0 Timer Logic
+        // Pathfinder 3.0 Timer Logic: Targeting April 27, 2026
         function updatePathfinderTimer() {
             const timerEl = document.getElementById('pathfinderTimer');
             if (!timerEl) return;
             
-            const target = new Date();
-            target.setDate(target.getDate() + 41); // Simulated 41 days from reference
-            target.setHours(target.getHours() + 15);
+            const target = new Date(2026, 3, 27, 23, 59, 59); // April 27, 2026 (Month is 0-indexed, so 3 is April)
             
             const update = () => {
                 const now = new Date();
                 const diff = target - now;
-                if (diff <= 0) return;
+                if (diff <= 0) {
+                    timerEl.innerHTML = `00<span class="timer-unit">d</span> 00<span class="timer-unit">h</span> 00<span class="timer-unit">m</span>`;
+                    return;
+                }
 
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
