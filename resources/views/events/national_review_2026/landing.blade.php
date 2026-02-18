@@ -92,47 +92,69 @@
 
         .nav-brand {
             display: flex;
-            flex-direction: column; /* Stacked for central impact */
+            flex-direction: row; /* HORIZONTAL STRIP */
             align-items: center;
-            gap: 1.5rem;
-            text-align: center;
+            gap: 2rem;
+            text-align: left;
         }
 
         .nav-logo-box {
             background: white;
-            padding: 1rem 1.25rem;
-            border-radius: 20px;
-            width: 140px; /* SCALED UP */
+            padding: 0.8rem 1.1rem;
+            border-radius: 16px;
+            width: 120px; /* Refined for horizontal balance */
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 20px rgba(0, 163, 108, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.4s var(--ease);
+            transition: all 0.4s var(--ease);
+            flex-shrink: 0;
         }
 
         .nav-logo-box:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0, 163, 108, 0.2);
         }
 
         .nav-title {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem; /* Space between the two text groups */
             font-family: 'Outfit', sans-serif;
-            font-size: 1.1rem; /* SCALED UP */
+            font-size: 1rem;
             font-weight: 800;
             color: white;
-            line-height: 1.2;
+            line-height: 1;
             letter-spacing: -0.01em;
         }
 
-        .nav-title span {
-            display: block;
-            font-size: 0.8rem; /* SCALED UP */
+        /* The Vertical Separator */
+        .nav-title::after {
+            content: '';
+            order: 1;
+            width: 1px;
+            height: 24px;
+            background: rgba(255,255,255,0.15);
+            margin: 0 -0.5rem;
+        }
+
+        /* Bio and Emerging Tech Institute */
+        .nav-title-main {
+            order: 0;
+            white-space: nowrap;
+        }
+
+        /* National Review 2026 */
+        .nav-title-sub {
+            order: 2;
+            font-size: 0.85rem;
             font-weight: 700;
             color: var(--emerald);
-            letter-spacing: 0.2em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            margin-top: 0.5rem;
-            filter: drop-shadow(0 0 8px rgba(0, 163, 108, 0.3));
+            filter: drop-shadow(0 0 8px rgba(0, 163, 108, 0.25));
+            white-space: nowrap;
         }
 
         /* ACTIONS REMOVED FROM TOP PER REQUEST */
@@ -956,8 +978,8 @@
                     <x-logo width="100%" height="auto" />
                 </div>
                 <div class="nav-title">
-                    Bio and Emerging Technology Institute
-                    <span>National Review 2026</span>
+                    <div class="nav-title-main">Bio and Emerging Technology Institute</div>
+                    <div class="nav-title-sub">National Review 2026</div>
                 </div>
             </div>
             <div class="nav-actions">
