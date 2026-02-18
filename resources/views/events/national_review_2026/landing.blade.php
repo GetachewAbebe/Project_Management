@@ -88,12 +88,14 @@
 
         .nav-logo-box {
             background: white;
-            padding: 0.5rem 0.75rem;
-            border-radius: 10px;
-            width: 80px;
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            width: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .nav-title {
@@ -1084,29 +1086,29 @@
             </button>
             
             <aside class="modal-sidebar">
-                <div style="position: relative; margin-bottom: 2.5rem;">
+                <div style="position: relative; margin-bottom: 3.5rem;">
                     {{-- Branding Halo --}}
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 140px; height: 140px; background: radial-gradient(circle, rgba(0, 163, 108, 0.15) 0%, transparent 70%); pointer-events: none; z-index: 0;"></div>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 220px; height: 220px; background: radial-gradient(circle, rgba(0, 163, 108, 0.2) 0%, transparent 70%); pointer-events: none; z-index: 0;"></div>
                     
-                    <div style="position: relative; z-index: 1; width: 80px; height: 80px; background: white; padding: 12px; border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0, 163, 108, 0.3); box-shadow: 0 0 25px rgba(0, 163, 108, 0.2), inset 0 0 10px rgba(0,0,0,0.05); transition: all 0.5s var(--ease);">
+                    <div style="position: relative; z-index: 1; width: 130px; height: 130px; background: white; padding: 18px; border-radius: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0, 163, 108, 0.3); box-shadow: 0 0 35px rgba(0, 163, 108, 0.25), inset 0 0 15px rgba(0,0,0,0.05); transition: all 0.5s var(--ease);">
                         <x-logo width="100%" height="auto" />
                     </div>
                 </div>
 
                 <div style="font-family: 'Outfit', sans-serif; position: relative; z-index: 1;">
-                    <div style="display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; background: rgba(0, 163, 108, 0.1); border: 1px solid rgba(0, 163, 108, 0.2); border-radius: 100px; margin-bottom: 1rem;">
-                        <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--emerald); margin-right: 0.5rem; box-shadow: 0 0 5px var(--emerald);"></div>
-                        <span style="font-size: 0.6rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; color: var(--emerald);">Official Registry</span>
+                    <div style="display: inline-flex; align-items: center; padding: 0.35rem 1rem; background: rgba(0, 163, 108, 0.12); border: 1px solid rgba(0, 163, 108, 0.25); border-radius: 100px; margin-bottom: 1.25rem;">
+                        <div style="width: 5px; height: 5px; border-radius: 50%; background: var(--emerald); margin-right: 0.6rem; box-shadow: 0 0 8px var(--emerald);"></div>
+                        <span style="font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.25em; color: var(--emerald);">Official Registry</span>
                     </div>
 
-                    <h2 style="font-size: 2.2rem; font-weight: 900; line-height: 0.95; letter-spacing: -0.05em; margin-bottom: 0.75rem;">
+                    <h2 style="font-size: 2.8rem; font-weight: 900; line-height: 0.9; letter-spacing: -0.05em; margin-bottom: 1rem;">
                         National<br>
-                        <span style="background: linear-gradient(to right, #00a36c, #007d53); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 1px rgba(0, 163, 108, 0.3));">Review</span>
+                        <span style="background: linear-gradient(to right, #00a36c, #007d53); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 2px rgba(0, 163, 108, 0.3));">Review</span>
                     </h2>
 
-                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 1.25rem; opacity: 0.4;">
-                        <div style="flex: 1; height: 1px; background: linear-gradient(to right, rgba(255,255,255,0.2), transparent);"></div>
-                        <span style="font-family: monospace; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap;">EST. 2018 | ADDIS ABABA</span>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; opacity: 0.5;">
+                        <div style="flex: 1; height: 1px; background: linear-gradient(to right, rgba(255,255,255,0.25), transparent);"></div>
+                        <span style="font-family: monospace; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.15em; white-space: nowrap;">EST. 2018 | ADDIS ABABA</span>
                     </div>
                 </div>
                 
