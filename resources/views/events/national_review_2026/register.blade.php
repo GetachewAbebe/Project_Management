@@ -664,13 +664,19 @@
                 const row = document.createElement('div');
                 row.className = 'grid';
                 row.style.background = 'white';
-                row.style.padding = '1.25rem';
-                row.style.borderRadius = '12px';
-                row.style.border = '1px solid var(--border)';
-                row.style.marginBottom = '0.5rem';
+                row.style.padding = '1.75rem';
+                row.style.borderRadius = '20px';
+                row.style.border = '1px solid rgba(0, 163, 108, 0.1)';
+                row.style.borderLeft = '5px solid var(--emerald)';
+                row.style.marginBottom = '1.25rem';
+                row.style.boxShadow = '0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05)';
+                row.style.animation = `slideIn 0.5s var(--ease) ${i * 0.1}s both`;
                 
                 row.innerHTML = `
-                    <div class="col-12" style="font-size:0.75rem; font-weight:900; color:var(--emerald); text-transform:uppercase; margin-bottom:0.75rem;">Additional Project #${i}</div>
+                    <div class="col-12" style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="background: rgba(0, 163, 108, 0.1); color: var(--emerald); padding: 0.35rem 0.85rem; border-radius: 8px; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.1em; backdrop-filter: blur(4px); border: 1px solid rgba(0, 163, 108, 0.2);">PROJECT #${i}</span>
+                        <div style="height: 1px; flex: 1; background: linear-gradient(90deg, rgba(0, 163, 108, 0.1), transparent);"></div>
+                    </div>
                     <div class="field col-8">
                         <label>Presentation Title</label>
                         <input type="text" name="extra_titles[]" required placeholder="Title of additional research">
