@@ -331,23 +331,22 @@
         }
 
         /* Hero bottom bar */
-        .hero-bottom {
+        .stat-bar {
             position: relative;
-            z-index: 10;
-            padding: 1.5rem 5rem 2.5rem;
+            z-index: 5;
+            padding: 2rem 5rem;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            background: rgba(5, 5, 5, 0.6);
-            backdrop-filter: blur(25px);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
+            justify-content: center;
         }
 
         .stat-row {
             display: flex;
             gap: 6rem;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 4rem;
+            border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.06);
         }
         
         .stat-item { 
@@ -355,8 +354,6 @@
             transition: transform 0.3s;
         }
         .stat-item:hover { transform: translateY(-5px); }
-
-        .stat-item { text-align: center; }
 
         .stat-num {
             font-family: 'Outfit', sans-serif;
@@ -658,22 +655,24 @@
             line-height: 1.7;
         }
 
-        /* Footer styles removed - integrated into hero-bottom */
+        /* Corrected Footer */
+        .footer-zenith {
+            position: relative;
+            z-index: 10;
+            padding: 1.25rem 5rem;
+            text-align: center;
+            background: rgba(5, 5, 5, 0.4);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
         .footer-tiny {
-            font-size: 0.65rem;
-            color: rgba(255,255,255,0.2);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
             font-weight: 600;
             letter-spacing: 0.05em;
         }
-        .footer-tiny span { color: var(--emerald); opacity: 0.6; }
-
-        .footer-copy {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.3);
-            font-weight: 600;
-        }
-
-        .footer-copy span { color: var(--emerald); }
+        .footer-tiny span { color: var(--emerald); }
 
         @media (max-width: 1024px) {
             .hero-nav, .hero-body, .hero-bottom, .section, .admin-section, .cta-section, .footer {
@@ -875,8 +874,8 @@
             </div>
         </div>
 
-        {{-- Bottom bar --}}
-        <div class="hero-bottom">
+        {{-- Stats Bar (Content Layer) --}}
+        <div class="stat-bar">
             <div class="stat-row">
                 <div class="stat-item">
                     <div class="stat-num">8th</div>
@@ -895,12 +894,15 @@
                     <div class="stat-label">Days of Science</div>
                 </div>
             </div>
-
-            <div class="footer-tiny">
-                &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
-            </div>
         </div>
     </section>
+
+    {{-- Footer (Anchored Layer) --}}
+    <footer class="footer-zenith">
+        <div class="footer-tiny">
+            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
+        </div>
+    </footer>
 
     {{-- ══════════ ADMIN HUD (authorized only) ══════════ --}}
     @if($stats !== null)
