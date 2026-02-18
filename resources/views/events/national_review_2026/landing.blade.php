@@ -923,55 +923,6 @@
                         </svg>
                     </a>
                 </div>
-
-                <div class="registration-status-banner">
-                    <div class="status-banner-main">
-                        <div class="status-dot-large"></div>
-                        <div class="status-text-prime">Registration Open</div>
-                    </div>
-                    @php
-                        $deadline = \Carbon\Carbon::create(2026, 2, 27);
-                        $now = now();
-                        $daysRemaining = $now->diffInDays($deadline, false);
-                    @endphp
-                    <div class="status-text-sub">
-                        @if($daysRemaining > 0)
-                            {{ (int)$daysRemaining }} DAYS REMAINING
-                        @elseif($daysRemaining == 0)
-                            CLOSING TODAY
-                        @else
-                            REGISTRATION CLOSED
-                        @endif
-                    </div>
-                </div>
-
-                {{-- Admin Stats HUD (Visible to Admins) --}}
-                @if(auth()->check() && auth()->user()->isAdmin() && isset($stats))
-                <div class="admin-hud-inline">
-                    <div class="admin-hud-card">
-                        <div class="hud-header">
-                            <span class="hud-badge">
-                                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-                                Systems Genesis Control
-                            </span>
-                        </div>
-                        <div class="hud-grid">
-                            <div class="hud-stat">
-                                <span class="hud-num">{{ $stats['total'] ?? 0 }}</span>
-                                <span class="hud-label">Registrations</span>
-                            </div>
-                            <div class="hud-stat">
-                                <span class="hud-num">{{ $stats['today'] ?? 0 }}</span>
-                                <span class="hud-label">Today</span>
-                            </div>
-                        </div>
-                        <a href="{{ route('dashboard') }}" class="btn-hud-results">
-                            Enter Admin Sanctum
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                        </a>
-                    </div>
-                </div>
-                @endif
             </div>
 
             <div class="hero-right">
@@ -1022,6 +973,55 @@
                         <div class="info-value">February 27, 2026</div>
                     </div>
                 </div>
+
+                <div class="registration-status-banner" style="animation: revealUp 0.8s var(--ease) 0.5s both;">
+                    <div class="status-banner-main">
+                        <div class="status-dot-large"></div>
+                        <div class="status-text-prime">Registration Open</div>
+                    </div>
+                    @php
+                        $deadline = \Carbon\Carbon::create(2026, 2, 27);
+                        $now = now();
+                        $daysRemaining = $now->diffInDays($deadline, false);
+                    @endphp
+                    <div class="status-text-sub">
+                        @if($daysRemaining > 0)
+                            {{ (int)$daysRemaining }} DAYS REMAINING
+                        @elseif($daysRemaining == 0)
+                            CLOSING TODAY
+                        @else
+                            REGISTRATION CLOSED
+                        @endif
+                    </div>
+                </div>
+
+                {{-- Admin Stats HUD (Visible to Admins) --}}
+                @if(auth()->check() && auth()->user()->isAdmin() && isset($stats))
+                <div class="admin-hud-inline" style="animation: revealUp 0.8s var(--ease) 0.6s both;">
+                    <div class="admin-hud-card">
+                        <div class="hud-header">
+                            <span class="hud-badge">
+                                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                                Systems Genesis Control
+                            </span>
+                        </div>
+                        <div class="hud-grid">
+                            <div class="hud-stat">
+                                <span class="hud-num">{{ $stats['total'] ?? 0 }}</span>
+                                <span class="hud-label">Registrations</span>
+                            </div>
+                            <div class="hud-stat">
+                                <span class="hud-num">{{ $stats['today'] ?? 0 }}</span>
+                                <span class="hud-label">Today</span>
+                            </div>
+                        </div>
+                        <a href="{{ route('dashboard') }}" class="btn-hud-results">
+                            Enter Admin Sanctum
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </a>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
 
