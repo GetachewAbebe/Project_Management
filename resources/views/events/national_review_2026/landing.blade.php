@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8'th National Review 2026 | Bio and Emerging Technology Institute</title>
-    <meta name="description" content="Join the 8'th BETIn National Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
+    <title>8th National Review 2026 | Bio and Emerging Technology Institute</title>
+    <meta name="description" content="Join the 8th BETIn National Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -968,7 +968,7 @@
                     <span class="badge-text">Registration Open</span>
                 </div>
 
-                <p class="hero-edition">8'<sup>th</sup> Annual Review · 2026</p>
+                <p class="hero-edition">8<sup>th</sup> Annual Review · 2026</p>
 
                 <h1 class="hero-title">
                     National
@@ -1072,7 +1072,7 @@
         <div class="stat-bar">
             <div class="stat-row">
                 <div class="stat-item">
-                    <div class="stat-num">8'<sup>th</sup></div>
+                    <div class="stat-num">8<sup>th</sup></div>
                     <div class="stat-label">Annual Review</div>
                 </div>
                 <div class="stat-item">
