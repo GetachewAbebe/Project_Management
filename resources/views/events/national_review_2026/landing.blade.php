@@ -11,16 +11,18 @@
             --obsidian: #0f1f12;
             --navy: #1a4a6b;
             --emerald: #1a7a3c;
-            --emerald-glow: rgba(26, 122, 60, 0.15);
-            --emerald-light: rgba(26, 122, 60, 0.05);
+            --emerald-glow: rgba(26, 122, 60, 0.20);
+            --emerald-light: rgba(26, 122, 60, 0.04);
             --gold: #f59e0b;
             --alabaster: #f8f9fa;
-            --border: rgba(0,0,0,0.06);
-            --ease: cubic-bezier(0.4, 0, 0.2, 1);
-            --text-main: #1e293b;
+            --border: rgba(0,0,0,0.05);
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --text-main: #0f172a;
             --text-sub: #475569;
-            --glass: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.05);
+            --shadow-deep: 0 20px 60px -15px rgba(0,0,0,0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -67,44 +69,61 @@
             z-index: 0;
         }
 
-        /* Grid & Pattern overlay */
+        /* Atmosphere 2.0: Higher Density Patterns */
         .hero-atmosphere::before {
             content: '';
             position: absolute;
             inset: 0;
             background-image: 
-                radial-gradient(rgba(26,122,60,0.1) 1px, transparent 1px),
-                linear-gradient(rgba(26,122,60,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(26,122,60,0.03) 1px, transparent 1px);
-            background-size: 40px 40px, 80px 80px, 80px 80px;
+                radial-gradient(rgba(26,122,60,0.08) 1px, transparent 1px),
+                linear-gradient(rgba(26,122,60,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(26,122,60,0.02) 1px, transparent 1px);
+            background-size: 30px 30px, 120px 120px, 120px 120px;
             z-index: 1;
+            opacity: 0.8;
         }
 
-        /* Glow orbs inside atmosphere */
+        /* Layered Light System */
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(120px);
             pointer-events: none;
             z-index: 2;
+            animation: orb-float 25s infinite ease-in-out alternate;
         }
-        .orb-1 { width: 80vw; height: 80vw; background: rgba(26, 122, 60, 0.08); top: -20%; right: -20%; filter: blur(150px); }
-        .orb-2 { width: 60vw; height: 60vw; background: rgba(26, 74, 107, 0.08); bottom: -10%; left: -10%; filter: blur(120px); }
-        .orb-3 { width: 40vw; height: 40vw; background: rgba(26, 122, 60, 0.04); top: 30%; left: 40%; filter: blur(100px); }
+        .orb-1 { width: 85vw; height: 85vw; background: radial-gradient(circle, rgba(26, 122, 60, 0.1) 0%, transparent 70%); top: -30%; right: -20%; filter: blur(180px); animation-duration: 30s; }
+        .orb-2 { width: 65vw; height: 65vw; background: radial-gradient(circle, rgba(26, 74, 107, 0.08) 0%, transparent 70%); bottom: -15%; left: -10%; filter: blur(140px); animation-duration: 35s; animation-delay: -5s; }
+        .orb-3 { width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(26, 122, 60, 0.05) 0%, transparent 70%); top: 40%; left: 30%; filter: blur(120px); animation-duration: 40s; animation-delay: -10s; }
+        .orb-4 { width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(245, 158, 11, 0.02) 0%, transparent 70%); top: 10%; left: 10%; filter: blur(100px); animation-duration: 45s; }
+        .orb-5 { width: 90vw; height: 90vw; background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 80%); top: -50%; left: -10%; filter: blur(200px); z-index: 1; opacity: 0.4; }
+
+        @keyframes orb-float {
+            0% { transform: translate(0, 0) scale(1.0); }
+            33% { transform: translate(5%, -5%) scale(1.05); }
+            66% { transform: translate(-3%, 7%) scale(0.95); }
+            100% { transform: translate(5%, -2%) scale(1.02); }
+        }
 
         /* Nav */
         .hero-nav {
             position: relative;
-            z-index: 10;
+            z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2.5rem 5rem;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            border-top: 3px solid var(--emerald);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 2rem 5% 2rem;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            border-top: 4px solid var(--emerald);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+            transition: all 0.5s var(--ease);
+        }
+
+        .hero-nav:hover {
+            background: rgba(255, 255, 255, 0.85);
+            padding-top: 1.8rem;
+            padding-bottom: 1.8rem;
         }
 
         .nav-brand {
@@ -314,13 +333,14 @@
 
         .hero-title {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(3.2rem, 9vw, 6.5rem);
             font-weight: 900;
-            line-height: 0.9;
-            letter-spacing: -0.05em;
+            line-height: 0.85;
+            letter-spacing: -0.06em;
             color: var(--text-main);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             position: relative;
+            filter: drop-shadow(0 0 40px rgba(26, 122, 60, 0.1));
         }
 
         .typewriter-container {
@@ -407,24 +427,38 @@
         }
 
         .info-card {
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(0,0,0,0.05);
-            border-radius: 20px;
-            padding: 1.25rem 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 1.5rem 2.25rem;
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            transition: all 0.5s var(--ease);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            gap: 1.75rem;
+            transition: all 0.6s var(--ease);
+            box-shadow: var(--shadow-soft), var(--shadow-deep);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Floating Sheen Effect */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.8s var(--ease);
+            pointer-events: none;
         }
 
         .info-card:hover {
-            background: white;
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--emerald);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            box-shadow: 0 30px 60px -20px rgba(26,122,60,0.15), var(--shadow-deep);
         }
+
+        .info-card:hover::before { transform: translateX(100%); }
 
         .info-icon {
             width: 44px; height: 44px;
@@ -438,19 +472,20 @@
         }
 
         .info-label {
-            font-size: 0.6rem;
-            font-weight: 800;
+            font-size: 0.65rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             color: var(--text-sub);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
         }
 
         .info-value {
             font-family: 'Outfit', sans-serif;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 800;
             color: var(--text-main);
+            letter-spacing: -0.01em;
         }
 
         /* Hero bottom bar - Integrated Glass Footer */
@@ -502,6 +537,11 @@
             text-transform: uppercase;
             letter-spacing: 0.15em;
             margin-top: 0.25rem;
+        }
+
+        @keyframes revealUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .scroll-hint {
@@ -838,6 +878,8 @@
             <div class="orb orb-1"></div>
             <div class="orb orb-2"></div>
             <div class="orb orb-3"></div>
+            <div class="orb orb-4"></div>
+            <div class="orb orb-5"></div>
         </div>
 
         {{-- Nav --}}
@@ -920,33 +962,51 @@
             </div>
 
             <div class="hero-right">
-                <div class="info-card">
+                <div class="info-card" style="animation: revealUp 0.8s var(--ease) 0.1s both;">
                     <div class="info-icon">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
                     </div>
                     <div>
                         <div class="info-label">Event Date</div>
-                        <div class="info-value">March 11–13, 2026</div>
+                        <div class="info-value">March 11 – 13, 2026 · Addis Ababa</div>
                     </div>
                 </div>
 
-                <div class="info-card">
+                <div class="info-card" style="animation: revealUp 0.8s var(--ease) 0.2s both;">
                     <div class="info-icon">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
                     </div>
                     <div>
                         <div class="info-label">Venue</div>
-                        <div class="info-value">Addis Ababa, Ethiopia</div>
+                        <div class="info-value">Bio and Emerging Technology Institute</div>
                     </div>
                 </div>
 
-                <div class="info-card">
+                <div class="info-card" style="animation: revealUp 0.8s var(--ease) 0.3s both;">
                     <div class="info-icon">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
                     </div>
                     <div>
-                        <div class="info-label">Accreditation</div>
-                        <div class="info-value">Scientific Certification</div>
+                        <div class="info-label">Eligibility</div>
+                        <div class="info-value">Researchers, PhD & MSc Scholars</div>
+                    </div>
+                </div>
+                <div class="info-card" style="animation: revealUp 0.8s var(--ease) 0.4s both;">
+                    <div class="info-icon">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="info-label">Submission Deadline</div>
+                        <div class="info-value">February 27, 2026</div>
                     </div>
                 </div>
             </div>
