@@ -278,11 +278,11 @@
         }
 
         .typewriter-container {
-            display: block;
-            min-height: 1.25em;
+            display: inline-block; /* SEAMLESS INLINE */
             color: var(--emerald);
-            margin-top: 0.5rem;
-            font-size: 0.8em;
+            margin-left: 0.35rem;
+            font-size: 0.9em; /* Balanced for inline flow */
+            vertical-align: bottom;
         }
 
         .typewrite > .wrap {
@@ -1029,7 +1029,7 @@
                 <p class="hero-edition">8<sup>th</sup> Annual Review · 2026</p>
 
                 <h1 class="hero-title">
-                    National Review on
+                    Annual Review on
                     <span class="typewriter-container">
                         <span id="typewriter" class="typewrite"></span>
                     </span>
