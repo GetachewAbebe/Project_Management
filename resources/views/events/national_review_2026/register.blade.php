@@ -528,6 +528,25 @@
                                     <div style="font-size:0.7rem; color:#94a3b8; margin-top:0.25rem;">PDF, DOC, JPG · Max 10MB</div>
                                 </div>
                             </div>
+                            <div class="field col-6">
+                                <label>Your Travel Option</label>
+                                <select name="travel_option" required>
+                                    <option value="" disabled {{ old('travel_option') ? '' : 'selected' }}>Select travel method</option>
+                                    <option value="Bus" {{ old('travel_option') == 'Bus' ? 'selected' : '' }}>Bus</option>
+                                    <option value="Plane" {{ old('travel_option') == 'Plane' ? 'selected' : '' }}>Plane</option>
+                                    <option value="Office/Personal Car" {{ old('travel_option') == 'Office/Personal Car' ? 'selected' : '' }}>Office Car / Personal Car</option>
+                                </select>
+                                @error('travel_option')<div class="error-msg">{{ $message }}</div>@enderror
+                            </div>
+                            <div class="field col-6">
+                                <label>Do you need Room Service/Hotel?</label>
+                                <select name="needs_hotel" required>
+                                    <option value="" disabled {{ old('needs_hotel') ? '' : 'selected' }}>Select response</option>
+                                    <option value="Yes" {{ old('needs_hotel') == 'Yes' ? 'selected' : '' }}>Yes, I require accommodation</option>
+                                    <option value="No" {{ old('needs_hotel') == 'No' ? 'selected' : '' }}>No, I have my own arrangement</option>
+                                </select>
+                                @error('needs_hotel')<div class="error-msg">{{ $message }}</div>@enderror
+                            </div>
                             <div class="field col-12">
                                 <label>How did you hear about this event?</label>
                                 <select name="discovery_source" id="discoverySource" required onchange="toggleInviterField()">
@@ -709,12 +728,14 @@
 
         @if($errors->any())
             @php
+                $step3Fields = ['discovery_source', 'inviter_name', 'travel_option', 'needs_hotel'];
                 $step1Fields = ['full_name','email','phone','organization', 'job_title', 'department','city','gender','qualification', 'expertise', 'previous_attendance'];
                 $step2Fields = ['presentation_title','project_status','abstract_text','abstract_file','thematic_area','available_on_date'];
                 $goTo = 3;
                 foreach($errors->keys() as $k) {
                     if(in_array($k, $step1Fields)) { $goTo = 1; break; }
                     if(in_array($k, $step2Fields)) { $goTo = 2; break; }
+                    if(in_array($k, $step3Fields)) { $goTo = 3; break; }
                 }
             @endphp
             currentStep = {{ $goTo }};
