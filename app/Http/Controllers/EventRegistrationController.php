@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegistrationConfirmed;
 use App\Models\ReviewRegistration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class EventRegistrationController extends Controller
@@ -110,6 +112,14 @@ class EventRegistrationController extends Controller
 
         $registration = ReviewRegistration::create($validated);
 
+        // Notify Participant
+        try {
+            Mail::to($registration->email)->send(new RegistrationConfirmed($registration));
+        } catch (\Exception $e) {
+            // Log mail failure but don't block registration
+            \Illuminate\Support\Facades\Log::error('Mail failed: '.$e->getMessage());
+        }
+
         return redirect()->route('event.confirmation', $registration->reference_code);
     }
 
@@ -128,9 +138,54 @@ class EventRegistrationController extends Controller
      */
     public function results()
     {
-        // This will be protected by middleware in routes/web.php
         $registrations = ReviewRegistration::latest()->get();
 
         return view('events.national_review_2026.results', compact('registrations'));
+    }
+
+    /**
+     * Show the participant's data (Self-Service).
+     */
+    public function show($reference)
+    {
+        $registration = ReviewRegistration::where('reference_code', $reference)->firstOrFail();
+
+        return view('events.national_review_2026.show', compact('registration'));
+    }
+
+    /**
+     * Show the edit form for a participant (Self-Service).
+     */
+    public function edit($reference)
+    {
+        $registration = ReviewRegistration::where('reference_code', $reference)->firstOrFail();
+
+        return view('events.national_review_2026.edit', compact('registration'));
+    }
+
+    /**
+     * Update participant documents (Self-Service).
+     */
+    public function update(Request $request, $reference)
+    {
+        $registration = ReviewRegistration::where('reference_code', $reference)->firstOrFail();
+
+        $validated = $request->validate([
+            'presentation_ppt' => 'nullable|file|mimes:ppt,pptx|max:20480',
+            'support_letter' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
+        ]);
+
+        if ($request->hasFile('presentation_ppt')) {
+            // Delete old if exists (Optional)
+            $validated['presentation_ppt_path'] = $request->file('presentation_ppt')->store('events/national_review_2026/presentations', 'public');
+        }
+
+        if ($request->hasFile('support_letter')) {
+            $validated['support_letter_path'] = $request->file('support_letter')->store('events/national_review_2026/support_letters', 'public');
+        }
+
+        $registration->update($validated);
+
+        return back()->with('success', 'Documents updated successfully! Reference: '.$reference);
     }
 }

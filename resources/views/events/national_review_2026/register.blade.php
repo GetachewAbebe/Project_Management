@@ -520,7 +520,7 @@
                                 </div>
                             </div>
                             <div class="field col-6">
-                                <label>Institutional Support Letter</label>
+                                <label>Institutional Support Letter <span style="font-weight:400; text-transform:none; letter-spacing:0;">(optional)</span></label>
                                 <div class="file-zone" onclick="document.getElementById('supportInput').click()">
                                     <input type="file" id="supportInput" name="support_letter" style="display:none" onchange="updateFileInfo(this, 'supportInfo')">
                                     <div class="file-icon">📁</div>

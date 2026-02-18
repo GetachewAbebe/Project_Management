@@ -70,6 +70,11 @@ Route::prefix('national-review-2026')->group(function () {
     Route::post('/register', [EventRegistrationController::class, 'store'])->name('event.register.store');
     Route::get('/confirmation/{reference}', [EventRegistrationController::class, 'confirmation'])->name('event.confirmation');
 
+    // Participant Portal (Self-Service)
+    Route::get('/registration/{reference}', [EventRegistrationController::class, 'show'])->name('event.registration.show');
+    Route::get('/registration/{reference}/edit', [EventRegistrationController::class, 'edit'])->name('event.registration.edit');
+    Route::put('/registration/{reference}', [EventRegistrationController::class, 'update'])->name('event.registration.update');
+
     // Protected Admin Routes (Results)
     Route::middleware(['auth'])->group(function () {
         Route::get('/results', [EventRegistrationController::class, 'results'])->name('event.results');
