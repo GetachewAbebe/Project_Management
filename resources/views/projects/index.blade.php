@@ -6,21 +6,64 @@
 @section('content')
 <div style="max-width: 1400px; margin: 0 auto;">
     
-    <!-- Premium Card Container -->
-    <div class="premium-card">
+    <!-- Advanced Filtering Panel -->
+    <div class="premium-card" x-data="{ 
+        search: '', 
+        statusFilter: '', 
+        directorateFilter: '',
+        yearFilter: '',
+        clearFilters() {
+            this.search = '';
+            this.statusFilter = '';
+            this.directorateFilter = '';
+            this.yearFilter = '';
+        }
+    }">
         
-        <!-- Header -->
-        <div class="card-header-flex">
+        <!-- Header & Search -->
+        <div class="card-header-flex" style="flex-wrap: wrap; gap: 1.5rem;">
             <div>
                 <h3 class="card-title">Registry <span class="highlight">Database</span></h3>
-                <p class="card-subtitle">Accessing institutional research assets</p>
+                <p class="card-subtitle">Advanced institutional research portfolio</p>
             </div>
-            @can('create', App\Models\Project::class)
-            <a href="{{ route('projects.create') }}" class="btn-primary">
-                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                Register New Initiative
-            </a>
-            @endcan
+            
+            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; flex: 1; justify-content: flex-end;">
+                <!-- Live Search -->
+                <div class="search-container">
+                    <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" x-model="search" placeholder="Search title, code, or staff..." class="search-input">
+                </div>
+
+                <!-- Status Select -->
+                <select x-model="statusFilter" class="filter-select">
+                    <option value="">All Statuses</option>
+                    <option value="REGISTERED">New/Registered</option>
+                    <option value="ACTIVE">Active Research</option>
+                    <option value="FINALIZED">Finalized</option>
+                </select>
+
+                <!-- Directorate Select -->
+                <select x-model="directorateFilter" class="filter-select" style="max-width: 200px;">
+                    <option value="">All Directorates</option>
+                    @foreach($directorates as $dir)
+                        <option value="{{ $dir->name }}">{{ $dir->name }}</option>
+                    @endforeach
+                </select>
+
+                <!-- Year Input -->
+                <input type="number" x-model="yearFilter" placeholder="Year" class="filter-input" style="width: 100px;">
+
+                <button @click="clearFilters()" class="btn-secondary" x-show="search || statusFilter || directorateFilter || yearFilter" x-cloak>
+                    Clear
+                </button>
+                
+                @can('create', App\Models\Project::class)
+                <a href="{{ route('projects.create') }}" class="btn-primary">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                    Register
+                </a>
+                @endcan
+            </div>
         </div>
 
         <!-- Table -->
@@ -40,7 +83,18 @@
                 </thead>
                 <tbody>
                     @forelse($projects as $proj)
-                    <tr>
+                    @php
+                        $searchableTitle = strtolower($proj->research_title);
+                        $searchableCode = strtolower($proj->project_code);
+                        $searchablePI = strtolower($proj->pi?->full_name);
+                    @endphp
+                    <tr x-show="(search === '' || '{{ $searchableTitle }}'.includes(search.toLowerCase()) || '{{ $searchableCode }}'.includes(search.toLowerCase()) || '{{ $searchablePI }}'.includes(search.toLowerCase())) &&
+                             (statusFilter === '' || '{{ $proj->status }}' === statusFilter) &&
+                             (directorateFilter === '' || '{{ $proj->directorate?->name }}' === directorateFilter) &&
+                             (yearFilter === '' || '{{ $proj->start_year }}'.includes(yearFilter))"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 transform -translate-y-2"
+                        x-transition:enter-end="opacity-100 transform translate-y-0">
                         <td style="font-weight: 700; color: #94a3b8; text-align: center;">
                             {{ $loop->iteration }}
                         </td>
@@ -132,8 +186,12 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 5rem;">
-                            <div style="font-size: 1.1rem; font-weight: 700; color: #94a3b8;">No projects found in the registry.</div>
+                        <td colspan="8" style="text-align: center; padding: 5rem;">
+                            <div style="background: #f8fafc; border-radius: 20px; padding: 3rem; border: 2px dashed #e2e8f0;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">📂</div>
+                                <div style="font-size: 1.1rem; font-weight: 800; color: var(--brand-blue);">No initiatives found</div>
+                                <p style="color: #94a3b8; font-weight: 600; margin-top: 0.5rem;">Start by registering a new research project to begin tracking.</p>
+                            </div>
                         </td>
                     </tr>
                     @endforelse
@@ -163,6 +221,80 @@
         padding-bottom: 1.5rem;
         border-bottom: 2px solid #f8fafc;
     }
+
+    /* Search Bar */
+    .search-container {
+        position: relative;
+        width: 300px;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        background: #f8fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        color: var(--brand-blue);
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: var(--brand-green);
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 139, 75, 0.1);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+    }
+
+    /* Filter Controls */
+    .filter-select, .filter-input {
+        padding: 0.75rem 1rem;
+        background: #f8fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        color: var(--brand-blue);
+        transition: all 0.3s ease;
+        min-width: 140px;
+    }
+
+    .filter-select:focus, .filter-input:focus {
+        outline: none;
+        border-color: var(--brand-green);
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 139, 75, 0.1);
+    }
+
+    .btn-secondary {
+        padding: 0.75rem 1.25rem;
+        background: #f1f5f9;
+        color: #64748b;
+        border-radius: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+        background: #e2e8f0;
+        color: #334155;
+    }
+
+    [x-cloak] { display: none !important; }
 
     .card-title {
         font-size: 1.75rem;

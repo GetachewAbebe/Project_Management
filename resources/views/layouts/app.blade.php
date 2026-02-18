@@ -15,18 +15,14 @@
     
     <style>
         :root {
-            --sidebar-width: 300px;
-            --institutional-header-height: 96px;
-            --topbar-height: 0px;
             --brand-blue: #003B5C;
             --brand-green: #008B4B;
+            --sidebar-width: 280px;
+            --institutional-header-height: 90px;
+            --topbar-height: 0px;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
+        [x-cloak] { display: none !important; }
         /* Full-Width Institutional Header */
         .institutional-header {
             position: fixed;
@@ -43,20 +39,53 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .header-content-wrapper {
-            flex: 1;
+        .header-brand {
             display: flex;
-            justify-content: center;
-            margin-right: 180px; /* Offset for logo width to ensure true center */
+            align-items: center;
+            gap: 1rem;
         }
 
-        .institutional-header h1 {
-            font-size: 1.55rem;
+        .brand-logo-card {
+            background: white;
+            padding: 0.6rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-blue);
+        }
+
+        .header-title {
+            font-size: 1.6rem;
             font-weight: 800;
             color: white;
             margin: 0;
             letter-spacing: -0.01em;
             white-space: nowrap;
+        }
+
+        .header-title .highlight {
+            font-style: italic;
+            font-weight: 500;
+            color: var(--brand-green);
+            font-size: 0.95em;
+            letter-spacing: 0.02em;
+            text-shadow: 0 0 20px rgba(0, 139, 75, 0.4);
+        }
+
+        .header-subtitle {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: -0.2rem;
+            letter-spacing: 0.05em;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
 
         /* Left Sidebar */
@@ -111,15 +140,17 @@
         }
 
         .nav-item:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
-            transform: translateX(5px);
+            transform: translateX(8px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .nav-item.active {
-            background: var(--brand-green);
+            background: linear-gradient(135deg, var(--brand-green), #059669);
             color: white;
-            box-shadow: 0 8px 20px rgba(0, 139, 75, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 139, 75, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-item.active::before {
@@ -128,10 +159,11 @@
             left: -1rem;
             top: 50%;
             transform: translateY(-50%);
-            width: 4px;
+            width: 6px;
             height: 60%;
-            background: white;
-            border-radius: 0 2px 2px 0;
+            background: #fff;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 2px 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .nav-icon {
@@ -173,11 +205,12 @@
         .main-content {
             @auth
                 margin-left: var(--sidebar-width);
-                margin-top: calc(var(--institutional-header-height) + var(--topbar-height));
-                padding: 3rem 3rem 0 3rem;
-                min-height: calc(100vh - var(--institutional-header-height) - var(--topbar-height));
+                margin-top: var(--institutional-header-height);
+                padding: 4rem 4rem 0 4rem;
+                min-height: calc(100vh - var(--institutional-header-height));
                 display: flex;
                 flex-direction: column;
+                background: #f8fafc;
             @else
                 margin: 0 !important;
                 padding: 0 !important;
@@ -281,24 +314,29 @@
     @auth
     <!-- Full-Width Institutional Header -->
     <header class="institutional-header">
-        <!-- Logo Left -->
-        <div style="background: white; padding: 0.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 140px; display: flex; justify-content: center;">
+        <!-- Logo Left (Restored) -->
+        <div style="background: white; padding: 0.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 140px; display: flex; justify-content: center; flex-shrink: 0;">
             <x-logo width="100%" height="auto" />
         </div>
 
-        <!-- Centered Text Content -->
-        <div class="header-content-wrapper">
-            <h1>
-                <span style="font-weight: 800; letter-spacing: -0.01em;">Bio and Emerging Technology Institute</span>
-                <span style="margin: 0 1.25rem; color: rgba(255,255,255,0.3); font-weight: 300;">|</span>
-                <span style="font-style: italic; font-weight: 500; color: var(--brand-green); font-size: 0.95em; letter-spacing: 0.02em; text-shadow: 0 0 20px rgba(0, 139, 75, 0.4);">Project Management System</span>
+        <!-- Institutional Branding Text (Sophisticated Command Center Enhancement) -->
+        <div class="header-content-wrapper" style="flex: 1; text-align: center; margin-right: 140px;">
+            <h1 style="margin: 0; display: inline-flex; align-items: center; gap: 1.25rem;">
+                <span style="font-weight: 900; letter-spacing: -0.02em; background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 15px rgba(255,255,255,0.15));">Bio and Emerging Technology Institute</span>
+                <span style="height: 20px; width: 1.5px; background: rgba(255,255,255,0.1); box-shadow: 0 0 10px rgba(255,255,255,0.05);"></span>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 8px; height: 8px; background: var(--brand-green); border-radius: 50%; box-shadow: 0 0 15px var(--brand-green); animation: pulse 2s infinite;"></div>
+                    <span style="font-weight: 600; color: var(--brand-green); font-size: 0.9em; letter-spacing: 0.02em; text-shadow: 0 0 20px rgba(0, 139, 75, 0.3);">Project Management System</span>
+                </div>
             </h1>
         </div>
+
+        <!-- Right Side Balance Spacer (Match Logo Width) -->
+        <div style="width: 140px; flex-shrink: 0;"></div>
     </header>
 
     <!-- Left Sidebar -->
     <aside class="sidebar">
-        <!-- Logo removed from here -->
 
         <nav class="sidebar-nav">
             <!-- Main Section -->
@@ -364,6 +402,22 @@
                         <div style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 900; border: 1px solid rgba(245, 158, 11, 0.3); animation: pulse 2s ease-in-out infinite;">{{ $pendingCount }}</div>
                     @endif
                 </a>
+
+                <a href="{{ route('evaluations.summary') }}" class="nav-item {{ request()->routeIs('evaluations.summary') ? 'active' : '' }}">
+                    <div style="width: 40px; height: 40px; background: {{ request()->routeIs('evaluations.summary') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.08)' }}; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 17v-2m3 2v-4m3 2v-6m-8 13h11a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    </div>
+                    <span style="flex: 1;">Summary Report</span>
+                </a>
+
+                @auth
+                <a href="{{ route('event.results') }}" class="nav-item {{ request()->routeIs('event.results') ? 'active' : '' }}">
+                    <div style="width: 40px; height: 40px; background: {{ request()->routeIs('event.results') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.08)' }}; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    </div>
+                    <span style="flex: 1;">Review Attendees</span>
+                </a>
+                @endauth
             </div>
         </nav>
 
@@ -390,8 +444,7 @@
                      x-transition:leave="transition ease-in duration-150"
                      x-transition:leave-start="opacity: 1; transform: translateY(0)"
                      x-transition:leave-end="opacity: 0; transform: translateY(-10px)"
-                     style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column; gap: 0.5rem;"
-                     style="display: none;">
+                     style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column; gap: 0.5rem;">
                     
                     <a href="{{ route('profile.edit') }}" style="display: flex; align-items: center; gap: 0.75rem; color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.5rem; border-radius: 8px; transition: background 0.2s ease;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
@@ -487,7 +540,99 @@
         @endauth
     </main>
 
+    <!-- Toast Notifications -->
+    <div x-data="{ 
+            show: false, 
+            message: '', 
+            type: 'success',
+            init() {
+                @if(session('success'))
+                    this.showToast('{{ session('success') }}', 'success');
+                @endif
+                @if(session('error'))
+                    this.showToast('{{ session('error') }}', 'error');
+                @endif
+            },
+            showToast(msg, type) {
+                this.message = msg;
+                this.type = type;
+                this.show = true;
+                setTimeout(() => { this.show = false }, 5000);
+            }
+         }" 
+         x-show="show"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform translate-y-4"
+         x-transition:enter-end="opacity-100 transform translate-y-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 transform translate-y-0"
+         x-transition:leave-end="opacity-0 transform translate-y-4"
+         style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: none;"
+         @notify.window="showToast($event.detail.message, $event.detail.type || 'success')">
+        
+        <div :class="type === 'success' ? 'toast-success' : 'toast-error'" class="toast-container">
+            <div class="toast-icon">
+                <template x-if="type === 'success'">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                </template>
+                <template x-if="type === 'error'">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </template>
+            </div>
+            <div class="toast-content">
+                <div class="toast-title" x-text="type === 'success' ? 'Success' : 'Attention'"></div>
+                <div class="toast-message" x-text="message"></div>
+            </div>
+            <button @click="show = false" class="toast-close">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+    </div>
+
     <style>
+        .toast-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            border-radius: 16px;
+            min-width: 320px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toast-success { background: rgba(0, 139, 75, 0.95); color: white; }
+        .toast-error { background: rgba(239, 68, 68, 0.95); color: white; }
+
+        .toast-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .toast-content { flex: 1; }
+        .toast-title { font-weight: 900; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .toast-message { font-size: 0.85rem; font-weight: 500; opacity: 0.9; }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: white;
+            opacity: 0.5;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .toast-close:hover { background: rgba(255, 255, 255, 0.1); opacity: 1; }
+
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.6; transform: scale(0.95); }

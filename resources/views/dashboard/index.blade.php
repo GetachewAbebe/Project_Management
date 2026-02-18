@@ -5,113 +5,82 @@
 
 @section('content')
 
-<!-- Page Header with Quick Actions -->
-<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0; margin-top: 1rem;">
-    <div>
-        <h1 style="font-size: 2.25rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.03em; margin: 0 0 0.5rem 0; line-height: 1;">
-            Executive Overview
-        </h1>
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #ecfdf5; color: var(--brand-green); px-2 py-1; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid rgba(0, 139, 75, 0.2);">
-                <div style="width: 6px; height: 6px; background: var(--brand-green); border-radius: 50%; animation: pulse 2s ease-in-out infinite;"></div>
-                Live Dashboard
+<!-- Page Header with Futuristic Command Center Aesthetic -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; padding: 2.5rem 0; border-bottom: 2px solid #f1f5f9; position: relative;">
+    <div style="flex: 1;">
+        <!-- Intelligence Status Badge -->
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(0, 139, 75, 0.05); padding: 0.35rem 1rem; border-radius: 99px; border: 1px solid rgba(0, 139, 75, 0.15); box-shadow: 0 0 20px rgba(0, 139, 75, 0.05);">
+                <div style="width: 8px; height: 8px; background: var(--brand-green); border-radius: 50%; box-shadow: 0 0 12px var(--brand-green); animation: pulse 2s infinite;"></div>
+                <span style="font-size: 0.7rem; font-weight: 950; color: var(--brand-green); text-transform: uppercase; letter-spacing: 0.15em;">System Status • Active Session</span>
             </div>
-            <span style="font-size: 0.85rem; font-weight: 700; color: #94a3b8;">Updated {{ now()->format('g:i A') }}</span>
+            <div style="height: 1px; flex: 0.1; background: linear-gradient(90deg, rgba(0, 139, 75, 0.2), transparent);"></div>
+        </div>
+
+        <!-- Main Executive Title -->
+        <h1 style="font-size: 3rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.05em; margin: 0; line-height: 0.9; position: relative;">
+            Executive <span style="color: var(--brand-green); background: linear-gradient(135deg, var(--brand-green) 0%, #006d3d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Command Center</span>
+        </h1>
+        
+        <!-- Tactical Subtext -->
+        <div style="margin-top: 1rem; display: flex; align-items: center; gap: 1.5rem; color: #94a3b8; font-size: 0.85rem; font-weight: 700;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span>Dashboard Overview</span>
+            </div>
+            <div style="width: 4px; height: 4px; background: #cbd5e1; border-radius: 50%;"></div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>System Health: Synchronized</span>
+            </div>
         </div>
     </div>
-    <div style="display: flex; gap: 1rem;">
-        <a href="{{ route('projects.create') }}" style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.75rem; background: var(--brand-green); color: white; border-radius: 12px; font-weight: 900; font-size: 0.95rem; text-decoration: none; box-shadow: 0 8px 20px rgba(0, 139, 75, 0.25); transition: all 0.3s ease; border: none; cursor: pointer;">
-            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-            New Project
-        </a>
-        <button onclick="window.print()" style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.75rem; background: white; color: var(--brand-blue); border: 2px solid #e2e8f0; border-radius: 12px; font-weight: 900; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease;">
-            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            Export Report
-        </button>
+
+    <!-- Tactical Command Clock -->
+    <div style="background: white; padding: 1.15rem 1.75rem; border-radius: 20px; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 1.5rem;">
+        <div style="text-align: right;">
+            <div style="font-size: 0.7rem; font-weight: 950; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 4px;">Current System Time</div>
+            <div style="font-size: 1.75rem; font-weight: 950; color: var(--brand-blue); font-family: 'Outfit', sans-serif; letter-spacing: -0.03em; line-height: 1;">
+                {{ now()->format('H:i') }}<span style="color: var(--brand-green); font-size: 0.85em; margin-left: 2px;">:{{ now()->format('s') }}</span>
+            </div>
+        </div>
+        <div style="width: 52px; height: 52px; background: rgba(0, 59, 92, 0.05); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--brand-blue); position: relative;">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div style="position: absolute; top: -2px; right: -2px; width: 12px; height: 12px; background: var(--brand-green); border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px var(--brand-green);"></div>
+        </div>
     </div>
 </div>
 
 <!-- Enhanced Stat Cards with Trends -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3.5rem;">
-    <!-- Strategic Initiatives Card -->
-    <div class="stat-card-pro" style="background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease;">
-        <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: radial-gradient(circle, rgba(0, 139, 75, 0.08) 0%, transparent 70%); border-radius: 50%;"></div>
-        
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; position: relative; z-index: 2;">
-            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--brand-green) 0%, #006d3d 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0, 139, 75, 0.3);">
-                <svg width="28" height="28" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(0, 139, 75, 0.1); color: var(--brand-green); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; font-weight: 900;">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                <span>12%</span>
-            </div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; margin-bottom: 4rem;">
+    <!-- Research Core metrics -->
+    <div style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #f1f5f9; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 1.5rem;">
+        <div style="width: 64px; height: 64px; background: rgba(0, 59, 92, 0.05); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: var(--brand-blue);">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
         </div>
-        
-        <div style="position: relative; z-index: 2;">
-            <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Strategic Initiatives</div>
-            <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem;">
-                <div class="counter" style="font-size: 3.5rem; font-weight: 950; color: var(--brand-green); line-height: 1; letter-spacing: -0.04em;">{{ $stats['ongoing_projects'] }}</div>
-                <div style="font-size: 0.9rem; font-weight: 800; color: #94a3b8;">active</div>
-            </div>
-            <div style="font-size: 0.85rem; color: #64748b; font-weight: 700;">
-                <span style="color: var(--brand-green); font-weight: 900;">+{{ $stats['ongoing_projects'] > 0 ? rand(1, 3) : 0 }}</span> from last month
-            </div>
+        <div>
+            <div style="font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;">Research Portfolio</div>
+            <div style="font-size: 2.25rem; font-weight: 950; color: var(--brand-blue); line-height: 1;">{{ $stats['projects'] }}</div>
         </div>
     </div>
 
-    <!-- Success Ratio Card -->
-    <div class="stat-card-pro" style="background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease;">
-        <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: radial-gradient(circle, rgba(8, 145, 178, 0.08) 0%, transparent 70%); border-radius: 50%;"></div>
-        
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; position: relative; z-index: 2;">
-            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(8, 145, 178, 0.3);">
-                <svg width="28" height="28" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(8, 145, 178, 0.1); color: #0891b2; padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; font-weight: 900;">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                <span>8%</span>
-            </div>
+    <div style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #f1f5f9; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 1.5rem;">
+        <div style="width: 64px; height: 64px; background: rgba(0, 139, 75, 0.05); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: var(--brand-green);">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
-        
-        <div style="position: relative; z-index: 2;">
-            <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Success Ratio</div>
-            <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem;">
-                <div class="counter" style="font-size: 3.5rem; font-weight: 950; color: #0891b2; line-height: 1; letter-spacing: -0.04em;">{{ round(($stats['completed_projects'] / max($stats['projects'], 1)) * 100) }}%</div>
-            </div>
-            <div style="font-size: 0.85rem; color: #64748b; font-weight: 700;">
-                {{ $stats['completed_projects'] }} of {{ $stats['projects'] }} completed
-            </div>
+        <div>
+            <div style="font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;">Performance Index</div>
+            <div style="font-size: 2.25rem; font-weight: 950; color: var(--brand-green); line-height: 1;">{{ round($stats['performance_index']) }}%</div>
         </div>
     </div>
 
-    <!-- Pending Reviews Card -->
-    <div class="stat-card-pro" style="background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease;">
-        <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%); border-radius: 50%;"></div>
-        
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; position: relative; z-index: 2;">
-            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);">
-                <svg width="28" height="28" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            @if(($stats['awaiting_evaluation'] ?? 0) > 0)
-            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; font-weight: 900;">
-                <span>Urgent</span>
-            </div>
-            @endif
+    <div style="background: white; border-radius: 24px; padding: 2rem; border: 1px solid #f1f5f9; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 1.5rem;">
+        <div style="width: 64px; height: 64px; background: rgba(245, 158, 11, 0.05); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #f59e0b;">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
-        
-        <div style="position: relative; z-index: 2;">
-            <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Pending Reviews</div>
-            <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem;">
-                <div class="counter" style="font-size: 3.5rem; font-weight: 950; color: #f59e0b; line-height: 1; letter-spacing: -0.04em;">{{ $stats['awaiting_evaluation'] ?? 0 }}</div>
-                <div style="font-size: 0.9rem; font-weight: 800; color: #94a3b8;">awaiting</div>
-            </div>
-            <div style="font-size: 0.85rem; color: #64748b; font-weight: 700;">
-                @if(($stats['awaiting_evaluation'] ?? 0) > 0)
-                    <span style="color: #ef4444; font-weight: 900;">Action required</span>
-                @else
-                    All evaluations current
-                @endif
-            </div>
+        <div>
+            <div style="font-size: 0.8rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;">Registry Pipeline</div>
+            <div style="font-size: 2.25rem; font-weight: 950; color: #f59e0b; line-height: 1;">{{ $stats['ongoing_projects'] }}</div>
         </div>
     </div>
 </div>

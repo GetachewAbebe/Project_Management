@@ -14,7 +14,7 @@ class AdminUserSeeder extends Seeder
             ['email' => 'admin@betin.gov.et'],
             [
                 'name' => 'BETin Administrator',
-                'password' => Hash::make('BETin@2026'),
+                'password' => Hash::make('BETinAdmin@2026'),
                 'role' => 'admin',
             ]
         );

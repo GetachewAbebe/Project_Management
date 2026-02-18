@@ -147,4 +147,106 @@ class EvaluationController extends Controller
         return redirect()->route('evaluations.index')
             ->with('success', 'Evaluation submitted successfully for "'.$project->research_title.'".');
     }
+
+    public function summary()
+    {
+        $this->authorize('viewAny', Evaluation::class);
+        $user = auth()->user();
+
+        $query = Project::with(['pi', 'directorate', 'evaluations.evaluator']);
+
+        if ($user->isDirector() && $user->directorate_id) {
+            $query->where('directorate_id', $user->directorate_id);
+        }
+
+        $allProjects = $query->get();
+        
+        // Sorting: Primarily by Directorate Name (Alphabetical), then by Evaluation Status
+        $projects = $allProjects->sort(function($a, $b) {
+            $dirA = $a->directorate->name ?? 'Z-None';
+            $dirB = $b->directorate->name ?? 'Z-None';
+            
+            if ($dirA !== $dirB) {
+                return strcmp($dirA, $dirB);
+            }
+            
+            // Within same directorate, put evaluated ones first
+            $hasEvalsA = $a->evaluations->count() > 0;
+            $hasEvalsB = $b->evaluations->count() > 0;
+            
+            if ($hasEvalsA !== $hasEvalsB) {
+                return $hasEvalsB <=> $hasEvalsA;
+            }
+            
+            return strcmp($a->research_title, $b->research_title);
+        })->values();
+
+        // Calculate Stats
+        $stats = [
+            'total' => $allProjects->count(),
+            'evaluated' => $allProjects->filter(fn($p) => $p->evaluations->count() > 0)->count(),
+            'unevaluated' => $allProjects->filter(fn($p) => $p->evaluations->count() == 0)->count(),
+            'accepted' => $allProjects->filter(function($p) {
+                return $p->evaluations->count() > 0 && $p->evaluations->avg('total_score') >= 70;
+            })->count(),
+            'unaccepted' => $allProjects->filter(function($p) {
+                return $p->evaluations->count() > 0 && $p->evaluations->avg('total_score') < 70;
+            })->count(),
+        ];
+
+        return view('evaluations.summary', compact('projects', 'stats'));
+    }
+
+    public function exportSummary()
+    {
+        $this->authorize('viewAny', Evaluation::class);
+        $user = auth()->user();
+
+        $query = Project::with(['pi', 'directorate', 'evaluations.evaluator']);
+
+        if ($user->isDirector() && $user->directorate_id) {
+            $query->where('directorate_id', $user->directorate_id);
+        }
+
+        $allProjects = $query->get();
+        
+        // Sorting: Primarily by Directorate Name (Alphabetical), then by Evaluation Status
+        $projects = $allProjects->sort(function($a, $b) {
+            $dirA = $a->directorate->name ?? 'Z-None';
+            $dirB = $b->directorate->name ?? 'Z-None';
+            
+            if ($dirA !== $dirB) {
+                return strcmp($dirA, $dirB);
+            }
+            
+            // Within same directorate, put evaluated ones first
+            $hasEvalsA = $a->evaluations->count() > 0;
+            $hasEvalsB = $b->evaluations->count() > 0;
+            
+            if ($hasEvalsA !== $hasEvalsB) {
+                return $hasEvalsB <=> $hasEvalsA;
+            }
+            
+            return strcmp($a->research_title, $b->research_title);
+        })->values();
+
+        // Calculate Stats
+        $stats = [
+            'total' => $allProjects->count(),
+            'evaluated' => $allProjects->filter(fn($p) => $p->evaluations->count() > 0)->count(),
+            'unevaluated' => $allProjects->filter(fn($p) => $p->evaluations->count() == 0)->count(),
+            'accepted' => $allProjects->filter(function($p) {
+                return $p->evaluations->count() > 0 && $p->evaluations->avg('total_score') >= 70;
+            })->count(),
+            'unaccepted' => $allProjects->filter(function($p) {
+                return $p->evaluations->count() > 0 && $p->evaluations->avg('total_score') < 70;
+            })->count(),
+        ];
+
+        $filename = 'Evaluation_Summary_Report_' . date('Y-m-d') . '.doc';
+
+        return response()->view('evaluations.export_summary', compact('projects', 'stats'))
+            ->header('Content-Type', 'application/msword')
+            ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
+    }
 }

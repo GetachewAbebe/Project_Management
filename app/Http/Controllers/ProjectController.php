@@ -26,8 +26,9 @@ class ProjectController extends Controller
         }
 
         $projects = $query->get();
+        $directorates = \App\Models\Directorate::orderBy('name')->get();
 
-        return view('projects.index', compact('projects'));
+        return view('projects.index', compact('projects', 'directorates'));
     }
 
     public function create()

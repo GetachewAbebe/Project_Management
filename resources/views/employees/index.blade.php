@@ -4,18 +4,27 @@
 @section('header_title', 'Personnel Directory')
 
 @section('content')
-<div class="card animate-up">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 2rem;">
+<div class="card animate-up" x-data="{ search: '' }">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem;">
         <div>
             <h3 style="font-size: 1.75rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.04em; margin: 0;">Staff <span style="color: var(--brand-green);">Directory</span></h3>
             <p style="font-size: 0.95rem; color: #64748b; font-weight: 700; margin-top: 0.5rem;">Managing human capital and institutional access</p>
         </div>
-        @can('create', App\Models\Employee::class)
-        <a href="{{ route('employees.create') }}" class="btn-primary" style="text-decoration: none; padding: 1.1rem 2.25rem; font-size: 0.95rem;">
-            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 0.75rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
-            Register New Staff
-        </a>
-        @endcan
+        
+        <div style="display: flex; gap: 1.25rem; align-items: center;">
+            <!-- Live Search -->
+            <div class="search-container">
+                <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" x-model="search" placeholder="Search staff, email, or ID..." class="search-input">
+            </div>
+
+            @can('create', App\Models\Employee::class)
+            <a href="{{ route('employees.create') }}" class="btn-primary" style="text-decoration: none; padding: 1.1rem 2.25rem; font-size: 0.95rem;">
+                <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 0.75rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                Register
+            </a>
+            @endcan
+        </div>
     </div>
 
     <div style="overflow-x: auto;">
@@ -32,7 +41,17 @@
             </thead>
             <tbody>
                 @foreach($employees as $emp)
-                <tr class="premium-row">
+                @php
+                    $searchableName = strtolower($emp->full_name);
+                    $searchableEmail = strtolower($emp->email);
+                    $searchableID = strtolower($emp->institutional_id);
+                    $searchableJob = strtolower($emp->job_title ?? 'staff');
+                @endphp
+                <tr class="premium-row" 
+                    x-show="search === '' || '{{ $searchableName }}'.includes(search.toLowerCase()) || '{{ $searchableEmail }}'.includes(search.toLowerCase()) || '{{ $searchableID }}'.includes(search.toLowerCase()) || '{{ $searchableJob }}'.includes(search.toLowerCase())"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 transform -translate-y-2"
+                    x-transition:enter-end="opacity-100 transform translate-y-0">
                     <td style="padding-left: 1.5rem;">
                         <div style="display: flex; align-items: center; gap: 1.25rem;">
                             <div style="width: 54px; height: 54px; background: linear-gradient(135deg, var(--brand-blue) 0%, #002d4a 100%); color: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.25rem; box-shadow: 0 4px 12px rgba(0, 59, 92, 0.15);">
@@ -95,6 +114,39 @@
     0% { transform: scale(0.95); opacity: 0.8; }
     50% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* Shared Search Styles */
+.search-container {
+    position: relative;
+    width: 300px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    color: var(--brand-blue);
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--brand-green);
+    background: white;
+    box-shadow: 0 4px 15px rgba(0, 139, 75, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
 }
 </style>
 @endsection
