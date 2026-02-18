@@ -473,6 +473,25 @@
                                     <option value="No" {{ old('available_on_date') == 'No' ? 'selected' : '' }}>No, I have partial availability</option>
                                 </select>
                             </div>
+
+                            <div class="field col-12" style="margin-top: 1rem; padding: 1.5rem; background: rgba(0, 163, 108, 0.03); border-radius: 16px; border: 1px dashed rgba(0, 163, 108, 0.2);">
+                                <label style="color: var(--emerald); margin-bottom: 1rem;">Additional Presentations</label>
+                                <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem;">
+                                    <span style="font-size: 0.85rem; font-weight: 600; color: #64748b;">Do you have more projects to present?</span>
+                                    <select id="hasMoreProjects" onchange="toggleMultiProject(this.value)" style="width: auto; padding: 0.5rem 1rem;">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>
+                                    </select>
+                                </div>
+                                
+                                <div id="multiProjectConfig" style="display:none; animation: fadeIn 0.4s ease;">
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: #64748b;">How many additional projects?</span>
+                                        <input type="number" id="projectCount" min="1" max="5" value="1" onchange="generateProjectFields(this.value)" style="width: 80px; padding: 0.5rem;">
+                                    </div>
+                                    <div id="additionalProjectsContainer" style="display: grid; gap: 1rem;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -626,6 +645,46 @@
                 field.style.display = 'none';
                 input.removeAttribute('required');
                 input.value = ''; // Clear if hidden
+            }
+        }
+
+        function toggleMultiProject(val) {
+            const config = document.getElementById('multiProjectConfig');
+            config.style.display = val === 'yes' ? 'block' : 'none';
+            if (val === 'yes') generateProjectFields(document.getElementById('projectCount').value);
+            else document.getElementById('additionalProjectsContainer').innerHTML = '';
+        }
+
+        function generateProjectFields(count) {
+            const container = document.getElementById('additionalProjectsContainer');
+            container.innerHTML = '';
+            count = Math.min(Math.max(count, 1), 5);
+            
+            for (let i = 1; i <= count; i++) {
+                const row = document.createElement('div');
+                row.className = 'grid';
+                row.style.background = 'white';
+                row.style.padding = '1.25rem';
+                row.style.borderRadius = '12px';
+                row.style.border = '1px solid var(--border)';
+                row.style.marginBottom = '0.5rem';
+                
+                row.innerHTML = `
+                    <div class="col-12" style="font-size:0.75rem; font-weight:900; color:var(--emerald); text-transform:uppercase; margin-bottom:0.75rem;">Additional Project #${i}</div>
+                    <div class="field col-8">
+                        <label>Presentation Title</label>
+                        <input type="text" name="extra_titles[]" required placeholder="Title of additional research">
+                    </div>
+                    <div class="field col-4">
+                        <label>Project Status</label>
+                        <select name="extra_statuses[]" required>
+                            <option value="New">New Project</option>
+                            <option value="Ongoing">Ongoing Research</option>
+                            <option value="Completed">Completed (Last 3 years)</option>
+                        </select>
+                    </div>
+                `;
+                container.appendChild(row);
             }
         }
 
