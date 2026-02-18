@@ -655,8 +655,8 @@
             line-height: 1.7;
         }
 
-        /* Corrected Footer */
-        .footer-zenith {
+        /* Synchronized Footer */
+        .hero-footer {
             position: relative;
             z-index: 10;
             padding: 1.25rem 5rem;
@@ -664,6 +664,7 @@
             background: rgba(5, 5, 5, 0.4);
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.3);
         }
 
         .footer-tiny {
@@ -895,14 +896,14 @@
                 </div>
             </div>
         </div>
-    </section>
 
-    {{-- Footer (Anchored Layer) --}}
-    <footer class="footer-zenith">
-        <div class="footer-tiny">
-            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
-        </div>
-    </footer>
+        {{-- Footer (Integrated for Symmetry) --}}
+        <footer class="hero-footer">
+            <div class="footer-tiny">
+                &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
+            </div>
+        </footer>
+    </section>
 
     {{-- ══════════ ADMIN HUD (authorized only) ══════════ --}}
     @if($stats !== null)
