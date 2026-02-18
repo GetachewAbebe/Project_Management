@@ -39,10 +39,7 @@
                 <h1 class="title">Registration Confirmed</h1>
                 <p class="text">Dear {{ $registration->full_name }},<br><br>Your registration for the 8<sup>th</sup> Annual Review has been successfully processed. We are excited to have you join our premier scientific event.</p>
                 
-                <div class="reference-box">
-                    <div class="reference-label">Participant Unique ID</div>
-                    <div class="reference-code">{{ $registration->reference_code }}</div>
-                </div>
+                
                 
                 <table class="details-table">
                     <tr>

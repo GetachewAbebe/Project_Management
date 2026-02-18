@@ -235,11 +235,6 @@
                 </div>
             </div>
 
-            <div class="participant-id-box">
-                <div class="id-label">Participant Unique ID</div>
-                <div class="id-value">{{ $registration->reference_code }}</div>
-            </div>
-
             <div class="details-grid">
                 <div class="detail-row">
                     <span class="detail-label">Event Focus</span>
