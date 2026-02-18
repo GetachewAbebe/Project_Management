@@ -717,8 +717,15 @@
         .modal-overlay.active .modal-container { transform: scale(1); }
 
         .modal-sidebar {
-            background: var(--navy); padding: 3rem; color: white;
+            background: linear-gradient(135deg, #002d4a 0%, #001a2c 100%); 
+            padding: 3.5rem 3rem; color: white;
             display: flex; flex-direction: column; gap: 2rem;
+            position: relative; overflow: hidden;
+        }
+        .modal-sidebar::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 0% 0%, rgba(0, 163, 108, 0.05) 0%, transparent 50%);
+            pointer-events: none;
         }
         .modal-close {
             position: absolute; top: 2rem; right: 2rem;
@@ -755,54 +762,90 @@
         .file-zone:hover { border-color: var(--emerald); background: white; }
 
         .step-list { 
-            display: flex; flex-direction: column; gap: 3.5rem; 
-            margin-top: 2rem; position: relative; 
+            display: flex; flex-direction: column; gap: 4rem; 
+            margin-top: 3rem; position: relative; 
         }
+        
+        /* Dual-Track Cinematic System */
+        .step-list::before {
+            content: ''; position: absolute;
+            top: 14px; left: 13px; bottom: 14px;
+            width: 4px; background: rgba(255,255,255,0.03);
+            border-radius: 10px; transform: translateX(-50%);
+            z-index: 0;
+        }
+
         .step-item { 
             display: flex; align-items: center; gap: 1.5rem; 
-            opacity: 0.4; transition: all 0.5s var(--ease); 
-            position: relative;
+            opacity: 0.35; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            position: relative; z-index: 1;
         }
-        .step-item.active { opacity: 1; transform: translateX(10px); }
-        .step-item.completed { opacity: 0.8; }
+        .step-item.active { opacity: 1; transform: translateX(12px); }
+        .step-item.completed { opacity: 0.85; }
 
-        /* Cinematic Connecting Line */
+        /* Glowing Progress Track */
         .step-item:not(:last-child)::after {
             content: '';
             position: absolute;
-            top: 28px; /* Height of dot */
-            left: 13px; /* Center of 28px dot */
-            width: 2px;
-            height: 3.5rem; /* Matches gap */
-            background: rgba(255,255,255,0.1);
-            transition: all 0.6s var(--ease);
-            z-index: 0;
+            top: 28px; left: 13px;
+            width: 2px; height: 4rem;
+            background: rgba(255,255,255,0.08);
+            transform: translateX(-50%);
+            transition: all 0.8s var(--ease);
+            z-index: 1;
         }
 
         .step-item.completed:not(:last-child)::after {
             background: var(--emerald);
-            box-shadow: 0 0 15px var(--emerald-glow);
+            box-shadow: 0 0 15px var(--emerald-glow), 0 0 5px rgba(255,255,255,0.5);
         }
 
         .step-dot { 
             width: 28px; height: 28px; border-radius: 50%; 
-            border: 2px solid white; flex-shrink: 0; 
+            border: 2px solid rgba(255,255,255,0.15); flex-shrink: 0; 
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.75rem; font-weight: 900; color: white;
-            transition: all 0.5s var(--ease);
-            background: transparent;
+            font-size: 0.75rem; font-weight: 901; color: white;
+            transition: all 0.6s var(--ease);
+            background: rgba(255,255,255,0.02);
             position: relative; z-index: 2;
+            backdrop-filter: blur(5px);
         }
+
         .step-item.active .step-dot { 
             background: var(--emerald); border-color: var(--emerald); 
-            box-shadow: 0 0 15px var(--emerald-glow); 
-            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--emerald-glow); 
+            transform: scale(1.15);
+            animation: emerald-pulse 2s infinite;
         }
+
+        @keyframes emerald-pulse {
+            0% { box-shadow: 0 0 20px var(--emerald-glow); }
+            50% { box-shadow: 0 0 35px var(--emerald-glow); }
+            100% { box-shadow: 0 0 20px var(--emerald-glow); }
+        }
+
         .step-item.completed .step-dot { 
             background: white; color: var(--navy); 
-            border-color: white;
+            border-color: white; transform: scale(0.95);
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
         }
-        .step-label { font-size: 0.85rem; font-weight: 800; color: white; letter-spacing: 0.05em; }
+
+        .step-label { 
+            font-size: 0.85rem; font-weight: 800; color: white; 
+            letter-spacing: 0.08em; text-transform: uppercase;
+            transition: all 0.6s var(--ease);
+        }
+        
+        .step-item.active .step-label {
+            color: var(--emerald);
+            text-shadow: 0 0 10px var(--emerald-glow);
+            animation: float-label 3s ease-in-out infinite;
+        }
+
+        @keyframes float-label {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
 
         @media (max-width: 900px) {
             .modal-container { grid-template-columns: 1fr; }
@@ -984,7 +1027,7 @@
             </button>
             
             <aside class="modal-sidebar">
-                <div style="width: 60px; height: 60px; background: white; padding: 10px; border-radius: 12px; margin-bottom: 2rem;">
+                <div style="width: 80px; height: 80px; background: white; padding: 12px; border-radius: 16px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
                     <x-logo width="100%" height="auto" />
                 </div>
                 <div style="font-family: 'Outfit', sans-serif;">
@@ -1019,9 +1062,8 @@
                     
                     <!-- Phase 01: Professional Identity -->
                     <div class="step-content active" id="modalStep1">
-                        <div style="margin-bottom: 2rem;">
-                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Institutional Framework</h3>
-                            <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Provide your professional background and contact details.</p>
+                        <div style="margin-bottom: 2.5rem;">
+                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--navy); line-height: 1.2;">Complete your Professional Identity Profile</h3>
                         </div>
 
                         <div class="grid">
@@ -1071,9 +1113,8 @@
 
                     <!-- Phase 02: Research Thesis -->
                     <div class="step-content" id="modalStep2">
-                        <div style="margin-bottom: 2rem;">
-                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Scientific Content</h3>
-                            <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Define your research area and presentation intent.</p>
+                        <div style="margin-bottom: 2.5rem;">
+                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--navy); line-height: 1.2;">Define your Research Thesis & Specialization</h3>
                         </div>
 
                         <div class="grid">
@@ -1103,9 +1144,8 @@
 
                     <!-- Phase 03: Submission Pack -->
                     <div class="step-content" id="modalStep3">
-                        <div style="margin-bottom: 2rem;">
-                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Submission Assets</h3>
-                            <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Upload required documents and final details.</p>
+                        <div style="margin-bottom: 2.5rem;">
+                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--navy); line-height: 1.2;">Finalize your Research Submission Pack</h3>
                         </div>
 
                         <div class="grid">
