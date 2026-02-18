@@ -255,7 +255,34 @@
         .btn-submit { background: var(--emerald); color: white; box-shadow: 0 10px 25px rgba(26, 122, 60, 0.3); }
         .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(26, 122, 60, 0.5); }
 
-        .error-msg { font-size: 0.75rem; color: #ef4444; margin-top: 0.25rem; }
+        .error-msg { font-size: 0.75rem; color: #ef4444; margin-top: 0.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem; animation: slideIn 0.3s var(--ease); }
+        .error-msg svg { flex-shrink: 0; }
+        
+        input.is-invalid, select.is-invalid, textarea.is-invalid {
+            border-color: #ef4444 !important;
+            background-color: #fffafb !important;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+        }
+        
+        .strategic-alert-hud {
+            background: #fff1f2;
+            border: 1.5px solid #fecdd3;
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            animation: revealUp 0.6s var(--ease) both;
+        }
+        .alert-hud-icon {
+            width: 48px; height: 48px; background: white; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; color: #e11d48;
+            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.15); flex-shrink: 0;
+        }
+        .alert-hud-title { font-weight: 900; color: #9f1239; font-size: 1rem; margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .alert-hud-desc { font-size: 0.9rem; color: #be123c; font-weight: 600; line-height: 1.5; }
+        .alert-hud-list { margin-top: 0.75rem; padding-left: 1.25rem; font-size: 0.85rem; color: #e11d48; display: grid; gap: 0.4rem; font-weight: 700; }
 
         @media (max-width: 1024px) {
             .hero-nav { padding: 1.5rem 2rem; }
@@ -335,10 +362,25 @@
 
             {{-- Form --}}
             <section class="form-content">
+                {{-- Strategic Alert HUD --}}
                 @if($errors->any())
-                    <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:1rem 1.25rem; margin-bottom:2rem; color:#dc2626; font-size:0.85rem; font-weight:600;">
-                        Please fix the highlighted fields below.
+                <div class="strategic-alert-hud" id="errorAlertHUD">
+                    <div class="alert-hud-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                     </div>
+                    <div style="flex: 1;">
+                        <div class="alert-hud-title">Validation Intelligence Alert</div>
+                        <p class="alert-hud-desc">Registry submission requires refinement. Please review the highlighted fields in the <strong>{{ $goTo == 1 ? 'Profile Identity' : ($goTo == 2 ? 'Research Thesis' : 'Finalize Submission') }}</strong> section.</p>
+                        <ul class="alert-hud-list">
+                            @foreach($errors->all() as $error)
+                                <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="margin-top: 3px;"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>
+                                    {{ $error }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
                 @endif
 
                 <form action="{{ route('event.register.store') }}" method="POST" enctype="multipart/form-data" id="registerForm">
@@ -351,72 +393,72 @@
                         <div class="grid">
                             <div class="field col-12">
                                 <label>Full Name</label>
-                                <input type="text" name="full_name" required value="{{ old('full_name') }}" placeholder="Enter your full name">
-                                @error('full_name')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="text" name="full_name" required value="{{ old('full_name') }}" placeholder="Enter your full name" class="@error('full_name') is-invalid @enderror">
+                                @error('full_name')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-6">
                                 <label>Email Address</label>
-                                <input type="email" name="email" required value="{{ old('email') }}" placeholder="example@domain.com">
-                                @error('email')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="email" name="email" required value="{{ old('email') }}" placeholder="example@domain.com" class="@error('email') is-invalid @enderror">
+                                @error('email')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-6">
                                 <label>Phone Number</label>
-                                <input type="text" name="phone" required value="{{ old('phone') }}" placeholder="+251 911 000 000">
-                                @error('phone')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="text" name="phone" required value="{{ old('phone') }}" placeholder="+251 911 000 000" class="@error('phone') is-invalid @enderror">
+                                @error('phone')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Organization / Institution</label>
-                                <input type="text" name="organization" required value="{{ old('organization') }}" placeholder="Enter your institution name">
-                                @error('organization')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="text" name="organization" required value="{{ old('organization') }}" placeholder="Enter your institution name" class="@error('organization') is-invalid @enderror">
+                                @error('organization')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-6">
                                 <label>Job Title / Position</label>
-                                <input type="text" name="job_title" required value="{{ old('job_title') }}" placeholder="e.g. Senior Researcher, Professor">
-                                @error('job_title')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="text" name="job_title" required value="{{ old('job_title') }}" placeholder="e.g. Senior Researcher, Professor" class="@error('job_title') is-invalid @enderror">
+                                @error('job_title')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-6">
                                 <label>Department / Faculty</label>
-                                <input type="text" name="department" required value="{{ old('department') }}" placeholder="e.g. Biotechnology, Engineering">
-                                @error('department')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="text" name="department" required value="{{ old('department') }}" placeholder="e.g. Biotechnology, Engineering" class="@error('department') is-invalid @enderror">
+                                @error('department')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-4">
                                 <label>City</label>
-                                <input type="text" name="city" required value="{{ old('city') }}" placeholder="Addis Ababa">
-                                @error('city')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="text" name="city" required value="{{ old('city') }}" placeholder="Addis Ababa" class="@error('city') is-invalid @enderror">
+                                @error('city')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-4">
                                 <label>Gender</label>
-                                <select name="gender" required>
+                                <select name="gender" required class="@error('gender') is-invalid @enderror">
                                     <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Select gender</option>
                                     <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
                                     <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
                                 </select>
-                                @error('gender')<div class="error-msg">{{ $message }}</div>@enderror
+                                @error('gender')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-4">
                                 <label>Qualification</label>
-                                <select name="qualification" required>
+                                <select name="qualification" required class="@error('qualification') is-invalid @enderror">
                                     <option value="" disabled {{ old('qualification') ? '' : 'selected' }}>Select level</option>
                                     <option value="PhD" {{ old('qualification') == 'PhD' ? 'selected' : '' }}>Doctorate (PhD)</option>
                                     <option value="MSc" {{ old('qualification') == 'MSc' ? 'selected' : '' }}>Master (MSc)</option>
                                     <option value="BSc" {{ old('qualification') == 'BSc' ? 'selected' : '' }}>Bachelor (BSc)</option>
                                 </select>
-                                @error('qualification')<div class="error-msg">{{ $message }}</div>@enderror
+                                @error('qualification')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Primary Area of Expertise</label>
-                                <input type="text" name="expertise" required value="{{ old('expertise') }}" placeholder="e.g. Bio-Informatics, Crop Science, Health Tech">
-                                @error('expertise')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="text" name="expertise" required value="{{ old('expertise') }}" placeholder="e.g. Bio-Informatics, Crop Science, Health Tech" class="@error('expertise') is-invalid @enderror">
+                                @error('expertise')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Have you attended previous Annual Reviews?</label>
-                                <select name="previous_attendance" required>
+                                <select name="previous_attendance" required class="@error('previous_attendance') is-invalid @enderror">
                                     <option value="" disabled {{ old('previous_attendance') ? '' : 'selected' }}>Select response</option>
                                     <option value="First Time" {{ old('previous_attendance') == 'First Time' ? 'selected' : '' }}>No, this is my first time</option>
                                     <option value="Once" {{ old('previous_attendance') == 'Once' ? 'selected' : '' }}>Yes, I have attended once before</option>
                                     <option value="Multiple" {{ old('previous_attendance') == 'Multiple' ? 'selected' : '' }}>Yes, I am a regular attendee</option>
                                 </select>
-                                @error('previous_attendance')<div class="error-msg">{{ $message }}</div>@enderror
+                                @error('previous_attendance')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                         </div>
                     </div>
@@ -428,25 +470,25 @@
                         <div class="grid">
                             <div class="field col-6">
                                 <label>Presentation Title</label>
-                                <input type="text" name="presentation_title" required value="{{ old('presentation_title') }}" placeholder="Title of your research presentation">
-                                @error('presentation_title')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="text" name="presentation_title" required value="{{ old('presentation_title') }}" placeholder="Title of your research presentation" class="@error('presentation_title') is-invalid @enderror">
+                                @error('presentation_title')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-6">
                                 <label>Project Status</label>
-                                <select name="project_status" required id="projectStatus">
+                                <select name="project_status" required id="projectStatus" class="@error('project_status') is-invalid @enderror">
                                     <option value="" disabled {{ old('project_status') ? '' : 'selected' }}>Select status</option>
                                     <option value="New" {{ old('project_status') == 'New' ? 'selected' : '' }}>New Project</option>
                                     <option value="Ongoing" {{ old('project_status') == 'Ongoing' ? 'selected' : '' }}>Ongoing Research</option>
                                     <option value="Completed" {{ old('project_status') == 'Completed' ? 'selected' : '' }}>Completed (Last 3 years)</option>
                                 </select>
                                 <div style="font-size:0.65rem; color:#94a3b8; margin-top:0.25rem;">Completed works must be from 2023 or later.</div>
-                                @error('project_status')<div class="error-msg">{{ $message }}</div>@enderror
+                                @error('project_status')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Abstract Submission <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--emerald);">(Submit Text OR File)</span></label>
                                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; align-items: stretch;">
                                     <div class="field">
-                                        <textarea name="abstract_text" id="abstractText" rows="6" placeholder="Briefly describe your research work (minimum 50 characters)..." style="height:100%">{{ old('abstract_text') }}</textarea>
+                                        <textarea name="abstract_text" id="abstractText" rows="6" placeholder="Briefly describe your research work (minimum 50 characters)..." style="height:100%" class="@error('abstract_text') is-invalid @enderror">{{ old('abstract_text') }}</textarea>
                                     </div>
                                     <div class="file-zone" onclick="document.getElementById('abstractFileInput').click()" style="display:flex; flex-direction:column; justify-content:center; height:100%">
                                         <input type="file" id="abstractFileInput" name="abstract_file" style="display:none" onchange="updateFileInfo(this, 'abstractFileInfo')">
@@ -455,13 +497,13 @@
                                         <div style="font-size:0.7rem; color:#94a3b8; margin-top:0.25rem;">PDF, DOC, DOCX · Max 10MB</div>
                                     </div>
                                 </div>
-                                <div id="abstractError" class="error-msg" style="display:none">Please provide either an abstract text or upload an abstract file.</div>
-                                @error('abstract_text')<div class="error-msg">{{ $message }}</div>@enderror
-                                @error('abstract_file')<div class="error-msg">{{ $message }}</div>@enderror
+                                <div id="abstractError" class="error-msg" style="display:none"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>Please provide either an abstract text or upload an abstract file.</div>
+                                @error('abstract_text')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
+                                @error('abstract_file')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Thematic Area</label>
-                                <select name="thematic_area" required>
+                                <select name="thematic_area" required class="@error('thematic_area') is-invalid @enderror">
                                     <option value="" disabled {{ old('thematic_area') ? '' : 'selected' }}>Select Thematic Area</option>
                                     <option value="Health Biotechnology" {{ old('thematic_area') == 'Health Biotechnology' ? 'selected' : '' }}>Health Biotechnology</option>
                                     <option value="Plant Biotechnology" {{ old('thematic_area') == 'Plant Biotechnology' ? 'selected' : '' }}>Plant Biotechnology</option>
@@ -474,14 +516,15 @@
                                     <option value="Computational Science" {{ old('thematic_area') == 'Computational Science' ? 'selected' : '' }}>Computational Science</option>
                                     <option value="Genomics & Bioinformatics" {{ old('thematic_area') == 'Genomics & Bioinformatics' ? 'selected' : '' }}>Genomics & Bioinformatics</option>
                                 </select>
-                                @error('thematic_area')<div class="error-msg">{{ $message }}</div>@enderror
+                                @error('thematic_area')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Availability (Can you attend all event dates?)</label>
-                                <select name="available_on_date" required>
+                                <select name="available_on_date" required class="@error('available_on_date') is-invalid @enderror">
                                     <option value="Yes" {{ old('available_on_date') == 'Yes' ? 'selected' : '' }}>Yes, I am fully available</option>
                                     <option value="No" {{ old('available_on_date') == 'No' ? 'selected' : '' }}>No, I have partial availability</option>
                                 </select>
+                                @error('available_on_date')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
 
                             <div class="field col-12" style="margin-top: 1rem; padding: 1.5rem; background: rgba(0, 163, 108, 0.03); border-radius: 16px; border: 1px dashed rgba(0, 163, 108, 0.2);">
@@ -530,39 +573,40 @@
                             </div>
                             <div class="field col-6">
                                 <label>Your Travel Option</label>
-                                <select name="travel_option" required>
+                                <select name="travel_option" required class="@error('travel_option') is-invalid @enderror">
                                     <option value="" disabled {{ old('travel_option') ? '' : 'selected' }}>Select travel method</option>
                                     <option value="Bus" {{ old('travel_option') == 'Bus' ? 'selected' : '' }}>Bus</option>
                                     <option value="Plane" {{ old('travel_option') == 'Plane' ? 'selected' : '' }}>Plane</option>
                                     <option value="Office/Personal Car" {{ old('travel_option') == 'Office/Personal Car' ? 'selected' : '' }}>Office Car / Personal Car</option>
                                 </select>
-                                @error('travel_option')<div class="error-msg">{{ $message }}</div>@enderror
+                                @error('travel_option')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-6">
                                 <label>Do you need Room Service/Hotel?</label>
-                                <select name="needs_hotel" required>
+                                <select name="needs_hotel" required class="@error('needs_hotel') is-invalid @enderror">
                                     <option value="" disabled {{ old('needs_hotel') ? '' : 'selected' }}>Select response</option>
                                     <option value="Yes" {{ old('needs_hotel') == 'Yes' ? 'selected' : '' }}>Yes, I require accommodation</option>
                                     <option value="No" {{ old('needs_hotel') == 'No' ? 'selected' : '' }}>No, I have my own arrangement</option>
                                 </select>
-                                @error('needs_hotel')<div class="error-msg">{{ $message }}</div>@enderror
+                                @error('needs_hotel')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>How did you hear about this event?</label>
-                                <select name="discovery_source" id="discoverySource" required onchange="toggleInviterField()">
+                                <select name="discovery_source" id="discoverySource" required onchange="toggleInviterField()" class="@error('discovery_source') is-invalid @enderror">
                                     <option value="" disabled selected>Select an option</option>
-                                    <option value="BETin Portal">BETin Portal</option>
-                                    <option value="Invited Directly">Invited Directly</option>
-                                    <option value="Social Media">Social Media</option>
-                                    <option value="Email/Invitation">Email / Official Invitation</option>
-                                    <option value="Colleague">Colleague / Word of Mouth</option>
-                                    <option value="Other">Other</option>
+                                    <option value="BETin Portal" {{ old('discovery_source') == 'BETin Portal' ? 'selected' : '' }}>BETin Portal</option>
+                                    <option value="Invited Directly" {{ old('discovery_source') == 'Invited Directly' ? 'selected' : '' }}>Invited Directly</option>
+                                    <option value="Social Media" {{ old('discovery_source') == 'Social Media' ? 'selected' : '' }}>Social Media</option>
+                                    <option value="Email/Invitation" {{ old('discovery_source') == 'Email/Invitation' ? 'selected' : '' }}>Email / Official Invitation</option>
+                                    <option value="Colleague" {{ old('discovery_source') == 'Colleague' ? 'selected' : '' }}>Colleague / Word of Mouth</option>
+                                    <option value="Other" {{ old('discovery_source') == 'Other' ? 'selected' : '' }}>Other</option>
                                 </select>
+                                @error('discovery_source')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12" id="inviterField" style="display:none; animation: slideIn 0.4s var(--ease) forwards;">
                                 <label>Who invited you?</label>
-                                <input type="text" name="inviter_name" id="inviterName" value="{{ old('inviter_name') }}" placeholder="Enter the name of your inviter">
-                                @error('inviter_name')<div class="error-msg">{{ $message }}</div>@enderror
+                                <input type="text" name="inviter_name" id="inviterName" value="{{ old('inviter_name') }}" placeholder="Enter the name of your inviter" class="@error('inviter_name') is-invalid @enderror">
+                                @error('inviter_name')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Additional Remarks <span style="font-weight:400; text-transform:none; letter-spacing:0;">(optional)</span></label>
@@ -740,6 +784,12 @@
             @endphp
             currentStep = {{ $goTo }};
             updateFormUI();
+
+            // Auto-scroll to error HUD
+            setTimeout(() => {
+                const hud = document.getElementById('errorAlertHUD');
+                if (hud) hud.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 500);
         @endif
     </script>
 </body>

@@ -42,6 +42,18 @@ class EventRegistrationController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'email.unique' => 'This identity is already associated with an active registration for the 8th Annual Review.',
+            'full_name.required' => 'The Participant Full Identity is mandatory for registry records.',
+            'abstract_text.required_without' => 'Please provide the Scientific Abstract to proceed with your submission.',
+            'abstract_text.min' => 'The Scientific Abstract must contain at least 50 characters to meet peer-review standards.',
+            'abstract_file.required_without' => 'An Abstract Document (PDF/Doc) must be uploaded if the text field is empty.',
+            'qualification.required' => 'Highest Academic Qualification is required for scientific classification.',
+            'available_on_date.in' => 'Please confirm your availability for the duration of the Annual Review.',
+            'discovery_source.required' => 'Information regarding how you discovered the event is required for logistical analytics.',
+            'inviter_name.required_if' => 'The name of the colleague or official who invited you is required for direct-invite participants.',
+        ];
+
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -71,7 +83,7 @@ class EventRegistrationController extends Controller
             'extra_titles.*' => 'required|string|max:500',
             'extra_statuses' => 'nullable|array',
             'extra_statuses.*' => 'required|string',
-        ]);
+        ], $messages);
 
         // Production-Ready: Duplicate Prevention
         $exists = ReviewRegistration::where('email', $validated['email'])
@@ -79,7 +91,7 @@ class EventRegistrationController extends Controller
             ->exists();
 
         if ($exists) {
-            return back()->withErrors(['email' => 'This participant is already registered for the 8th National Review.'])->withInput();
+            return back()->withErrors(['email' => 'This identity is already associated with an active registration for the 8th Annual Review.'])->withInput();
         }
 
         // File Storage
