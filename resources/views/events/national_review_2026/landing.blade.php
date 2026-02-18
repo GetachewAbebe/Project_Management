@@ -19,6 +19,8 @@
             --ease: cubic-bezier(0.4, 0, 0.2, 1);
             --text-main: #1e293b;
             --text-sub: #475569;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,6 +48,17 @@
         }
 
         /* Atmosphere Container for clipped effects */
+        /* Noise texture overlay for premium feel */
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.015;
+            pointer-events: none;
+            z-index: 1;
+        }
+
         .hero-atmosphere {
             position: absolute;
             inset: 0;
@@ -54,15 +67,16 @@
             z-index: 0;
         }
 
-        /* Grid overlay inside atmosphere */
+        /* Grid & Pattern overlay */
         .hero-atmosphere::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-image:
-                linear-gradient(rgba(26,122,60,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(26,122,60,0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
+            background-image: 
+                radial-gradient(rgba(26,122,60,0.1) 1px, transparent 1px),
+                linear-gradient(rgba(26,122,60,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(26,122,60,0.03) 1px, transparent 1px);
+            background-size: 40px 40px, 80px 80px, 80px 80px;
             z-index: 1;
         }
 
@@ -195,14 +209,16 @@
 
         /* Hero Content */
         .hero-body {
-            flex: 1;
-            display: flex;
-            align-items: flex-start; /* Flow from top */
-            justify-content: space-between;
             position: relative;
             z-index: 5;
-            padding: 8rem 4% 6rem; /* Top/Bottom padding for mission-critical spacing */
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4rem 10% 6rem;
             gap: 6rem;
+            max-width: 1440px;
+            margin: 0 auto;
             width: 100%;
             flex-wrap: wrap; /* Stack naturally on smaller screens */
         }
@@ -841,12 +857,10 @@
             <div class="hero-left">
                 <div class="hero-edition">8th National Review</div>
                 <h1 class="hero-title">
-                    National Bio-Tech
-                    <div class="typewriter-container">
-                        <span class="typewrite" data-period="2000" data-type='[ "Research Hub", "Innovation 2026", "Scientific Core", "Future Hub" ]'>
-                            <span class="wrap"></span>
-                        </span>
-                    </div>
+                    National Review on<br>
+                    <span class="typewriter-container" style="color: var(--emerald); display: block; margin-top: 0.5rem; font-size: 0.75em;">
+                        <span id="typewriter" class="typewrite"></span>
+                    </span>
                 </h1>
 
                 <p class="hero-subtitle">
@@ -856,7 +870,15 @@
                 <div class="hero-cta-group">
                     <a href="{{ route('event.register') }}" class="cta-primary">
                         Register to Present
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    <a href="#about" class="cta-secondary">
+                        Learn More
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </a>
                 </div>
 
@@ -1034,7 +1056,7 @@
 
     {{-- Scripts for Typewriter effect --}}
     <script>
-        var TxtType = function(el, toRotate, period) {
+        const TxtType = function(el, toRotate, period) {
             this.toRotate = toRotate;
             this.el = el;
             this.loopNum = 0;
@@ -1056,8 +1078,8 @@
 
             this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
 
-            var that = this;
-            var delta = 200 - Math.random() * 100;
+            var self = this;
+            var delta = 150 - Math.random() * 80;
 
             if (this.isDeleting) { delta /= 2; }
 
@@ -1071,19 +1093,32 @@
             }
 
             setTimeout(function() {
-                that.tick();
+                self.tick();
             }, delta);
         };
 
-        window.onload = function() {
+        function initTypewriter() {
             var elements = document.getElementsByClassName('typewrite');
+            var toRotate = [
+                "Health Biotechnology",
+                "Plant Biotechnology",
+                "Animal Biotechnology",
+                "Environmental Biotechnology",
+                "Industrial Biotechnology",
+                "Nanotechnology",
+                "Materials Science & Engineering",
+                "Reverse Engineering",
+                "Computational Science",
+                "Genomics & Bioinformatics"
+            ];
             for (var i=0; i<elements.length; i++) {
-                var toRotate = elements[i].getAttribute('data-type');
-                var period = elements[i].getAttribute('data-period');
-                if (toRotate) {
-                  new TxtType(elements[i], JSON.parse(toRotate), period);
-                }
+                new TxtType(elements[i], toRotate, 2500);
             }
+        }
+
+        window.onload = function() {
+            updatePathfinderTimer();
+            initTypewriter();
         };
     </script>
 </body>
