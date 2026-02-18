@@ -32,7 +32,7 @@
         .hero-nav {
             position: sticky; top: 0; z-index: 100;
             display: flex; align-items: center; justify-content: center;
-            padding: 1.5rem 5rem;
+            padding: 2.5rem 5rem;
             background: rgba(5, 5, 5, 0.6);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -51,7 +51,7 @@
         .nav-title-sub { font-size: 0.9rem; font-weight: 800; color: var(--emerald); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
 
         .hero-footer {
-            padding: 2.5rem 5rem; text-align: center;
+            padding: 2rem 5rem; text-align: center;
             background: rgba(5, 5, 5, 0.4); backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255,255,255,0.08);
             margin-top: auto;
@@ -175,12 +175,8 @@
         <div class="register-container">
             <aside class="sidebar">
                 <div style="font-family: 'Outfit', sans-serif;">
-                    <div style="display: inline-flex; align-items: center; padding: 0.35rem 1rem; background: rgba(0, 163, 108, 0.12); border: 1px solid rgba(0, 163, 108, 0.25); border-radius: 100px; margin-bottom: 1.25rem;">
-                        <div style="width: 5px; height: 5px; border-radius: 50%; background: var(--emerald); margin-right: 0.6rem; box-shadow: 0 0 8px var(--emerald);"></div>
-                        <span style="font-size: 0.65rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.25em; color: var(--emerald);">BETin</span>
-                    </div>
-                    <h2 style="font-size: 2.2rem; font-weight: 900; line-height: 0.9; letter-spacing: -0.05em; margin-bottom: 1rem;">
-                        Annual<br><span style="color: var(--emerald);">Review</span>
+                    <h2 style="font-size: 2.2rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.05em; margin-bottom: 1rem;">
+                        BETin<br>Annual<br><span style="color: var(--emerald);">Review</span>
                     </h2>
                 </div>
 
