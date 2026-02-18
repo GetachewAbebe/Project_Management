@@ -927,9 +927,22 @@
                 <div class="registration-status-banner">
                     <div class="status-banner-main">
                         <div class="status-dot-large"></div>
-                        <div class="status-text-prime">Critical Registration Update</div>
+                        <div class="status-text-prime">Registration Open</div>
                     </div>
-                    <div class="status-text-sub">87 SLOTS REMAINING</div>
+                    @php
+                        $deadline = \Carbon\Carbon::create(2026, 2, 27);
+                        $now = now();
+                        $daysRemaining = $now->diffInDays($deadline, false);
+                    @endphp
+                    <div class="status-text-sub">
+                        @if($daysRemaining > 0)
+                            {{ (int)$daysRemaining }} DAYS REMAINING
+                        @elseif($daysRemaining == 0)
+                            CLOSING TODAY
+                        @else
+                            REGISTRATION CLOSED
+                        @endif
+                    </div>
                 </div>
 
                 {{-- Admin Stats HUD (Visible to Admins) --}}
