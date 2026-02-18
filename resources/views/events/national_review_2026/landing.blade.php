@@ -685,8 +685,10 @@
             background: var(--obsidian);
             padding: 2.5rem 5rem;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            text-align: center;
         }
 
         .footer-copy {
@@ -1102,9 +1104,6 @@
     <footer class="footer">
         <div class="footer-copy">
             &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
-        </div>
-        <div class="footer-copy">
-            REF: BETIN-NR-2026 · <span>projects.betin.gov.et</span>
         </div>
     </footer>
 
