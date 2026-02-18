@@ -33,9 +33,17 @@ return new class extends Migration
     {
         Schema::table('review_registrations', function (Blueprint $table) {
             $table->dropColumn([
-                'job_title', 'department', 'expertise', 'previous_attendance',
-                'thematic_area', 'inviter_name', 'project_status',
-                'presentation_ppt_path', 'travel_option', 'needs_hotel', 'extra_projects'
+                'job_title',
+                'department',
+                'expertise',
+                'previous_attendance',
+                'thematic_area',
+                'inviter_name',
+                'project_status',
+                'presentation_ppt_path',
+                'travel_option',
+                'needs_hotel',
+                'extra_projects',
             ]);
         });
     }

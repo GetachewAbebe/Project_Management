@@ -94,12 +94,12 @@ class EventRegistrationController extends Controller
         }
 
         // Process Additional Projects
-        if (!empty($validated['extra_titles'])) {
+        if (! empty($validated['extra_titles'])) {
             $extra = [];
             foreach ($validated['extra_titles'] as $index => $title) {
                 $extra[] = [
                     'title' => $title,
-                    'status' => $validated['extra_statuses'][$index] ?? 'New'
+                    'status' => $validated['extra_statuses'][$index] ?? 'New',
                 ];
             }
             $validated['extra_projects'] = $extra;
