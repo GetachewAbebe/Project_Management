@@ -76,19 +76,19 @@
         /* ── REGISTRY PORTAL ── */
         .page-content {
             flex: 1; display: flex; align-items: center; justify-content: center;
-            padding: 4rem 2rem; position: relative; z-index: 10;
+            padding: 3rem 2rem; position: relative; z-index: 10;
         }
 
         .register-container {
-            width: 100%; max-width: 1100px;
+            width: 100%; max-width: 1400px;
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(40px);
             border: 1px solid var(--border);
             border-radius: 32px;
             overflow: hidden;
             box-shadow: 0 50px 100px rgba(0,0,0,0.6);
-            display: grid; grid-template-columns: 320px 1fr;
-            min-height: 75vh;
+            display: grid; grid-template-columns: 360px 1fr;
+            min-height: 80vh;
         }
 
         .sidebar {
@@ -99,7 +99,7 @@
             border-right: 1px solid var(--border);
         }
 
-        .form-content { padding: 4rem 5rem; background: transparent; overflow-y: auto; max-height: 80vh; }
+        .form-content { padding: 4rem 6rem; background: transparent; }
         .step-content { display: none; }
         .step-content.active { display: block; animation: slideIn 0.8s var(--ease) forwards; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
