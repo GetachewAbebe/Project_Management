@@ -766,86 +766,108 @@
             margin-top: 3rem; position: relative; 
         }
         
-        /* Dual-Track Cinematic System */
+        /* Pathfinder 3.0 Track System */
         .step-list::before {
             content: ''; position: absolute;
             top: 14px; left: 13px; bottom: 14px;
-            width: 4px; background: rgba(255,255,255,0.03);
-            border-radius: 10px; transform: translateX(-50%);
+            width: 2px;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.08) 50%, transparent 50%);
+            background-size: 2px 10px; /* Dashed by default */
+            transform: translateX(-50%);
             z-index: 0;
         }
 
         .step-item { 
-            display: flex; align-items: center; gap: 1.5rem; 
-            opacity: 0.35; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            display: flex; align-items: start; gap: 1.5rem; 
+            opacity: 0.2; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); 
             position: relative; z-index: 1;
         }
         .step-item.active { opacity: 1; transform: translateX(12px); }
-        .step-item.completed { opacity: 0.85; }
+        .step-item.completed { opacity: 0.9; }
 
-        /* Glowing Progress Track */
-        .step-item:not(:last-child)::after {
+        /* Solid Glowing Progress Track for Completed Steps */
+        .step-item.completed:not(:last-child)::after {
             content: '';
             position: absolute;
             top: 28px; left: 13px;
-            width: 2px; height: 4rem;
-            background: rgba(255,255,255,0.08);
-            transform: translateX(-50%);
-            transition: all 0.8s var(--ease);
-            z-index: 1;
-        }
-
-        .step-item.completed:not(:last-child)::after {
+            width: 2px; height: calc(4rem + 2px);
             background: var(--emerald);
-            box-shadow: 0 0 15px var(--emerald-glow), 0 0 5px rgba(255,255,255,0.5);
+            box-shadow: 0 0 15px var(--emerald-glow);
+            transform: translateX(-50%);
+            z-index: 1;
+            transition: all 0.8s var(--ease);
         }
 
         .step-dot { 
             width: 28px; height: 28px; border-radius: 50%; 
-            border: 2px solid rgba(255,255,255,0.15); flex-shrink: 0; 
+            border: 2px solid rgba(255,255,255,0.2); flex-shrink: 0; 
             display: flex; align-items: center; justify-content: center;
             font-size: 0.75rem; font-weight: 901; color: white;
             transition: all 0.6s var(--ease);
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.03);
             position: relative; z-index: 2;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
+        /* Pathfinder 3.0 States */
+        /* Active: Vivid Blue Pulse */
         .step-item.active .step-dot { 
-            background: var(--emerald); border-color: var(--emerald); 
-            box-shadow: 0 0 20px var(--emerald-glow); 
-            transform: scale(1.15);
-            animation: emerald-pulse 2s infinite;
+            background: #007bff; border-color: #00c6ff; 
+            box-shadow: 0 0 25px rgba(0, 123, 255, 0.6); 
+            transform: scale(1.2);
+            animation: blue-pulse 2s infinite;
         }
 
-        @keyframes emerald-pulse {
-            0% { box-shadow: 0 0 20px var(--emerald-glow); }
-            50% { box-shadow: 0 0 35px var(--emerald-glow); }
-            100% { box-shadow: 0 0 20px var(--emerald-glow); }
-        }
-
+        /* Completed: Solid Emerald */
         .step-item.completed .step-dot { 
-            background: white; color: var(--navy); 
-            border-color: white; transform: scale(0.95);
-            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+            background: var(--emerald); border-color: var(--emerald); 
+            box-shadow: 0 0 15px var(--emerald-glow);
+            transform: scale(0.95);
         }
 
+        @keyframes blue-pulse {
+            0% { box-shadow: 0 0 20px rgba(0, 123, 255, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(0, 123, 255, 0.7); }
+            100% { box-shadow: 0 0 20px rgba(0, 123, 255, 0.4); }
+        }
+
+        .step-info { display: flex; flex-direction: column; gap: 0.25rem; }
+        
         .step-label { 
             font-size: 0.85rem; font-weight: 800; color: white; 
             letter-spacing: 0.08em; text-transform: uppercase;
             transition: all 0.6s var(--ease);
         }
         
+        .step-sub {
+            font-size: 0.6rem; font-weight: 600; color: rgba(255,255,255,0.4);
+            text-transform: uppercase; letter-spacing: 0.1em;
+            display: none;
+        }
+
+        .step-item.active .step-sub { display: block; animation: fadeIn 0.5s ease forwards; }
         .step-item.active .step-label {
-            color: var(--emerald);
-            text-shadow: 0 0 10px var(--emerald-glow);
+            color: #00c6ff;
+            text-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
             animation: float-label 3s ease-in-out infinite;
         }
 
-        @keyframes float-label {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+        /* Submission Window Card inspired by reference footer */
+        .submission-window {
+            margin-top: auto; padding: 1.25rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
         }
+        .window-header {
+            font-size: 0.55rem; font-weight: 800; color: rgba(255,255,255,0.3);
+            text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0.5rem;
+        }
+        .window-timer {
+            font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 900;
+            color: white; display: flex; align-items: baseline; gap: 0.4rem;
+        }
+        .timer-unit { font-size: 0.6rem; font-weight: 700; opacity: 0.5; }
 
         @media (max-width: 900px) {
             .modal-container { grid-template-columns: 1fr; }
@@ -1056,21 +1078,35 @@
                 <div class="step-list">
                     <div class="step-item active" data-step="1">
                         <div class="step-dot">1</div>
-                        <span class="step-label">Professional Identity</span>
+                        <div class="step-info">
+                            <span class="step-label">Professional Identity</span>
+                            <span class="step-sub">Phase 01 of 03</span>
+                        </div>
                     </div>
                     <div class="step-item" data-step="2">
                         <div class="step-dot">2</div>
-                        <span class="step-label">Research Thesis</span>
+                        <div class="step-info">
+                            <span class="step-label">Research Thesis</span>
+                            <span class="step-sub">Phase 02 of 03</span>
+                        </div>
                     </div>
                     <div class="step-item" data-step="3">
                         <div class="step-dot">3</div>
-                        <span class="step-label">Submission Pack</span>
+                        <div class="step-info">
+                            <span class="step-label">Submission Pack</span>
+                            <span class="step-sub">Phase 03 of 03</span>
+                        </div>
                     </div>
                 </div>
 
-                <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <div style="font-size: 0.6rem; font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em;">Secure Submission Portal</div>
-                    <div style="font-family: monospace; font-size: 0.55rem; color: rgba(255,255,255,0.3); margin-top: 0.5rem;">STATUS: AUTH_ENCRYPTED</div>
+                <div class="submission-window">
+                    <div class="window-header">Submission Window Closes In</div>
+                    <div class="window-timer" id="pathfinderTimer">
+                        00<span class="timer-unit">d</span> 00<span class="timer-unit">h</span> 00<span class="timer-unit">m</span>
+                    </div>
+                    <div style="font-size: 0.5rem; color: rgba(255,255,255,0.2); margin-top: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em;">
+                        Status: <span style="color: var(--emerald);">Awaiting Payload</span>
+                    </div>
                 </div>
             </aside>
 
@@ -1270,17 +1306,43 @@
         // Close on escape
         document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
 
+        // Pathfinder 3.0 Timer Logic
+        function updatePathfinderTimer() {
+            const timerEl = document.getElementById('pathfinderTimer');
+            if (!timerEl) return;
+            
+            const target = new Date();
+            target.setDate(target.getDate() + 41); // Simulated 41 days from reference
+            target.setHours(target.getHours() + 15);
+            
+            const update = () => {
+                const now = new Date();
+                const diff = target - now;
+                if (diff <= 0) return;
+
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                timerEl.innerHTML = `${d.toString().padStart(2, '0')}<span class="timer-unit">d</span> ${h.toString().padStart(2, '0')}<span class="timer-unit">h</span> ${m.toString().padStart(2, '0')}<span class="timer-unit">m</span>`;
+            };
+            setInterval(update, 60000);
+            update();
+        }
+
         // Handle errors from old input
         @if($errors->any())
             window.addEventListener('load', () => {
                 openModal();
-                // If there are errors, show them via borders
+                updatePathfinderTimer();
                 const form = document.getElementById('modalRegisterForm');
                 @foreach($errors->keys() as $key)
                     const el = form.querySelector('[name="{{ $key }}"]');
                     if (el) el.parentElement.style.borderColor = '#ef4444';
                 @endforeach
             });
+        @else
+            window.addEventListener('load', updatePathfinderTimer);
         @endif
     </script>
 
