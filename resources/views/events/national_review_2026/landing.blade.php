@@ -82,8 +82,8 @@
             z-index: 10;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 1.5rem 5rem;
+            justify-content: center; /* CENTERED */
+            padding: 2.5rem 5rem; /* Increased vertical breathing room */
             background: rgba(5, 5, 5, 0.4);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -92,44 +92,52 @@
 
         .nav-brand {
             display: flex;
+            flex-direction: column; /* Stacked for central impact */
             align-items: center;
-            gap: 1.25rem;
+            gap: 1.5rem;
+            text-align: center;
         }
 
         .nav-logo-box {
             background: white;
-            padding: 0.75rem 1rem;
-            border-radius: 14px;
-            width: 110px;
+            padding: 1rem 1.25rem;
+            border-radius: 20px;
+            width: 140px; /* SCALED UP */
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 20px rgba(0, 163, 108, 0.15);
             border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.4s var(--ease);
+        }
+
+        .nav-logo-box:hover {
+            transform: scale(1.05);
         }
 
         .nav-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 0.85rem;
+            font-size: 1.1rem; /* SCALED UP */
             font-weight: 800;
             color: white;
-            line-height: 1.3;
+            line-height: 1.2;
             letter-spacing: -0.01em;
         }
 
         .nav-title span {
             display: block;
-            font-size: 0.65rem;
-            font-weight: 600;
+            font-size: 0.8rem; /* SCALED UP */
+            font-weight: 700;
             color: var(--emerald);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
+            margin-top: 0.5rem;
+            filter: drop-shadow(0 0 8px rgba(0, 163, 108, 0.3));
         }
 
+        /* ACTIONS REMOVED FROM TOP PER REQUEST */
         .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            display: none;
         }
 
         .nav-link {
