@@ -151,8 +151,9 @@
             align-items: center;
             position: relative;
             z-index: 5;
-            padding: 3rem 5rem;
+            padding: 2rem 5rem;
             gap: 5rem;
+            min-height: 0;
         }
 
         .hero-left { flex: 1; max-width: 700px; }
@@ -326,10 +327,11 @@
             position: relative;
             z-index: 5;
             border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 1.5rem 5rem;
+            padding: 1rem 5rem 1.5rem;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            gap: 1.5rem;
         }
 
         .stat-row {
@@ -639,17 +641,14 @@
             line-height: 1.7;
         }
 
-        /* Footer */
-        .footer {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 1.5rem 5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            z-index: 10;
+        /* Footer styles removed - integrated into hero-bottom */
+        .footer-tiny {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.2);
+            font-weight: 600;
+            letter-spacing: 0.05em;
         }
+        .footer-tiny span { color: var(--emerald); opacity: 0.6; }
 
         .footer-copy {
             font-size: 0.8rem;
@@ -879,6 +878,10 @@
                     <div class="stat-label">Days of Science</div>
                 </div>
             </div>
+
+            <div class="footer-tiny">
+                &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
+            </div>
         </div>
     </section>
 
@@ -1037,13 +1040,6 @@
             </main>
         </div>
     </div>
-
-    {{-- Footer --}}
-    <footer class="footer">
-        <div class="footer-copy">
-            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
-        </div>
-    </footer>
 
     <script>
         function openModal() {
