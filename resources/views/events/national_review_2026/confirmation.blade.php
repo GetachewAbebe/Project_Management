@@ -17,21 +17,62 @@
             --ease: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: radial-gradient(circle at 10% 20%, rgba(0, 163, 108, 0.05) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(0, 31, 49, 0.05) 0%, transparent 40%),
-                        #f8fafc;
+            background: #f8fafc;
             color: var(--navy);
             line-height: 1.6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            padding: 2rem;
+            display: flex;
+            flex-direction: column;
             overflow-x: hidden;
+        }
+
+        /* ── HEADER (Vibrant Zenith Sync) ── */
+        .hero-nav {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: center;
+            padding: 1.5rem 5rem;
+            background: linear-gradient(135deg, #0f172a 30%, #1a4a6b 100%);
+            backdrop-filter: blur(24px);
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            border-top: 4px solid var(--emerald);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.5s var(--ease);
+        }
+
+        .hero-nav::before {
+            content: ''; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.03); pointer-events: none;
+        }
+
+        .hero-nav:hover {
+            padding-top: 1.3rem; padding-bottom: 1.3rem;
+            background: linear-gradient(135deg, #131d35 30%, #1a7a3c 100%);
+        }
+
+        .nav-brand { display: flex; align-items: center; gap: 2rem; }
+        .nav-logo-box {
+            background: white; padding: 0.8rem 1.1rem; border-radius: 16px; width: 110px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1); transition: all 0.4s var(--ease);
+        }
+        .nav-logo-box:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(0, 163, 108, 0.2); }
+
+        .nav-title { display: flex; align-items: center; gap: 2rem; color: white; line-height: 1; position: relative; }
+        .nav-title::after { content: ''; width: 1px; height: 32px; background: rgba(255,255,255,0.2); margin: 0 -0.5rem; }
+        .nav-title-main { font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em; white-space: nowrap; }
+        .nav-title-sub { font-size: 0.95rem; font-weight: 800; color: var(--emerald); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
+
+        /* ── PAGE CONTENT ── */
+        .page-content {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            padding: 4rem 2rem;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 163, 108, 0.03) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(0, 31, 49, 0.03) 0%, transparent 40%);
         }
 
         .container {
@@ -44,43 +85,6 @@
         @keyframes revealUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── HEADER SYNC ── */
-        .header-box {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 3.5rem;
-            text-align: left;
-        }
-
-        .logo-wrapper {
-            background: white;
-            padding: 0.75rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 31, 49, 0.08);
-            width: 110px;
-            flex-shrink: 0;
-            border: 1px solid var(--border);
-        }
-
-        .brand-text-main {
-            font-size: 0.7rem;
-            font-weight: 900;
-            color: var(--navy);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            opacity: 0.7;
-            margin-bottom: 0.25rem;
-        }
-
-        .brand-text-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--navy);
-            letter-spacing: -0.03em;
-            line-height: 1.1;
         }
 
         /* ── RECEIPT CARD ── */
@@ -97,24 +101,14 @@
         }
 
         .receipt-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 6px;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
             background: linear-gradient(90deg, var(--emerald), var(--navy));
         }
 
         .success-aura {
-            width: 90px;
-            height: 90px;
-            background: var(--emerald-light);
-            color: var(--emerald);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2.5rem;
-            position: relative;
-            animation: pulseEmerald 2s infinite;
+            width: 90px; height: 90px; background: var(--emerald-light); color: var(--emerald);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 2.5rem; position: relative; animation: pulseEmerald 2s infinite;
         }
 
         @keyframes pulseEmerald {
@@ -123,141 +117,101 @@
             100% { box-shadow: 0 0 0 0 rgba(0, 163, 108, 0); }
         }
 
-        .conf-title {
-            font-size: 2.2rem;
-            font-weight: 950;
-            color: var(--navy);
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.04em;
-        }
+        .conf-title { font-size: 2.2rem; font-weight: 950; color: var(--navy); margin-bottom: 0.75rem; letter-spacing: -0.04em; }
+        .conf-desc { font-size: 1rem; color: var(--slate); margin-bottom: 3rem; font-weight: 500; }
 
-        .conf-desc {
-            font-size: 1rem;
-            color: var(--slate);
-            margin-bottom: 3rem;
-            font-weight: 500;
-        }
-
-        .participant-id-box {
-            background: #f8fafc;
-            border: 1.5px dashed var(--border);
-            padding: 1.5rem;
-            border-radius: 20px;
-            margin-bottom: 2.5rem;
-        }
-
-        .id-label {
-            font-size: 0.7rem;
-            font-weight: 950;
-            color: var(--slate);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 0.5rem;
-        }
-
-        .id-value {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 950;
-            color: var(--navy);
-            letter-spacing: 0.1em;
-            background: linear-gradient(135deg, var(--navy), var(--emerald));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .details-grid {
-            border-top: 1.5px solid #f1f5f9;
-            padding-top: 2rem;
-            display: grid;
-            gap: 1rem;
-            text-align: left;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            font-size: 0.95rem;
-        }
-
+        .details-grid { border-top: 1.5px solid #f1f5f9; padding-top: 2rem; display: grid; gap: 1rem; text-align: left; }
+        .detail-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.95rem; }
         .detail-label { font-weight: 800; color: var(--slate); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
         .detail-value { font-weight: 700; color: var(--navy); }
 
         .btn-portal {
-            display: inline-block;
-            margin-top: 3rem;
-            padding: 1.25rem 3rem;
-            background: var(--navy);
-            color: white;
-            text-decoration: none;
-            border-radius: 100px;
-            font-weight: 900;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            transition: all 0.4s var(--ease);
-            box-shadow: 0 10px 25px rgba(0, 31, 49, 0.2);
+            display: inline-block; margin-top: 3rem; padding: 1.25rem 3rem; background: var(--navy);
+            color: white; text-decoration: none; border-radius: 100px; font-weight: 900;
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em;
+            transition: all 0.4s var(--ease); box-shadow: 0 10px 25px rgba(0, 31, 49, 0.2);
         }
+        .btn-portal:hover { background: var(--emerald); transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0, 163, 108, 0.3); }
 
-        .btn-portal:hover {
-            background: var(--emerald);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 163, 108, 0.3);
+        /* ── FOOTER SYNC ── */
+        .hero-footer {
+            padding: 2rem 5rem; text-align: center; background: linear-gradient(135deg, #1a7a3c 0%, #0f172a 100%);
+            border-top: 1px solid rgba(255,255,255,0.1); width: 100%; margin-top: auto; position: relative;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+        }
+        .hero-footer::before { content: ''; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.02); pointer-events: none; }
+        .footer-tiny { font-size: 0.95rem; color: rgba(255,255,255,0.6); font-weight: 500; letter-spacing: 0.02em; position: relative; z-index: 2; }
+        .footer-tiny span { color: white; font-weight: 800; border-bottom: 2px solid var(--emerald); }
+
+        @media (max-width: 992px) {
+            .hero-nav, .hero-footer { padding: 1.5rem 2rem; }
+            .nav-title { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header-box">
-            <div class="logo-wrapper">
+    {{-- Header --}}
+    <nav class="hero-nav">
+        <div class="nav-brand">
+            <div class="nav-logo-box">
                 <x-logo width="100%" height="auto" />
             </div>
-            <div>
-                <div class="brand-text-main">Bio and Emerging Technology Institute</div>
-                <h2 class="brand-text-title">8<sup>th</sup> Annual <span style="color: var(--emerald);">Review</span></h2>
-            </div>
-        </header>
-
-        <div class="receipt-card">
-            <div class="success-aura">
-                <svg width="45" height="45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg>
-            </div>
-
-            <h1 class="conf-title">Registration Confirmed</h1>
-            <p class="conf-desc">Thank you, <strong>{{ $registration->full_name }}</strong>. Your registration for the 8<sup>th</sup> Annual Review has been successfully received.</p>
-
-            <div style="background: var(--emerald-light); border: 1px solid rgba(0, 163, 108, 0.2); padding: 1.5rem; border-radius: 20px; margin-bottom: 2.5rem; text-align: left; display: flex; gap: 1rem; align-items: center; animation: slideIn 0.4s var(--ease) both;">
-                <div style="font-size: 1.5rem;">📧</div>
-                <div>
-                    <div style="font-weight: 800; color: var(--emerald); font-size: 0.9rem; margin-bottom: 0.1rem;">Confirmation Email Sent</div>
-                    <div style="font-size: 0.85rem; color: var(--navy); opacity: 0.8; font-weight: 500;">Please check your inbox. You can use the secure link in the email to **edit your application** or upload missing documents anytime.</div>
-                </div>
-            </div>
-
-            <div class="details-grid">
-                <div class="detail-row">
-                    <span class="detail-label">Event Focus</span>
-                    <span class="detail-value">8<sup>th</sup> Annual Review</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Schedule</span>
-                    <span class="detail-value">March 11 – 13, 2026</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Organizer</span>
-                    <span class="detail-value" style="color: var(--emerald);">BETin</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Location</span>
-                    <span class="detail-value">Addis Ababa, Ethiopia</span>
-                </div>
+            <div class="nav-title">
+                <div class="nav-title-main">Bio and Emerging Technology Institute</div>
+                <div class="nav-title-sub">Annual Review 2026</div>
             </div>
         </div>
+    </nav>
 
-        <div style="text-align: center;">
-            <a href="{{ route('event.landing') }}" class="btn-portal">Return to Event Portal</a>
+    <main class="page-content">
+        <div class="container">
+            <div class="receipt-card">
+                <div class="success-aura">
+                    <svg width="45" height="45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+
+                <h1 class="conf-title">Registration Confirmed</h1>
+                <p class="conf-desc">Thank you, <strong>{{ $registration->full_name }}</strong>. Your registration for the 8<sup>th</sup> Annual Review has been successfully received.</p>
+
+                <div style="background: var(--emerald-light); border: 1px solid rgba(0, 163, 108, 0.2); padding: 1.5rem; border-radius: 20px; margin-bottom: 2.5rem; text-align: left; display: flex; gap: 1rem; align-items: center; animation: slideIn 0.4s var(--ease) both;">
+                    <div style="font-size: 1.5rem;">📧</div>
+                    <div>
+                        <div style="font-weight: 800; color: var(--emerald); font-size: 0.9rem; margin-bottom: 0.1rem;">Confirmation Email Sent</div>
+                        <div style="font-size: 0.85rem; color: var(--navy); opacity: 0.8; font-weight: 500;">Please check your inbox. You can use the secure link in the email to **edit your application** or upload missing documents anytime.</div>
+                    </div>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-row">
+                        <span class="detail-label">Event Focus</span>
+                        <span class="detail-value">8<sup>th</sup> Annual Review</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Schedule</span>
+                        <span class="detail-value">March 11 – 13, 2026</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Organizer</span>
+                        <span class="detail-value" style="color: var(--emerald);">BETin</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Location</span>
+                        <span class="detail-value">Addis Ababa, Ethiopia</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="{{ route('event.landing') }}" class="btn-portal">Return to Event Portal</a>
+            </div>
         </div>
-    </div>
+    </main>
+
+    {{-- Footer --}}
+    <footer class="hero-footer">
+        <div class="footer-tiny">
+            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
+        </div>
+    </footer>
 </body>
 </html>
