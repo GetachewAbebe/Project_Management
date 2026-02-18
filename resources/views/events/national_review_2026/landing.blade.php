@@ -8,15 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --obsidian: #0a1a0e;
+            --obsidian: #0f1f12;
             --navy: #1a4a6b;
             --emerald: #1a7a3c;
-            --emerald-glow: rgba(26, 122, 60, 0.35);
-            --emerald-light: rgba(26, 122, 60, 0.08);
+            --emerald-glow: rgba(26, 122, 60, 0.15);
+            --emerald-light: rgba(26, 122, 60, 0.05);
             --gold: #f59e0b;
             --alabaster: #f8f9fa;
-            --border: rgba(0,0,0,0.07);
+            --border: rgba(0,0,0,0.06);
             --ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --text-main: #1e293b;
+            --text-sub: #475569;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,8 +27,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            color: white; /* Default light text for dark theme */
-            background: var(--obsidian); /* Ground the layout with dark theme */
+            color: var(--text-main);
+            background: #f8fafc;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -36,7 +38,7 @@
         /* ── HERO ── */
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0d2b14 0%, #0a1a0e 60%, #0d2233 100%);
+            background: linear-gradient(160deg, #f0f7f2 0%, #f8fafc 50%, #f1f8fe 100%);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -58,8 +60,8 @@
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+                linear-gradient(rgba(26,122,60,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(26,122,60,0.05) 1px, transparent 1px);
             background-size: 60px 60px;
             z-index: 1;
         }
@@ -72,9 +74,9 @@
             pointer-events: none;
             z-index: 2;
         }
-        .orb-1 { width: 80vw; height: 80vw; background: rgba(26, 122, 60, 0.12); top: -20%; right: -20%; filter: blur(150px); }
-        .orb-2 { width: 60vw; height: 60vw; background: rgba(26, 74, 107, 0.35); bottom: -10%; left: -10%; filter: blur(120px); }
-        .orb-3 { width: 40vw; height: 40vw; background: rgba(26, 122, 60, 0.06); top: 30%; left: 40%; filter: blur(100px); }
+        .orb-1 { width: 80vw; height: 80vw; background: rgba(26, 122, 60, 0.08); top: -20%; right: -20%; filter: blur(150px); }
+        .orb-2 { width: 60vw; height: 60vw; background: rgba(26, 74, 107, 0.08); bottom: -10%; left: -10%; filter: blur(120px); }
+        .orb-3 { width: 40vw; height: 40vw; background: rgba(26, 122, 60, 0.04); top: 30%; left: 40%; filter: blur(100px); }
 
         /* Nav */
         .hero-nav {
@@ -84,11 +86,11 @@
             align-items: center;
             justify-content: center;
             padding: 2.5rem 5rem;
-            background: rgba(10, 26, 14, 0.6);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             border-top: 3px solid var(--emerald);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
         .nav-brand {
@@ -121,9 +123,9 @@
         .nav-title {
             display: flex;
             align-items: center;
-            gap: 2rem; /* Balanced gap for larger text */
+            gap: 2rem;
             font-family: 'Outfit', sans-serif;
-            color: white;
+            color: var(--text-main);
             line-height: 1;
         }
 
@@ -132,18 +134,18 @@
             content: '';
             order: 1;
             width: 1px;
-            height: 32px; /* Taller for larger text */
-            background: rgba(255,255,255,0.2);
+            height: 32px;
+            background: rgba(0,0,0,0.1);
             margin: 0 -0.5rem;
         }
 
-        /* Bio and Emerging Tech Institute */
+        /* Bio and Emerging Technology Institute */
         .nav-title-main {
             order: 0;
-            font-size: 1.4rem; /* TITAN SCALE */
+            font-size: 1.4rem;
             font-weight: 900;
             letter-spacing: -0.02em;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            color: var(--text-main);
             white-space: nowrap;
         }
 
@@ -214,11 +216,11 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            background: rgba(220, 38, 38, 0.1);
-            border: 2px solid rgba(220, 38, 38, 0.6);
+            background: rgba(220, 38, 38, 0.04);
+            border: 1px solid rgba(220, 38, 38, 0.2);
             border-radius: 12px;
             padding: 1rem 1.75rem;
-            box-shadow: 0 0 40px rgba(220, 38, 38, 0.2);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.05);
             animation: red-aura-pulse 3s infinite ease-in-out;
         }
 
@@ -288,7 +290,7 @@
         .hero-edition {
             font-size: 0.75rem;
             font-weight: 800;
-            color: rgba(255,255,255,0.35);
+            color: var(--emerald);
             text-transform: uppercase;
             letter-spacing: 0.4em;
             margin-bottom: 1.5rem;
@@ -296,11 +298,11 @@
 
         .hero-title {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(3rem, 8vw, 6rem); /* Refined for horizontal balance */
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 900;
             line-height: 0.9;
             letter-spacing: -0.05em;
-            color: white;
+            color: var(--text-main);
             margin-bottom: 2rem;
             position: relative;
         }
@@ -327,7 +329,7 @@
         .hero-subtitle {
             font-size: 1.15rem;
             font-weight: 500;
-            color: rgba(255,255,255,0.65);
+            color: var(--text-sub);
             line-height: 1.7;
             max-width: 580px;
             margin-bottom: 3.5rem;
@@ -367,7 +369,7 @@
         .cta-primary:hover svg { transform: translateX(5px); }
 
         .cta-secondary {
-            color: rgba(255,255,255,0.6);
+            color: var(--text-sub);
             font-size: 0.9rem;
             font-weight: 600;
             text-decoration: none;
@@ -377,7 +379,7 @@
             transition: color 0.2s;
         }
 
-        .cta-secondary:hover { color: white; }
+        .cta-secondary:hover { color: var(--text-main); }
 
         /* Event Info Cards */
         .hero-right {
@@ -389,26 +391,28 @@
         }
 
         .info-card {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.7);
             backdrop-filter: blur(30px);
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(0,0,0,0.05);
             border-radius: 20px;
             padding: 1.25rem 2rem;
             display: flex;
             align-items: center;
             gap: 1.5rem;
             transition: all 0.5s var(--ease);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         .info-card:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(0, 163, 108, 0.3);
-            transform: translateX(5px);
+            background: white;
+            border-color: var(--emerald);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
         }
 
         .info-icon {
             width: 44px; height: 44px;
-            background: rgba(0, 163, 108, 0.15);
+            background: var(--emerald-light);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -422,7 +426,7 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: rgba(255,255,255,0.35);
+            color: var(--text-sub);
             margin-bottom: 0.3rem;
         }
 
@@ -430,7 +434,7 @@
             font-family: 'Outfit', sans-serif;
             font-size: 0.95rem;
             font-weight: 800;
-            color: white;
+            color: var(--text-main);
         }
 
         /* Hero bottom bar - Integrated Glass Footer */
@@ -441,12 +445,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.06);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             width: 100%;
-            margin: 2rem 0; /* Natural vertical spacing, not grounded */
+            margin: 2rem 0;
         }
 
         .stat-row {
@@ -471,14 +475,14 @@
             font-family: 'Outfit', sans-serif;
             font-size: 1.75rem;
             font-weight: 900;
-            color: white;
+            color: var(--text-main);
             line-height: 1;
         }
 
         .stat-label {
             font-size: 0.65rem;
             font-weight: 700;
-            color: rgba(255,255,255,0.35);
+            color: var(--text-sub);
             text-transform: uppercase;
             letter-spacing: 0.15em;
             margin-top: 0.25rem;
@@ -488,7 +492,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            color: rgba(255,255,255,0.3);
+            color: var(--text-sub);
             font-size: 0.75rem;
             font-weight: 600;
             animation: bounce 2s infinite;
@@ -768,18 +772,17 @@
         .hero-footer {
             position: relative;
             z-index: 10;
-            padding: 2rem 5rem; /* Increased vertical padding to accommodate larger text */
+            padding: 2rem 5rem;
             text-align: center;
-            background: rgba(5, 5, 5, 0.4);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.08);
+            background: white;
+            border-top: 1px solid rgba(0,0,0,0.05);
             width: 100%;
-            margin-top: auto; /* This is what grounds the footer to the bottom */
+            margin-top: auto;
         }
 
         .footer-tiny {
-            font-size: 0.9rem; /* INCREASED FROM 0.7rem */
-            color: rgba(255,255,255,0.45);
+            font-size: 0.9rem;
+            color: var(--text-sub);
             font-weight: 500;
             letter-spacing: 0.02em;
         }
