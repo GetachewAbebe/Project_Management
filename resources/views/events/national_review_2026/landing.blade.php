@@ -1001,7 +1001,7 @@
                         <div class="status-text-prime">Registration Open</div>
                     </div>
                     @php
-                        $deadline = \Carbon\Carbon::create(2026, 2, 27);
+                        $deadline = \Carbon\Carbon::create(2026, 2, 27, 23, 59, 59);
                         $now = now();
                         $daysRemaining = $now->diffInDays($deadline, false);
                     @endphp
