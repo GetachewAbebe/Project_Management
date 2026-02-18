@@ -25,12 +25,12 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            color: var(--obsidian);
-            background: var(--alabaster);
+            color: white; /* Default light text for dark theme */
+            background: var(--obsidian); /* Ground the layout with dark theme */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden; /* Prevent horizontal scroll, allow vertical */
+            overflow-x: hidden;
         }
 
         /* ── HERO ── */
