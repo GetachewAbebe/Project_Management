@@ -227,6 +227,14 @@
             <h1 class="conf-title">Registration Confirmed</h1>
             <p class="conf-desc">Thank you, <strong>{{ $registration->full_name }}</strong>. Your registration for the 8<sup>th</sup> Annual Review has been successfully received.</p>
 
+            <div style="background: var(--emerald-light); border: 1px solid rgba(0, 163, 108, 0.2); padding: 1.5rem; border-radius: 20px; margin-bottom: 2.5rem; text-align: left; display: flex; gap: 1rem; align-items: center; animation: slideIn 0.4s var(--ease) both;">
+                <div style="font-size: 1.5rem;">📧</div>
+                <div>
+                    <div style="font-weight: 800; color: var(--emerald); font-size: 0.9rem; margin-bottom: 0.1rem;">Confirmation Email Sent</div>
+                    <div style="font-size: 0.85rem; color: var(--navy); opacity: 0.8; font-weight: 500;">Please check your inbox. You can use the secure link in the email to **edit your application** or upload missing documents anytime.</div>
+                </div>
+            </div>
+
             <div class="participant-id-box">
                 <div class="id-label">Participant Unique ID</div>
                 <div class="id-value">{{ $registration->reference_code }}</div>

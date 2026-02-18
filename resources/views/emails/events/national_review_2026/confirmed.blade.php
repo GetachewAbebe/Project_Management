@@ -64,8 +64,8 @@
                 </table>
 
                 <div class="update-box">
-                    <p style="font-size: 14px; font-weight: 700; color: #001f31; margin-bottom: 15px;">Need to submit missing documents?</p>
-                    <p style="font-size: 12px; color: #64748b; margin-bottom: 25px;">You can use your secure link to upload your Institutional Support Letter or Presentation PPT at any time before the event.</p>
+                    <p style="font-size: 14px; font-weight: 700; color: #001f31; margin-bottom: 15px;">You can Edit your application at any time!</p>
+                    <p style="font-size: 12px; color: #64748b; margin-bottom: 25px;">We understand you may need to refine your research data or upload documents later. Use the secure link below to access your personal portal and **update your submission** (including Institutional Support Letter and PPT) before the event deadline.</p>
                     <a href="{{ route('event.registration.edit', $registration->reference_code) }}" class="button">Access Update Portal</a>
                 </div>
             </div>
