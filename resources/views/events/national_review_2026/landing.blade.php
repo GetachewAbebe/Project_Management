@@ -1211,7 +1211,6 @@
         }
 
         window.onload = function() {
-            updatePathfinderTimer();
             initTypewriter();
         };
     </script>
