@@ -757,10 +757,23 @@
         .step-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
         .step-item { display: flex; align-items: center; gap: 1rem; opacity: 0.4; transition: 0.3s; }
         .step-item.active { opacity: 1; }
-        .step-item.completed { opacity: 0.6; }
-        .step-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; flex-shrink: 0; }
-        .step-item.active .step-dot { background: var(--emerald); border-color: var(--emerald); box-shadow: 0 0 10px var(--emerald); }
-        .step-item.completed .step-dot { background: white; }
+        .step-item.completed { opacity: 0.8; }
+        .step-dot { 
+            width: 28px; height: 28px; border-radius: 50%; 
+            border: 2px solid white; flex-shrink: 0; 
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 900; color: white;
+            transition: all 0.3s;
+        }
+        .step-item.active .step-dot { 
+            background: var(--emerald); border-color: var(--emerald); 
+            box-shadow: 0 0 15px var(--emerald-glow); 
+            transform: scale(1.1);
+        }
+        .step-item.completed .step-dot { 
+            background: white; color: var(--navy); 
+            border-color: white;
+        }
         .step-label { font-size: 0.8rem; font-weight: 700; color: white; }
 
         @media (max-width: 900px) {
@@ -953,12 +966,16 @@
                 
                 <div class="step-list">
                     <div class="step-item active" data-step="1">
-                        <div class="step-dot"></div>
-                        <span class="step-label">Phase 01: Profile</span>
+                        <div class="step-dot">1</div>
+                        <span class="step-label">Professional Identity</span>
                     </div>
                     <div class="step-item" data-step="2">
-                        <div class="step-dot"></div>
-                        <span class="step-label">Phase 02: Research</span>
+                        <div class="step-dot">2</div>
+                        <span class="step-label">Research Thesis</span>
+                    </div>
+                    <div class="step-item" data-step="3">
+                        <div class="step-dot">3</div>
+                        <span class="step-label">Submission Pack</span>
                     </div>
                 </div>
 
@@ -972,9 +989,9 @@
                 <form action="{{ route('event.register.store') }}" method="POST" enctype="multipart/form-data" id="modalRegisterForm">
                     @csrf
                     
-                    <!-- Phase 01: Profile -->
+                    <!-- Phase 01: Professional Identity -->
                     <div class="step-content active" id="modalStep1">
-                        <div style="margin-bottom: 2.5rem;">
+                        <div style="margin-bottom: 2rem;">
                             <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Institutional Framework</h3>
                             <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Provide your professional background and contact details.</p>
                         </div>
@@ -997,6 +1014,10 @@
                                 <div class="input-well"><input type="text" name="organization" required placeholder="Enter institution"></div>
                             </div>
                             <div class="field col-6">
+                                <label>City</label>
+                                <div class="input-well"><input type="text" name="city" required placeholder="Addis Ababa"></div>
+                            </div>
+                            <div class="field col-6">
                                 <label>Gender</label>
                                 <div class="input-well">
                                     <select name="gender" required>
@@ -1006,7 +1027,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="field col-6">
+                            <div class="field col-12">
                                 <label>Qualification</label>
                                 <div class="input-well">
                                     <select name="qualification" required>
@@ -1017,16 +1038,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <input type="hidden" name="specialization" value="General">
-                            <input type="hidden" name="city" value="Addis Ababa">
                         </div>
                     </div>
 
-                    <!-- Phase 02: Research -->
+                    <!-- Phase 02: Research Thesis -->
                     <div class="step-content" id="modalStep2">
-                        <div style="margin-bottom: 2.5rem;">
-                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Research Assets</h3>
-                            <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Upload your abstract and presentation details.</p>
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Scientific Content</h3>
+                            <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Define your research area and presentation intent.</p>
                         </div>
 
                         <div class="grid">
@@ -1035,19 +1054,64 @@
                                 <div class="input-well"><input type="text" name="presentation_title" required placeholder="Title of your research"></div>
                             </div>
                             <div class="field col-12">
+                                <label>Specialization / Department</label>
+                                <div class="input-well"><input type="text" name="specialization" required placeholder="e.g. Bioinformatics, Biotechnology"></div>
+                            </div>
+                            <div class="field col-12">
                                 <label>Abstract Summary</label>
                                 <div class="input-well"><textarea name="abstract_text" rows="3" required placeholder="Briefly describe your work..."></textarea></div>
                             </div>
                             <div class="field col-12">
-                                <label>Manuscript (PDF)</label>
-                                <div class="file-zone" onclick="document.getElementById('modalFile').click()">
-                                    <input type="file" id="modalFile" name="abstract_file" style="display:none" onchange="updateFileName(this)">
-                                    <div id="fileStatus">📄 Click to Choose File</div>
+                                <label>Availability (Present on all dates?)</label>
+                                <div class="input-well">
+                                    <select name="available_on_date" required>
+                                        <option value="Yes">Yes, fully available</option>
+                                        <option value="No">No, partial availability</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="available_on_date" value="Yes">
-                        <input type="hidden" name="discovery_source" value="Portal">
+                    </div>
+
+                    <!-- Phase 03: Submission Pack -->
+                    <div class="step-content" id="modalStep3">
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Submission Assets</h3>
+                            <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Upload required documents and final details.</p>
+                        </div>
+
+                        <div class="grid">
+                            <div class="field col-6">
+                                <label>Manuscript (PDF)</label>
+                                <div class="file-zone" onclick="document.getElementById('modalFile').click()">
+                                    <input type="file" id="modalFile" name="abstract_file" style="display:none" onchange="updateFileName(this, 'fileStatus')">
+                                    <div id="fileStatus" style="font-size: 0.7rem;">📄 Abstract/File</div>
+                                </div>
+                            </div>
+                            <div class="field col-6">
+                                <label>Support Letter</label>
+                                <div class="file-zone" onclick="document.getElementById('modalSupport').click()">
+                                    <input type="file" id="modalSupport" name="support_letter" style="display:none" onchange="updateFileName(this, 'supportStatus')">
+                                    <div id="supportStatus" style="font-size: 0.7rem;">📁 Support Doc</div>
+                                </div>
+                            </div>
+                            <div class="field col-12">
+                                <label>Discovery Source (How did you hear about us?)</label>
+                                <div class="input-well">
+                                    <select name="discovery_source" required>
+                                        <option value="Social Media">Social Media</option>
+                                        <option value="Email/Invitation">Email/Invitation</option>
+                                        <option value="BETI Website">BETI Website</option>
+                                        <option value="Colleague">Colleague</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field col-12">
+                                <label>Additional Questions / Remarks</label>
+                                <div class="input-well"><textarea name="questions" rows="2" placeholder="Any special requirements?"></textarea></div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-nav">
@@ -1077,7 +1141,7 @@
         let currentModalStep = 1;
         function changeStep(dir) {
             const nextStep = currentModalStep + dir;
-            if (nextStep < 1 || nextStep > 2) return;
+            if (nextStep < 1 || nextStep > 3) return;
 
             // Simple validation
             if (dir > 0) {
@@ -1107,14 +1171,14 @@
             });
 
             document.getElementById('modalPrev').style.display = currentModalStep === 1 ? 'none' : 'block';
-            document.getElementById('modalNext').style.display = currentModalStep === 2 ? 'none' : 'block';
-            document.getElementById('modalSubmit').style.display = currentModalStep === 2 ? 'block' : 'none';
+            document.getElementById('modalNext').style.display = currentModalStep === 3 ? 'none' : 'block';
+            document.getElementById('modalSubmit').style.display = currentModalStep === 3 ? 'block' : 'none';
         }
 
-        function updateFileName(input) {
-            const status = document.getElementById('fileStatus');
+        function updateFileName(input, statusId) {
+            const status = document.getElementById(statusId);
             if (input.files.length) status.innerHTML = '✅ ' + input.files[0].name;
-            else status.innerHTML = '📄 Click to Choose File';
+            else status.innerHTML = (statusId === 'fileStatus') ? '📄 Abstract/File' : '📁 Support Doc';
         }
 
         // Close on escape
