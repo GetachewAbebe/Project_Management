@@ -1173,17 +1173,17 @@
             this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
 
             var self = this;
-            var delta = 150 - Math.random() * 80;
+            var delta = 100 - Math.random() * 50;
 
-            if (this.isDeleting) { delta /= 2; }
+            if (this.isDeleting) { delta /= 2.5; }
 
             if (!this.isDeleting && this.txt === fullTxt) {
-                delta = this.period;
+                delta = 2000;
                 this.isDeleting = true;
             } else if (this.isDeleting && this.txt === '') {
                 this.isDeleting = false;
                 this.loopNum++;
-                delta = 500;
+                delta = 400;
             }
 
             setTimeout(function() {
