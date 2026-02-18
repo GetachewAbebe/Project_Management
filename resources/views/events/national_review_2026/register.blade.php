@@ -145,7 +145,7 @@
 
         /* ── SIDEBAR (Supreme Glass) ── */
         .sidebar {
-            background: linear-gradient(165deg, #1a5c2e, #0a1a0e);
+            background: linear-gradient(135deg, #0f172a 30%, #1a4a6b 100%);
             padding: 4rem 2.5rem; color: white;
             display: flex; flex-direction: column; gap: 2rem;
             position: relative; overflow: hidden;
@@ -280,7 +280,7 @@
 
                     <div style="display: inline-block; background: var(--emerald); color: white; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1.25rem;">BETin</div>
                     <h2 style="font-size: 2.6rem; font-weight: 900; line-height: 1; letter-spacing: -0.04em; margin-bottom: 1rem;">
-                        8<sup>th</sup> Annual<br><span style="color: var(--gold);">Review</span>
+                        8<sup>th</sup> Annual<br><span style="color: var(--emerald);">Review</span>
                     </h2>
                     <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 600;">
                         <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
