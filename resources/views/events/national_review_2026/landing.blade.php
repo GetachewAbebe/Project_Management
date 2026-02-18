@@ -266,11 +266,22 @@
         }
 
         .status-text-sub {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: rgba(248, 113, 113, 0.7);
+            font-size: 1.25rem; /* Titan Scale */
+            font-weight: 900;
+            color: #ffffff; /* High Contrast White */
             letter-spacing: 0.05em;
-            text-transform: none;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.9); /* Intense Glow */
+            animation: heartbeat 2s infinite ease-in-out;
+            margin-top: 0.25rem;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); filter: brightness(1); }
+            15% { transform: scale(1.1); filter: brightness(1.2); }
+            30% { transform: scale(1); filter: brightness(1); }
+            45% { transform: scale(1.1); filter: brightness(1.2); }
+            100% { transform: scale(1); filter: brightness(1); }
         }
 
         .hero-edition {
