@@ -182,10 +182,17 @@
             {{-- Sidebar --}}
             <aside class="sidebar">
                 <div style="font-family: 'Outfit', sans-serif;">
-                    <h2 style="font-size: 2.2rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.05em; margin-bottom: 0.75rem;">
-                        BETin<br>Annual<br><span style="color: var(--emerald);">Review</span>
+                    <div style="display: inline-block; background: var(--emerald); color: white; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1.25rem;">BETin</div>
+                    <h2 style="font-size: 2.6rem; font-weight: 900; line-height: 1; letter-spacing: -0.04em; margin-bottom: 1rem;">
+                        8<sup style="font-size:1.2rem; vertical-align:super;">th</sup> Annual<br><span style="color: var(--emerald);">Review</span>
                     </h2>
-                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.6; margin-top: 0.5rem;">8th Annual Review · March 11–13, 2026 · Addis Ababa</p>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 600;">
+                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        March 11–13, 2026
+                        <span style="opacity:0.3;">·</span>
+                        <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        Addis Ababa
+                    </div>
                 </div>
 
                 <div class="step-list">
