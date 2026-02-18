@@ -202,10 +202,20 @@
         .step-heading { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--navy); margin-bottom: 0.5rem; }
         .step-desc { font-size: 0.9rem; color: var(--slate); margin-bottom: 2.5rem; }
 
+        .project-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: var(--shadow-deep); 
+            border-color: rgba(0, 163, 108, 0.2); 
+            background: #fafafa !important;
+        }
+
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
         .col-12 { grid-column: span 12; }
+        .col-9 { grid-column: span 9; }
+        .col-8 { grid-column: span 8; }
         .col-6 { grid-column: span 6; }
         .col-4 { grid-column: span 4; }
+        .col-3 { grid-column: span 3; }
 
         .field { display: flex; flex-direction: column; gap: 0.5rem; }
         .field label { font-size: 0.72rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; color: var(--navy); opacity: 0.7; }
@@ -662,24 +672,27 @@
             
             for (let i = 1; i <= count; i++) {
                 const row = document.createElement('div');
-                row.className = 'grid';
+                row.className = 'grid project-card';
                 row.style.background = 'white';
-                row.style.padding = '1.75rem';
-                row.style.borderRadius = '20px';
-                row.style.border = '1px solid rgba(0, 163, 108, 0.1)';
-                row.style.borderLeft = '5px solid var(--emerald)';
-                row.style.marginBottom = '1.25rem';
-                row.style.boxShadow = '0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05)';
+                row.style.padding = '2rem';
+                row.style.borderRadius = '24px';
+                row.style.border = '1.5px solid rgba(0, 163, 108, 0.08)';
+                row.style.borderLeft = '6px solid var(--emerald)';
+                row.style.marginBottom = '1.5rem';
+                row.style.boxShadow = '0 10px 30px -10px rgba(0,0,0,0.06)';
+                row.style.transition = 'all 0.4s var(--ease)';
                 row.style.animation = `slideIn 0.5s var(--ease) ${i * 0.1}s both`;
                 
                 row.innerHTML = `
-                    <div class="col-12" style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
-                        <span style="background: rgba(0, 163, 108, 0.1); color: var(--emerald); padding: 0.35rem 0.85rem; border-radius: 8px; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.1em; backdrop-filter: blur(4px); border: 1px solid rgba(0, 163, 108, 0.2);">PROJECT #${i}</span>
+                    <div class="col-12" style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
+                        <span style="background: rgba(0, 163, 108, 0.08); color: var(--emerald); padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.75rem; font-weight: 900; letter-spacing: 0.12em; border: 1.5px solid rgba(0, 163, 108, 0.15); display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="opacity: 0.5;">#0${i}</span> ADDITIONAL PROJECT
+                        </span>
                         <div style="height: 1px; flex: 1; background: linear-gradient(90deg, rgba(0, 163, 108, 0.1), transparent);"></div>
                     </div>
                     <div class="field col-8">
                         <label>Presentation Title</label>
-                        <input type="text" name="extra_titles[]" required placeholder="Title of additional research">
+                        <input type="text" name="extra_titles[]" required placeholder="Enter the title of your additional research project">
                     </div>
                     <div class="field col-4">
                         <label>Project Status</label>
