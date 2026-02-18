@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('*', \App\View\Composers\GlobalStatsComposer::class);
+        View::composer(['dashboard', 'evaluations.index', 'evaluations.summary'], \App\View\Composers\GlobalStatsComposer::class);
 
         Gate::policy(Project::class, ProjectPolicy::class);
         Gate::policy(Evaluation::class, EvaluationPolicy::class);

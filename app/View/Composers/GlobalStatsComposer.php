@@ -15,8 +15,9 @@ class GlobalStatsComposer
      */
     public function compose(View $view): void
     {
-        // Registration Trend (Last 6 Months) - Database Agnostic
-        $trend = Project::where('created_at', '>=', now()->subMonths(6))
+        // Registration Trend (Last 6 Months) - Database Agnostic & Performance Optimized
+        $trend = Project::select('created_at')
+            ->where('created_at', '>=', now()->subMonths(6))
             ->orderBy('created_at')
             ->get()
             ->groupBy(function ($project) {
@@ -42,9 +43,10 @@ class GlobalStatsComposer
 
             'registration_trend' => $trend,
 
-            'status_distribution' => Project::selectRaw('status, count(*) as count')
+            'status_distribution' => Project::select('status')
+                ->get()
                 ->groupBy('status')
-                ->pluck('count', 'status'),
+                ->map(fn ($group) => $group->count()),
         ]);
     }
 }
