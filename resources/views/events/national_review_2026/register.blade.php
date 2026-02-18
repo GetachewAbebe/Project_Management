@@ -416,20 +416,38 @@
                         <h3 class="step-heading">Research Thesis & Specialization</h3>
                         <p class="step-desc">Describe your research focus and presentation.</p>
                         <div class="grid">
-                            <div class="field col-12">
+                            <div class="field col-6">
+                                <label>Project Status</label>
+                                <select name="project_status" required id="projectStatus">
+                                    <option value="" disabled {{ old('project_status') ? '' : 'selected' }}>Select status</option>
+                                    <option value="New" {{ old('project_status') == 'New' ? 'selected' : '' }}>New Project</option>
+                                    <option value="Ongoing" {{ old('project_status') == 'Ongoing' ? 'selected' : '' }}>Ongoing Research</option>
+                                    <option value="Completed" {{ old('project_status') == 'Completed' ? 'selected' : '' }}>Completed (Last 3 years)</option>
+                                </select>
+                                <div style="font-size:0.65rem; color:#94a3b8; margin-top:0.25rem;">Completed works must be from 2023 or later.</div>
+                                @error('project_status')<div class="error-msg">{{ $message }}</div>@enderror
+                            </div>
+                            <div class="field col-6">
                                 <label>Presentation Title</label>
                                 <input type="text" name="presentation_title" required value="{{ old('presentation_title') }}" placeholder="Title of your research presentation">
                                 @error('presentation_title')<div class="error-msg">{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
-                                <label>Specialization / Department</label>
-                                <input type="text" name="specialization" required value="{{ old('specialization') }}" placeholder="e.g. Health Biotechnology, Nanotechnology">
-                                @error('specialization')<div class="error-msg">{{ $message }}</div>@enderror
-                            </div>
-                            <div class="field col-12">
-                                <label>Abstract Summary</label>
-                                <textarea name="abstract_text" rows="4" required placeholder="Briefly describe your research work (minimum 50 characters)...">{{ old('abstract_text') }}</textarea>
+                                <label>Abstract Submission <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--emerald);">(Submit Text OR File)</span></label>
+                                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; align-items: stretch;">
+                                    <div class="field">
+                                        <textarea name="abstract_text" id="abstractText" rows="6" placeholder="Briefly describe your research work (minimum 50 characters)..." style="height:100%">{{ old('abstract_text') }}</textarea>
+                                    </div>
+                                    <div class="file-zone" onclick="document.getElementById('abstractFileInput').click()" style="display:flex; flex-direction:column; justify-content:center; height:100%">
+                                        <input type="file" id="abstractFileInput" name="abstract_file" style="display:none" onchange="updateFileInfo(this, 'abstractFileInfo')">
+                                        <div class="file-icon">📄</div>
+                                        <div id="abstractFileInfo">Click to upload abstract file</div>
+                                        <div style="font-size:0.7rem; color:#94a3b8; margin-top:0.25rem;">PDF, DOC, DOCX · Max 10MB</div>
+                                    </div>
+                                </div>
+                                <div id="abstractError" class="error-msg" style="display:none">Please provide either an abstract text or upload an abstract file.</div>
                                 @error('abstract_text')<div class="error-msg">{{ $message }}</div>@enderror
+                                @error('abstract_file')<div class="error-msg">{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Thematic Area (BETin Directorate)</label>
@@ -464,12 +482,12 @@
                         <p class="step-desc">Upload your documents and complete your registration.</p>
                         <div class="grid">
                             <div class="field col-6">
-                                <label>Abstract / Manuscript (PDF)</label>
-                                <div class="file-zone" onclick="document.getElementById('fileInput').click()">
-                                    <input type="file" id="fileInput" name="abstract_file" style="display:none" onchange="updateFileInfo(this, 'fileInfo')">
-                                    <div class="file-icon">📄</div>
-                                    <div id="fileInfo">Click to upload abstract</div>
-                                    <div style="font-size:0.7rem; color:#94a3b8; margin-top:0.25rem;">PDF, DOC, DOCX, PPT · Max 10MB</div>
+                                <label>Presentation PPT (Optional)</label>
+                                <div class="file-zone" onclick="document.getElementById('pptInput').click()">
+                                    <input type="file" id="pptInput" name="presentation_ppt" style="display:none" onchange="updateFileInfo(this, 'pptInfo')">
+                                    <div class="file-icon">📊</div>
+                                    <div id="pptInfo">Click to upload Presentation PPT</div>
+                                    <div style="font-size:0.7rem; color:#94a3b8; margin-top:0.25rem;">PPT, PPTX · Max 20MB</div>
                                 </div>
                             </div>
                             <div class="field col-6">
@@ -529,9 +547,28 @@
         function changeFormStep(dir) {
             if (dir > 0) {
                 const active = document.getElementById('step' + currentStep);
+                
+                // Special validation for Step 2: Abstract either text or file
+                if (currentStep === 2) {
+                    const abstractText = document.getElementById('abstractText').value.trim();
+                    const abstractFile = document.getElementById('abstractFileInput').files.length > 0;
+                    const errorEl = document.getElementById('abstractError');
+                    
+                    if (!abstractText && !abstractFile) {
+                        errorEl.style.display = 'block';
+                        window.scrollTo({ top: errorEl.offsetTop - 100, behavior: 'smooth' });
+                        return;
+                    } else {
+                        errorEl.style.display = 'none';
+                    }
+                }
+
                 const inputs = active.querySelectorAll('input[required], select[required], textarea[required]');
                 let valid = true;
                 inputs.forEach(i => {
+                    // Skip abstractText if file is provided
+                    if (i.id === 'abstractText' && document.getElementById('abstractFileInput').files.length > 0) return;
+                    
                     i.style.borderColor = i.value ? '' : '#ef4444';
                     if (!i.value) valid = false;
                 });
@@ -595,7 +632,7 @@
         @if($errors->any())
             @php
                 $step1Fields = ['full_name','email','phone','organization', 'job_title', 'department','city','gender','qualification', 'expertise', 'previous_attendance'];
-                $step2Fields = ['presentation_title','specialization','abstract_text','thematic_area','available_on_date'];
+                $step2Fields = ['presentation_title','project_status','abstract_text','abstract_file','thematic_area','available_on_date'];
                 $goTo = 3;
                 foreach($errors->keys() as $k) {
                     if(in_array($k, $step1Fields)) { $goTo = 1; break; }
