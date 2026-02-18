@@ -334,7 +334,7 @@
         .stat-bar {
             position: relative;
             z-index: 5;
-            padding: 4rem 4%; 
+            padding: 4rem 4% 1rem; /* Reduced bottom padding as footer follows */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -342,6 +342,7 @@
             backdrop-filter: blur(25px);
             border-top: 1px solid rgba(255,255,255,0.08);
             width: 100%;
+            margin-top: auto; /* Push stats and footer to bottom */
         }
 
         .stat-row {
@@ -664,12 +665,12 @@
         .hero-footer {
             position: relative;
             z-index: 10;
-            padding: 1.25rem 5rem;
+            padding: 1.5rem 5rem 2.5rem; /* Grounded padding */
             text-align: center;
             background: rgba(5, 5, 5, 0.4);
             backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 -4px 30px rgba(0,0,0,0.3);
+            border-top: none; /* Merged with stats bar above */
+            width: 100%;
         }
 
         .footer-tiny {
