@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>National Review Registry 2026 | Bio and Emerging Technology Institute</title>
+    <title>Annual Review Registry 2026 | Bio and Emerging Technology Institute</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -174,7 +174,7 @@
             </div>
             <div class="nav-title">
                 <div class="nav-title-main">Bio and Emerging Technology Institute</div>
-                <div class="nav-title-sub">National Review 2026</div>
+                <div class="nav-title-sub">Annual Review 2026</div>
             </div>
         </div>
     </nav>

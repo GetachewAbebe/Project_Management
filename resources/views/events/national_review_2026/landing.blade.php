@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8th National Review 2026 | Bio and Emerging Technology Institute</title>
-    <meta name="description" content="Join the 8th BETIn National Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
+    <title>8th Annual Review 2026 | Bio and Emerging Technology Institute</title>
+    <meta name="description" content="Join the 8th BETIn Annual Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -932,16 +932,16 @@
                 </div>
                 <div class="nav-title">
                     <div class="nav-title-main">Bio and Emerging Technology Institute</div>
-                    <div class="nav-title-sub">National Review 2026</div>
+                    <div class="nav-title-sub">Annual Review 2026</div>
                 </div>
             </div>
         </nav>
 
         <div class="hero-body">
             <div class="hero-left">
-                <div class="hero-edition">8th National Review</div>
+                <div class="hero-edition">8th Annual Review</div>
                 <h1 class="hero-title">
-                    National Review on<br>
+                    Annual Review on<br>
                     <span class="typewriter-container" style="color: var(--emerald); display: block; margin-top: 0.5rem; font-size: 0.75em;">
                         <span id="typewriter" class="typewrite"></span>
                     </span>
@@ -1096,7 +1096,7 @@
                 <div class="section-tag">About the Review</div>
                 <h2 class="section-title">The Frontier of <span class="em">Ethiopian Science</span></h2>
                 <p class="section-desc">
-                    The 8th National Review brings together the brightest minds in biotechnology and emerging sciences to share breakthroughs that address Ethiopia's most pressing challenges.
+                    The 8th Annual Review brings together the brightest minds in biotechnology and emerging sciences to share breakthroughs that address Ethiopia's most pressing challenges.
                 </p>
 
                 <div class="pillar-list">
