@@ -209,21 +209,28 @@
         .registration-status-banner {
             margin-top: 1.5rem;
             display: flex;
+            flex-direction: column; /* Vertical balance */
             align-items: center;
             justify-content: center;
-            gap: 0.85rem;
-            background: rgba(220, 38, 38, 0.1); /* Red tint */
-            border: 2px solid rgba(220, 38, 38, 0.6); /* Bold Red Border */
+            gap: 0.5rem;
+            background: rgba(220, 38, 38, 0.1);
+            border: 2px solid rgba(220, 38, 38, 0.6);
             border-radius: 12px;
-            padding: 1rem 1.75rem; /* Increased padding */
+            padding: 1rem 1.75rem;
             box-shadow: 0 0 40px rgba(220, 38, 38, 0.2);
             animation: red-aura-pulse 3s infinite ease-in-out;
+        }
+
+        .status-banner-main {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
         }
 
         .status-dot-large {
             width: 12px;
             height: 12px;
-            background: #ef4444; /* Vibrant Red */
+            background: #ef4444;
             border-radius: 50%;
             box-shadow: 0 0 15px #ef4444;
             position: relative;
@@ -249,12 +256,21 @@
         }
 
         .status-text-prime {
-            font-size: 0.9rem; /* ENLARGED */
+            font-size: 0.9rem;
             font-weight: 900;
-            color: #f87171; /* Light Red for readability */
+            color: #f87171;
             text-transform: uppercase;
             letter-spacing: 0.25em;
             text-shadow: 0 0 12px rgba(220, 38, 38, 0.5);
+            line-height: 1;
+        }
+
+        .status-text-sub {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(248, 113, 113, 0.7);
+            letter-spacing: 0.05em;
+            text-transform: none;
         }
 
         .hero-edition {
@@ -1097,8 +1113,11 @@
                 </div>
 
                 <div class="registration-status-banner">
-                    <div class="status-dot-large"></div>
-                    <span class="status-text-prime">Registration Open</span>
+                    <div class="status-banner-main">
+                        <div class="status-dot-large"></div>
+                        <span class="status-text-prime">Registration Open</span>
+                    </div>
+                    <div class="status-text-sub" id="registrationDuration">--- Days Remaining</div>
                 </div>
 
                 {{-- Integrated Admin HUD --}}
@@ -1507,6 +1526,12 @@
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 
                 timerEl.innerHTML = `${d.toString().padStart(2, '0')}<span class="timer-unit">d</span> ${h.toString().padStart(2, '0')}<span class="timer-unit">h</span> ${m.toString().padStart(2, '0')}<span class="timer-unit">m</span>`;
+                
+                // Sync status duration text
+                const durationEl = document.getElementById('registrationDuration');
+                if (durationEl) {
+                    durationEl.innerHTML = `${d} Days Remaining`;
+                }
             };
             setInterval(update, 60000);
             update();
