@@ -30,13 +30,14 @@
             flex-direction: column;
         }
 
-        /* ── HEADER (dark, matching landing page) ── */
+        /* ── HEADER (light, matching registration page) ── */
         .hero-nav {
             position: sticky; top: 0; z-index: 100;
             display: flex; align-items: center; justify-content: center;
-            padding: 2.5rem 5rem;
-            background: var(--obsidian);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 1.5rem 5rem;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.06);
         }
 
         .nav-brand { display: flex; align-items: center; gap: 2rem; }
@@ -45,20 +46,20 @@
             width: 110px; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .nav-title { display: flex; align-items: center; gap: 2rem; font-family: 'Outfit', sans-serif; color: white; line-height: 1; }
-        .nav-title::after { content: ''; width: 1px; height: 28px; background: rgba(255,255,255,0.2); }
-        .nav-title-main { font-size: 1.2rem; font-weight: 900; letter-spacing: -0.02em; white-space: nowrap; }
+        .nav-title { display: flex; align-items: center; gap: 2rem; font-family: 'Outfit', sans-serif; color: var(--navy); line-height: 1; }
+        .nav-title::after { content: ''; width: 1px; height: 28px; background: #e2e8f0; }
+        .nav-title-main { font-size: 1.2rem; font-weight: 900; letter-spacing: -0.02em; white-space: nowrap; color: var(--navy); }
         .nav-title-sub { font-size: 0.9rem; font-weight: 800; color: var(--emerald); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
 
-        /* ── FOOTER (dark, matching landing page) ── */
+        /* ── FOOTER (light, matching registration page) ── */
         .hero-footer {
-            padding: 2rem 5rem; text-align: center;
-            background: var(--obsidian);
-            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 1.5rem 5rem; text-align: center;
+            background: white;
+            border-top: 1px solid #e2e8f0;
             margin-top: auto;
         }
-        .footer-tiny { font-size: 0.9rem; color: rgba(255,255,255,0.45); font-weight: 500; }
-        .footer-tiny span { color: var(--emerald); }
+        .footer-tiny { font-size: 0.85rem; color: #94a3b8; font-weight: 500; }
+        .footer-tiny span { color: var(--emerald); font-weight: 700; }
 
         /* ── PAGE CONTENT ── */
         .page-content {
