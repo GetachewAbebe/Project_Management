@@ -73,8 +73,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 2rem 5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 1.5rem 5rem;
+            background: rgba(5, 5, 5, 0.4);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
         }
 
         .nav-brand {
@@ -151,9 +154,12 @@
             align-items: center;
             position: relative;
             z-index: 5;
-            padding: 2rem 5rem;
-            gap: 5rem;
+            padding: 0 5rem;
+            gap: 8rem;
             min-height: 0;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .hero-left { flex: 1; max-width: 700px; }
@@ -201,12 +207,13 @@
 
         .hero-title {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(3rem, 5vw, 5rem);
+            font-size: clamp(3.5rem, 7vw, 7rem);
             font-weight: 900;
-            line-height: 0.9;
-            letter-spacing: -0.04em;
+            line-height: 0.85;
+            letter-spacing: -0.05em;
             color: white;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1.25rem;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .hero-title .accent {
@@ -215,12 +222,12 @@
         }
 
         .hero-subtitle {
-            font-size: 1rem;
+            font-size: 1.15rem;
             font-weight: 500;
-            color: rgba(255,255,255,0.55);
-            line-height: 1.6;
-            max-width: 480px;
-            margin-bottom: 2.5rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.7;
+            max-width: 580px;
+            margin-bottom: 3.5rem;
         }
 
         .hero-cta-group {
@@ -273,20 +280,21 @@
         .hero-right {
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
-            min-width: 300px;
+            gap: 1.5rem;
+            min-width: 380px;
+            flex-shrink: 0;
         }
 
         .info-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 1rem 1.5rem;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 1.25rem 2rem;
             display: flex;
             align-items: center;
-            gap: 1.25rem;
-            transition: all 0.3s var(--ease);
+            gap: 1.5rem;
+            transition: all 0.5s var(--ease);
         }
 
         .info-card:hover {
@@ -325,19 +333,28 @@
         /* Hero bottom bar */
         .hero-bottom {
             position: relative;
-            z-index: 5;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 1rem 5rem 1.5rem;
+            z-index: 10;
+            padding: 1.5rem 5rem 2.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            gap: 2rem;
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(25px);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
         }
 
         .stat-row {
             display: flex;
-            gap: 4rem;
+            gap: 6rem;
         }
+        
+        .stat-item { 
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .stat-item:hover { transform: translateY(-5px); }
 
         .stat-item { text-align: center; }
 
