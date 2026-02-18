@@ -177,7 +177,7 @@
                 <div style="font-family: 'Outfit', sans-serif;">
                     <div style="display: inline-flex; align-items: center; padding: 0.35rem 1rem; background: rgba(0, 163, 108, 0.12); border: 1px solid rgba(0, 163, 108, 0.25); border-radius: 100px; margin-bottom: 1.25rem;">
                         <div style="width: 5px; height: 5px; border-radius: 50%; background: var(--emerald); margin-right: 0.6rem; box-shadow: 0 0 8px var(--emerald);"></div>
-                        <span style="font-size: 0.65rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.25em; color: var(--emerald);">Official Registry</span>
+                        <span style="font-size: 0.65rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.25em; color: var(--emerald);">BETin</span>
                     </div>
                     <h2 style="font-size: 2.2rem; font-weight: 900; line-height: 0.9; letter-spacing: -0.05em; margin-bottom: 1rem;">
                         Annual<br><span style="color: var(--emerald);">Review</span>
