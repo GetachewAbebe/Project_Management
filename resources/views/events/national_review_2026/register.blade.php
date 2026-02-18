@@ -413,9 +413,14 @@
 
                     {{-- Step 2 --}}
                     <div class="step-content" id="step2">
-                        <h3 class="step-heading">Research Thesis & Specialization</h3>
+                        <h3 class="step-heading">Project/Research Information</h3>
                         <p class="step-desc">Describe your research focus and presentation.</p>
                         <div class="grid">
+                            <div class="field col-6">
+                                <label>Presentation Title</label>
+                                <input type="text" name="presentation_title" required value="{{ old('presentation_title') }}" placeholder="Title of your research presentation">
+                                @error('presentation_title')<div class="error-msg">{{ $message }}</div>@enderror
+                            </div>
                             <div class="field col-6">
                                 <label>Project Status</label>
                                 <select name="project_status" required id="projectStatus">
@@ -426,11 +431,6 @@
                                 </select>
                                 <div style="font-size:0.65rem; color:#94a3b8; margin-top:0.25rem;">Completed works must be from 2023 or later.</div>
                                 @error('project_status')<div class="error-msg">{{ $message }}</div>@enderror
-                            </div>
-                            <div class="field col-6">
-                                <label>Presentation Title</label>
-                                <input type="text" name="presentation_title" required value="{{ old('presentation_title') }}" placeholder="Title of your research presentation">
-                                @error('presentation_title')<div class="error-msg">{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Abstract Submission <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--emerald);">(Submit Text OR File)</span></label>
@@ -450,9 +450,9 @@
                                 @error('abstract_file')<div class="error-msg">{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
-                                <label>Thematic Area (BETin Directorate)</label>
+                                <label>Thematic Area</label>
                                 <select name="thematic_area" required>
-                                    <option value="" disabled {{ old('thematic_area') ? '' : 'selected' }}>Select BETin Directorate</option>
+                                    <option value="" disabled {{ old('thematic_area') ? '' : 'selected' }}>Select Thematic Area</option>
                                     <option value="Health Biotechnology" {{ old('thematic_area') == 'Health Biotechnology' ? 'selected' : '' }}>Health Biotechnology</option>
                                     <option value="Plant Biotechnology" {{ old('thematic_area') == 'Plant Biotechnology' ? 'selected' : '' }}>Plant Biotechnology</option>
                                     <option value="Animal Biotechnology" {{ old('thematic_area') == 'Animal Biotechnology' ? 'selected' : '' }}>Animal Biotechnology</option>
