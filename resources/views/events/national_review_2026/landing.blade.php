@@ -1088,7 +1088,7 @@
                     <div class="stat-label">Institutions</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">12</div>
+                    <div class="stat-num">10<sup>+</sup></div>
                     <div class="stat-label">Subject Areas</div>
                 </div>
             </div>
