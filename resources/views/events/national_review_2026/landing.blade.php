@@ -27,21 +27,19 @@
             font-family: 'Inter', sans-serif;
             color: var(--obsidian);
             background: var(--alabaster);
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden; /* Prevent horizontal scroll, allow vertical */
         }
 
         /* ── HERO ── */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             background: linear-gradient(135deg, var(--navy) 0%, #001f3a 60%, #002d4a 100%);
             position: relative;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            flex: 1;
         }
 
         /* Grid overlay */
@@ -153,15 +151,14 @@
         .hero-body {
             flex: 1;
             display: flex;
-            align-items: center; /* Center vertically for panoramic balance */
-            justify-content: space-between; /* Push content to edges */
+            align-items: flex-start; /* Flow from top */
+            justify-content: space-between;
             position: relative;
             z-index: 5;
-            padding: 0 4%; /* Fluid horizontal padding */
-            gap: 4rem;
-            min-height: 0;
+            padding: 8rem 4% 6rem; /* Top/Bottom padding for mission-critical spacing */
+            gap: 6rem;
             width: 100%;
-            /* Removed max-width for full-bleed experience */
+            flex-wrap: wrap; /* Stack naturally on smaller screens */
         }
 
         .hero-left { flex: 1; max-width: 700px; }
@@ -337,13 +334,12 @@
         .stat-bar {
             position: relative;
             z-index: 5;
-            padding: 2.5rem 4%;
+            padding: 4rem 4%; 
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: auto;
-            background: rgba(5, 5, 5, 0.6);
-            backdrop-filter: blur(20px);
+            background: rgba(5, 5, 5, 0.4);
+            backdrop-filter: blur(25px);
             border-top: 1px solid rgba(255,255,255,0.08);
             width: 100%;
         }
@@ -578,12 +574,10 @@
             margin-top: 0.4rem;
         }
 
-        /* ── ADMIN HUD ── */
-        .admin-hud {
-            position: fixed; bottom: 2rem; right: 2rem;
-            z-index: 100; pointer-events: none;
-            display: flex; flex-direction: column; gap: 1rem;
-            align-items: flex-end;
+        /* ── ADMIN HUD (Inline Version) ── */
+        .admin-hud-inline {
+            margin-top: 2rem;
+            width: 100%;
         }
 
         .admin-hud-card {
@@ -1021,9 +1015,39 @@
                     </div>
                     <div>
                         <div class="info-label">Submission Deadline</div>
-                        <div class="info-value">April 27, 2026</div>
+                        <div class="info-value">February 27, 2026</div>
                     </div>
                 </div>
+
+                {{-- Integrated Admin HUD --}}
+                @if($stats !== null)
+                <div class="admin-hud-inline">
+                    <div class="admin-hud-card">
+                        <div class="hud-header">
+                            <div class="hud-badge">
+                                <div class="badge-dot" style="width:6px;height:6px;background:var(--gold);box-shadow:0 0 10px var(--gold);"></div>
+                                Master Dashboard
+                            </div>
+                        </div>
+                        
+                        <div class="hud-grid">
+                            <div class="hud-stat">
+                                <div class="hud-num">{{ $stats['total'] }}</div>
+                                <div class="hud-label">Total</div>
+                            </div>
+                            <div class="hud-stat">
+                                <div class="hud-num" style="color:var(--gold)">{{ $stats['pending'] }}</div>
+                                <div class="hud-label">Pending</div>
+                            </div>
+                        </div>
+
+                        <a href="{{ route('event.results') }}" class="btn-hud-results">
+                            View In-Depth Data
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19l7-7-7-7"/></svg>
+                        </a>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
 
@@ -1057,35 +1081,6 @@
         </footer>
     </section>
 
-    {{-- ══════════ ADMIN HUD (authorized only) ══════════ --}}
-    @if($stats !== null)
-    <div class="admin-hud">
-        <div class="admin-hud-card">
-            <div class="hud-header">
-                <div class="hud-badge">
-                    <div class="badge-dot" style="width:6px;height:6px;background:var(--gold);box-shadow:0 0 10px var(--gold);"></div>
-                    Master Dashboard
-                </div>
-            </div>
-            
-            <div class="hud-grid">
-                <div class="hud-stat">
-                    <div class="hud-num">{{ $stats['total'] }}</div>
-                    <div class="hud-label">Total</div>
-                </div>
-                <div class="hud-stat">
-                    <div class="hud-num" style="color:var(--gold)">{{ $stats['pending'] }}</div>
-                    <div class="hud-label">Pending</div>
-                </div>
-            </div>
-
-            <a href="{{ route('event.results') }}" class="btn-hud-results">
-                View In-Depth Data
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19l7-7-7-7"/></svg>
-            </a>
-        </div>
-    </div>
-    @endif
 
     {{-- ══════════ REGISTRATION MODAL ══════════ --}}
     <div class="modal-overlay" id="registrationModal">
