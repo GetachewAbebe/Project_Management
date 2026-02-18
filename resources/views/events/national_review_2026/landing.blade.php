@@ -153,11 +153,11 @@
         .hero-body {
             flex: 1;
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* Changed from center to allow natural flow */
             position: relative;
             z-index: 5;
-            padding: 0 5rem;
-            gap: 8rem;
+            padding: 2rem 5rem; /* Added top padding */
+            gap: 4rem;
             min-height: 0;
             max-width: 1600px;
             margin: 0 auto;
@@ -336,9 +336,10 @@
         .stat-bar {
             position: relative;
             z-index: 5;
-            padding: 2rem 5rem;
+            padding: 4rem 5rem 2rem; /* Increased top padding to clear CTA */
             display: flex;
             justify-content: center;
+            margin-top: auto; /* Push to bottom of flex container */
         }
 
         .stat-row {
@@ -571,7 +572,7 @@
 
         /* ── ADMIN HUD ── */
         .admin-hud {
-            position: fixed; top: 10rem; right: 3rem;
+            position: fixed; bottom: 2rem; right: 2rem;
             z-index: 100; pointer-events: none;
             display: flex; flex-direction: column; gap: 1rem;
             align-items: flex-end;
