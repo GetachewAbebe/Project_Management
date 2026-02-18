@@ -105,6 +105,7 @@
         }
 
         /* Nav */
+        /* Vibrant Zenith Nav */
         .hero-nav {
             position: relative;
             z-index: 100;
@@ -112,18 +113,26 @@
             align-items: center;
             justify-content: center;
             padding: 2rem 5% 2rem;
-            background: rgba(255, 255, 255, 0.65);
+            background: linear-gradient(135deg, #0f172a 30%, #1a4a6b 100%);
             backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(0,0,0,0.06);
+            border-bottom: 2px solid rgba(255,255,255,0.1);
             border-top: 4px solid var(--emerald);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             transition: all 0.5s var(--ease);
         }
 
+        .hero-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.03);
+            pointer-events: none;
+        }
+
         .hero-nav:hover {
-            background: rgba(255, 255, 255, 0.85);
             padding-top: 1.8rem;
             padding-bottom: 1.8rem;
+            background: linear-gradient(135deg, #131d35 30%, #1a7a3c 100%);
         }
 
         .nav-brand {
@@ -158,7 +167,7 @@
             align-items: center;
             gap: 2rem;
             font-family: 'Outfit', sans-serif;
-            color: var(--text-main);
+            color: white;
             line-height: 1;
         }
 
@@ -168,7 +177,7 @@
             order: 1;
             width: 1px;
             height: 32px;
-            background: rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.2);
             margin: 0 -0.5rem;
         }
 
@@ -178,7 +187,7 @@
             font-size: 1.4rem;
             font-weight: 900;
             letter-spacing: -0.02em;
-            color: var(--text-main);
+            color: white;
             white-space: nowrap;
         }
 
@@ -825,24 +834,36 @@
         }
 
         /* Synchronized Footer */
+        /* Vibrant Zenith Footer */
         .hero-footer {
             position: relative;
             z-index: 10;
-            padding: 2rem 5rem;
+            padding: 4rem 5rem;
             text-align: center;
-            background: white;
-            border-top: 1px solid rgba(0,0,0,0.05);
+            background: linear-gradient(135deg, #1a7a3c 0%, #0f172a 100%);
+            border-top: 1px solid rgba(255,255,255,0.1);
             width: 100%;
             margin-top: auto;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+        }
+
+        .hero-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.02);
+            pointer-events: none;
         }
 
         .footer-tiny {
-            font-size: 0.9rem;
-            color: var(--text-sub);
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.6);
             font-weight: 500;
             letter-spacing: 0.02em;
+            position: relative;
+            z-index: 2;
         }
-        .footer-tiny span { color: var(--emerald); }
+        .footer-tiny span { color: white; font-weight: 800; border-bottom: 2px solid var(--emerald); }
 
         @media (max-width: 1024px) {
             .hero-nav, .hero-body, .section, .admin-section, .cta-section, .hero-footer {
