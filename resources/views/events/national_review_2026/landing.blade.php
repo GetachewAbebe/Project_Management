@@ -211,21 +211,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
-            background: rgba(0, 163, 108, 0.15);
-            border: 1px solid rgba(0, 163, 108, 0.4);
+            gap: 0.85rem;
+            background: rgba(220, 38, 38, 0.1); /* Red tint */
+            border: 2px solid rgba(220, 38, 38, 0.6); /* Bold Red Border */
             border-radius: 12px;
-            padding: 0.85rem 1.5rem;
-            box-shadow: 0 0 30px rgba(0, 163, 108, 0.15);
-            animation: aura-pulse 3s infinite ease-in-out;
+            padding: 1rem 1.75rem; /* Increased padding */
+            box-shadow: 0 0 40px rgba(220, 38, 38, 0.2);
+            animation: red-aura-pulse 3s infinite ease-in-out;
         }
 
         .status-dot-large {
-            width: 10px;
-            height: 10px;
-            background: var(--emerald);
+            width: 12px;
+            height: 12px;
+            background: #ef4444; /* Vibrant Red */
             border-radius: 50%;
-            box-shadow: 0 0 15px var(--emerald);
+            box-shadow: 0 0 15px #ef4444;
             position: relative;
         }
 
@@ -234,27 +234,27 @@
             position: absolute;
             inset: -4px;
             border-radius: 50%;
-            border: 2px solid var(--emerald);
-            animation: ring-pulse 2s infinite;
+            border: 2px solid #ef4444;
+            animation: ring-pulse-red 2s infinite;
         }
 
-        @keyframes aura-pulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 163, 108, 0.1); border-color: rgba(0, 163, 108, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(0, 163, 108, 0.3); border-color: rgba(0, 163, 108, 0.6); }
+        @keyframes red-aura-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(220, 38, 38, 0.4); border-color: rgba(220, 38, 38, 0.9); }
         }
 
-        @keyframes ring-pulse {
+        @keyframes ring-pulse-red {
             0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
+            100% { transform: scale(3.5); opacity: 0; }
         }
 
         .status-text-prime {
-            font-size: 0.75rem;
+            font-size: 0.9rem; /* ENLARGED */
             font-weight: 900;
-            color: var(--emerald);
+            color: #f87171; /* Light Red for readability */
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            text-shadow: 0 0 10px rgba(0, 163, 108, 0.3);
+            letter-spacing: 0.25em;
+            text-shadow: 0 0 12px rgba(220, 38, 38, 0.5);
         }
 
         .hero-edition {
