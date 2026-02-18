@@ -432,6 +432,23 @@
                                 @error('abstract_text')<div class="error-msg">{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
+                                <label>Thematic Area (BETin Directorate)</label>
+                                <select name="thematic_area" required>
+                                    <option value="" disabled {{ old('thematic_area') ? '' : 'selected' }}>Select BETin Directorate</option>
+                                    <option value="Health Biotechnology" {{ old('thematic_area') == 'Health Biotechnology' ? 'selected' : '' }}>Health Biotechnology</option>
+                                    <option value="Plant Biotechnology" {{ old('thematic_area') == 'Plant Biotechnology' ? 'selected' : '' }}>Plant Biotechnology</option>
+                                    <option value="Animal Biotechnology" {{ old('thematic_area') == 'Animal Biotechnology' ? 'selected' : '' }}>Animal Biotechnology</option>
+                                    <option value="Environmental Biotechnology" {{ old('thematic_area') == 'Environmental Biotechnology' ? 'selected' : '' }}>Environmental Biotechnology</option>
+                                    <option value="Industrial Biotechnology" {{ old('thematic_area') == 'Industrial Biotechnology' ? 'selected' : '' }}>Industrial Biotechnology</option>
+                                    <option value="Nanotechnology" {{ old('thematic_area') == 'Nanotechnology' ? 'selected' : '' }}>Nanotechnology</option>
+                                    <option value="Materials Science & Engineering" {{ old('thematic_area') == 'Materials Science & Engineering' ? 'selected' : '' }}>Materials Science & Engineering</option>
+                                    <option value="Reverse Engineering" {{ old('thematic_area') == 'Reverse Engineering' ? 'selected' : '' }}>Reverse Engineering</option>
+                                    <option value="Computational Science" {{ old('thematic_area') == 'Computational Science' ? 'selected' : '' }}>Computational Science</option>
+                                    <option value="Genomics & Bioinformatics" {{ old('thematic_area') == 'Genomics & Bioinformatics' ? 'selected' : '' }}>Genomics & Bioinformatics</option>
+                                </select>
+                                @error('thematic_area')<div class="error-msg">{{ $message }}</div>@enderror
+                            </div>
+                            <div class="field col-12">
                                 <label>Availability (Can you attend all event dates?)</label>
                                 <select name="available_on_date" required>
                                     <option value="Yes" {{ old('available_on_date') == 'Yes' ? 'selected' : '' }}>Yes, I am fully available</option>
@@ -466,13 +483,20 @@
                             </div>
                             <div class="field col-12">
                                 <label>How did you hear about this event?</label>
-                                <select name="discovery_source" required>
+                                <select name="discovery_source" id="discoverySource" required onchange="toggleInviterField()">
+                                    <option value="" disabled selected>Select an option</option>
+                                    <option value="BETin Portal">BETin Portal</option>
+                                    <option value="Invited Directly">Invited Directly</option>
                                     <option value="Social Media">Social Media</option>
-                                    <option value="Email/Invitation">Email / Invitation</option>
-                                    <option value="BETI Website">BETI Website</option>
+                                    <option value="Email/Invitation">Email / Official Invitation</option>
                                     <option value="Colleague">Colleague / Word of Mouth</option>
                                     <option value="Other">Other</option>
                                 </select>
+                            </div>
+                            <div class="field col-12" id="inviterField" style="display:none; animation: slideIn 0.4s var(--ease) forwards;">
+                                <label>Who invited you?</label>
+                                <input type="text" name="inviter_name" id="inviterName" value="{{ old('inviter_name') }}" placeholder="Enter the name of your inviter">
+                                @error('inviter_name')<div class="error-msg">{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
                                 <label>Additional Remarks <span style="font-weight:400; text-transform:none; letter-spacing:0;">(optional)</span></label>
@@ -548,12 +572,30 @@
             setInterval(update, 60000); update();
         }
 
-        window.onload = updateTimer;
+        window.onload = function() {
+            updateTimer();
+            toggleInviterField(); // Initial state check
+        };
+
+        function toggleInviterField() {
+            const source = document.getElementById('discoverySource').value;
+            const field = document.getElementById('inviterField');
+            const input = document.getElementById('inviterName');
+            
+            if (source === 'Invited Directly') {
+                field.style.display = 'flex';
+                input.setAttribute('required', 'required');
+            } else {
+                field.style.display = 'none';
+                input.removeAttribute('required');
+                input.value = ''; // Clear if hidden
+            }
+        }
 
         @if($errors->any())
             @php
                 $step1Fields = ['full_name','email','phone','organization', 'job_title', 'department','city','gender','qualification', 'expertise', 'previous_attendance'];
-                $step2Fields = ['presentation_title','specialization','abstract_text','available_on_date'];
+                $step2Fields = ['presentation_title','specialization','abstract_text','thematic_area','available_on_date'];
                 $goTo = 3;
                 foreach($errors->keys() as $k) {
                     if(in_array($k, $step1Fields)) { $goTo = 1; break; }
