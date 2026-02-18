@@ -62,9 +62,9 @@
             filter: blur(120px);
             pointer-events: none;
         }
-        .orb-1 { width: 600px; height: 600px; background: rgba(0, 163, 108, 0.12); top: -100px; right: -100px; }
-        .orb-2 { width: 400px; height: 400px; background: rgba(0, 59, 92, 0.4); bottom: -50px; left: -50px; }
-        .orb-3 { width: 300px; height: 300px; background: rgba(245, 158, 11, 0.06); top: 40%; left: 30%; }
+        .orb-1 { width: 80vw; height: 80vw; background: rgba(0, 163, 108, 0.08); top: -20%; right: -20%; filter: blur(150px); }
+        .orb-2 { width: 60vw; height: 60vw; background: rgba(0, 59, 92, 0.3); bottom: -10%; left: -10%; filter: blur(120px); }
+        .orb-3 { width: 40vw; height: 40vw; background: rgba(245, 158, 11, 0.04); top: 30%; left: 40%; filter: blur(100px); }
 
         /* Nav */
         .hero-nav {
@@ -153,15 +153,15 @@
         .hero-body {
             flex: 1;
             display: flex;
-            align-items: flex-start; /* Changed from center to allow natural flow */
+            align-items: center; /* Center vertically for panoramic balance */
+            justify-content: space-between; /* Push content to edges */
             position: relative;
             z-index: 5;
-            padding: 2rem 5rem; /* Added top padding */
+            padding: 0 4%; /* Fluid horizontal padding */
             gap: 4rem;
             min-height: 0;
-            max-width: 1600px;
-            margin: 0 auto;
             width: 100%;
+            /* Removed max-width for full-bleed experience */
         }
 
         .hero-left { flex: 1; max-width: 700px; }
@@ -209,13 +209,14 @@
 
         .hero-title {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(3.5rem, 7vw, 7rem);
+            font-size: clamp(4rem, 11vw, 11rem); /* Massive scaling */
             font-weight: 900;
             line-height: 0.85;
             letter-spacing: -0.05em;
             color: white;
-            margin-bottom: 1.25rem;
+            margin-bottom: 2rem;
             text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 90%;
         }
 
         .hero-title .accent {
@@ -332,24 +333,31 @@
             color: white;
         }
 
-        /* Hero bottom bar */
+        /* Hero bottom bar - Integrated Glass Footer */
         .stat-bar {
             position: relative;
             z-index: 5;
-            padding: 4rem 5rem 2rem; /* Increased top padding to clear CTA */
+            padding: 2.5rem 4%;
             display: flex;
-            justify-content: center;
-            margin-top: auto; /* Push to bottom of flex container */
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            width: 100%;
         }
 
         .stat-row {
             display: flex;
-            gap: 6rem;
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(20px);
-            padding: 1.5rem 4rem;
-            border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.06);
+            gap: 4vw;
+            width: 100%;
+            justify-content: space-around;
+            padding: 0;
+            background: transparent;
+            backdrop-filter: none;
+            border: none;
+            border-radius: 0;
         }
         
         .stat-item { 
