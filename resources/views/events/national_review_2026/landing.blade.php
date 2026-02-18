@@ -1080,21 +1080,17 @@
         <div class="stat-bar">
             <div class="stat-row">
                 <div class="stat-item">
-                    <div class="stat-num">500<sup>+</sup></div>
+                    <div class="stat-num">200<sup>+</sup></div>
                     <div class="stat-label">Researchers</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">45<sup>+</sup></div>
+                    <div class="stat-num">20<sup>+</sup></div>
                     <div class="stat-label">Institutions</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">10<sup>+</sup></div>
                     <div class="stat-label">Subject Areas</div>
                 </div>
-            </div>
-            <div class="scroll-hint">
-                Scroll to Explore
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
             </div>
         </div>
     </section>
