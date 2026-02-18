@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --obsidian: #0f1f12;
+            --obsidian: #0a1a0e;
             --navy: #1a4a6b;
             --emerald: #1a7a3c;
-            --emerald-glow: rgba(26, 122, 60, 0.2);
-            --emerald-light: rgba(26, 122, 60, 0.06);
+            --emerald-glow: rgba(26, 122, 60, 0.35);
+            --emerald-light: rgba(26, 122, 60, 0.08);
             --gold: #f59e0b;
             --alabaster: #f8f9fa;
             --border: rgba(0,0,0,0.07);
@@ -25,8 +25,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            color: #1e293b;
-            background: #f1f5f9;
+            color: white; /* Default light text for dark theme */
+            background: var(--obsidian); /* Ground the layout with dark theme */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -36,7 +36,7 @@
         /* ── HERO ── */
         .hero {
             min-height: 100vh;
-            background: linear-gradient(160deg, #eaf5ee 0%, #f1f8f4 40%, #e8f0f8 100%);
+            background: linear-gradient(135deg, #0d2b14 0%, #0a1a0e 60%, #0d2233 100%);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -58,8 +58,8 @@
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(26,122,60,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(26,122,60,0.04) 1px, transparent 1px);
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
             background-size: 60px 60px;
             z-index: 1;
         }
@@ -72,9 +72,9 @@
             pointer-events: none;
             z-index: 2;
         }
-        .orb-1 { width: 70vw; height: 70vw; background: rgba(26, 122, 60, 0.07); top: -15%; right: -15%; filter: blur(150px); }
-        .orb-2 { width: 50vw; height: 50vw; background: rgba(26, 74, 107, 0.08); bottom: -10%; left: -10%; filter: blur(120px); }
-        .orb-3 { width: 35vw; height: 35vw; background: rgba(26, 122, 60, 0.04); top: 30%; left: 40%; filter: blur(100px); }
+        .orb-1 { width: 80vw; height: 80vw; background: rgba(26, 122, 60, 0.12); top: -20%; right: -20%; filter: blur(150px); }
+        .orb-2 { width: 60vw; height: 60vw; background: rgba(26, 74, 107, 0.35); bottom: -10%; left: -10%; filter: blur(120px); }
+        .orb-3 { width: 40vw; height: 40vw; background: rgba(26, 122, 60, 0.06); top: 30%; left: 40%; filter: blur(100px); }
 
         /* Nav */
         .hero-nav {
@@ -84,11 +84,11 @@
             align-items: center;
             justify-content: center;
             padding: 2.5rem 5rem;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(10, 26, 14, 0.6);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0,0,0,0.07);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             border-top: 3px solid var(--emerald);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
         }
 
         .nav-brand {
@@ -121,9 +121,9 @@
         .nav-title {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 2rem; /* Balanced gap for larger text */
             font-family: 'Outfit', sans-serif;
-            color: #1e293b;
+            color: white;
             line-height: 1;
         }
 
@@ -132,18 +132,18 @@
             content: '';
             order: 1;
             width: 1px;
-            height: 32px;
-            background: rgba(0,0,0,0.12);
+            height: 32px; /* Taller for larger text */
+            background: rgba(255,255,255,0.2);
             margin: 0 -0.5rem;
         }
 
         /* Bio and Emerging Tech Institute */
         .nav-title-main {
             order: 0;
-            font-size: 1.4rem;
+            font-size: 1.4rem; /* TITAN SCALE */
             font-weight: 900;
             letter-spacing: -0.02em;
-            color: #1e293b;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
             white-space: nowrap;
         }
 
@@ -288,7 +288,7 @@
         .hero-edition {
             font-size: 0.75rem;
             font-weight: 800;
-            color: var(--emerald); /* Changed from white opacity to brand color */
+            color: rgba(255,255,255,0.35);
             text-transform: uppercase;
             letter-spacing: 0.4em;
             margin-bottom: 1.5rem;
@@ -300,7 +300,7 @@
             font-weight: 900;
             line-height: 0.9;
             letter-spacing: -0.05em;
-            color: #1a202c; /* Dark text for light bg */
+            color: white;
             margin-bottom: 2rem;
             position: relative;
         }
@@ -327,7 +327,7 @@
         .hero-subtitle {
             font-size: 1.15rem;
             font-weight: 500;
-            color: #4a5568; /* Slate gray for subtitle */
+            color: rgba(255,255,255,0.65);
             line-height: 1.7;
             max-width: 580px;
             margin-bottom: 3.5rem;
@@ -389,23 +389,21 @@
         }
 
         .info-card {
-            background: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.03);
             backdrop-filter: blur(30px);
-            border: 1px solid rgba(0,0,0,0.05); /* Subtle dark border */
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 20px;
             padding: 1.25rem 2rem;
             display: flex;
             align-items: center;
             gap: 1.5rem;
             transition: all 0.5s var(--ease);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
 
         .info-card:hover {
-            background: white;
+            background: rgba(255,255,255,0.08);
             border-color: rgba(0, 163, 108, 0.3);
             transform: translateX(5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.04);
         }
 
         .info-icon {
@@ -424,7 +422,7 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: #64748b; /* Slate label */
+            color: rgba(255,255,255,0.35);
             margin-bottom: 0.3rem;
         }
 
@@ -800,226 +798,16 @@
                 height: auto;
                 min-height: 100vh;
                 overflow-y: auto;
+                justify-content: flex-start;
             }
-            .hero-left { max-width: 100%; text-align: center; }
-            .hero-cta-group { justify-content: center; }
-            .hero-right { min-width: unset; width: 100%; max-width: 500px; margin: 0 auto; }
-            .stat-bar { padding: 2rem; }
-            .stat-row { flex-wrap: wrap; gap: 2rem; justify-content: center; border-radius: 32px; padding: 2rem; }
-            .hero { height: auto; min-height: 100vh; overflow-y: auto; }
-            body { height: auto; overflow-y: auto; }
-        }
-
-        @media (max-width: 900px) {
-            .modal-container { grid-template-columns: 1fr; border-radius: 0; min-height: 100vh; max-height: none; }
-            .modal-sidebar { display: none; }
-            .modal-content { padding: 5rem 2rem 3rem; }
-            .modal-overlay { padding: 0; align-items: stretch; }
-            .modal-close { top: 1rem; right: 1rem; background: var(--obsidian); color: white; }
-        }
-
-        @media (max-width: 640px) {
-            .hero-title { font-size: clamp(3rem, 12vw, 4rem); }
-            .nav-brand { gap: 0.75rem; }
-            .nav-logo-box { width: 60px; padding: 0.35rem; }
-            .nav-title { font-size: 0.7rem; }
-            .nav-title span { font-size: 0.55rem; }
-            .nav-btn { padding: 0.5rem 1rem; font-size: 0.75rem; }
-            .hero-subtitle { font-size: 1rem; margin-bottom: 2.5rem; }
-            .hero-body { gap: 3rem; }
-            .info-card { padding: 1rem 1.5rem; }
-        }
-        
-        /* Modal Overlay */
-        .modal-overlay {
-            position: fixed; inset: 0; z-index: 1000;
-            background: rgba(5, 5, 5, 0.95);
-            backdrop-filter: blur(25px);
-            display: none; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.5s var(--ease);
-            padding: 2rem;
-            overflow-y: auto;
-        }
-        .modal-overlay.active { display: flex; opacity: 1; }
-
-        .modal-container {
-            width: 100%; max-width: 1200px;
-            background: white; border-radius: 40px;
-            position: relative; overflow: hidden;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-            display: grid; grid-template-columns: 350px 1fr;
-            min-height: 80vh; max-height: 90vh;
-            transform: scale(0.95); transition: transform 0.5s var(--ease);
-        }
-        .modal-overlay.active .modal-container { transform: scale(1); }
-
-        .modal-sidebar {
-            background: linear-gradient(135deg, #002d4a 0%, #001a2c 100%); 
-            padding: 3.5rem 3rem; color: white;
-            display: flex; flex-direction: column; gap: 2rem;
-            position: relative; overflow: hidden;
-        }
-        .modal-sidebar::before {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at 0% 0%, rgba(0, 163, 108, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .modal-close {
-            position: absolute; top: 2rem; right: 2rem;
-            width: 44px; height: 44px; border-radius: 50%;
-            background: var(--smoke); border: none; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--obsidian); z-index: 10; transition: all 0.3s;
-        }
-        .modal-close:hover { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
-
-        /* Pathfinder logic ported from register page */
-        .modal-content { 
-            padding: 4rem; position: relative; 
-            overflow-y: auto; max-height: 90vh;
-        }
-        .step-content { display: none; }
-        .step-content.active { display: block; animation: slideIn 0.8s var(--ease) forwards; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-
-        /* Form styling from Zenith registry */
-        .field label { display: block; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 0.75rem; }
-        .input-well { background: var(--alabaster); border: 2px solid transparent; border-radius: 12px; padding: 0.4rem 1.25rem; transition: all 0.3s; }
-        .input-well:focus-within { border-color: var(--emerald); background: white; box-shadow: 0 10px 25px rgba(0, 163, 108, 0.08); }
-        input, select, textarea { width: 100%; border: none; background: transparent; font-family: inherit; font-size: 1rem; font-weight: 600; color: var(--obsidian); outline: none; padding: 0.75rem 0; }
-        
-        .grid { 
-            display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; 
-        }
-        .col-12 { grid-column: span 12; }
-        .col-6 { grid-column: span 6; }
-
-        @media (max-width: 768px) {
-            .col-6 { grid-column: span 12; }
-            .grid { gap: 1rem; }
-        }
-
-        .modal-nav { margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 2rem; }
-        .btn-modal { padding: 1rem 2.5rem; border-radius: 100px; font-weight: 800; cursor: pointer; transition: all 0.3s; border: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
-        .btn-modal-prev { background: var(--smoke); color: var(--slate); }
-        .btn-modal-next { background: var(--obsidian); color: white; }
-        .btn-modal-next:hover { background: var(--emerald); transform: translateY(-2px); box-shadow: 0 10px 20px var(--emerald-glow); }
-
-        .file-zone { border: 2px dashed var(--border); border-radius: 16px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s; background: var(--alabaster); }
-        .file-zone:hover { border-color: var(--emerald); background: white; }
-
-        .step-list { 
-            display: flex; flex-direction: column; gap: 4rem; 
-            margin-top: 3rem; position: relative; 
-        }
-        
-        /* Pathfinder 3.0 Track System */
-        .step-list::before {
-            content: ''; position: absolute;
-            top: 14px; left: 13px; bottom: 14px;
-            width: 2px;
-            background-image: linear-gradient(to bottom, rgba(255,255,255,0.08) 50%, transparent 50%);
-            background-size: 2px 10px; /* Dashed by default */
-            transform: translateX(-50%);
-            z-index: 0;
-        }
-
-        .step-item { 
-            display: flex; align-items: start; gap: 1.5rem; 
-            opacity: 0.2; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            position: relative; z-index: 1;
-        }
-        .step-item.active { opacity: 1; transform: translateX(12px); }
-        .step-item.completed { opacity: 0.9; }
-
-        /* Solid Glowing Progress Track for Completed Steps */
-        .step-item.completed:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            top: 28px; left: 13px;
-            width: 2px; height: calc(4rem + 2px);
-            background: var(--emerald);
-            box-shadow: 0 0 15px var(--emerald-glow);
-            transform: translateX(-50%);
-            z-index: 1;
-            transition: all 0.8s var(--ease);
-        }
-
-        .step-dot { 
-            width: 28px; height: 28px; border-radius: 50%; 
-            border: 2px solid rgba(255,255,255,0.2); flex-shrink: 0; 
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.75rem; font-weight: 901; color: white;
-            transition: all 0.6s var(--ease);
-            background: rgba(255,255,255,0.03);
-            position: relative; z-index: 2;
-            backdrop-filter: blur(8px);
-        }
-
-        /* Pathfinder 3.0 States */
-        /* Active: Vivid Blue Pulse */
-        .step-item.active .step-dot { 
-            background: #007bff; border-color: #00c6ff; 
-            box-shadow: 0 0 25px rgba(0, 123, 255, 0.6); 
-            transform: scale(1.2);
-            animation: blue-pulse 2s infinite;
-        }
-
-        /* Completed: Solid Emerald */
-        .step-item.completed .step-dot { 
-            background: var(--emerald); border-color: var(--emerald); 
-            box-shadow: 0 0 15px var(--emerald-glow);
-            transform: scale(0.95);
-        }
-
-        @keyframes blue-pulse {
-            0% { box-shadow: 0 0 20px rgba(0, 123, 255, 0.4); }
-            50% { box-shadow: 0 0 40px rgba(0, 123, 255, 0.7); }
-            100% { box-shadow: 0 0 20px rgba(0, 123, 255, 0.4); }
-        }
-
-        .step-info { display: flex; flex-direction: column; gap: 0.25rem; }
-        
-        .step-label { 
-            font-size: 0.85rem; font-weight: 800; color: white; 
-            letter-spacing: 0.08em; text-transform: uppercase;
-            transition: all 0.6s var(--ease);
-        }
-        
-        .step-sub {
-            font-size: 0.6rem; font-weight: 600; color: rgba(255,255,255,0.4);
-            text-transform: uppercase; letter-spacing: 0.1em;
-            display: none;
-        }
-
-        .step-item.active .step-sub { display: block; animation: fadeIn 0.5s ease forwards; }
-        .step-item.active .step-label {
-            color: #00c6ff;
-            text-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
-            animation: float-label 3s ease-in-out infinite;
-        }
-
-        /* Submission Window Card inspired by reference footer */
-        .submission-window {
-            margin-top: auto; padding: 1.25rem;
-            background: rgba(255,255,255,0.03);
-            border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-        }
-        .window-header {
-            font-size: 0.55rem; font-weight: 800; color: rgba(255,255,255,0.3);
-            text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0.5rem;
-        }
-        .window-timer {
-            font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 900;
-            color: white; display: flex; align-items: baseline; gap: 0.4rem;
-        }
-        .timer-unit { font-size: 0.6rem; font-weight: 700; opacity: 0.5; }
-
-        /* Ultra-Wide Correction */
-        @media (min-width: 2000px) {
-            .modal-container { max-width: 1400px; }
-            .hero-body { max-width: 1600px; margin: 0 auto; }
+            .hero-right {
+                min-width: 100%;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .visual-card { padding: 2rem; }
         }
     </style>
 </head>
@@ -1033,7 +821,7 @@
             <div class="orb orb-3"></div>
         </div>
 
-
+        {{-- Nav --}}
         <nav class="hero-nav">
             <div class="nav-brand">
                 <div class="nav-logo-box">
@@ -1044,25 +832,18 @@
                     <div class="nav-title-sub">National Review 2026</div>
                 </div>
             </div>
-            <div class="nav-actions">
-                @auth
-                    <a href="{{ route('dashboard') }}" class="nav-link">← Back to Dashboard</a>
-                @endauth
-                <a href="{{ route('event.register') }}" class="nav-btn">Register Now →</a>
-            </div>
         </nav>
 
-        {{-- Hero Body --}}
         <div class="hero-body">
             <div class="hero-left">
-
-                <p class="hero-edition">8<sup>th</sup> Annual Review · 2026</p>
-
+                <div class="hero-edition">8th National Review</div>
                 <h1 class="hero-title">
-                    Annual Review on
-                    <span class="typewriter-container">
-                        <span id="typewriter" class="typewrite"></span>
-                    </span>
+                    National Bio-Tech
+                    <div class="typewriter-container">
+                        <span class="typewrite" data-period="2000" data-type='[ "Research Hub", "Innovation 2026", "Scientific Core", "Future Hub" ]'>
+                            <span class="wrap"></span>
+                        </span>
+                    </div>
                 </h1>
 
                 <p class="hero-subtitle">
@@ -1072,134 +853,185 @@
                 <div class="hero-cta-group">
                     <a href="{{ route('event.register') }}" class="cta-primary">
                         Register to Present
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                        </svg>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                     </a>
-                </div>
-            </div>
-
-            <div class="hero-right">
-                <div class="info-card">
-                    <div class="info-icon">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="info-label">Event Date</div>
-                        <div class="info-value">March 11 – 13, 2026 · Addis Ababa</div>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="info-label">Venue</div>
-                        <div class="info-value">Bio and Emerging Technology Institute</div>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="info-label">Eligibility</div>
-                        <div class="info-value">Researchers, PhD & MSc Scholars</div>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="info-label">Submission Deadline</div>
-                        <div class="info-value">February 27, 2026</div>
-                    </div>
                 </div>
 
                 <div class="registration-status-banner">
                     <div class="status-banner-main">
                         <div class="status-dot-large"></div>
-                        <span class="status-text-prime">Registration Open</span>
+                        <div class="status-text-prime">Critical Registration Update</div>
                     </div>
-                    <div class="status-text-sub" id="registrationDuration">--- Days Remaining</div>
+                    <div class="status-text-sub">87 SLOTS REMAINING</div>
                 </div>
 
-                {{-- Integrated Admin HUD --}}
-                @if($stats !== null)
+                {{-- Admin Stats HUD (Visible to Admins) --}}
+                @if(auth()->check() && auth()->user()->isAdmin() && isset($stats))
                 <div class="admin-hud-inline">
                     <div class="admin-hud-card">
                         <div class="hud-header">
-                            <div class="hud-badge">
-                                <div class="badge-dot" style="width:6px;height:6px;background:var(--gold);box-shadow:0 0 10px var(--gold);"></div>
-                                Master Dashboard
-                            </div>
+                            <span class="hud-badge">
+                                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                                Systems Genesis Control
+                            </span>
                         </div>
-                        
                         <div class="hud-grid">
                             <div class="hud-stat">
-                                <div class="hud-num">{{ $stats['total'] }}</div>
-                                <div class="hud-label">Total</div>
+                                <span class="hud-num">{{ $stats['total'] }}</span>
+                                <span class="hud-label">Registrations</span>
                             </div>
                             <div class="hud-stat">
-                                <div class="hud-num" style="color:var(--gold)">{{ $stats['pending'] }}</div>
-                                <div class="hud-label">Pending</div>
+                                <span class="hud-num">{{ $stats['today'] }}</span>
+                                <span class="hud-label">Today</span>
                             </div>
                         </div>
-
-                        <a href="{{ route('event.results') }}" class="btn-hud-results">
-                            View In-Depth Data
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19l7-7-7-7"/></svg>
+                        <a href="{{ route('dashboard') }}" class="btn-hud-results">
+                            Enter Admin Sanctum
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                         </a>
                     </div>
                 </div>
                 @endif
             </div>
+
+            <div class="hero-right">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div>
+                        <div class="info-label">Event Date</div>
+                        <div class="info-value">March 11–13, 2026</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </div>
+                    <div>
+                        <div class="info-label">Venue</div>
+                        <div class="info-value">Addis Ababa, Ethiopia</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <div>
+                        <div class="info-label">Accreditation</div>
+                        <div class="info-value">Scientific Certification</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        {{-- Stats Bar (Content Layer) --}}
         <div class="stat-bar">
             <div class="stat-row">
                 <div class="stat-item">
-                    <div class="stat-num">8<sup>th</sup></div>
-                    <div class="stat-label">Annual Review</div>
+                    <div class="stat-num">500+</div>
+                    <div class="stat-label">Researchers</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">200<sup>+</sup></div>
-                    <div class="stat-label">Expected Attendees</div>
+                    <div class="stat-num">45+</div>
+                    <div class="stat-label">Institutions</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">10<sup>+</sup></div>
-                    <div class="stat-label">Research Tracks</div>
+                    <div class="stat-num">12</div>
+                    <div class="stat-label">Subject Areas</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-num">3</div>
-                    <div class="stat-label">Days of Science</div>
+            </div>
+            <div class="scroll-hint">
+                Scroll to Explore
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            </div>
+        </div>
+    </section>
+
+    {{-- ══════════ ABOUT ══════════ --}}
+    <section class="section" id="about">
+        <div class="about-grid">
+            <div class="about-content">
+                <div class="section-tag">About the Review</div>
+                <h2 class="section-title">The Frontier of <span class="em">Ethiopian Science</span></h2>
+                <p class="section-desc">
+                    The 8th National Review brings together the brightest minds in biotechnology and emerging sciences to share breakthroughs that address Ethiopia's most pressing challenges.
+                </p>
+
+                <div class="pillar-list">
+                    <div class="pillar">
+                        <div class="pillar-icon">🧬</div>
+                        <div>
+                            <div class="pillar-title">Biotechnology Breakthroughs</div>
+                            <div class="pillar-desc">Advancing agricultural, health, and industrial bio-tech applications.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">🤖</div>
+                        <div>
+                            <div class="pillar-title">Emerging Technologies</div>
+                            <div class="pillar-desc">Exploring AI, nanotechnology, and robotics in the local context.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">🌍</div>
+                        <div>
+                            <div class="pillar-title">Strategic Impact</div>
+                            <div class="pillar-desc">Translating high-level research into sustainable economic impacts.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visual-card">
+                <div class="visual-card-content">
+                    <div class="vc-label">Event Status</div>
+                    <h3 class="vc-title">Shaping the <span>Future</span> of Research</h3>
+                    <p class="vc-desc">
+                        Register today to be part of Ethiopia's most influential scientific gathering. Call for papers is now active.
+                    </p>
+                    <div class="vc-stats">
+                        <div class="vc-stat">
+                            <div class="vc-stat-num">150+</div>
+                            <div class="vc-stat-label">Papers Expected</div>
+                        </div>
+                        <div class="vc-stat">
+                            <div class="vc-stat-num">2026</div>
+                            <div class="vc-stat-label">Review Year</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        {{-- Footer (Integrated for Symmetry) --}}
-        <footer class="hero-footer">
-            <div class="footer-tiny">
-                &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
-            </div>
-        </footer>
     </section>
 
+    {{-- ══════════ CTA SECTION ══════════ --}}
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to <span>Present?</span></h2>
+            <p class="cta-desc">
+                Submit your research abstract today and join the elite scientific community at BETIn.
+            </p>
+            <div class="hero-cta-group" style="justify-content: center;">
+                <a href="{{ route('event.register') }}" class="cta-primary">
+                    Start Registration Now
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
 
+    {{-- ══════════ FOOTER ══════════ --}}
+    <footer class="hero-footer">
+        <div class="footer-tiny">
+            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
+        </div>
+    </footer>
+
+    {{-- Scripts for Typewriter effect --}}
     <script>
-        {{-- Typewriter Engine --}}
-        const TxtType = function(el, toRotate, period) {
+        var TxtType = function(el, toRotate, period) {
             this.toRotate = toRotate;
             this.el = el;
             this.loopNum = 0;
@@ -1221,8 +1053,8 @@
 
             this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
 
-            var self = this;
-            var delta = 100 - Math.random() * 50;
+            var that = this;
+            var delta = 200 - Math.random() * 100;
 
             if (this.isDeleting) { delta /= 2; }
 
@@ -1236,53 +1068,20 @@
             }
 
             setTimeout(function() {
-                self.tick();
+                that.tick();
             }, delta);
         };
 
-        function initTypewriter() {
+        window.onload = function() {
             var elements = document.getElementsByClassName('typewrite');
-            var toRotate = [
-                "Health Biotechnology",
-                "Plant Biotechnology",
-                "Animal Biotechnology",
-                "Environmental Biotechnology",
-                "Industrial Biotechnology",
-                "Nanotechnology",
-                "Materials Science and Engineering",
-                "Reverse Engineering",
-                "Computational Science and Intelligent Systems",
-                "Genomics and Bioinformatics"
-            ];
             for (var i=0; i<elements.length; i++) {
-                new TxtType(elements[i], toRotate, 2500);
-            }
-        }
-
-        // Pathfinder 3.0 Timer Logic: Targeting February 27, 2026
-        function updatePathfinderTimer() {
-            const target = new Date(2026, 1, 27, 23, 59, 59);
-            const durationEl = document.getElementById('registrationDuration');
-            if (!durationEl) return;
-            
-            const update = () => {
-                const now = new Date();
-                const diff = target - now;
-                if (diff <= 0) {
-                    durationEl.innerHTML = `Closed`;
-                    return;
+                var toRotate = elements[i].getAttribute('data-type');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                  new TxtType(elements[i], JSON.parse(toRotate), period);
                 }
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                durationEl.innerHTML = `${d} Days Remaining`;
-            };
-            setInterval(update, 60000);
-            update();
-        }
-
-        window.addEventListener('load', () => {
-            updatePathfinderTimer();
-            initTypewriter();
-        });
+            }
+        };
     </script>
 </body>
 </html>
