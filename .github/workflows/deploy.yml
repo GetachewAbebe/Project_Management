@@ -57,5 +57,5 @@ jobs:
             echo "❌ Error: CPANEL_DEPLOY_WEBHOOK secret is not set in GitHub Settings."
             exit 1
           fi
-          curl -X POST "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}"
+          curl -X GET "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}"
 
