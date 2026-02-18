@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --obsidian: #0a1a0e;
+            --obsidian: #0f1f12;
             --navy: #1a4a6b;
             --emerald: #1a7a3c;
-            --emerald-glow: rgba(26, 122, 60, 0.35);
-            --emerald-light: rgba(26, 122, 60, 0.08);
+            --emerald-glow: rgba(26, 122, 60, 0.2);
+            --emerald-light: rgba(26, 122, 60, 0.06);
             --gold: #f59e0b;
             --alabaster: #f8f9fa;
             --border: rgba(0,0,0,0.07);
@@ -25,8 +25,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            color: white; /* Default light text for dark theme */
-            background: var(--obsidian); /* Ground the layout with dark theme */
+            color: #1e293b;
+            background: #f1f5f9;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -36,7 +36,7 @@
         /* ── HERO ── */
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0d2b14 0%, #0a1a0e 60%, #0d2233 100%);
+            background: linear-gradient(160deg, #eaf5ee 0%, #f1f8f4 40%, #e8f0f8 100%);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -58,8 +58,8 @@
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+                linear-gradient(rgba(26,122,60,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(26,122,60,0.04) 1px, transparent 1px);
             background-size: 60px 60px;
             z-index: 1;
         }
@@ -72,9 +72,9 @@
             pointer-events: none;
             z-index: 2;
         }
-        .orb-1 { width: 80vw; height: 80vw; background: rgba(26, 122, 60, 0.12); top: -20%; right: -20%; filter: blur(150px); }
-        .orb-2 { width: 60vw; height: 60vw; background: rgba(26, 74, 107, 0.35); bottom: -10%; left: -10%; filter: blur(120px); }
-        .orb-3 { width: 40vw; height: 40vw; background: rgba(26, 122, 60, 0.06); top: 30%; left: 40%; filter: blur(100px); }
+        .orb-1 { width: 70vw; height: 70vw; background: rgba(26, 122, 60, 0.07); top: -15%; right: -15%; filter: blur(150px); }
+        .orb-2 { width: 50vw; height: 50vw; background: rgba(26, 74, 107, 0.08); bottom: -10%; left: -10%; filter: blur(120px); }
+        .orb-3 { width: 35vw; height: 35vw; background: rgba(26, 122, 60, 0.04); top: 30%; left: 40%; filter: blur(100px); }
 
         /* Nav */
         .hero-nav {
@@ -84,11 +84,11 @@
             align-items: center;
             justify-content: center;
             padding: 2.5rem 5rem;
-            background: rgba(10, 26, 14, 0.6);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(0,0,0,0.07);
             border-top: 3px solid var(--emerald);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
         }
 
         .nav-brand {
@@ -121,9 +121,9 @@
         .nav-title {
             display: flex;
             align-items: center;
-            gap: 2rem; /* Balanced gap for larger text */
+            gap: 2rem;
             font-family: 'Outfit', sans-serif;
-            color: white;
+            color: #1e293b;
             line-height: 1;
         }
 
@@ -132,18 +132,18 @@
             content: '';
             order: 1;
             width: 1px;
-            height: 32px; /* Taller for larger text */
-            background: rgba(255,255,255,0.2);
+            height: 32px;
+            background: rgba(0,0,0,0.12);
             margin: 0 -0.5rem;
         }
 
         /* Bio and Emerging Tech Institute */
         .nav-title-main {
             order: 0;
-            font-size: 1.4rem; /* TITAN SCALE */
+            font-size: 1.4rem;
             font-weight: 900;
             letter-spacing: -0.02em;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            color: #1e293b;
             white-space: nowrap;
         }
 
@@ -288,7 +288,7 @@
         .hero-edition {
             font-size: 0.75rem;
             font-weight: 800;
-            color: rgba(255,255,255,0.35);
+            color: var(--emerald); /* Changed from white opacity to brand color */
             text-transform: uppercase;
             letter-spacing: 0.4em;
             margin-bottom: 1.5rem;
@@ -300,7 +300,7 @@
             font-weight: 900;
             line-height: 0.9;
             letter-spacing: -0.05em;
-            color: white;
+            color: #1a202c; /* Dark text for light bg */
             margin-bottom: 2rem;
             position: relative;
         }
@@ -327,7 +327,7 @@
         .hero-subtitle {
             font-size: 1.15rem;
             font-weight: 500;
-            color: rgba(255,255,255,0.65);
+            color: #4a5568; /* Slate gray for subtitle */
             line-height: 1.7;
             max-width: 580px;
             margin-bottom: 3.5rem;
@@ -389,21 +389,23 @@
         }
 
         .info-card {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.6);
             backdrop-filter: blur(30px);
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(0,0,0,0.05); /* Subtle dark border */
             border-radius: 20px;
             padding: 1.25rem 2rem;
             display: flex;
             align-items: center;
             gap: 1.5rem;
             transition: all 0.5s var(--ease);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
 
         .info-card:hover {
-            background: rgba(255,255,255,0.08);
+            background: white;
             border-color: rgba(0, 163, 108, 0.3);
             transform: translateX(5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.04);
         }
 
         .info-icon {
@@ -422,7 +424,7 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: rgba(255,255,255,0.35);
+            color: #64748b; /* Slate label */
             margin-bottom: 0.3rem;
         }
 
