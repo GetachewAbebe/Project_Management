@@ -268,19 +268,32 @@
 
         .hero-title {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(4rem, 11vw, 11rem); /* Massive scaling */
+            font-size: clamp(3rem, 8vw, 6rem); /* Refined for horizontal balance */
             font-weight: 900;
-            line-height: 0.85;
+            line-height: 0.9;
             letter-spacing: -0.05em;
             color: white;
             margin-bottom: 2rem;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            max-width: 90%;
+            position: relative;
         }
 
-        .hero-title .accent {
-            color: var(--emerald);
+        .typewriter-container {
             display: block;
+            min-height: 1.25em;
+            color: var(--emerald);
+            margin-top: 0.5rem;
+            font-size: 0.8em;
+        }
+
+        .typewrite > .wrap {
+            border-right: 0.08em solid var(--emerald);
+            padding-right: 10px;
+            animation: typewriter-cursor 1s infinite;
+        }
+
+        @keyframes typewriter-cursor {
+            0%, 100% { border-color: var(--emerald); }
+            50% { border-color: transparent; }
         }
 
         .hero-subtitle {
@@ -715,7 +728,6 @@
         }
 
         .cta-title span { color: var(--emerald); }
-
         .cta-desc {
             font-size: 1.05rem;
             color: rgba(255,255,255,0.5);
@@ -1017,8 +1029,10 @@
                 <p class="hero-edition">8<sup>th</sup> Annual Review · 2026</p>
 
                 <h1 class="hero-title">
-                    National
-                    <span class="accent">Review</span>
+                    National Review on
+                    <span class="typewriter-container">
+                        <span id="typewriter" class="typewrite"></span>
+                    </span>
                 </h1>
 
                 <p class="hero-subtitle">
@@ -1412,45 +1426,79 @@
         // Close on escape
         document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
 
-        // Pathfinder 3.0 Timer Logic: Targeting February 27, 2026
-        function updatePathfinderTimer() {
-            const timerEl = document.getElementById('pathfinderTimer');
-            if (!timerEl) return;
-            
-            const target = new Date(2026, 1, 27, 23, 59, 59); // February 27, 2026 (Month is 0-indexed, so 1 is February)
-            
-            const update = () => {
-                const now = new Date();
-                const diff = target - now;
-                if (diff <= 0) {
-                    timerEl.innerHTML = `00<span class="timer-unit">d</span> 00<span class="timer-unit">h</span> 00<span class="timer-unit">m</span>`;
-                    return;
-                }
+        {{-- Typewriter Engine --}}
+        const TxtType = function(el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 2000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
 
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                
-                timerEl.innerHTML = `${d.toString().padStart(2, '0')}<span class="timer-unit">d</span> ${h.toString().padStart(2, '0')}<span class="timer-unit">h</span> ${m.toString().padStart(2, '0')}<span class="timer-unit">m</span>`;
-            };
-            setInterval(update, 60000);
-            update();
+        TxtType.prototype.tick = function() {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+            var self = this;
+            var delta = 100 - Math.random() * 50; // Faster typing for directorates
+
+            if (this.isDeleting) { delta /= 2; }
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                delta = this.period;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.loopNum++;
+                delta = 500;
+            }
+
+            setTimeout(function() {
+                self.tick();
+            }, delta);
+        };
+
+        function initTypewriter() {
+            var elements = document.getElementsByClassName('typewrite');
+            var toRotate = [
+                "Health Biotechnology",
+                "Plant Biotechnology",
+                "Animal Biotechnology",
+                "Environmental Biotechnology",
+                "Industrial Biotechnology",
+                "Nanotechnology",
+                "Materials Science and Engineering",
+                "Reverse Engineering",
+                "Computational Science and Intelligent Systems",
+                "Genomics and Bioinformatics"
+            ];
+            for (var i=0; i<elements.length; i++) {
+                new TxtType(elements[i], toRotate, 2500);
+            }
         }
 
-        // Handle errors from old input
-        @if($errors->any())
-            window.addEventListener('load', () => {
+        window.addEventListener('load', () => {
+            updatePathfinderTimer();
+            initTypewriter();
+            @if($errors->any())
                 openModal();
-                updatePathfinderTimer();
                 const form = document.getElementById('modalRegisterForm');
                 @foreach($errors->keys() as $key)
                     const el = form.querySelector('[name="{{ $key }}"]');
                     if (el) el.parentElement.style.borderColor = '#ef4444';
                 @endforeach
-            });
-        @else
-            window.addEventListener('load', updatePathfinderTimer);
-        @endif
+            @endif
+        });
     </script>
 
 </body>
