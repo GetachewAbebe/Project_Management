@@ -715,6 +715,81 @@
             .admin-stats-grid { grid-template-columns: 1fr 1fr; }
             .hero-bottom { flex-direction: column; gap: 1.5rem; }
         }
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 1000;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(25px);
+            display: none; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.5s var(--ease);
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+
+        .modal-container {
+            width: 100%; max-width: 1200px;
+            background: white; border-radius: 40px;
+            position: relative; overflow: hidden;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            display: grid; grid-template-columns: 350px 1fr;
+            min-height: 700px;
+            transform: scale(0.95); transition: transform 0.5s var(--ease);
+        }
+        .modal-overlay.active .modal-container { transform: scale(1); }
+
+        .modal-sidebar {
+            background: var(--navy); padding: 3rem; color: white;
+            display: flex; flex-direction: column; gap: 2rem;
+        }
+        .modal-close {
+            position: absolute; top: 2rem; right: 2rem;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--smoke); border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--obsidian); z-index: 10; transition: all 0.3s;
+        }
+        .modal-close:hover { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
+
+        /* Pathfinder logic ported from register page */
+        .modal-content { padding: 4rem; position: relative; }
+        .step-content { display: none; }
+        .step-content.active { display: block; animation: slideIn 0.8s var(--ease) forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Form styling from Zenith registry */
+        .field label { display: block; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 0.75rem; }
+        .input-well { background: var(--alabaster); border: 2px solid transparent; border-radius: 12px; padding: 0.4rem 1.25rem; transition: all 0.3s; }
+        .input-well:focus-within { border-color: var(--emerald); background: white; box-shadow: 0 10px 25px rgba(0, 163, 108, 0.08); }
+        input, select, textarea { width: 100%; border: none; background: transparent; font-family: inherit; font-size: 1rem; font-weight: 600; color: var(--obsidian); outline: none; padding: 0.75rem 0; }
+        
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+        .col-12 { grid-column: span 12; }
+        .col-6 { grid-column: span 6; }
+
+        .modal-nav { margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 2rem; }
+        .btn-modal { padding: 1rem 2.5rem; border-radius: 100px; font-weight: 800; cursor: pointer; transition: all 0.3s; border: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .btn-modal-prev { background: var(--smoke); color: var(--slate); }
+        .btn-modal-next { background: var(--obsidian); color: white; }
+        .btn-modal-next:hover { background: var(--emerald); transform: translateY(-2px); box-shadow: 0 10px 20px var(--emerald-glow); }
+
+        .file-zone { border: 2px dashed var(--border); border-radius: 16px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s; background: var(--alabaster); }
+        .file-zone:hover { border-color: var(--emerald); background: white; }
+
+        .step-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+        .step-item { display: flex; align-items: center; gap: 1rem; opacity: 0.4; transition: 0.3s; }
+        .step-item.active { opacity: 1; }
+        .step-item.completed { opacity: 0.6; }
+        .step-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; flex-shrink: 0; }
+        .step-item.active .step-dot { background: var(--emerald); border-color: var(--emerald); box-shadow: 0 0 10px var(--emerald); }
+        .step-item.completed .step-dot { background: white; }
+        .step-label { font-size: 0.8rem; font-weight: 700; color: white; }
+
+        @media (max-width: 900px) {
+            .modal-container { grid-template-columns: 1fr; }
+            .modal-sidebar { display: none; }
+            .modal-content { padding: 2rem; }
+        }
     </style>
 </head>
 <body>
@@ -740,7 +815,7 @@
                 @auth
                     <a href="{{ route('dashboard') }}" class="nav-link">← Back to Dashboard</a>
                 @endauth
-                <a href="{{ route('event.register') }}" class="nav-btn">Register Now →</a>
+                <a href="javascript:void(0)" onclick="openModal()" class="nav-btn">Register Now →</a>
             </div>
         </nav>
 
@@ -764,16 +839,10 @@
                 </p>
 
                 <div class="hero-cta-group">
-                    <a href="{{ route('event.register') }}" class="cta-primary">
+                    <a href="javascript:void(0)" onclick="openModal()" class="cta-primary">
                         Register to Present
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                        </svg>
-                    </a>
-                    <a href="#about" class="cta-secondary">
-                        Learn More
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </a>
                 </div>
@@ -903,100 +972,131 @@
     </div>
     @endif
 
-    {{-- ══════════ ABOUT SECTION ══════════ --}}
-    <section class="section" id="about" style="background: white;">
-        <div class="about-grid">
-            <div>
-                <p class="section-tag">About the Event</p>
-                <h2 class="section-title">
-                    Where Science<br>Meets <span class="em">Innovation</span>
-                </h2>
-                <p class="section-desc">
-                    The BETIn National Review is Ethiopia's flagship scientific conference, bringing together researchers, academics, and industry leaders to share breakthroughs in bio and emerging technology.
-                </p>
-
-                <div class="pillar-list">
-                    <div class="pillar">
-                        <div class="pillar-icon">
-                            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="pillar-title">Research Presentations</div>
-                            <div class="pillar-desc">Present your original research to a panel of distinguished scientists and peers.</div>
-                        </div>
+    {{-- ══════════ REGISTRATION MODAL ══════════ --}}
+    <div class="modal-overlay" id="registrationModal">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeModal()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            
+            <aside class="modal-sidebar">
+                <div style="width: 60px; height: 60px; background: white; padding: 10px; border-radius: 12px; margin-bottom: 2rem;">
+                    <x-logo width="100%" height="auto" />
+                </div>
+                <div style="font-family: 'Outfit', sans-serif;">
+                    <div style="font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em; color: var(--emerald);">Official Registry</div>
+                    <h2 style="font-size: 1.8rem; font-weight: 900; line-height: 1.1; margin-top: 0.5rem;">National<br><span style="color: var(--emerald);">Review</span></h2>
+                </div>
+                
+                <div class="step-list">
+                    <div class="step-item active" data-step="1">
+                        <div class="step-dot"></div>
+                        <span class="step-label">Phase 01: Profile</span>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">
-                            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="pillar-title">Networking & Collaboration</div>
-                            <div class="pillar-desc">Connect with Ethiopia's leading scientists, researchers, and technology innovators.</div>
-                        </div>
-                    </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">
-                            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="pillar-title">Recognition & Awards</div>
-                            <div class="pillar-desc">Outstanding research is recognized with institutional awards and certificates of excellence.</div>
-                        </div>
+                    <div class="step-item" data-step="2">
+                        <div class="step-dot"></div>
+                        <span class="step-label">Phase 02: Research</span>
                     </div>
                 </div>
-            </div>
 
-            <div class="visual-card">
-                <div class="visual-card-content">
-                    <p class="vc-label">Event Theme · 2026</p>
-                    <h3 class="vc-title">Advancing <span>Science</span> for Sustainable Development</h3>
-                    <p class="vc-desc">
-                        This year's review focuses on translating scientific research into real-world solutions that address Ethiopia's most pressing development challenges.
-                    </p>
-                    <div class="vc-stats">
-                        <div class="vc-stat">
-                            <div class="vc-stat-num">8th</div>
-                            <div class="vc-stat-label">Annual Edition</div>
+                <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 0.6rem; font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em;">Secure Submission Portal</div>
+                    <div style="font-family: monospace; font-size: 0.55rem; color: rgba(255,255,255,0.3); margin-top: 0.5rem;">STATUS: AUTH_ENCRYPTED</div>
+                </div>
+            </aside>
+
+            <main class="modal-content">
+                <form action="{{ route('event.register.store') }}" method="POST" enctype="multipart/form-data" id="modalRegisterForm">
+                    @csrf
+                    
+                    <!-- Phase 01: Profile -->
+                    <div class="step-content active" id="modalStep1">
+                        <div style="margin-bottom: 2.5rem;">
+                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Institutional Framework</h3>
+                            <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Provide your professional background and contact details.</p>
                         </div>
-                        <div class="vc-stat">
-                            <div class="vc-stat-num">2026</div>
-                            <div class="vc-stat-label">Academic Year</div>
-                        </div>
-                        <div class="vc-stat">
-                            <div class="vc-stat-num">PhD</div>
-                            <div class="vc-stat-label">Min. Qualification</div>
-                        </div>
-                        <div class="vc-stat">
-                            <div class="vc-stat-num">Free</div>
-                            <div class="vc-stat-label">Registration</div>
+
+                        <div class="grid">
+                            <div class="field col-12">
+                                <label>Full Name</label>
+                                <div class="input-well"><input type="text" name="full_name" required placeholder="Enter your full name"></div>
+                            </div>
+                            <div class="field col-6">
+                                <label>Email Address</label>
+                                <div class="input-well"><input type="email" name="email" required placeholder="example@domain.com"></div>
+                            </div>
+                            <div class="field col-6">
+                                <label>Phone Number</label>
+                                <div class="input-well"><input type="text" name="phone" required placeholder="+251 911 000 000"></div>
+                            </div>
+                            <div class="field col-12">
+                                <label>Organization</label>
+                                <div class="input-well"><input type="text" name="organization" required placeholder="Enter institution"></div>
+                            </div>
+                            <div class="field col-6">
+                                <label>Gender</label>
+                                <div class="input-well">
+                                    <select name="gender" required>
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field col-6">
+                                <label>Qualification</label>
+                                <div class="input-well">
+                                    <select name="qualification" required>
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="PhD">Doctorate (PhD)</option>
+                                        <option value="MSc">Master (MSc)</option>
+                                        <option value="BSc">Bachelor (BSc)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" name="specialization" value="General">
+                            <input type="hidden" name="city" value="Addis Ababa">
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    {{-- ══════════ FINAL CTA ══════════ --}}
-    <section class="cta-section">
-        <div class="cta-content">
-            <h2 class="cta-title">Ready to <span>Present</span><br>Your Research?</h2>
-            <p class="cta-desc">
-                Join hundreds of researchers at Ethiopia's most prestigious scientific review. Secure your spot today.
-            </p>
-            <a href="{{ route('event.register') }}" class="cta-primary" style="display: inline-flex; font-size: 1.1rem; padding: 1.5rem 4rem;">
-                Begin Registration
-                <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
-            </a>
+                    <!-- Phase 02: Research -->
+                    <div class="step-content" id="modalStep2">
+                        <div style="margin-bottom: 2.5rem;">
+                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Research Assets</h3>
+                            <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.5rem;">Upload your abstract and presentation details.</p>
+                        </div>
+
+                        <div class="grid">
+                            <div class="field col-12">
+                                <label>Presentation Title</label>
+                                <div class="input-well"><input type="text" name="presentation_title" required placeholder="Title of your research"></div>
+                            </div>
+                            <div class="field col-12">
+                                <label>Abstract Summary</label>
+                                <div class="input-well"><textarea name="abstract_text" rows="3" required placeholder="Briefly describe your work..."></textarea></div>
+                            </div>
+                            <div class="field col-12">
+                                <label>Manuscript (PDF)</label>
+                                <div class="file-zone" onclick="document.getElementById('modalFile').click()">
+                                    <input type="file" id="modalFile" name="abstract_file" style="display:none" onchange="updateFileName(this)">
+                                    <div id="fileStatus">📄 Click to Choose File</div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="available_on_date" value="Yes">
+                        <input type="hidden" name="discovery_source" value="Portal">
+                    </div>
+
+                    <div class="modal-nav">
+                        <button type="button" class="btn-modal btn-modal-prev" id="modalPrev" style="display:none" onclick="changeStep(-1)">Previous</button>
+                        <div style="flex:1"></div>
+                        <button type="button" class="btn-modal btn-modal-next" id="modalNext" onclick="changeStep(1)">Next Phase →</button>
+                        <button type="submit" class="btn-modal btn-modal-next" id="modalSubmit" style="display:none; background: var(--emerald);">Finalize Registration</button>
+                    </div>
+                </form>
+            </main>
         </div>
-    </section>
+    </div>
 
     {{-- Footer --}}
     <footer class="footer">
@@ -1007,6 +1107,79 @@
             REF: BETIN-NR-2026 · <span>projects.betin.gov.et</span>
         </div>
     </footer>
+
+    <script>
+        function openModal() {
+            document.getElementById('registrationModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            currentModalStep = 1;
+            updateModalUI();
+        }
+
+        function closeModal() {
+            document.getElementById('registrationModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        let currentModalStep = 1;
+        function changeStep(dir) {
+            const nextStep = currentModalStep + dir;
+            if (nextStep < 1 || nextStep > 2) return;
+
+            // Simple validation
+            if (dir > 0) {
+                const activeContent = document.getElementById('modalStep' + currentModalStep);
+                const inputs = activeContent.querySelectorAll('input[required], select[required], textarea[required]');
+                let valid = true;
+                inputs.forEach(i => { 
+                    if(!i.value) { 
+                        i.parentElement.style.borderColor = '#ef4444'; 
+                        valid = false; 
+                    } else { 
+                        i.parentElement.style.borderColor = 'transparent'; 
+                    } 
+                });
+                if (!valid) return;
+            }
+
+            currentModalStep = nextStep;
+            updateModalUI();
+        }
+
+        function updateModalUI() {
+            document.querySelectorAll('.step-content').forEach((el, i) => el.classList.toggle('active', (i+1) === currentModalStep));
+            document.querySelectorAll('.step-item').forEach((el, i) => {
+                el.classList.toggle('active', (i+1) === currentModalStep);
+                el.classList.toggle('completed', (i+1) < currentModalStep);
+            });
+
+            document.getElementById('modalPrev').style.display = currentModalStep === 1 ? 'none' : 'block';
+            document.getElementById('modalNext').style.display = currentModalStep === 2 ? 'none' : 'block';
+            document.getElementById('modalSubmit').style.display = currentModalStep === 2 ? 'block' : 'none';
+        }
+
+        function updateFileName(input) {
+            const status = document.getElementById('fileStatus');
+            if (input.files.length) status.innerHTML = '✅ ' + input.files[0].name;
+            else status.innerHTML = '📄 Click to Choose File';
+        }
+
+        // Close on escape
+        document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+
+        // Handle errors from old input
+        @if($errors->any())
+            window.addEventListener('load', () => {
+                openModal();
+                // If there are errors, show them via borders
+                const form = document.getElementById('modalRegisterForm');
+                @foreach($errors->keys() as $key)
+                    const el = form.querySelector('[name="{{ $key }}"]');
+                    if (el) el.parentElement.style.borderColor = '#ef4444';
+                @endforeach
+            });
+        @endif
+    </script>
 
 </body>
 </html>
