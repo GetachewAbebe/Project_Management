@@ -754,16 +754,44 @@
         .file-zone { border: 2px dashed var(--border); border-radius: 16px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s; background: var(--alabaster); }
         .file-zone:hover { border-color: var(--emerald); background: white; }
 
-        .step-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
-        .step-item { display: flex; align-items: center; gap: 1rem; opacity: 0.4; transition: 0.3s; }
-        .step-item.active { opacity: 1; }
+        .step-list { 
+            display: flex; flex-direction: column; gap: 3.5rem; 
+            margin-top: 2rem; position: relative; 
+        }
+        .step-item { 
+            display: flex; align-items: center; gap: 1.5rem; 
+            opacity: 0.4; transition: all 0.5s var(--ease); 
+            position: relative;
+        }
+        .step-item.active { opacity: 1; transform: translateX(10px); }
         .step-item.completed { opacity: 0.8; }
+
+        /* Cinematic Connecting Line */
+        .step-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 28px; /* Height of dot */
+            left: 13px; /* Center of 28px dot */
+            width: 2px;
+            height: 3.5rem; /* Matches gap */
+            background: rgba(255,255,255,0.1);
+            transition: all 0.6s var(--ease);
+            z-index: 0;
+        }
+
+        .step-item.completed:not(:last-child)::after {
+            background: var(--emerald);
+            box-shadow: 0 0 15px var(--emerald-glow);
+        }
+
         .step-dot { 
             width: 28px; height: 28px; border-radius: 50%; 
             border: 2px solid white; flex-shrink: 0; 
             display: flex; align-items: center; justify-content: center;
             font-size: 0.75rem; font-weight: 900; color: white;
-            transition: all 0.3s;
+            transition: all 0.5s var(--ease);
+            background: transparent;
+            position: relative; z-index: 2;
         }
         .step-item.active .step-dot { 
             background: var(--emerald); border-color: var(--emerald); 
@@ -774,7 +802,7 @@
             background: white; color: var(--navy); 
             border-color: white;
         }
-        .step-label { font-size: 0.8rem; font-weight: 700; color: white; }
+        .step-label { font-size: 0.85rem; font-weight: 800; color: white; letter-spacing: 0.05em; }
 
         @media (max-width: 900px) {
             .modal-container { grid-template-columns: 1fr; }
