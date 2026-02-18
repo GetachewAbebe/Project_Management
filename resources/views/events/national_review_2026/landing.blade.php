@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8th Annual Review 2026 | Bio and Emerging Technology Institute</title>
+    <title>8<sup>th</sup> Annual Review 2026 | Bio and Emerging Technology Institute</title>
     <meta name="description" content="Join the 8th BETIn Annual Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -23,6 +23,16 @@
             --glass-border: rgba(255, 255, 255, 0.4);
             --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.05);
             --shadow-deep: 0 20px 60px -15px rgba(0,0,0,0.08);
+        }
+
+        /* Custom Typography Refinements */
+        sup {
+            font-size: 0.65em;
+            vertical-align: super;
+            line-height: 0;
+            position: relative;
+            top: -0.1em;
+            margin-left: 0.05em;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -939,7 +949,7 @@
 
         <div class="hero-body">
             <div class="hero-left">
-                <div class="hero-edition">8th Annual Review</div>
+                <div class="hero-edition">8<sup>th</sup> Annual Review</div>
                 <h1 class="hero-title">
                     Annual Review on<br>
                     <span class="typewriter-container" style="color: var(--emerald); display: block; margin-top: 0.5rem; font-size: 0.75em;">
@@ -1070,11 +1080,11 @@
         <div class="stat-bar">
             <div class="stat-row">
                 <div class="stat-item">
-                    <div class="stat-num">500+</div>
+                    <div class="stat-num">500<sup>+</sup></div>
                     <div class="stat-label">Researchers</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">45+</div>
+                    <div class="stat-num">45<sup>+</sup></div>
                     <div class="stat-label">Institutions</div>
                 </div>
                 <div class="stat-item">
@@ -1096,7 +1106,7 @@
                 <div class="section-tag">About the Review</div>
                 <h2 class="section-title">The Frontier of <span class="em">Ethiopian Science</span></h2>
                 <p class="section-desc">
-                    The 8th Annual Review brings together the brightest minds in biotechnology and emerging sciences to share breakthroughs that address Ethiopia's most pressing challenges.
+                    The 8<sup>th</sup> Annual Review brings together the brightest minds in biotechnology and emerging sciences to share breakthroughs that address Ethiopia's most pressing challenges.
                 </p>
 
                 <div class="pillar-list">
@@ -1133,7 +1143,7 @@
                     </p>
                     <div class="vc-stats">
                         <div class="vc-stat">
-                            <div class="vc-stat-num">150+</div>
+                            <div class="vc-stat-num">100<sup>+</sup></div>
                             <div class="vc-stat-label">Papers Expected</div>
                         </div>
                         <div class="vc-stat">

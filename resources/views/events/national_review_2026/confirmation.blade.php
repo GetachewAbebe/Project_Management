@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Confirmed | 8th Annual Review</title>
+    <title>Registration Confirmed | 8<sup>th</sup> Annual Review</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -140,7 +140,7 @@
             </div>
             <div>
                 <div style="font-size: 0.8rem; font-weight: 800; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8;">Bio and Emerging Technology Institute</div>
-                <h2 style="font-size: 1.75rem; font-weight: 900; color: var(--primary); letter-spacing: -0.02em;">8th Annual <span style="color: var(--brand-green);">Review</span></h2>
+                <h2 style="font-size: 1.75rem; font-weight: 900; color: var(--primary); letter-spacing: -0.02em;">8<sup>th</sup> Annual <span style="color: var(--brand-green);">Review</span></h2>
             </div>
         </header>
 
@@ -149,7 +149,7 @@
         </div>
 
         <h1 class="title">Registration Confirmed</h1>
-        <p class="subtitle">Thank you, <strong>{{ $registration->full_name }}</strong>. Your registration for the 8th Annual Review has been successfully received.</p>
+        <p class="subtitle">Thank you, <strong>{{ $registration->full_name }}</strong>. Your registration for the 8<sup>th</sup> Annual Review has been successfully received.</p>
 
         <div class="info-card">
             <div class="reference-label">Your Participant ID</div>
@@ -158,7 +158,7 @@
             <div class="event-info">
                 <div class="info-item">
                     <span class="label">Event</span>
-                    <span class="value">8th Annual Review</span>
+                    <span class="value">8<sup>th</sup> Annual Review</span>
                 </div>
                 <div class="info-item">
                     <span class="label">Date</span>
