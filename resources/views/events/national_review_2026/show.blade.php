@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Profile | 8<sup>th</sup> Annual Review</title>
+    <title>Participant Dashboard | 8<sup>th</sup> Annual Review</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -161,8 +161,11 @@
                 <x-logo width="100%" height="auto" />
             </div>
             <div>
-                <div style="font-size: 0.7rem; font-weight: 900; color: var(--slate); text-transform: uppercase; letter-spacing: 0.1em;">Participant Portal</div>
-                <h2 style="font-size: 1.5rem; font-weight: 900;">Registration Profile</h2>
+                <div style="font-size: 0.7rem; font-weight: 950; color: var(--gold); text-transform: uppercase; letter-spacing: 0.15em; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    Systems Genesis
+                </div>
+                <h2 style="font-size: 1.8rem; font-weight: 900; letter-spacing: -0.02em;">Participant <span style="color: var(--emerald);">Dashboard</span></h2>
             </div>
         </header>
 

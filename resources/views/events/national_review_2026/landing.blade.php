@@ -945,6 +945,11 @@
                     <div class="nav-title-sub">Annual Review 2026</div>
                 </div>
             </div>
+
+            <div class="nav-links" style="display: flex; gap: 1rem;">
+                <a href="#about" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">About</a>
+                <a href="{{ route('dashboard') }}" style="color: var(--emerald); text-decoration: none; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; border: 1px solid var(--emerald); padding: 0.5rem 1.25rem; border-radius: 100px; transition: all 0.3s;" onmouseover="this.style.background='var(--emerald)'; this.style.color='white'" onmouseout="this.style.background='transparent'; this.style.color='var(--emerald)'">Participant Portal</a>
+            </div>
         </nav>
 
         <div class="hero-body">
@@ -1047,33 +1052,6 @@
                     </div>
                 </div>
 
-                {{-- Admin Stats HUD (Visible to Admins) --}}
-                @if(auth()->check() && auth()->user()->isAdmin() && isset($stats))
-                <div class="admin-hud-inline" style="animation: revealUp 0.8s var(--ease) 0.6s both;">
-                    <div class="admin-hud-card">
-                        <div class="hud-header">
-                            <span class="hud-badge">
-                                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-                                Systems Genesis Control
-                            </span>
-                        </div>
-                        <div class="hud-grid">
-                            <div class="hud-stat">
-                                <span class="hud-num">{{ $stats['total'] ?? 0 }}</span>
-                                <span class="hud-label">Registrations</span>
-                            </div>
-                            <div class="hud-stat">
-                                <span class="hud-num">{{ $stats['today'] ?? 0 }}</span>
-                                <span class="hud-label">Today</span>
-                            </div>
-                        </div>
-                        <a href="{{ route('dashboard') }}" class="btn-hud-results">
-                            Enter Admin Sanctum
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                        </a>
-                    </div>
-                </div>
-                @endif
             </div>
         </div>
 
