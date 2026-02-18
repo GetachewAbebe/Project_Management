@@ -13,9 +13,9 @@
             --emerald-glow: rgba(0, 163, 108, 0.35);
             --gold: #f59e0b;
             --alabaster: #f8f9fa;
-            --smoke: #f1f5f9;
-            --slate: #475569;
-            --border: rgba(0,0,0,0.07);
+            --smoke: rgba(255,255,255,0.05);
+            --slate: rgba(255,255,255,0.4);
+            --border: rgba(255,255,255,0.08);
             --ease: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -29,7 +29,8 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            color: var(--obsidian);
+            color: white;
+            overflow-x: hidden;
         }
 
         /* ── ATMOSPHERE ── */
@@ -37,27 +38,43 @@
             position: fixed; inset: 0; z-index: 0;
             overflow: hidden; pointer-events: none;
         }
-        .orb {
-            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5;
+        .atmosphere::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 1;
         }
-        .orb-1 { width: 60vw; height: 60vw; background: rgba(0, 163, 108, 0.1); top: -10%; right: -10%; }
-        .orb-2 { width: 40vw; height: 40vw; background: rgba(0, 59, 92, 0.4); bottom: -5%; left: -5%; }
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.6;
+            pointer-events: none;
+        }
+        .orb-1 { width: 70vw; height: 70vw; background: rgba(0, 163, 108, 0.08); top: -20%; right: -20%; }
+        .orb-2 { width: 50vw; height: 50vw; background: rgba(0, 59, 92, 0.4); bottom: -10%; left: -10%; }
+        .orb-3 { width: 30vw; height: 30vw; background: rgba(245, 158, 11, 0.03); top: 30%; left: 40%; }
 
         .register-container {
-            width: 100%; max-width: 1200px;
-            background: white; border-radius: 40px;
+            width: 100%; max-width: 1100px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--border);
+            border-radius: 32px;
             position: relative; z-index: 10;
             overflow: hidden;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-            display: grid; grid-template-columns: 350px 1fr;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.6);
+            display: grid; grid-template-columns: 320px 1fr;
             min-height: 80vh;
         }
 
         .sidebar {
-            background: linear-gradient(135deg, #002d4a 0%, #001a2c 100%); 
-            padding: 3.5rem 3rem; color: white;
+            background: linear-gradient(135deg, rgba(0, 59, 92, 0.4) 0%, rgba(0, 26, 44, 0.6) 100%); 
+            padding: 3.5rem 2.5rem; color: white;
             display: flex; flex-direction: column; gap: 2rem;
             position: relative; overflow: hidden;
+            border-right: 1px solid var(--border);
         }
 
         .sidebar::before {
@@ -67,41 +84,74 @@
         }
 
         .back-link {
-            position: absolute; top: 2rem; right: 2rem;
-            font-size: 0.75rem; font-weight: 800; color: rgba(255,255,255,0.4);
-            text-decoration: none; text-transform: uppercase; letter-spacing: 0.1em;
+            position: absolute; top: 1.5rem; left: 2.5rem;
+            font-size: 0.7rem; font-weight: 800; color: rgba(255,255,255,0.3);
+            text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em;
             display: flex; align-items: center; gap: 0.5rem;
             transition: all 0.3s;
+            z-index: 10;
         }
-        .back-link:hover { color: white; transform: translateX(-5px); }
+        .back-link:hover { color: var(--emerald); transform: translateX(-4px); }
 
         .form-content { 
-            padding: 4rem; position: relative; 
+            padding: 4rem 4.5rem; position: relative; 
             overflow-y: auto; max-height: 90vh;
-            background: white;
+            background: transparent;
         }
 
         .step-content { display: none; }
         .step-content.active { display: block; animation: slideIn 0.8s var(--ease) forwards; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .field label { display: block; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 0.75rem; }
-        .input-well { background: var(--alabaster); border: 2px solid transparent; border-radius: 12px; padding: 0.4rem 1.25rem; transition: all 0.3s; }
-        .input-well:focus-within { border-color: var(--emerald); background: white; box-shadow: 0 10px 25px rgba(0, 163, 108, 0.08); }
-        input, select, textarea { width: 100%; border: none; background: transparent; font-family: inherit; font-size: 1rem; font-weight: 600; color: var(--obsidian); outline: none; padding: 0.75rem 0; }
+        .field label { 
+            display: block; font-size: 0.7rem; font-weight: 900; 
+            text-transform: uppercase; letter-spacing: 0.15em; 
+            color: rgba(255,255,255,0.4); margin-bottom: 0.75rem; 
+        }
+        .input-well { 
+            background: rgba(255,255,255,0.04); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 12px; padding: 0.25rem 1rem; 
+            transition: all 0.3s; 
+        }
+        .input-well:focus-within { 
+            border-color: var(--emerald); 
+            background: rgba(255,255,255,0.07); 
+            box-shadow: 0 0 20px rgba(0, 163, 108, 0.15); 
+        }
+        input, select, textarea { 
+            width: 100%; border: none; background: transparent; 
+            font-family: inherit; font-size: 0.95rem; font-weight: 600; 
+            color: white; outline: none; padding: 0.75rem 0; 
+        }
         
+        select option { background: #0a0a0a; color: white; }
+
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
         .col-12 { grid-column: span 12; }
         .col-6 { grid-column: span 6; }
 
-        .form-nav { margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 2rem; }
-        .btn-action { padding: 1rem 2.5rem; border-radius: 100px; font-weight: 800; cursor: pointer; transition: all 0.3s; border: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
-        .btn-prev { background: var(--smoke); color: var(--slate); }
-        .btn-next { background: var(--obsidian); color: white; }
-        .btn-next:hover { background: var(--emerald); transform: translateY(-2px); box-shadow: 0 10px 20px var(--emerald-glow); }
+        .form-nav { 
+            margin-top: 3.5rem; display: flex; justify-content: space-between; 
+            align-items: center; border-top: 1px solid var(--border); padding-top: 2rem; 
+        }
+        .btn-action { 
+            padding: 1rem 2.25rem; border-radius: 100px; font-weight: 800; 
+            cursor: pointer; transition: all 0.4s var(--ease); border: none; 
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; 
+        }
+        .btn-prev { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.5); }
+        .btn-prev:hover { background: rgba(255,255,255,0.1); color: white; }
+        .btn-next { background: var(--emerald); color: white; box-shadow: 0 10px 30px var(--emerald-glow); }
+        .btn-next:hover { transform: translateY(-3px); box-shadow: 0 20px 50px var(--emerald-glow); }
 
-        .file-zone { border: 2px dashed var(--border); border-radius: 16px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s; background: var(--alabaster); }
-        .file-zone:hover { border-color: var(--emerald); background: white; }
+        .file-zone { 
+            border: 1px dashed rgba(255,255,255,0.15); border-radius: 16px; 
+            padding: 1.5rem; text-align: center; cursor: pointer; 
+            transition: all 0.3s; background: rgba(255,255,255,0.03); 
+            color: rgba(255,255,255,0.6); font-size: 0.8rem; font-weight: 600;
+        }
+        .file-zone:hover { border-color: var(--emerald); background: rgba(255,255,255,0.06); color: white; }
 
         .step-list { display: flex; flex-direction: column; gap: 4rem; margin-top: 3rem; position: relative; }
         .step-list::before {
@@ -215,7 +265,7 @@
                 <!-- Step 1 -->
                 <div class="step-content active" id="step1">
                     <div style="margin-bottom: 2.5rem;">
-                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Complete your Professional Identity Profile</h3>
+                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: white;">Complete your Professional Identity Profile</h3>
                     </div>
                     <div class="grid">
                         <div class="field col-12">
@@ -265,7 +315,7 @@
                 <!-- Step 2 -->
                 <div class="step-content" id="step2">
                     <div style="margin-bottom: 2.5rem;">
-                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Define your Research Thesis & Specialization</h3>
+                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: white;">Define your Research Thesis & Specialization</h3>
                     </div>
                     <div class="grid">
                         <div class="field col-12">
@@ -295,7 +345,7 @@
                 <!-- Step 3 -->
                 <div class="step-content" id="step3">
                     <div style="margin-bottom: 2.5rem;">
-                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy);">Finalize your Research Submission Pack</h3>
+                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: white;">Finalize your Research Submission Pack</h3>
                     </div>
                     <div class="grid">
                         <div class="field col-6">
