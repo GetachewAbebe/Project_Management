@@ -120,13 +120,10 @@
         .nav-title {
             display: flex;
             align-items: center;
-            gap: 1.5rem; /* Space between the two text groups */
+            gap: 2rem; /* Balanced gap for larger text */
             font-family: 'Outfit', sans-serif;
-            font-size: 1rem;
-            font-weight: 800;
             color: white;
             line-height: 1;
-            letter-spacing: -0.01em;
         }
 
         /* The Vertical Separator */
@@ -134,26 +131,30 @@
             content: '';
             order: 1;
             width: 1px;
-            height: 24px;
-            background: rgba(255,255,255,0.15);
+            height: 32px; /* Taller for larger text */
+            background: rgba(255,255,255,0.2);
             margin: 0 -0.5rem;
         }
 
         /* Bio and Emerging Tech Institute */
         .nav-title-main {
             order: 0;
+            font-size: 1.4rem; /* TITAN SCALE */
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
             white-space: nowrap;
         }
 
         /* National Review 2026 */
         .nav-title-sub {
             order: 2;
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-size: 1.1rem; /* SCALED UP */
+            font-weight: 800;
             color: var(--emerald);
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            filter: drop-shadow(0 0 8px rgba(0, 163, 108, 0.25));
+            filter: drop-shadow(0 0 10px rgba(0, 163, 108, 0.4));
             white-space: nowrap;
         }
 
