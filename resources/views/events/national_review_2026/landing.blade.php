@@ -945,11 +945,6 @@
                     <div class="nav-title-sub">Annual Review 2026</div>
                 </div>
             </div>
-
-            <div class="nav-links" style="display: flex; gap: 1rem;">
-                <a href="#about" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">About</a>
-                <a href="{{ route('dashboard') }}" style="color: var(--emerald); text-decoration: none; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; border: 1px solid var(--emerald); padding: 0.5rem 1.25rem; border-radius: 100px; transition: all 0.3s;" onmouseover="this.style.background='var(--emerald)'; this.style.color='white'" onmouseout="this.style.background='transparent'; this.style.color='var(--emerald)'">Participant Portal</a>
-            </div>
         </nav>
 
         <div class="hero-body">
