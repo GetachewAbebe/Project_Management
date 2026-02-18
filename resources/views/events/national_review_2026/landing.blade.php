@@ -206,36 +206,55 @@
 
         .hero-left { flex: 1; max-width: 700px; }
 
-        .event-badge {
-            display: inline-flex;
+        .registration-status-banner {
+            margin-top: 1.5rem;
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.75rem;
-            background: rgba(0, 163, 108, 0.12);
-            border: 1px solid rgba(0, 163, 108, 0.3);
-            border-radius: 100px;
-            padding: 0.5rem 1.25rem;
-            margin-bottom: 2.5rem;
+            background: rgba(0, 163, 108, 0.15);
+            border: 1px solid rgba(0, 163, 108, 0.4);
+            border-radius: 12px;
+            padding: 0.85rem 1.5rem;
+            box-shadow: 0 0 30px rgba(0, 163, 108, 0.15);
+            animation: aura-pulse 3s infinite ease-in-out;
         }
 
-        .badge-dot {
-            width: 8px; height: 8px;
+        .status-dot-large {
+            width: 10px;
+            height: 10px;
             background: var(--emerald);
             border-radius: 50%;
-            box-shadow: 0 0 12px var(--emerald-glow);
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px var(--emerald);
+            position: relative;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.4); opacity: 0.7; }
+        .status-dot-large::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--emerald);
+            animation: ring-pulse 2s infinite;
         }
 
-        .badge-text {
-            font-size: 0.7rem;
-            font-weight: 800;
+        @keyframes aura-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 163, 108, 0.1); border-color: rgba(0, 163, 108, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 163, 108, 0.3); border-color: rgba(0, 163, 108, 0.6); }
+        }
+
+        @keyframes ring-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        .status-text-prime {
+            font-size: 0.75rem;
+            font-weight: 900;
             color: var(--emerald);
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
+            text-shadow: 0 0 10px rgba(0, 163, 108, 0.3);
         }
 
         .hero-edition {
@@ -994,10 +1013,6 @@
         {{-- Hero Body --}}
         <div class="hero-body">
             <div class="hero-left">
-                <div class="event-badge">
-                    <div class="badge-dot"></div>
-                    <span class="badge-text">Registration Open</span>
-                </div>
 
                 <p class="hero-edition">8<sup>th</sup> Annual Review · 2026</p>
 
@@ -1065,6 +1080,11 @@
                         <div class="info-label">Submission Deadline</div>
                         <div class="info-value">February 27, 2026</div>
                     </div>
+                </div>
+
+                <div class="registration-status-banner">
+                    <div class="status-dot-large"></div>
+                    <span class="status-text-prime">Registration Open</span>
                 </div>
 
                 {{-- Integrated Admin HUD --}}
