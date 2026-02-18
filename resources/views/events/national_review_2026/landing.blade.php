@@ -1045,7 +1045,7 @@
                 @auth
                     <a href="{{ route('dashboard') }}" class="nav-link">← Back to Dashboard</a>
                 @endauth
-                <a href="javascript:void(0)" onclick="openModal()" class="nav-btn">Register Now →</a>
+                <a href="{{ route('event.register') }}" class="nav-btn">Register Now →</a>
             </div>
         </nav>
 
@@ -1067,7 +1067,7 @@
                 </p>
 
                 <div class="hero-cta-group">
-                    <a href="javascript:void(0)" onclick="openModal()" class="cta-primary">
+                    <a href="{{ route('event.register') }}" class="cta-primary">
                         Register to Present
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -1194,268 +1194,7 @@
     </section>
 
 
-    {{-- ══════════ REGISTRATION MODAL ══════════ --}}
-    <div class="modal-overlay" id="registrationModal">
-        <div class="modal-container">
-            <button class="modal-close" onclick="closeModal()">
-                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-            
-            <aside class="modal-sidebar">
-                <div style="position: relative; margin-bottom: 3.5rem;">
-                    {{-- Branding Halo --}}
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 220px; height: 220px; background: radial-gradient(circle, rgba(0, 163, 108, 0.2) 0%, transparent 70%); pointer-events: none; z-index: 0;"></div>
-                    
-                    <div style="position: relative; z-index: 1; width: 130px; height: 130px; background: white; padding: 18px; border-radius: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0, 163, 108, 0.3); box-shadow: 0 0 35px rgba(0, 163, 108, 0.25), inset 0 0 15px rgba(0,0,0,0.05); transition: all 0.5s var(--ease);">
-                        <x-logo width="100%" height="auto" />
-                    </div>
-                </div>
-
-                <div style="font-family: 'Outfit', sans-serif; position: relative; z-index: 1;">
-                    <div style="display: inline-flex; align-items: center; padding: 0.35rem 1rem; background: rgba(0, 163, 108, 0.12); border: 1px solid rgba(0, 163, 108, 0.25); border-radius: 100px; margin-bottom: 1.25rem;">
-                        <div style="width: 5px; height: 5px; border-radius: 50%; background: var(--emerald); margin-right: 0.6rem; box-shadow: 0 0 8px var(--emerald);"></div>
-                        <span style="font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.25em; color: var(--emerald);">Official Registry</span>
-                    </div>
-
-                    <h2 style="font-size: 2.8rem; font-weight: 900; line-height: 0.9; letter-spacing: -0.05em; margin-bottom: 1rem;">
-                        National<br>
-                        <span style="background: linear-gradient(to right, #00a36c, #007d53); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 2px rgba(0, 163, 108, 0.3));">Review</span>
-                    </h2>
-
-                    <div style="display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; opacity: 0.5;">
-                        <div style="flex: 1; height: 1px; background: linear-gradient(to right, rgba(255,255,255,0.25), transparent);"></div>
-                        <span style="font-family: monospace; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.15em; white-space: nowrap;">EST. 2018 | ADDIS ABABA</span>
-                    </div>
-                </div>
-                
-                <div class="step-list">
-                    <div class="step-item active" data-step="1">
-                        <div class="step-dot">1</div>
-                        <div class="step-info">
-                            <span class="step-label">Professional Identity</span>
-                            <span class="step-sub">Phase 01 of 03</span>
-                        </div>
-                    </div>
-                    <div class="step-item" data-step="2">
-                        <div class="step-dot">2</div>
-                        <div class="step-info">
-                            <span class="step-label">Research Thesis</span>
-                            <span class="step-sub">Phase 02 of 03</span>
-                        </div>
-                    </div>
-                    <div class="step-item" data-step="3">
-                        <div class="step-dot">3</div>
-                        <div class="step-info">
-                            <span class="step-label">Submission Pack</span>
-                            <span class="step-sub">Phase 03 of 03</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="submission-window">
-                    <div class="window-header">Submission Window Closes In</div>
-                    <div class="window-timer" id="pathfinderTimer">
-                        00<span class="timer-unit">d</span> 00<span class="timer-unit">h</span> 00<span class="timer-unit">m</span>
-                    </div>
-                </div>
-            </aside>
-
-            <main class="modal-content">
-                <form action="{{ route('event.register.store') }}" method="POST" enctype="multipart/form-data" id="modalRegisterForm">
-                    @csrf
-                    
-                    <!-- Phase 01: Professional Identity -->
-                    <div class="step-content active" id="modalStep1">
-                        <div style="margin-bottom: 2.5rem;">
-                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--navy); line-height: 1.2;">Complete your Professional Identity Profile</h3>
-                        </div>
-
-                        <div class="grid">
-                            <div class="field col-12">
-                                <label>Full Name</label>
-                                <div class="input-well"><input type="text" name="full_name" required placeholder="Enter your full name"></div>
-                            </div>
-                            <div class="field col-6">
-                                <label>Email Address</label>
-                                <div class="input-well"><input type="email" name="email" required placeholder="example@domain.com"></div>
-                            </div>
-                            <div class="field col-6">
-                                <label>Phone Number</label>
-                                <div class="input-well"><input type="text" name="phone" required placeholder="+251 911 000 000"></div>
-                            </div>
-                            <div class="field col-12">
-                                <label>Organization</label>
-                                <div class="input-well"><input type="text" name="organization" required placeholder="Enter institution"></div>
-                            </div>
-                            <div class="field col-6">
-                                <label>City</label>
-                                <div class="input-well"><input type="text" name="city" required placeholder="Addis Ababa"></div>
-                            </div>
-                            <div class="field col-6">
-                                <label>Gender</label>
-                                <div class="input-well">
-                                    <select name="gender" required>
-                                        <option value="" disabled selected>Select</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="field col-12">
-                                <label>Qualification</label>
-                                <div class="input-well">
-                                    <select name="qualification" required>
-                                        <option value="" disabled selected>Select</option>
-                                        <option value="PhD">Doctorate (PhD)</option>
-                                        <option value="MSc">Master (MSc)</option>
-                                        <option value="BSc">Bachelor (BSc)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Phase 02: Research Thesis -->
-                    <div class="step-content" id="modalStep2">
-                        <div style="margin-bottom: 2.5rem;">
-                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--navy); line-height: 1.2;">Define your Research Thesis & Specialization</h3>
-                        </div>
-
-                        <div class="grid">
-                            <div class="field col-12">
-                                <label>Presentation Title</label>
-                                <div class="input-well"><input type="text" name="presentation_title" required placeholder="Title of your research"></div>
-                            </div>
-                            <div class="field col-12">
-                                <label>Specialization / Department</label>
-                                <div class="input-well"><input type="text" name="specialization" required placeholder="e.g. Bioinformatics, Biotechnology"></div>
-                            </div>
-                            <div class="field col-12">
-                                <label>Abstract Summary</label>
-                                <div class="input-well"><textarea name="abstract_text" rows="3" required placeholder="Briefly describe your work..."></textarea></div>
-                            </div>
-                            <div class="field col-12">
-                                <label>Availability (Present on all dates?)</label>
-                                <div class="input-well">
-                                    <select name="available_on_date" required>
-                                        <option value="Yes">Yes, fully available</option>
-                                        <option value="No">No, partial availability</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Phase 03: Submission Pack -->
-                    <div class="step-content" id="modalStep3">
-                        <div style="margin-bottom: 2.5rem;">
-                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--navy); line-height: 1.2;">Finalize your Research Submission Pack</h3>
-                        </div>
-
-                        <div class="grid">
-                            <div class="field col-6">
-                                <label>Manuscript (PDF)</label>
-                                <div class="file-zone" onclick="document.getElementById('modalFile').click()">
-                                    <input type="file" id="modalFile" name="abstract_file" style="display:none" onchange="updateFileName(this, 'fileStatus')">
-                                    <div id="fileStatus" style="font-size: 0.7rem;">📄 Abstract/File</div>
-                                </div>
-                            </div>
-                            <div class="field col-6">
-                                <label>Support Letter</label>
-                                <div class="file-zone" onclick="document.getElementById('modalSupport').click()">
-                                    <input type="file" id="modalSupport" name="support_letter" style="display:none" onchange="updateFileName(this, 'supportStatus')">
-                                    <div id="supportStatus" style="font-size: 0.7rem;">📁 Support Doc</div>
-                                </div>
-                            </div>
-                            <div class="field col-12">
-                                <label>Discovery Source (How did you hear about us?)</label>
-                                <div class="input-well">
-                                    <select name="discovery_source" required>
-                                        <option value="Social Media">Social Media</option>
-                                        <option value="Email/Invitation">Email/Invitation</option>
-                                        <option value="BETI Website">BETI Website</option>
-                                        <option value="Colleague">Colleague</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="field col-12">
-                                <label>Additional Questions / Remarks</label>
-                                <div class="input-well"><textarea name="questions" rows="2" placeholder="Any special requirements?"></textarea></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-nav">
-                        <button type="button" class="btn-modal btn-modal-prev" id="modalPrev" style="display:none" onclick="changeStep(-1)">Previous</button>
-                        <div style="flex:1"></div>
-                        <button type="button" class="btn-modal btn-modal-next" id="modalNext" onclick="changeStep(1)">Next Phase →</button>
-                        <button type="submit" class="btn-modal btn-modal-next" id="modalSubmit" style="display:none; background: var(--emerald);">Finalize Registration</button>
-                    </div>
-                </form>
-            </main>
-        </div>
-    </div>
-
     <script>
-        function openModal() {
-            document.getElementById('registrationModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            currentModalStep = 1;
-            updateModalUI();
-        }
-
-        function closeModal() {
-            document.getElementById('registrationModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        let currentModalStep = 1;
-        function changeStep(dir) {
-            const nextStep = currentModalStep + dir;
-            if (nextStep < 1 || nextStep > 3) return;
-
-            // Simple validation
-            if (dir > 0) {
-                const activeContent = document.getElementById('modalStep' + currentModalStep);
-                const inputs = activeContent.querySelectorAll('input[required], select[required], textarea[required]');
-                let valid = true;
-                inputs.forEach(i => { 
-                    if(!i.value) { 
-                        i.parentElement.style.borderColor = '#ef4444'; 
-                        valid = false; 
-                    } else { 
-                        i.parentElement.style.borderColor = 'transparent'; 
-                    } 
-                });
-                if (!valid) return;
-            }
-
-            currentModalStep = nextStep;
-            updateModalUI();
-        }
-
-        function updateModalUI() {
-            document.querySelectorAll('.step-content').forEach((el, i) => el.classList.toggle('active', (i+1) === currentModalStep));
-            document.querySelectorAll('.step-item').forEach((el, i) => {
-                el.classList.toggle('active', (i+1) === currentModalStep);
-                el.classList.toggle('completed', (i+1) < currentModalStep);
-            });
-
-            document.getElementById('modalPrev').style.display = currentModalStep === 1 ? 'none' : 'block';
-            document.getElementById('modalNext').style.display = currentModalStep === 3 ? 'none' : 'block';
-            document.getElementById('modalSubmit').style.display = currentModalStep === 3 ? 'block' : 'none';
-        }
-
-        function updateFileName(input, statusId) {
-            const status = document.getElementById(statusId);
-            if (input.files.length) status.innerHTML = '✅ ' + input.files[0].name;
-            else status.innerHTML = (statusId === 'fileStatus') ? '📄 Abstract/File' : '📁 Support Doc';
-        }
-
-        // Close on escape
-        document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
-
         {{-- Typewriter Engine --}}
         const TxtType = function(el, toRotate, period) {
             this.toRotate = toRotate;
@@ -1519,30 +1258,19 @@
 
         // Pathfinder 3.0 Timer Logic: Targeting February 27, 2026
         function updatePathfinderTimer() {
-            const timerEl = document.getElementById('pathfinderTimer');
-            if (!timerEl) return;
-            
-            const target = new Date(2026, 1, 27, 23, 59, 59); // February 27, 2026 (Month is 0-indexed)
+            const target = new Date(2026, 1, 27, 23, 59, 59);
+            const durationEl = document.getElementById('registrationDuration');
+            if (!durationEl) return;
             
             const update = () => {
                 const now = new Date();
                 const diff = target - now;
                 if (diff <= 0) {
-                    timerEl.innerHTML = `00<span class="timer-unit">d</span> 00<span class="timer-unit">h</span> 00<span class="timer-unit">m</span>`;
+                    durationEl.innerHTML = `Closed`;
                     return;
                 }
-
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                
-                timerEl.innerHTML = `${d.toString().padStart(2, '0')}<span class="timer-unit">d</span> ${h.toString().padStart(2, '0')}<span class="timer-unit">h</span> ${m.toString().padStart(2, '0')}<span class="timer-unit">m</span>`;
-                
-                // Sync status duration text
-                const durationEl = document.getElementById('registrationDuration');
-                if (durationEl) {
-                    durationEl.innerHTML = `${d} Days Remaining`;
-                }
+                durationEl.innerHTML = `${d} Days Remaining`;
             };
             setInterval(update, 60000);
             update();
@@ -1551,16 +1279,7 @@
         window.addEventListener('load', () => {
             updatePathfinderTimer();
             initTypewriter();
-            @if($errors->any())
-                openModal();
-                const form = document.getElementById('modalRegisterForm');
-                @foreach($errors->keys() as $key)
-                    const el = form.querySelector('[name="{{ $key }}"]');
-                    if (el) el.parentElement.style.borderColor = '#ef4444';
-                @endforeach
-            @endif
         });
     </script>
-
 </body>
 </html>

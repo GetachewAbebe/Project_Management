@@ -31,7 +31,7 @@ class EventRegistrationController extends Controller
      */
     public function create()
     {
-        return redirect()->route('event.landing');
+        return view('events.national_review_2026.register');
     }
 
     /**
