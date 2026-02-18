@@ -9,6 +9,23 @@ use Illuminate\Support\Str;
 class EventRegistrationController extends Controller
 {
     /**
+     * Show the public landing page for the National Review 2026.
+     */
+    public function landing()
+    {
+        $stats = null;
+        if (auth()->check() && auth()->user()->isAdmin()) {
+            $stats = [
+                'total'   => ReviewRegistration::count(),
+                'male'    => ReviewRegistration::where('gender', 'Male')->count(),
+                'female'  => ReviewRegistration::where('gender', 'Female')->count(),
+                'pending' => ReviewRegistration::where('status', 'pending')->count(),
+            ];
+        }
+        return view('events.national_review_2026.landing', compact('stats'));
+    }
+
+    /**
      * Show the public registration form.
      */
     public function create()

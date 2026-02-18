@@ -59,7 +59,10 @@ use App\Http\Controllers\EventRegistrationController;
 
 // National Review 2026 - Isolated Registration Module
 Route::prefix('national-review-2026')->group(function () {
-    // Public Routes
+    // Landing Page
+    Route::get('/', [EventRegistrationController::class, 'landing'])->name('event.landing');
+
+    // Registration Form
     Route::get('/register', [EventRegistrationController::class, 'create'])->name('event.register');
     Route::post('/register', [EventRegistrationController::class, 'store'])->name('event.register.store');
     Route::get('/confirmation/{reference}', [EventRegistrationController::class, 'confirmation'])->name('event.confirmation');
