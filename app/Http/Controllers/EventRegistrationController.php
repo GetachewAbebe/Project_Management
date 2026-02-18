@@ -17,6 +17,7 @@ class EventRegistrationController extends Controller
         if (auth()->check() && auth()->user()->isAdmin()) {
             $stats = [
                 'total' => ReviewRegistration::count(),
+                'today' => ReviewRegistration::whereDate('created_at', now()->today())->count(),
                 'male' => ReviewRegistration::where('gender', 'Male')->count(),
                 'female' => ReviewRegistration::where('gender', 'Female')->count(),
                 'pending' => ReviewRegistration::where('status', 'pending')->count(),

@@ -880,11 +880,11 @@
                         </div>
                         <div class="hud-grid">
                             <div class="hud-stat">
-                                <span class="hud-num">{{ $stats['total'] }}</span>
+                                <span class="hud-num">{{ $stats['total'] ?? 0 }}</span>
                                 <span class="hud-label">Registrations</span>
                             </div>
                             <div class="hud-stat">
-                                <span class="hud-num">{{ $stats['today'] }}</span>
+                                <span class="hud-num">{{ $stats['today'] ?? 0 }}</span>
                                 <span class="hud-label">Today</span>
                             </div>
                         </div>
