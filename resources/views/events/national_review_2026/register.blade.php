@@ -362,6 +362,22 @@
 
             {{-- Form --}}
             <section class="form-content">
+                @php
+                    $goTo = 1; // Default
+                    if($errors->any()) {
+                        $step3Fields = ['discovery_source', 'inviter_name', 'travel_option', 'needs_hotel'];
+                        $step1Fields = ['full_name','email','phone','organization', 'job_title', 'department','city','gender','qualification', 'expertise', 'previous_attendance'];
+                        $step2Fields = ['presentation_title','project_status','abstract_text','abstract_file','thematic_area','available_on_date'];
+                        
+                        $goTo = 3; // Default to last step if unknown error
+                        foreach($errors->keys() as $k) {
+                            if(in_array($k, $step1Fields)) { $goTo = 1; break; }
+                            if(in_array($k, $step2Fields)) { $goTo = 2; break; }
+                            if(in_array($k, $step3Fields)) { $goTo = 3; break; }
+                        }
+                    }
+                @endphp
+
                 {{-- Strategic Alert HUD --}}
                 @if($errors->any())
                 <div class="strategic-alert-hud" id="errorAlertHUD">
@@ -771,18 +787,7 @@
         }
 
         @if($errors->any())
-            @php
-                $step3Fields = ['discovery_source', 'inviter_name', 'travel_option', 'needs_hotel'];
-                $step1Fields = ['full_name','email','phone','organization', 'job_title', 'department','city','gender','qualification', 'expertise', 'previous_attendance'];
-                $step2Fields = ['presentation_title','project_status','abstract_text','abstract_file','thematic_area','available_on_date'];
-                $goTo = 3;
-                foreach($errors->keys() as $k) {
-                    if(in_array($k, $step1Fields)) { $goTo = 1; break; }
-                    if(in_array($k, $step2Fields)) { $goTo = 2; break; }
-                    if(in_array($k, $step3Fields)) { $goTo = 3; break; }
-                }
-            @endphp
-            currentStep = {{ $goTo }};
+            currentStep = {{ $goTo ?? 1 }};
             updateFormUI();
 
             // Auto-scroll to error HUD
