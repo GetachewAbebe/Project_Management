@@ -319,7 +319,7 @@
                     <div class="step-item" data-step="3">
                         <div class="step-dot">3</div>
                         <div>
-                            <div class="step-label">Submission Pack</div>
+                            <div class="step-label">Finalize Submission</div>
                             <div class="step-sub">Phase 03 of 03</div>
                         </div>
                     </div>
@@ -507,7 +507,7 @@
 
                     {{-- Step 3 --}}
                     <div class="step-content" id="step3">
-                        <h3 class="step-heading">Finalize Submission Pack</h3>
+                        <h3 class="step-heading">Finalize Submission</h3>
                         <p class="step-desc">Upload your documents and complete your registration.</p>
                         <div class="grid">
                             <div class="field col-6">
@@ -520,11 +520,11 @@
                                 </div>
                             </div>
                             <div class="field col-6">
-                                <label>Support Letter</label>
+                                <label>Institutional Support Letter</label>
                                 <div class="file-zone" onclick="document.getElementById('supportInput').click()">
                                     <input type="file" id="supportInput" name="support_letter" style="display:none" onchange="updateFileInfo(this, 'supportInfo')">
                                     <div class="file-icon">📁</div>
-                                    <div id="supportInfo">Click to upload support letter</div>
+                                    <div id="supportInfo">Click to upload institutional support letter</div>
                                     <div style="font-size:0.7rem; color:#94a3b8; margin-top:0.25rem;">PDF, DOC, JPG · Max 10MB</div>
                                 </div>
                             </div>
