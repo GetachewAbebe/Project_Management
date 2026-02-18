@@ -359,6 +359,16 @@
                                 <input type="text" name="organization" required value="{{ old('organization') }}" placeholder="Enter your institution name">
                                 @error('organization')<div class="error-msg">{{ $message }}</div>@enderror
                             </div>
+                            <div class="field col-6">
+                                <label>Job Title / Position</label>
+                                <input type="text" name="job_title" required value="{{ old('job_title') }}" placeholder="e.g. Senior Researcher, Professor">
+                                @error('job_title')<div class="error-msg">{{ $message }}</div>@enderror
+                            </div>
+                            <div class="field col-6">
+                                <label>Department / Faculty</label>
+                                <input type="text" name="department" required value="{{ old('department') }}" placeholder="e.g. Biotechnology, Engineering">
+                                @error('department')<div class="error-msg">{{ $message }}</div>@enderror
+                            </div>
                             <div class="field col-4">
                                 <label>City</label>
                                 <input type="text" name="city" required value="{{ old('city') }}" placeholder="Addis Ababa">
@@ -382,6 +392,21 @@
                                     <option value="BSc" {{ old('qualification') == 'BSc' ? 'selected' : '' }}>Bachelor (BSc)</option>
                                 </select>
                                 @error('qualification')<div class="error-msg">{{ $message }}</div>@enderror
+                            </div>
+                            <div class="field col-12">
+                                <label>Primary Area of Expertise</label>
+                                <input type="text" name="expertise" required value="{{ old('expertise') }}" placeholder="e.g. Bio-Informatics, Crop Science, Health Tech">
+                                @error('expertise')<div class="error-msg">{{ $message }}</div>@enderror
+                            </div>
+                            <div class="field col-12">
+                                <label>Have you attended previous Annual Reviews?</label>
+                                <select name="previous_attendance" required>
+                                    <option value="" disabled {{ old('previous_attendance') ? '' : 'selected' }}>Select response</option>
+                                    <option value="First Time" {{ old('previous_attendance') == 'First Time' ? 'selected' : '' }}>No, this is my first time</option>
+                                    <option value="Once" {{ old('previous_attendance') == 'Once' ? 'selected' : '' }}>Yes, I have attended once before</option>
+                                    <option value="Multiple" {{ old('previous_attendance') == 'Multiple' ? 'selected' : '' }}>Yes, I am a regular attendee</option>
+                                </select>
+                                @error('previous_attendance')<div class="error-msg">{{ $message }}</div>@enderror
                             </div>
                         </div>
                     </div>
@@ -527,7 +552,7 @@
 
         @if($errors->any())
             @php
-                $step1Fields = ['full_name','email','phone','organization','city','gender','qualification'];
+                $step1Fields = ['full_name','email','phone','organization', 'job_title', 'department','city','gender','qualification', 'expertise', 'previous_attendance'];
                 $step2Fields = ['presentation_title','specialization','abstract_text','available_on_date'];
                 $goTo = 3;
                 foreach($errors->keys() as $k) {
