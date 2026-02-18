@@ -40,10 +40,20 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            overflow: hidden; /* CRITICAL: Clips all background orbs/effects */
         }
 
-        /* Grid overlay */
-        .hero::before {
+        /* Atmosphere Container for clipped effects */
+        .hero-atmosphere {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Grid overlay inside atmosphere */
+        .hero-atmosphere::before {
             content: '';
             position: absolute;
             inset: 0;
@@ -51,14 +61,16 @@
                 linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
             background-size: 60px 60px;
+            z-index: 1;
         }
 
-        /* Glow orbs */
+        /* Glow orbs inside atmosphere */
         .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(120px);
             pointer-events: none;
+            z-index: 2;
         }
         .orb-1 { width: 80vw; height: 80vw; background: rgba(0, 163, 108, 0.08); top: -20%; right: -20%; filter: blur(150px); }
         .orb-2 { width: 60vw; height: 60vw; background: rgba(0, 59, 92, 0.3); bottom: -10%; left: -10%; filter: blur(120px); }
@@ -923,9 +935,11 @@
 
     {{-- ══════════ HERO ══════════ --}}
     <section class="hero">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+        <div class="hero-atmosphere">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
 
         {{-- Nav --}}
         <nav class="hero-nav">
