@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --obsidian: #050505;
-            --navy: #003B5C;
-            --emerald: #00a36c;
-            --emerald-glow: rgba(0, 163, 108, 0.35);
-            --emerald-light: rgba(0, 163, 108, 0.08);
+            --obsidian: #0a1a0e;
+            --navy: #1a4a6b;
+            --emerald: #1a7a3c;
+            --emerald-glow: rgba(26, 122, 60, 0.35);
+            --emerald-light: rgba(26, 122, 60, 0.08);
             --gold: #f59e0b;
             --alabaster: #f8f9fa;
             --border: rgba(0,0,0,0.07);
@@ -36,11 +36,11 @@
         /* ── HERO ── */
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--navy) 0%, #001f3a 60%, #002d4a 100%);
+            background: linear-gradient(135deg, #0d2b14 0%, #0a1a0e 60%, #0d2233 100%);
             position: relative;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* CRITICAL: Clips all background orbs/effects */
+            overflow: hidden;
         }
 
         /* Atmosphere Container for clipped effects */
@@ -72,9 +72,9 @@
             pointer-events: none;
             z-index: 2;
         }
-        .orb-1 { width: 80vw; height: 80vw; background: rgba(0, 163, 108, 0.08); top: -20%; right: -20%; filter: blur(150px); }
-        .orb-2 { width: 60vw; height: 60vw; background: rgba(0, 59, 92, 0.3); bottom: -10%; left: -10%; filter: blur(120px); }
-        .orb-3 { width: 40vw; height: 40vw; background: rgba(245, 158, 11, 0.04); top: 30%; left: 40%; filter: blur(100px); }
+        .orb-1 { width: 80vw; height: 80vw; background: rgba(26, 122, 60, 0.12); top: -20%; right: -20%; filter: blur(150px); }
+        .orb-2 { width: 60vw; height: 60vw; background: rgba(26, 74, 107, 0.35); bottom: -10%; left: -10%; filter: blur(120px); }
+        .orb-3 { width: 40vw; height: 40vw; background: rgba(26, 122, 60, 0.06); top: 30%; left: 40%; filter: blur(100px); }
 
         /* Nav */
         .hero-nav {
@@ -82,11 +82,12 @@
             z-index: 10;
             display: flex;
             align-items: center;
-            justify-content: center; /* CENTERED */
-            padding: 2.5rem 5rem; /* Increased vertical breathing room */
-            background: rgba(5, 5, 5, 0.4);
+            justify-content: center;
+            padding: 2.5rem 5rem;
+            background: rgba(10, 26, 14, 0.6);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-top: 3px solid var(--emerald);
             box-shadow: 0 4px 30px rgba(0,0,0,0.3);
         }
 
@@ -1028,7 +1029,34 @@
             <div class="orb orb-1"></div>
             <div class="orb orb-2"></div>
             <div class="orb orb-3"></div>
+            {{-- DNA Helix Watermark (BETin brand motif) --}}
+            <svg style="position:absolute; right:2%; top:5%; width:420px; height:auto; opacity:0.045; pointer-events:none; z-index:3;" viewBox="0 0 200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Left strand -->
+                <path d="M60,0 C100,50 20,100 60,150 C100,200 20,250 60,300 C100,350 20,400 60,450 C100,500 20,550 60,600" stroke="#1a7a3c" stroke-width="3" fill="none"/>
+                <!-- Right strand -->
+                <path d="M140,0 C100,50 180,100 140,150 C100,200 180,250 140,300 C100,350 180,400 140,450 C100,500 180,550 140,600" stroke="#1a4a6b" stroke-width="3" fill="none"/>
+                <!-- Rungs -->
+                <line x1="60" y1="30" x2="140" y2="30" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="75" x2="140" y2="75" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="120" x2="140" y2="120" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="180" x2="140" y2="180" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="225" x2="140" y2="225" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="270" x2="140" y2="270" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="330" x2="140" y2="330" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="375" x2="140" y2="375" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="420" x2="140" y2="420" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="480" x2="140" y2="480" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="525" x2="140" y2="525" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <line x1="60" y1="570" x2="140" y2="570" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <!-- Node dots -->
+                <circle cx="60" cy="30" r="4" fill="#1a7a3c"/><circle cx="140" cy="30" r="4" fill="#1a4a6b"/>
+                <circle cx="60" cy="150" r="4" fill="#1a7a3c"/><circle cx="140" cy="150" r="4" fill="#1a4a6b"/>
+                <circle cx="60" cy="300" r="4" fill="#1a7a3c"/><circle cx="140" cy="300" r="4" fill="#1a4a6b"/>
+                <circle cx="60" cy="450" r="4" fill="#1a7a3c"/><circle cx="140" cy="450" r="4" fill="#1a4a6b"/>
+                <circle cx="60" cy="600" r="4" fill="#1a7a3c"/><circle cx="140" cy="600" r="4" fill="#1a4a6b"/>
+            </svg>
         </div>
+
 
         {{-- Nav --}}
         <nav class="hero-nav">
