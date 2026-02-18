@@ -42,15 +42,31 @@
             flex-direction: column;
         }
 
-        /* ── HEADER (light, matching registration page) ── */
+        /* ── HEADER (Vibrant Zenith) ── */
         .hero-nav {
             position: sticky; top: 0; z-index: 100;
             display: flex; align-items: center; justify-content: center;
             padding: 1.5rem 5rem;
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            border-top: 3px solid var(--emerald);
-            box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+            background: linear-gradient(135deg, #0f172a 30%, #1a4a6b 100%);
+            backdrop-filter: blur(24px);
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            border-top: 4px solid var(--emerald);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.5s var(--ease);
+        }
+
+        .hero-nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.03);
+            pointer-events: none;
+        }
+
+        .hero-nav:hover {
+            padding-top: 1.3rem;
+            padding-bottom: 1.3rem;
+            background: linear-gradient(135deg, #131d35 30%, #1a7a3c 100%);
         }
 
         .nav-brand { display: flex; align-items: center; gap: 2rem; }
@@ -58,21 +74,50 @@
             background: white; padding: 0.8rem 1.1rem; border-radius: 16px;
             width: 110px; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s var(--ease);
+            flex-shrink: 0;
         }
-        .nav-title { display: flex; align-items: center; gap: 2rem; font-family: 'Outfit', sans-serif; color: var(--navy); line-height: 1; }
-        .nav-title::after { content: ''; width: 1px; height: 28px; background: #e2e8f0; }
-        .nav-title-main { font-size: 1.2rem; font-weight: 900; letter-spacing: -0.02em; white-space: nowrap; color: var(--navy); }
-        .nav-title-sub { font-size: 0.9rem; font-weight: 800; color: var(--emerald); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
 
-        /* ── FOOTER (light, matching registration page) ── */
-        .hero-footer {
-            padding: 1.5rem 5rem; text-align: center;
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            margin-top: auto;
+        .nav-logo-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0, 163, 108, 0.2);
         }
-        .footer-tiny { font-size: 0.85rem; color: #94a3b8; font-weight: 500; }
-        .footer-tiny span { color: var(--emerald); font-weight: 700; }
+        .nav-title { display: flex; align-items: center; gap: 2rem; font-family: 'Outfit', sans-serif; color: white; line-height: 1; position: relative; }
+        .nav-title::after { 
+            content: ''; 
+            width: 1px; height: 32px; 
+            background: rgba(255,255,255,0.2); 
+            margin: 0 -0.5rem;
+        }
+        .nav-title-main { font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em; white-space: nowrap; color: white; }
+        .nav-title-sub { 
+            font-size: 0.95rem; font-weight: 800; color: var(--emerald); 
+            letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap;
+            filter: drop-shadow(0 0 10px rgba(0, 163, 108, 0.4));
+        }
+
+        /* ── FOOTER (Vibrant Zenith) ── */
+        .hero-footer {
+            padding: 2rem 5rem; text-align: center;
+            background: linear-gradient(135deg, #1a7a3c 0%, #0f172a 100%);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            margin-top: auto;
+            position: relative;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+        }
+
+        .hero-footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.02);
+            pointer-events: none;
+        }
+
+        .footer-tiny { font-size: 0.95rem; color: rgba(255,255,255,0.6); font-weight: 500; letter-spacing: 0.02em; position: relative; z-index: 2; }
+        .footer-tiny span { color: white; font-weight: 800; border-bottom: 2px solid var(--emerald); }
 
         /* ── PAGE CONTENT ── */
         .page-content {
