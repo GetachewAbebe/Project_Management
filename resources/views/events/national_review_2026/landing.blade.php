@@ -709,7 +709,7 @@
         .hero-footer {
             position: relative;
             z-index: 10;
-            padding: 1.5rem 5rem; 
+            padding: 2rem 5rem; /* Increased vertical padding to accommodate larger text */
             text-align: center;
             background: rgba(5, 5, 5, 0.4);
             backdrop-filter: blur(20px);
@@ -719,10 +719,10 @@
         }
 
         .footer-tiny {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.4);
-            font-weight: 600;
-            letter-spacing: 0.05em;
+            font-size: 0.9rem; /* INCREASED FROM 0.7rem */
+            color: rgba(255,255,255,0.45);
+            font-weight: 500;
+            letter-spacing: 0.02em;
         }
         .footer-tiny span { color: var(--emerald); }
 
