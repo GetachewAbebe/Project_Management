@@ -27,17 +27,21 @@
             font-family: 'Inter', sans-serif;
             color: var(--obsidian);
             background: var(--alabaster);
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* ── HERO ── */
         .hero {
-            min-height: 100vh;
+            height: 100vh;
             background: linear-gradient(135deg, var(--navy) 0%, #001f3a 60%, #002d4a 100%);
             position: relative;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            flex: 1;
         }
 
         /* Grid overlay */
@@ -147,7 +151,7 @@
             align-items: center;
             position: relative;
             z-index: 5;
-            padding: 5rem 5rem 6rem;
+            padding: 3rem 5rem;
             gap: 5rem;
         }
 
@@ -196,12 +200,12 @@
 
         .hero-title {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(3.5rem, 6vw, 6rem);
+            font-size: clamp(3rem, 5vw, 5rem);
             font-weight: 900;
             line-height: 0.9;
             letter-spacing: -0.04em;
             color: white;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .hero-title .accent {
@@ -210,12 +214,12 @@
         }
 
         .hero-subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
             color: rgba(255,255,255,0.55);
-            line-height: 1.7;
-            max-width: 520px;
-            margin-bottom: 3.5rem;
+            line-height: 1.6;
+            max-width: 480px;
+            margin-bottom: 2.5rem;
         }
 
         .hero-cta-group {
@@ -276,8 +280,8 @@
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
             display: flex;
             align-items: center;
             gap: 1.25rem;
@@ -547,97 +551,52 @@
             margin-top: 0.4rem;
         }
 
-        /* ── ADMIN PANEL ── */
-        .admin-section {
-            background: white;
-            border-top: 3px solid var(--emerald);
-            padding: 4rem 5rem;
+        /* ── ADMIN HUD ── */
+        .admin-hud {
+            position: fixed; top: 10rem; right: 3rem;
+            z-index: 100; pointer-events: none;
+            display: flex; flex-direction: column; gap: 1rem;
+            align-items: flex-end;
         }
 
-        .admin-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2.5rem;
+        .admin-hud-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 1.25rem 2rem;
+            pointer-events: auto;
+            display: flex; flex-direction: column; gap: 0.5rem;
+            transition: all 0.4s var(--ease);
+            min-width: 240px;
         }
 
-        .admin-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: #fef3c7;
-            border: 1px solid #fde68a;
-            border-radius: 100px;
-            padding: 0.4rem 1rem;
-            font-size: 0.65rem;
-            font-weight: 900;
-            color: #92400e;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .admin-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .admin-stat-card {
-            background: var(--alabaster);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s var(--ease);
-        }
-
-        .admin-stat-card:hover {
-            border-color: var(--emerald);
-            box-shadow: 0 8px 25px rgba(0, 163, 108, 0.08);
-        }
-
-        .admin-stat-num {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--navy);
-            line-height: 1;
-        }
-
-        .admin-stat-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: 0.5rem;
-        }
-
-        .admin-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn-results {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: var(--navy);
-            color: white;
-            padding: 0.9rem 2rem;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: all 0.3s var(--ease);
-        }
-
-        .btn-results:hover {
-            background: var(--emerald);
+        .admin-hud-card:hover { 
+            background: rgba(255,255,255,0.08);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px var(--emerald-glow);
+            border-color: var(--emerald);
         }
+
+        .hud-header { display: flex; align-items: center; justify-content: space-between; }
+        .hud-badge { 
+            font-size: 0.6rem; font-weight: 900; color: var(--gold); 
+            text-transform: uppercase; letter-spacing: 0.15em;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        .hud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+        .hud-stat { display: flex; flex-direction: column; }
+        .hud-num { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: white; line-height: 1; }
+        .hud-label { font-size: 0.55rem; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+
+        .btn-hud-results {
+            margin-top: 1rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+            background: white; color: var(--navy); padding: 0.75rem; border-radius: 12px;
+            font-size: 0.75rem; font-weight: 900; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-hud-results:hover { background: var(--emerald); color: white; }
 
         /* ── CTA SECTION ── */
         .cta-section {
@@ -682,13 +641,14 @@
 
         /* Footer */
         .footer {
-            background: var(--obsidian);
-            padding: 2.5rem 5rem;
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 1.5rem 5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+            z-index: 10;
         }
 
         .footer-copy {
@@ -919,57 +879,35 @@
                     <div class="stat-label">Days of Science</div>
                 </div>
             </div>
-            <div class="scroll-hint">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-                Scroll to explore
-            </div>
         </div>
     </section>
 
-    {{-- ══════════ ADMIN PANEL (visible only to admins) ══════════ --}}
+    {{-- ══════════ ADMIN HUD (authorized only) ══════════ --}}
     @if($stats !== null)
-    <div class="admin-section">
-        <div class="admin-header">
-            <div>
-                <div class="admin-badge">
-                    <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                    </svg>
-                    Admin Overview
+    <div class="admin-hud">
+        <div class="admin-hud-card">
+            <div class="hud-header">
+                <div class="hud-badge">
+                    <div class="badge-dot" style="width:6px;height:6px;background:var(--gold);box-shadow:0 0 10px var(--gold);"></div>
+                    Master Dashboard
                 </div>
-                <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--navy); margin-top: 0.75rem; letter-spacing: -0.02em;">
-                    Registration Dashboard
-                </h2>
             </div>
-            <div class="admin-actions">
-                <a href="{{ route('event.results') }}" class="btn-results">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m-8 13h11a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                    </svg>
-                    View Full Results
-                </a>
+            
+            <div class="hud-grid">
+                <div class="hud-stat">
+                    <div class="hud-num">{{ $stats['total'] }}</div>
+                    <div class="hud-label">Total</div>
+                </div>
+                <div class="hud-stat">
+                    <div class="hud-num" style="color:var(--gold)">{{ $stats['pending'] }}</div>
+                    <div class="hud-label">Pending</div>
+                </div>
             </div>
-        </div>
 
-        <div class="admin-stats-grid">
-            <div class="admin-stat-card" style="border-top: 3px solid var(--emerald);">
-                <div class="admin-stat-num" style="color: var(--emerald);">{{ $stats['total'] }}</div>
-                <div class="admin-stat-label">Total Registrations</div>
-            </div>
-            <div class="admin-stat-card" style="border-top: 3px solid #3b82f6;">
-                <div class="admin-stat-num" style="color: #3b82f6;">{{ $stats['male'] }}</div>
-                <div class="admin-stat-label">Male Participants</div>
-            </div>
-            <div class="admin-stat-card" style="border-top: 3px solid #ec4899;">
-                <div class="admin-stat-num" style="color: #ec4899;">{{ $stats['female'] }}</div>
-                <div class="admin-stat-label">Female Participants</div>
-            </div>
-            <div class="admin-stat-card" style="border-top: 3px solid var(--gold);">
-                <div class="admin-stat-num" style="color: var(--gold);">{{ $stats['pending'] }}</div>
-                <div class="admin-stat-label">Pending Review</div>
-            </div>
+            <a href="{{ route('event.results') }}" class="btn-hud-results">
+                View In-Depth Data
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19l7-7-7-7"/></svg>
+            </a>
         </div>
     </div>
     @endif
