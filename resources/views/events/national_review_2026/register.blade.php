@@ -329,16 +329,16 @@
             box-shadow: 
                 0 0 0 1px rgba(0,0,0,0.005),
                 0 50px 120px -30px rgba(0,0,0,0.1);
-            padding: 8rem;
+            padding: 6rem;
             min-height: 850px;
             position: relative;
             overflow: hidden;
         }
 
-        .section-header { margin-bottom: 5rem; }
+        .section-header { margin-bottom: 4rem; }
 
         .section-label {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 900;
             color: var(--emerald);
             text-transform: uppercase;
@@ -346,6 +346,7 @@
             display: flex;
             align-items: center;
             gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
         .section-label::after { 
@@ -539,7 +540,7 @@
                     <div class="step-node"><div class="step-node-inner"></div></div>
                     <div class="step-text">
                         <span class="step-tag">Phase 01</span>
-                        <div class="step-name">Personal Info</div>
+                        <div class="step-name">Profile & Institution</div>
                         <span class="step-status">Active Module</span>
                     </div>
                 </div>
@@ -547,24 +548,8 @@
                     <div class="step-node"><div class="step-node-inner"></div></div>
                     <div class="step-text">
                         <span class="step-tag">Phase 02</span>
-                        <div class="step-name">Institutional</div>
-                        <span class="step-status">Awaiting Data</span>
-                    </div>
-                </div>
-                <div class="step" id="node3">
-                    <div class="step-node"><div class="step-node-inner"></div></div>
-                    <div class="step-text">
-                        <span class="step-tag">Phase 03</span>
-                        <div class="step-name">Submission</div>
-                        <span class="step-status">Awaiting Upload</span>
-                    </div>
-                </div>
-                <div class="step" id="node4">
-                    <div class="step-node"><div class="step-node-inner"></div></div>
-                    <div class="step-text">
-                        <span class="step-tag">Phase 04</span>
-                        <div class="step-name">Confirmation</div>
-                        <span class="step-status">Pending Review</span>
+                        <div class="step-name">Release & Security</div>
+                        <span class="step-status">Pending Phase</span>
                     </div>
                 </div>
             </nav>
@@ -593,26 +578,16 @@
             <form action="{{ route('event.register.store') }}" method="POST" enctype="multipart/form-data" id="registryForm">
                 @csrf
                 
-                <!-- STEP 1: Identity -->
+                <!-- PHASE 01: Profile & Institution -->
                 <div class="step-content active" id="step1">
                     <div class="section-header">
-                        <span class="section-label">Personal Information</span>
+                        <span class="section-label">Profile & Institutional Framework</span>
                     </div>
                     <div class="grid">
                         <div class="field col-12">
                             <label>Full Name</label>
                             <div class="input-well">
                                 <input type="text" name="full_name" value="{{ old('full_name') }}" required placeholder="Enter your full name">
-                            </div>
-                        </div>
-                        <div class="field col-6">
-                            <label>Gender</label>
-                            <div class="input-well">
-                                <select name="gender" required>
-                                    <option value="" disabled selected>Select gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
                             </div>
                         </div>
                         <div class="field col-6">
@@ -627,21 +602,9 @@
                                 <input type="text" name="phone" value="{{ old('phone') }}" required placeholder="+251 911 000 000">
                             </div>
                         </div>
-                        <div class="field col-6">
-                            <label>City</label>
-                            <div class="input-well">
-                                <input type="text" name="city" value="{{ old('city') }}" required placeholder="Enter city">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        
+                        <div class="field col-12"><div style="height: 2px; background: var(--border); margin: 2rem 0;"></div></div>
 
-                <!-- STEP 2: Institutional -->
-                <div class="step-content" id="step2">
-                    <div class="section-header">
-                        <span class="section-label">Institutional Background</span>
-                    </div>
-                    <div class="grid">
                         <div class="field col-12">
                             <label>Organization / Institution</label>
                             <div class="input-well">
@@ -665,13 +628,29 @@
                                 <input type="text" name="specialization" value="{{ old('specialization') }}" required placeholder="e.g. Molecular Biology">
                             </div>
                         </div>
+                        <div class="field col-6">
+                            <label>Gender</label>
+                            <div class="input-well">
+                                <select name="gender" required>
+                                    <option value="" disabled selected>Select gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field col-6">
+                            <label>City</label>
+                            <div class="input-well">
+                                <input type="text" name="city" value="{{ old('city') }}" required placeholder="Enter city">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- STEP 3: Submission -->
-                <div class="step-content" id="step3">
+                <!-- PHASE 02: Submission & Authorization -->
+                <div class="step-content" id="step2">
                     <div class="section-header">
-                        <span class="section-label">Research Submission</span>
+                        <span class="section-label">Research Assets & Security</span>
                     </div>
                     <div class="grid">
                         <div class="field col-12">
@@ -681,34 +660,39 @@
                             </div>
                         </div>
                         <div class="field col-12">
-                            <label>Abstract</label>
+                            <label>Abstract Summary</label>
                             <div class="input-well">
-                                <textarea name="abstract_text" rows="6" required placeholder="Provide a summary of your research..."></textarea>
+                                <textarea name="abstract_text" rows="4" required placeholder="Provide a brief summary of your research..."></textarea>
                             </div>
                         </div>
-                        <div class="field col-12">
+                        <div class="field col-6">
                             <label>Manuscript Upload (PDF)</label>
-                            <div class="file-zone" id="abstractDropZone">
+                            <div class="file-zone" id="abstractDropZone" style="padding: 3rem 1rem;">
                                 <input type="file" name="abstract_file" id="abstractFile" style="display: none;">
-                                <div class="file-icon">📄</div>
-                                <div class="file-title">Click or drag to upload manuscript</div>
-                                <div class="file-sub">PDF/PPT Formats Supported (Max 10MB)</div>
+                                <div class="file-icon" style="font-size: 1.5rem; margin-bottom: 1rem;">📄</div>
+                                <div class="file-title" style="font-size: 0.7rem;">Click to Upload</div>
                                 
-                                <div id="abstractPreview" style="margin-top: 3rem; display: none; background: var(--obsidian); color: white; padding: 2.5rem; border-radius: 20px; align-items: center; justify-content: space-between;">
-                                    <span id="abstractName" style="font-weight: 700; font-family: 'Outfit';">document_01.pdf</span>
-                                    <button type="button" onclick="event.stopPropagation(); removeFile('abstract')" style="background: var(--emerald); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 900; cursor: pointer;">Remove</button>
+                                <div id="abstractPreview" style="margin-top: 1.5rem; display: none; background: var(--obsidian); color: white; padding: 1rem; border-radius: 12px; align-items: center; justify-content: space-between; font-size: 0.7rem;">
+                                    <span id="abstractName">document.pdf</span>
+                                    <button type="button" onclick="event.stopPropagation(); removeFile('abstract')" style="background: var(--emerald); color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; cursor: pointer;">X</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <div class="field col-6">
+                            <label>Support Letter</label>
+                            <div class="file-zone" id="supportDropZone" style="padding: 3rem 1rem;">
+                                <input type="file" name="support_letter" id="supportFile" style="display: none;">
+                                <div class="file-icon" style="font-size: 1.5rem; margin-bottom: 1rem;">📝</div>
+                                <div class="file-title" style="font-size: 0.7rem;">Click to Upload</div>
+                                <div id="supportPreview" style="margin-top: 1.5rem; display: none; background: var(--emerald); color: white; padding: 1rem; border-radius: 12px; align-items: center; justify-content: space-between; font-size: 0.7rem;">
+                                    <span id="supportName">letter.pdf</span>
+                                    <button type="button" onclick="event.stopPropagation(); removeFile('support')" style="background: var(--obsidian); color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; cursor: pointer;">X</button>
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- STEP 4: Confirmation -->
-                <div class="step-content" id="step4">
-                    <div class="section-header">
-                        <span class="section-label">Final Authorization</span>
-                    </div>
-                    <div class="grid">
+                        <div class="field col-12"><div style="height: 2px; background: var(--border); margin: 1rem 0;"></div></div>
+
                         <div class="field col-6">
                             <label>Availability</label>
                             <div class="input-well">
@@ -719,7 +703,7 @@
                             </div>
                         </div>
                         <div class="field col-6">
-                            <label>How did you hear about us?</label>
+                            <label>Discovery Source</label>
                             <div class="input-well">
                                 <select name="discovery_source" required>
                                     <option value="Official">Official BETin Portal</option>
@@ -728,26 +712,14 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="field col-12">
-                            <label>Support Letter</label>
-                            <div class="file-zone" id="supportDropZone">
-                                <input type="file" name="support_letter" id="supportFile" style="display: none;">
-                                <div class="file-icon">📝</div>
-                                <div class="file-title">Click or drag to upload support letter</div>
-                                <div id="supportPreview" style="margin-top: 3rem; display: none; background: var(--emerald); color: white; padding: 2.5rem; border-radius: 20px; align-items: center; justify-content: space-between;">
-                                    <span id="supportName" style="font-weight: 700; font-family: 'Outfit';">auth_letter.pdf</span>
-                                    <button type="button" onclick="event.stopPropagation(); removeFile('support')" style="background: var(--obsidian); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 900; cursor: pointer;">Remove</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="nav-bar">
-                    <button type="button" class="btn btn-prev" id="prevBtn" style="display: none;">← Previous Step</button>
+                    <button type="button" class="btn btn-prev" id="prevBtn" style="display: none;">← Previous Phase</button>
                     <div></div>
-                    <button type="button" class="btn btn-next" id="nextBtn">Next Step →</button>
-                    <button type="submit" class="btn btn-next" id="submitBtn" style="display: none; background: var(--emerald);">Authenticate</button>
+                    <button type="button" class="btn btn-next" id="nextBtn">Next Phase →</button>
+                    <button type="submit" class="btn btn-next" id="submitBtn" style="display: none; background: var(--emerald);">Finalize Entry</button>
                 </div>
             </form>
         </main>
@@ -756,7 +728,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let currentStep = 1;
-            const totalSteps = 4;
+            const totalSteps = 2;
             const form = document.getElementById('registryForm');
             const nextBtn = document.getElementById('nextBtn');
             const prevBtn = document.getElementById('prevBtn');
@@ -772,9 +744,9 @@
                     el.classList.toggle('completed', (i + 1) < currentStep);
                     
                     const statusText = el.querySelector('.step-status');
-                    if (i + 1 < currentStep) statusText.textContent = 'Verified';
+                    if (i + 1 < currentStep) statusText.textContent = 'Verified ✓';
                     else if (i + 1 === currentStep) statusText.textContent = 'Active Module';
-                    else statusText.textContent = 'Awaiting Data';
+                    else statusText.textContent = 'Pending Phase';
                 });
 
                 prevBtn.style.display = currentStep === 1 ? 'none' : 'flex';
