@@ -1171,7 +1171,7 @@
                     <div class="stat-label">Annual Review</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">200+</div>
+                    <div class="stat-num">200<sup>+</sup></div>
                     <div class="stat-label">Expected Attendees</div>
                 </div>
                 <div class="stat-item">
