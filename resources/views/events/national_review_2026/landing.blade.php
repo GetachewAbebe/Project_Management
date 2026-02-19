@@ -656,6 +656,25 @@
 
         .about-header .section-desc { margin: 1.5rem auto 0; }
 
+        .about-group-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--emerald);
+            margin: 4rem 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .about-group-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--emerald-light), transparent);
+        }
+
         .about-grid {
             max-width: 1400px;
             margin: 0 auto;
@@ -1206,6 +1225,9 @@
                         <div class="pillar-desc">Green interventions for efficient waste management, bioremediation, and natural resource conservation.</div>
                     </div>
                 </div>
+            </div>
+
+            <div class="pillar-list" style="margin-top: 2rem;">
                 <div class="pillar pillar-tech">
                     <div class="pillar-icon">🧬</div>
                     <div>
