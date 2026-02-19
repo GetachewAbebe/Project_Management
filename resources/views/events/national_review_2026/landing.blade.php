@@ -386,12 +386,26 @@
         }
 
         .typewriter-container {
-            display: block; /* Consistent block display */
+            position: relative;
+            display: block;
             color: var(--emerald);
             margin-top: 0.5rem;
             font-size: 0.75em;
-            min-height: 1.5em; /* RESERVES SPACE: Prevents jumping! */
             line-height: 1.5;
+        }
+
+        .typewrite {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .ghost-text {
+            visibility: hidden;
+            pointer-events: none;
+            display: block;
+            user-select: none;
         }
 
         .typewrite > .wrap {
@@ -1145,6 +1159,7 @@
                 <h1 class="hero-title">
                     BETin National Research Review on<br>
                     <span class="typewriter-container">
+                        <span class="ghost-text" aria-hidden="true">Computational Science and Intelligent Systems</span>
                         <span id="typewriter" class="typewrite"></span>
                     </span>
                 </h1>
