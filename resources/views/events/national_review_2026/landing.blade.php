@@ -13,6 +13,8 @@
             --emerald: #1a7a3c;
             --emerald-glow: rgba(26, 122, 60, 0.20);
             --emerald-light: rgba(26, 122, 60, 0.04);
+            --crimson: #dc2626;
+            --crimson-glow: rgba(220, 38, 38, 0.20);
             --gold: #f59e0b;
             --alabaster: #f8f9fa;
             --border: rgba(0,0,0,0.05);
@@ -457,44 +459,61 @@
 
         .cta-secondary:hover { color: var(--text-main); }
 
-        /* Eye-catching Enquiry Link */
+        /* Crimson Zenith Enquiry Link */
+        .enquiry-container {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .enquiry-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.02em;
+        }
+
         .enquiry-link {
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.85rem 1.5rem;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(26, 122, 60, 0.15);
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(220, 38, 38, 0.08);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(220, 38, 38, 0.25);
             border-radius: 100px;
-            color: var(--emerald);
+            color: #ff4d4d;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.4s var(--ease);
+            letter-spacing: 0.02em;
+            transition: all 0.5s var(--ease);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            box-shadow: 0 10px 40px rgba(220, 38, 38, 0.1);
         }
 
         .enquiry-link:hover {
-            background: white;
-            transform: translateY(-2px);
-            border-color: var(--emerald);
-            box-shadow: 0 15px 35px var(--emerald-glow);
-            color: var(--navy);
+            background: #dc2626;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #ff4d4d;
+            box-shadow: 0 20px 50px rgba(220, 38, 38, 0.3);
+            color: white;
         }
 
         .enquiry-link::before {
             content: '';
             position: absolute;
             inset: -2px;
-            background: linear-gradient(90deg, transparent, var(--emerald), transparent);
-            opacity: 0.3;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
             animation: enquiry-pulse 3s linear infinite;
         }
+
+        .enquiry-link:hover::before { opacity: 1; }
 
         @keyframes enquiry-pulse {
             0% { transform: translateX(-100%); }
@@ -502,14 +521,21 @@
         }
 
         .enquiry-icon {
-            width: 32px; height: 32px;
-            background: var(--emerald);
+            width: 36px; height: 36px;
+            background: #dc2626;
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px var(--emerald-glow);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
+            transition: all 0.3s;
+        }
+
+        .enquiry-link:hover .enquiry-icon {
+            background: white;
+            color: #dc2626;
+            transform: scale(1.1);
         }
 
         /* Event Info Cards */
@@ -1363,14 +1389,17 @@
                 </a>
             </div>
 
-            <a href="mailto:nationalreview@betin.gov.et" class="enquiry-link" style="margin-top: 1rem;">
-                <div class="enquiry-icon">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
-                </div>
-                Enquiries: nationalreview@betin.gov.et
-            </a>
+            <div class="enquiry-container">
+                <div class="enquiry-label">For Registration & Technical Enquiries, please reach out via email:</div>
+                <a href="mailto:nationalreview@betin.gov.et" class="enquiry-link">
+                    <div class="enquiry-icon">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    nationalreview@betin.gov.et
+                </a>
+            </div>
         </div>
     </section>
 
