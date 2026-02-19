@@ -1134,13 +1134,11 @@
                         </svg>
                     </a>
                     
-                    <a href="mailto:nationareview@betin.gov.et" class="enquiry-link">
-                        <div class="enquiry-icon">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
-                        Enquiries: nationareview@betin.gov.et
+                    <a href="#about" class="cta-secondary">
+                        Learn More
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -1358,12 +1356,21 @@
             <p class="cta-desc">
                 Submit your research abstract today and join the elite scientific community at BETIn.
             </p>
-            <div class="hero-cta-group" style="justify-content: center;">
+            <div class="hero-cta-group" style="justify-content: center; margin-bottom: 2rem;">
                 <a href="{{ route('event.register') }}" class="cta-primary">
                     Start Registration Now
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </a>
             </div>
+
+            <a href="mailto:nationalreview@betin.gov.et" class="enquiry-link" style="margin-top: 1rem;">
+                <div class="enquiry-icon">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                Enquiries: nationalreview@betin.gov.et
+            </a>
         </div>
     </section>
 
