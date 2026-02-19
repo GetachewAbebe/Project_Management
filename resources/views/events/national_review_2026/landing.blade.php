@@ -748,7 +748,7 @@
         }
 
         .pillar-title::after {
-            content: 'HUB';
+            content: 'AREA';
             font-size: 0.55rem;
             padding: 2px 6px;
             background: var(--pillar-color-light, var(--emerald-light));
@@ -1181,10 +1181,10 @@
     {{-- ══════════ ABOUT ══════════ --}}
     <section class="section" id="about">
         <div class="about-header">
-            <div class="section-tag">Institute Directorates</div>
+            <div class="section-tag">National Review Thematic Areas</div>
             <h2 class="section-title">Driving Innovation through <span class="em">Advanced Research</span></h2>
             <p class="section-desc">
-                The Research Directorates at BETin represent specialized centers of excellence dedicated to solving Ethiopia's most critical challenges through biotechnology and emerging sciences.
+                The Thematic Areas of the National Review represent specialized focuses of excellence dedicated to solving Ethiopia's most critical challenges through biotechnology and emerging sciences.
             </p>
         </div>
 
@@ -1287,6 +1287,14 @@
                             <div class="vc-stat-label">Review Year</div>
                         </div>
                     </div>
+
+                    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <div class="vc-stat-label" style="margin-bottom: 0.5rem; opacity: 0.7;">REGISTRATION ENQUIRIES</div>
+                        <a href="mailto:nationareview@betin.gov.et" class="vc-title" style="font-size: 1rem; text-decoration: none; color: white; display: flex; align-items: center; gap: 0.5rem;">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            nationareview@betin.gov.et
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1311,7 +1319,7 @@
     {{-- ══════════ FOOTER ══════════ --}}
     <footer class="hero-footer">
         <div class="footer-tiny">
-            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
+            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved. &bull; <a href="mailto:nationareview@betin.gov.et" style="color: inherit; text-decoration: none;">nationareview@betin.gov.et</a>
         </div>
     </footer>
 
