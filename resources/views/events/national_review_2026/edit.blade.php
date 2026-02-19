@@ -155,7 +155,6 @@
                 <x-logo width="100%" height="auto" />
             </div>
             <div>
-                <div style="font-size: 0.75rem; font-weight: 950; color: var(--gold); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 0.5rem;">Systems Genesis</div>
                 <h2 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1.1;">Participant <span style="color: var(--emerald);">Dashboard</span></h2>
                 <div style="width: 40px; height: 3px; background: var(--emerald); margin: 1.5rem auto 0; border-radius: 100px; opacity: 0.5;"></div>
             </div>

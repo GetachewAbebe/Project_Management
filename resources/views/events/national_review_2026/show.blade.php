@@ -41,28 +41,39 @@
 
         .header-box {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            text-align: center;
+            gap: 1.25rem;
+            margin-bottom: 4rem;
         }
 
         .logo-wrapper {
             background: white;
-            padding: 0.75rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 31, 49, 0.08);
-            width: 90px;
+            padding: 1rem;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0, 31, 49, 0.12);
+            width: 100px;
             border: 1px solid var(--border);
+            transition: transform 0.4s var(--ease);
+        }
+
+        .logo-wrapper:hover {
+            transform: translateY(-5px) scale(1.05);
         }
 
         .profile-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
             padding: 4rem;
-            border-radius: 32px;
+            border-radius: 40px;
             box-shadow: var(--shadow-deep);
             border: 1px solid rgba(255, 255, 255, 0.4);
+            border-top: 6px solid var(--emerald);
+            border-bottom: 4px solid var(--gold);
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .section-title {
@@ -161,11 +172,8 @@
                 <x-logo width="100%" height="auto" />
             </div>
             <div>
-                <div style="font-size: 0.7rem; font-weight: 950; color: var(--gold); text-transform: uppercase; letter-spacing: 0.15em; display: flex; align-items: center; gap: 0.5rem;">
-                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-                    Systems Genesis
-                </div>
-                <h2 style="font-size: 1.8rem; font-weight: 900; letter-spacing: -0.02em;">Participant <span style="color: var(--emerald);">Dashboard</span></h2>
+                <h2 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1.1;">Participant <span style="color: var(--emerald);">Dashboard</span></h2>
+                <div style="width: 40px; height: 3px; background: var(--emerald); margin: 1.5rem auto 0; border-radius: 100px; opacity: 0.5;"></div>
             </div>
         </header>
 
