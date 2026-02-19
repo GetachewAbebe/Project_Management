@@ -1164,9 +1164,7 @@
                     </span>
                 </h1>
 
-                <p class="hero-subtitle">
-                    Ethiopia's premier scientific gathering for bio and emerging technology research. Present your work, connect with leading researchers, and shape the future of science in Africa.
-                </p>
+
 
                 <div class="hero-cta-group">
                     <a href="{{ route('event.register') }}" class="cta-primary">
