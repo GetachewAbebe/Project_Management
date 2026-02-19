@@ -658,9 +658,12 @@
 
         .pillar-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
             margin-top: 3.5rem;
+        }
+        @media (min-width: 1400px) {
+            .pillar-list { grid-template-columns: repeat(3, 1fr); }
         }
 
         .pillar {
@@ -983,7 +986,7 @@
             <div class="hero-left">
                 <div class="hero-edition">8<sup>th</sup> National Review</div>
                 <h1 class="hero-title">
-                    National Review on<br>
+                    BETin National Review on<br>
                     <span class="typewriter-container" style="color: var(--emerald); display: block; margin-top: 0.5rem; font-size: 0.75em;">
                         <span id="typewriter" class="typewrite"></span>
                     </span>
@@ -1115,28 +1118,42 @@
                         <div class="pillar-icon">🌿</div>
                         <div>
                             <div class="pillar-title">Plant Biotechnology</div>
-                            <div class="pillar-desc">Improving crop productivity and resilience through advanced breeding and genomic tools.</div>
+                            <div class="pillar-desc">Enhancing crop productivity and resilience through advanced breeding and genomic tools.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">🐄</div>
+                        <div>
+                            <div class="pillar-title">Animal Biotechnology</div>
+                            <div class="pillar-desc">Improving livestock health, breeding, and productivity using modern bio-techniques.</div>
                         </div>
                     </div>
                     <div class="pillar">
                         <div class="pillar-icon">🩺</div>
                         <div>
                             <div class="pillar-title">Health Biotechnology</div>
-                            <div class="pillar-desc">Diagnosing and treating diseases using bio-innovations and molecular research.</div>
+                            <div class="pillar-desc">Developing bio-innovations for precise disease diagnosis, treatment, and vaccine research.</div>
                         </div>
                     </div>
                     <div class="pillar">
                         <div class="pillar-icon">🏭</div>
                         <div>
-                            <div class="pillar-title">Industrial & Environmental</div>
-                            <div class="pillar-desc">Sustainable manufacturing and green interventions for a cleaner environment.</div>
+                            <div class="pillar-title">Industrial Biotechnology</div>
+                            <div class="pillar-desc">Advancing sustainable manufacturing through specialized bio-processing and fermentation.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">🌍</div>
+                        <div>
+                            <div class="pillar-title">Environmental Biotechnology</div>
+                            <div class="pillar-desc">Green interventions for efficient waste management, bioremediation, and conservation.</div>
                         </div>
                     </div>
                     <div class="pillar">
                         <div class="pillar-icon">🧬</div>
                         <div>
                             <div class="pillar-title">Genomics & Bioinformatics</div>
-                            <div class="pillar-desc">Decoding complex biological data to drive insights in various life science fields.</div>
+                            <div class="pillar-desc">Decoding complex biological data to drive insights across all life science fields.</div>
                         </div>
                     </div>
                     <div class="pillar">
@@ -1147,10 +1164,24 @@
                         </div>
                     </div>
                     <div class="pillar">
+                        <div class="pillar-icon">💎</div>
+                        <div>
+                            <div class="pillar-title">Materials Science & Engineering</div>
+                            <div class="pillar-desc">Engineering advanced materials for industrial applications and technical innovation.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
                         <div class="pillar-icon">🤖</div>
                         <div>
                             <div class="pillar-title">Computational & Intelligent Systems</div>
                             <div class="pillar-desc">Scaling research through AI, data science, and advanced computational modeling.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">⚙️</div>
+                        <div>
+                            <div class="pillar-title">Reverse Engineering</div>
+                            <div class="pillar-desc">Replicating and improving existing technologies for sustainable local adaptation.</div>
                         </div>
                     </div>
                 </div>

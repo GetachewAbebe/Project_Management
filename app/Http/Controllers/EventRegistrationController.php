@@ -43,13 +43,13 @@ class EventRegistrationController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'email.unique' => 'This identity is already associated with an active registration for the 8th Annual Review.',
+            'email.unique' => 'This identity is already associated with an active registration for the 8th National Review.',
             'full_name.required' => 'The Participant Full Identity is mandatory for registry records.',
             'abstract_text.required_without' => 'Please provide the Scientific Abstract to proceed with your submission.',
             'abstract_text.min' => 'The Scientific Abstract must contain at least 50 characters to meet peer-review standards.',
             'abstract_file.required_without' => 'An Abstract Document (PDF/Doc) must be uploaded if the text field is empty.',
             'qualification.required' => 'Highest Academic Qualification is required for scientific classification.',
-            'available_on_date.in' => 'Please confirm your availability for the duration of the Annual Review.',
+            'available_on_date.in' => 'Please confirm your availability for the duration of the National Review.',
             'discovery_source.required' => 'Information regarding how you discovered the event is required for logistical analytics.',
             'inviter_name.required_if' => 'The name of the colleague or official who invited you is required for direct-invite participants.',
         ];
@@ -91,7 +91,7 @@ class EventRegistrationController extends Controller
             ->exists();
 
         if ($exists) {
-            return back()->withErrors(['email' => 'This identity is already associated with an active registration for the 8th Annual Review.'])->withInput();
+            return back()->withErrors(['email' => 'This identity is already associated with an active registration for the 8th National Review.'])->withInput();
         }
 
         // File Storage
