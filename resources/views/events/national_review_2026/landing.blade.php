@@ -457,6 +457,61 @@
 
         .cta-secondary:hover { color: var(--text-main); }
 
+        /* Eye-catching Enquiry Link */
+        .enquiry-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.5rem;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(26, 122, 60, 0.15);
+            border-radius: 100px;
+            color: var(--emerald);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.4s var(--ease);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .enquiry-link:hover {
+            background: white;
+            transform: translateY(-2px);
+            border-color: var(--emerald);
+            box-shadow: 0 15px 35px var(--emerald-glow);
+            color: var(--navy);
+        }
+
+        .enquiry-link::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(90deg, transparent, var(--emerald), transparent);
+            opacity: 0.3;
+            animation: enquiry-pulse 3s linear infinite;
+        }
+
+        @keyframes enquiry-pulse {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .enquiry-icon {
+            width: 32px; height: 32px;
+            background: var(--emerald);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px var(--emerald-glow);
+        }
+
         /* Event Info Cards */
         .hero-right {
             display: flex;
@@ -1078,11 +1133,14 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
                     </a>
-                    <a href="#about" class="cta-secondary">
-                        Learn More
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
+                    
+                    <a href="mailto:nationareview@betin.gov.et" class="enquiry-link">
+                        <div class="enquiry-icon">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        Enquiries: nationareview@betin.gov.et
                     </a>
                 </div>
             </div>
@@ -1288,13 +1346,6 @@
                         </div>
                     </div>
 
-                    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                        <div class="vc-stat-label" style="margin-bottom: 0.5rem; opacity: 0.7;">REGISTRATION ENQUIRIES</div>
-                        <a href="mailto:nationareview@betin.gov.et" class="vc-title" style="font-size: 1rem; text-decoration: none; color: white; display: flex; align-items: center; gap: 0.5rem;">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            nationareview@betin.gov.et
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1319,7 +1370,7 @@
     {{-- ══════════ FOOTER ══════════ --}}
     <footer class="hero-footer">
         <div class="footer-tiny">
-            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved. &bull; For registration enquiries, contact: <a href="mailto:nationareview@betin.gov.et" style="color: inherit; text-decoration: none; font-weight: 600;">nationareview@betin.gov.et</a>
+            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
         </div>
     </footer>
 
