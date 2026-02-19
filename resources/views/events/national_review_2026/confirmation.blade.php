@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Confirmed | 8<sup>th</sup> Annual Review</title>
-    <meta http-equiv="refresh" content="5;url={{ url('/national-review-2026/registration/' . $registration->reference_code) }}">
+
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -148,6 +148,29 @@
             .hero-nav, .hero-footer { padding: 1.5rem 2rem; }
             .nav-title { display: none; }
         }
+
+        @media (max-width: 768px) {
+            .hero-nav { padding: 1.25rem 1.5rem; }
+            .nav-brand { gap: 1rem; }
+            .nav-logo-box { width: 80px; padding: 0.5rem; }
+            .nav-title { display: flex; gap: 1rem; }
+            .nav-title::after { height: 24px; margin: 0; }
+            .nav-title-main { font-size: 0.9rem; white-space: normal; line-height: 1.3; color: white; }
+            .nav-title-sub { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--emerald); }
+
+            .page-content { padding: 2rem 1rem; }
+            .receipt-card { padding: 2rem 1.5rem; }
+            .conf-title { font-size: 1.6rem; }
+            .detail-row { flex-direction: column; gap: 0.25rem; margin-bottom: 1rem; }
+            .detail-label { font-size: 0.65rem; }
+            .detail-value { font-size: 0.9rem; }
+            .btn-portal { width: 100%; text-align: center; padding: 1rem 1.5rem; font-size: 0.75rem; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-title::after { display: none; }
+            .nav-title { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+        }
     </style>
 </head>
 <body>
@@ -174,11 +197,13 @@
                 <h1 class="conf-title">Registration Confirmed</h1>
                 <p class="conf-desc">Thank you, <strong>{{ $registration->full_name }}</strong>. Your registration for the 8<sup>th</sup> Annual Review has been successfully received.</p>
 
-                <div style="background: var(--emerald-light); border: 1px solid rgba(0, 163, 108, 0.2); padding: 1.5rem; border-radius: 20px; margin-bottom: 2.5rem; text-align: left; display: flex; gap: 1rem; align-items: center; animation: slideIn 0.4s var(--ease) both;">
-                    <div style="font-size: 1.5rem;">📧</div>
+                <div style="background: var(--emerald-light); border: 1px solid rgba(0, 163, 108, 0.2); padding: 1.5rem; border-radius: 20px; margin-bottom: 2.5rem; text-align: left; display: flex; gap: 1rem; align-items: flex-start; animation: slideIn 0.4s var(--ease) both;">
+                    <div style="font-size: 1.5rem;">🏗️</div>
                     <div>
-                        <div style="font-weight: 800; color: var(--emerald); font-size: 0.9rem; margin-bottom: 0.1rem;">Confirmation Email Sent</div>
-                        <div style="font-size: 0.85rem; color: var(--navy); opacity: 0.8; font-weight: 500;">Please check your inbox. You can use the secure link in the email to **edit your application** or upload missing documents anytime.</div>
+                        <div style="font-weight: 800; color: var(--emerald); font-size: 0.9rem; margin-bottom: 0.3rem;">You can Edit your application at any time!</div>
+                        <div style="font-size: 0.85rem; color: var(--navy); opacity: 0.8; font-weight: 500; line-height: 1.4;">
+                            We understand you may need to refine your research data or upload documents later. Use the secure link below to access your personal portal and **update your submission** (including Institutional Support Letter and PPT) before the event deadline.
+                        </div>
                     </div>
                 </div>
 
@@ -197,14 +222,13 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Location</span>
-                        <span class="detail-value">Addis Ababa, Ethiopia</span>
+                        <span class="detail-value">Addis Ababa, Ethiopia, ICT Park</span>
                     </div>
                 </div>
             </div>
 
             <div style="text-align: center;">
                 <a href="{{ url('/national-review-2026/registration/' . $registration->reference_code) }}" class="btn-portal">Access Participant Dashboard</a>
-                <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--slate); font-weight: 600;">Redirecting to dashboard in <span id="countdown">5</span> seconds...</div>
             </div>
         </div>
     </main>
@@ -215,14 +239,6 @@
             &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
         </div>
     </footer>
-    <script>
-        let seconds = 5;
-        const countdownEl = document.getElementById('countdown');
-        const interval = setInterval(() => {
-            seconds--;
-            if (countdownEl) countdownEl.textContent = seconds;
-            if (seconds <= 0) clearInterval(interval);
-        }, 1000);
-    </script>
+
 </body>
 </html>

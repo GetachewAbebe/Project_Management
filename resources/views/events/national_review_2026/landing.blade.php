@@ -920,6 +920,33 @@
             }
             .visual-card { padding: 2rem; }
         }
+
+        @media (max-width: 768px) {
+            .hero-nav { padding: 1.25rem 1.5rem; }
+            .nav-brand { gap: 1rem; }
+            .nav-logo-box { width: 80px; padding: 0.5rem; }
+            .nav-title { gap: 1rem; }
+            .nav-title::after { height: 24px; margin: 0; }
+            .nav-title-main { font-size: 0.9rem; white-space: normal; line-height: 1.3; }
+            .nav-title-sub { font-size: 0.7rem; letter-spacing: 0.1em; }
+
+            .hero-body { padding: 4rem 1.5rem; }
+            .hero-title { font-size: 3rem; letter-spacing: -0.04em; margin-bottom: 1.5rem; }
+            .hero-subtitle { font-size: 1rem; margin-bottom: 2.5rem; }
+            .hero-cta-group { flex-direction: column; gap: 1rem; width: 100%; }
+            .cta-primary { width: 100%; justify-content: center; padding: 1rem 2rem; }
+            
+            .info-card { padding: 1.25rem 1.5rem; gap: 1rem; }
+            .stat-row { flex-direction: column; gap: 2rem; }
+            
+            .section { padding: 4rem 1.5rem; }
+            .section-title { font-size: 2.2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-title::after { display: none; }
+            .nav-title { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+        }
     </style>
 </head>
 <body>
@@ -986,7 +1013,7 @@
                     </div>
                     <div>
                         <div class="info-label">Event Date</div>
-                        <div class="info-value">March 11 – 13, 2026 · Addis Ababa</div>
+                        <div class="info-value">March 11 – 13, 2026 · Addis Ababa, ICT Park</div>
                     </div>
                 </div>
 

@@ -248,6 +248,39 @@
 
         .form-nav { margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 2rem; }
         .btn-action { padding: 1.1rem 2.5rem; border-radius: 100px; font-weight: 900; cursor: pointer; transition: all 0.4s var(--ease); border: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.12em; font-family: inherit; }
+
+        /* ── MOBILE RESPONSIVENESS ── */
+        @media (max-width: 1024px) {
+            .register-container { grid-template-columns: 1fr; }
+            .sidebar { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 3rem 2rem; }
+            .form-content { padding: 3rem 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-nav { padding: 1.25rem 1.5rem; }
+            .nav-brand { gap: 1rem; }
+            .nav-logo-box { width: 80px; padding: 0.5rem; }
+            .nav-title { gap: 1rem; }
+            .nav-title::after { height: 24px; margin: 0; }
+            .nav-title-main { font-size: 0.9rem; white-space: normal; line-height: 1.3; }
+            .nav-title-sub { font-size: 0.7rem; letter-spacing: 0.1em; }
+
+            .step-heading { font-size: 1.4rem; }
+            .grid { gap: 1rem; }
+            .col-4, .col-6, .col-8, .col-9 { grid-column: span 12; }
+            
+            .form-content { padding: 2.5rem 1.25rem; }
+            .form-nav { flex-direction: column-reverse; gap: 1rem; }
+            .btn-action { width: 100%; text-align: center; }
+            
+            .step-list { gap: 2rem; }
+            .step-item.completed:not(:last-child)::after { height: calc(2rem + 2px); }
+        }
+
+        @media (max-width: 480px) {
+            .nav-title::after { display: none; }
+            .nav-title { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+        }
         .btn-prev { background: #f1f5f9; color: var(--slate); border: 1.5px solid var(--border); }
         .btn-prev:hover { background: #e2e8f0; color: #0f172a; transform: translateX(-5px); }
         .btn-next { background: var(--navy); color: white; box-shadow: 0 10px 25px rgba(26, 92, 46, 0.3); }
@@ -324,7 +357,7 @@
                         March 11–13, 2026
                         <span style="opacity:0.3;">·</span>
                         <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        Addis Ababa
+                        Addis Ababa, ICT Park
                     </div>
                 </div>
 
