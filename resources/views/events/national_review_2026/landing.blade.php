@@ -644,68 +644,124 @@
             max-width: 600px;
         }
 
-        /* About Grid */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 4rem;
+        /* Redesigned About Section */
+        #about { padding: 8rem 0; overflow: hidden; }
+
+        .about-header {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 0 auto 5rem;
+            text-align: center;
+            padding: 0 2rem;
         }
-@media (min-width: 1100px) {
-    .about-grid { grid-template-columns: 1fr 400px; gap: 6rem; }
-}
+
+        .about-header .section-desc { margin: 1.5rem auto 0; }
+
+        .about-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
         .pillar-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3.5rem;
-        }
-        @media (min-width: 1400px) {
-            .pillar-list { grid-template-columns: repeat(3, 1fr); }
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
         }
 
         .pillar {
+            position: relative;
             display: flex;
-            align-items: flex-start;
-            gap: 1.25rem;
-            padding: 1.25rem;
-            background: white;
-            border-radius: 20px;
-            border: 1.5px solid var(--border);
-            transition: all 0.4s var(--ease);
-            box-shadow: var(--shadow-soft);
+            flex-direction: column;
+            padding: 2.25rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden;
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                0 10px 15px -3px rgba(0, 0, 0, 0.03);
+        }
+
+        .pillar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--pillar-color, var(--emerald)) 0.5px, transparent 0.5px);
+            background-size: 15px 15px;
+            opacity: 0.03;
+            pointer-events: none;
         }
 
         .pillar:hover {
-            border-color: var(--emerald);
-            box-shadow: 0 10px 30px rgba(0, 163, 108, 0.08);
-            transform: translateY(-3px);
+            transform: translateY(-8px) scale(1.02);
+            background: white;
+            border-color: var(--pillar-color, var(--emerald));
+            box-shadow: 
+                0 20px 40px -10px rgba(0, 0, 0, 0.1),
+                0 0 20px -5px var(--pillar-color-light, rgba(0, 163, 108, 0.1));
         }
 
         .pillar-icon {
-            width: 44px; height: 44px;
-            background: var(--emerald-light);
-            border-radius: 12px;
+            width: 56px; height: 56px;
+            background: var(--pillar-color-light, var(--emerald-light));
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--emerald);
-            flex-shrink: 0;
+            font-size: 1.5rem;
+            color: var(--pillar-color, var(--emerald));
+            margin-bottom: 1.75rem;
+            transition: transform 0.3s ease;
         }
 
+        .pillar:hover .pillar-icon { transform: rotate(10deg) scale(1.1); }
+
         .pillar-title {
-            font-weight: 800;
+            font-weight: 850;
             color: var(--navy);
-            font-size: 0.95rem;
-            margin-bottom: 0.3rem;
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pillar-title::after {
+            content: 'HUB';
+            font-size: 0.55rem;
+            padding: 2px 6px;
+            background: var(--pillar-color-light, var(--emerald-light));
+            border-radius: 4px;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
         }
 
         .pillar-desc {
-            font-size: 0.85rem;
-            color: #64748b;
-            line-height: 1.6;
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.7;
+            font-weight: 450;
+        }
+
+        /* Scientific Color Themes */
+        .pillar-bio { --pillar-color: #10b981; --pillar-color-light: #ecfdf5; }
+        .pillar-health { --pillar-color: #0ea5e9; --pillar-color-light: #f0f9ff; }
+        .pillar-tech { --pillar-color: #6366f1; --pillar-color-light: #eef2ff; }
+        .pillar-engineering { --pillar-color: #f59e0b; --pillar-color-light: #fffbeb; }
+        .pillar-env { --pillar-color: #84cc16; --pillar-color-light: #f7fee7; }
+
+        /* Visual Cardio Section */
+        .visual-section {
+            padding: 6rem 2rem;
+            background: #f8fafc;
+            position: relative;
+        }
+
+        .visual-container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* Visual card */
@@ -1105,88 +1161,93 @@
 
     {{-- ══════════ ABOUT ══════════ --}}
     <section class="section" id="about">
-        <div class="about-grid">
-            <div class="about-content">
-                <div class="section-tag">Institute Directorates</div>
-                <h2 class="section-title">Driving Innovation through <span class="em">Advanced Research</span></h2>
-                <p class="section-desc">
-                    The Research Directorates at BETin represent the specialized centers of excellence dedicated to solving Ethiopia's most critical challenges through biotechnology and emerging sciences.
-                </p>
+        <div class="about-header">
+            <div class="section-tag">Institute Directorates</div>
+            <h2 class="section-title">Driving Innovation through <span class="em">Advanced Research</span></h2>
+            <p class="section-desc">
+                The Research Directorates at BETin represent specialized centers of excellence dedicated to solving Ethiopia's most critical challenges through biotechnology and emerging sciences.
+            </p>
+        </div>
 
-                <div class="pillar-list">
-                    <div class="pillar">
-                        <div class="pillar-icon">🌿</div>
-                        <div>
-                            <div class="pillar-title">Plant Biotechnology</div>
-                            <div class="pillar-desc">Enhancing crop productivity and resilience through advanced breeding and genomic tools.</div>
-                        </div>
+        <div class="about-grid">
+            <div class="pillar-list">
+                <div class="pillar pillar-bio">
+                    <div class="pillar-icon">🌿</div>
+                    <div>
+                        <div class="pillar-title">Plant Biotechnology</div>
+                        <div class="pillar-desc">Enhancing crop productivity and resilience through advanced breeding and genomic tools for food security.</div>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">🐄</div>
-                        <div>
-                            <div class="pillar-title">Animal Biotechnology</div>
-                            <div class="pillar-desc">Improving livestock health, breeding, and productivity using modern bio-techniques.</div>
-                        </div>
+                </div>
+                <div class="pillar pillar-bio">
+                    <div class="pillar-icon">🐄</div>
+                    <div>
+                        <div class="pillar-title">Animal Biotechnology</div>
+                        <div class="pillar-desc">Improving livestock health, breeding, and productivity using modern bio-techniques and genetic mapping.</div>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">🩺</div>
-                        <div>
-                            <div class="pillar-title">Health Biotechnology</div>
-                            <div class="pillar-desc">Developing bio-innovations for precise disease diagnosis, treatment, and vaccine research.</div>
-                        </div>
+                </div>
+                <div class="pillar pillar-health">
+                    <div class="pillar-icon">🩺</div>
+                    <div>
+                        <div class="pillar-title">Health Biotechnology</div>
+                        <div class="pillar-desc">Developing bio-innovations for precise disease diagnosis, treatment, and pioneering vaccine research.</div>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">🏭</div>
-                        <div>
-                            <div class="pillar-title">Industrial Biotechnology</div>
-                            <div class="pillar-desc">Advancing sustainable manufacturing through specialized bio-processing and fermentation.</div>
-                        </div>
+                </div>
+                <div class="pillar pillar-bio">
+                    <div class="pillar-icon">🏭</div>
+                    <div>
+                        <div class="pillar-title">Industrial Biotechnology</div>
+                        <div class="pillar-desc">Advancing sustainable manufacturing through specialized bio-processing, fermentation, and enzyme tech.</div>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">🌍</div>
-                        <div>
-                            <div class="pillar-title">Environmental Biotechnology</div>
-                            <div class="pillar-desc">Green interventions for efficient waste management, bioremediation, and conservation.</div>
-                        </div>
+                </div>
+                <div class="pillar pillar-env">
+                    <div class="pillar-icon">🌍</div>
+                    <div>
+                        <div class="pillar-title">Environmental Biotechnology</div>
+                        <div class="pillar-desc">Green interventions for efficient waste management, bioremediation, and natural resource conservation.</div>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">🧬</div>
-                        <div>
-                            <div class="pillar-title">Genomics & Bioinformatics</div>
-                            <div class="pillar-desc">Decoding complex biological data to drive insights across all life science fields.</div>
-                        </div>
+                </div>
+                <div class="pillar pillar-tech">
+                    <div class="pillar-icon">🧬</div>
+                    <div>
+                        <div class="pillar-title">Genomics & Bioinformatics</div>
+                        <div class="pillar-desc">Decoding complex biological data to drive insights across all life science fields via high-throughput sequencing.</div>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">🔬</div>
-                        <div>
-                            <div class="pillar-title">Nanotechnology Research</div>
-                            <div class="pillar-desc">Advancing materials and devices at the molecular scale for diverse tech applications.</div>
-                        </div>
+                </div>
+                <div class="pillar pillar-tech">
+                    <div class="pillar-icon">🔬</div>
+                    <div>
+                        <div class="pillar-title">Nanotechnology Research</div>
+                        <div class="pillar-desc">Advancing materials and devices at the molecular scale for medicine, energy, and electronics.</div>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">💎</div>
-                        <div>
-                            <div class="pillar-title">Materials Science & Engineering</div>
-                            <div class="pillar-desc">Engineering advanced materials for industrial applications and technical innovation.</div>
-                        </div>
+                </div>
+                <div class="pillar pillar-engineering">
+                    <div class="pillar-icon">💎</div>
+                    <div>
+                        <div class="pillar-title">Materials Science & Engineering</div>
+                        <div class="pillar-desc">Engineering advanced materials for industrial applications, structural integrity, and technical innovation.</div>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">🤖</div>
-                        <div>
-                            <div class="pillar-title">Computational & Intelligent Systems</div>
-                            <div class="pillar-desc">Scaling research through AI, data science, and advanced computational modeling.</div>
-                        </div>
+                </div>
+                <div class="pillar pillar-tech">
+                    <div class="pillar-icon">🤖</div>
+                    <div>
+                        <div class="pillar-title">Computational & Intelligent Systems</div>
+                        <div class="pillar-desc">Scaling research through AI, data science, and advanced computational modeling for predictive analysis.</div>
                     </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">⚙️</div>
-                        <div>
-                            <div class="pillar-title">Reverse Engineering</div>
-                            <div class="pillar-desc">Replicating and improving existing technologies for sustainable local adaptation.</div>
-                        </div>
+                </div>
+                <div class="pillar pillar-engineering">
+                    <div class="pillar-icon">⚙️</div>
+                    <div>
+                        <div class="pillar-title">Reverse Engineering</div>
+                        <div class="pillar-desc">Replicating and improving existing technologies for sustainable local adaptation and self-reliance.</div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
+    {{-- ══════════ VISUAL STATUS ══════════ --}}
+    <section class="visual-section">
+        <div class="visual-container">
             <div class="visual-card">
                 <div class="visual-card-content">
                     <div class="vc-label">Event Status</div>
