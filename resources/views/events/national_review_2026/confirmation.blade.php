@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Confirmed | 8<sup>th</sup> Annual Review</title>
+    <title>Registration Confirmed | 8<sup>th</sup> National Review</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -182,7 +182,7 @@
             </div>
             <div class="nav-title">
                 <div class="nav-title-main">Bio and Emerging Technology Institute</div>
-                <div class="nav-title-sub">Annual Review 2026</div>
+                <div class="nav-title-sub">National Review 2026</div>
             </div>
         </div>
     </nav>
@@ -195,7 +195,7 @@
                 </div>
 
                 <h1 class="conf-title">Registration Confirmed</h1>
-                <p class="conf-desc">Thank you, <strong>{{ $registration->full_name }}</strong>. Your registration for the 8<sup>th</sup> Annual Review has been successfully received.</p>
+                <p class="conf-desc">Thank you, <strong>{{ $registration->full_name }}</strong>. Your registration for the 8<sup>th</sup> National Review has been successfully received.</p>
 
                 <div style="background: var(--emerald-light); border: 1px solid rgba(0, 163, 108, 0.2); padding: 1.5rem; border-radius: 20px; margin-bottom: 2.5rem; text-align: left; display: flex; gap: 1rem; align-items: flex-start; animation: slideIn 0.4s var(--ease) both;">
                     <div style="font-size: 1.5rem;">🏗️</div>
@@ -210,7 +210,7 @@
                 <div class="details-grid">
                     <div class="detail-row">
                         <span class="detail-label">Event Focus</span>
-                        <span class="detail-value">8<sup>th</sup> Annual Review</span>
+                        <span class="detail-value">8<sup>th</sup> National Review</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Schedule</span>

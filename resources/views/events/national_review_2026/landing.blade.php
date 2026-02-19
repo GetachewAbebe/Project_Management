@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8<sup>th</sup> Annual Review 2026 | Bio and Emerging Technology Institute</title>
-    <meta name="description" content="Join the 8th BETIn Annual Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
+    <title>8<sup>th</sup> National Review 2026 | Bio and Emerging Technology Institute</title>
+    <meta name="description" content="Join the 8th BETIn National Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -647,27 +647,32 @@
         /* About Grid */
         .about-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+@media (min-width: 1100px) {
+    .about-grid { grid-template-columns: 1fr 400px; gap: 6rem; }
+}
 
         .pillar-list {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
-            margin-top: 3rem;
+            margin-top: 3.5rem;
         }
 
         .pillar {
             display: flex;
             align-items: flex-start;
             gap: 1.25rem;
-            padding: 1.5rem;
+            padding: 1.25rem;
             background: white;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            transition: all 0.3s var(--ease);
+            border-radius: 20px;
+            border: 1.5px solid var(--border);
+            transition: all 0.4s var(--ease);
+            box-shadow: var(--shadow-soft);
         }
 
         .pillar:hover {
@@ -969,16 +974,16 @@
                 </div>
                 <div class="nav-title">
                     <div class="nav-title-main">Bio and Emerging Technology Institute</div>
-                    <div class="nav-title-sub">Annual Review 2026</div>
+                    <div class="nav-title-sub">National Review 2026</div>
                 </div>
             </div>
         </nav>
 
         <div class="hero-body">
             <div class="hero-left">
-                <div class="hero-edition">8<sup>th</sup> Annual Review</div>
+                <div class="hero-edition">8<sup>th</sup> National Review</div>
                 <h1 class="hero-title">
-                    Annual Review on<br>
+                    National Review on<br>
                     <span class="typewriter-container" style="color: var(--emerald); display: block; margin-top: 0.5rem; font-size: 0.75em;">
                         <span id="typewriter" class="typewrite"></span>
                     </span>
@@ -1099,32 +1104,53 @@
     <section class="section" id="about">
         <div class="about-grid">
             <div class="about-content">
-                <div class="section-tag">About the Review</div>
-                <h2 class="section-title">The Frontier of <span class="em">Ethiopian Science</span></h2>
+                <div class="section-tag">Institute Directorates</div>
+                <h2 class="section-title">Driving Innovation through <span class="em">Advanced Research</span></h2>
                 <p class="section-desc">
-                    The 8<sup>th</sup> Annual Review brings together the brightest minds in biotechnology and emerging sciences to share breakthroughs that address Ethiopia's most pressing challenges.
+                    The Research Directorates at BETin represent the specialized centers of excellence dedicated to solving Ethiopia's most critical challenges through biotechnology and emerging sciences.
                 </p>
 
                 <div class="pillar-list">
                     <div class="pillar">
+                        <div class="pillar-icon">🌿</div>
+                        <div>
+                            <div class="pillar-title">Plant Biotechnology</div>
+                            <div class="pillar-desc">Improving crop productivity and resilience through advanced breeding and genomic tools.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">🩺</div>
+                        <div>
+                            <div class="pillar-title">Health Biotechnology</div>
+                            <div class="pillar-desc">Diagnosing and treating diseases using bio-innovations and molecular research.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">🏭</div>
+                        <div>
+                            <div class="pillar-title">Industrial & Environmental</div>
+                            <div class="pillar-desc">Sustainable manufacturing and green interventions for a cleaner environment.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
                         <div class="pillar-icon">🧬</div>
                         <div>
-                            <div class="pillar-title">Biotechnology Breakthroughs</div>
-                            <div class="pillar-desc">Advancing agricultural, health, and industrial bio-tech applications.</div>
+                            <div class="pillar-title">Genomics & Bioinformatics</div>
+                            <div class="pillar-desc">Decoding complex biological data to drive insights in various life science fields.</div>
+                        </div>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">🔬</div>
+                        <div>
+                            <div class="pillar-title">Nanotechnology Research</div>
+                            <div class="pillar-desc">Advancing materials and devices at the molecular scale for diverse tech applications.</div>
                         </div>
                     </div>
                     <div class="pillar">
                         <div class="pillar-icon">🤖</div>
                         <div>
-                            <div class="pillar-title">Emerging Technologies</div>
-                            <div class="pillar-desc">Exploring AI, nanotechnology, and robotics in the local context.</div>
-                        </div>
-                    </div>
-                    <div class="pillar">
-                        <div class="pillar-icon">🌍</div>
-                        <div>
-                            <div class="pillar-title">Strategic Impact</div>
-                            <div class="pillar-desc">Translating high-level research into sustainable economic impacts.</div>
+                            <div class="pillar-title">Computational & Intelligent Systems</div>
+                            <div class="pillar-desc">Scaling research through AI, data science, and advanced computational modeling.</div>
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Annual Review Registry 2026 | Bio and Emerging Technology Institute</title>
+    <title>National Review Registry 2026 | Bio and Emerging Technology Institute</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -336,7 +336,7 @@
             </div>
             <div class="nav-title">
                 <div class="nav-title-main">Bio and Emerging Technology Institute</div>
-                <div class="nav-title-sub">Annual Review 2026</div>
+                <div class="nav-title-sub">National Review 2026</div>
             </div>
         </div>
     </nav>
@@ -500,7 +500,7 @@
                                 @error('expertise')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
-                                <label>Have you attended previous Annual Reviews?</label>
+                                <label>Have you attended previous National Reviews?</label>
                                 <select name="previous_attendance" required class="@error('previous_attendance') is-invalid @enderror">
                                     <option value="" disabled {{ old('previous_attendance') ? '' : 'selected' }}>Select response</option>
                                     <option value="First Time" {{ old('previous_attendance') == 'First Time' ? 'selected' : '' }}>No, this is my first time</option>

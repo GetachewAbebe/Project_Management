@@ -28,7 +28,7 @@ class RegistrationConfirmed extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Registration Confirmed: 8th Annual Review (BETin)',
+            subject: 'Registration Confirmed: National Review 2026 (BETin)',
         );
     }
 
