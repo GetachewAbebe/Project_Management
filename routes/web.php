@@ -57,10 +57,10 @@ require __DIR__.'/auth.php';
 
 use App\Http\Controllers\EventRegistrationController;
 
-// National Review 2026 - bare path (no trailing slash) for cPanel/Apache compatibility
+// National Research Review 2026 - bare path (no trailing slash) for cPanel/Apache compatibility
 Route::get('/national-review-2026', [EventRegistrationController::class, 'landing']);
 
-// National Review 2026 - Isolated Registration Module
+// National Research Review 2026 - Isolated Registration Module
 Route::prefix('national-review-2026')->group(function () {
     // Landing Page (with trailing slash)
     Route::get('/', [EventRegistrationController::class, 'landing'])->name('event.landing');

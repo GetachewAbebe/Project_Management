@@ -31,20 +31,20 @@
     <div class="wrapper">
         <div class="container">
             <div class="header">
-                <div class="logo">BETin <span style="color: #00a36c;">National Review</span></div>
+                <div class="logo">BETin <span style="color: #00a36c;">National Research Review</span></div>
                 <div class="status-badge">Official Confirmation</div>
             </div>
             
             <div class="content">
                 <h1 class="title">Registration Confirmed</h1>
-                <p class="text">Dear {{ $registration->full_name }},<br><br>Your registration for the 8<sup>th</sup> National Review has been successfully processed. We are excited to have you join our premier scientific event.</p>
+                <p class="text">Dear {{ $registration->full_name }},<br><br>Your registration for the 8<sup>th</sup> National Research Review has been successfully processed. We are excited to have you join our premier scientific event.</p>
                 
                 
                 
                 <table class="details-table">
                     <tr>
                         <td class="label">Event</td>
-                        <td class="value">8<sup>th</sup> National Review 2026</td>
+                        <td class="value">8<sup>th</sup> National Research Review 2026</td>
                     </tr>
                     <tr>
                         <td class="label">Duration</td>

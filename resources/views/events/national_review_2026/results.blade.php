@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', '8<sup>th</sup> National Review | Production Registry')
-@section('header_title', '8<sup>th</sup> National Review')
+@section('title', '8<sup>th</sup> National Research Review | Production Registry')
+@section('header_title', '8<sup>th</sup> National Research Review')
 
 @section('content')
 <div style="max-width: 1600px; margin: 0 auto; padding-bottom: 5rem; animation: fadeIn 0.8s ease-out;">
@@ -14,9 +14,9 @@
                 <span style="font-size: 0.75rem; font-weight: 900; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 0.15em;">Strategic Registry LIVE</span>
             </div>
             <h2 style="font-size: 3rem; font-weight: 950; color: var(--brand-blue); letter-spacing: -0.06em; margin: 0; line-height: 1;">
-                8<sup>th</sup> Annual <span style="color: var(--brand-green);">Review</span>
+                8<sup>th</sup> Annual <span style="color: var(--brand-green);">Research Review</span>
             </h2>
-            <p style="color: #64748b; font-weight: 600; font-size: 1.1rem; margin-top: 0.75rem;">March 11 - 13, 2026 | Official Participant Intelligence</p>
+            <p style="color: #64748b; font-weight: 600; font-size: 1.1rem; margin-top: 0.75rem;">March 11 - 13, 2026 | Official Participant Intelligence for National Research Review</p>
         </div>
 
         <div style="display: flex; gap: 1rem;">

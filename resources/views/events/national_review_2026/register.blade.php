@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>National Review Registry 2026 | Bio and Emerging Technology Institute</title>
+    <title>National Research Review Registry 2026 | Bio and Emerging Technology Institute</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -336,7 +336,7 @@
             </div>
             <div class="nav-title">
                 <div class="nav-title-main">Bio and Emerging Technology Institute</div>
-                <div class="nav-title-sub">National Review 2026</div>
+                <div class="nav-title-sub">National Research Review 2026</div>
             </div>
         </div>
     </nav>
@@ -350,7 +350,7 @@
 
                     <div style="display: inline-block; background: var(--emerald); color: white; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1.25rem;">BETin</div>
                     <h2 style="font-size: 2.6rem; font-weight: 900; line-height: 1; letter-spacing: -0.04em; margin-bottom: 1rem;">
-                        8<sup>th</sup> Annual<br><span style="color: var(--emerald);">Review</span>
+                        8<sup>th</sup> Annual<br><span style="color: var(--emerald);">Research Review</span>
                     </h2>
                     <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 600;">
                         <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -500,7 +500,7 @@
                                 @error('expertise')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>
                             <div class="field col-12">
-                                <label>Have you attended previous National Reviews?</label>
+                                <label>Have you attended previous National Research Reviews?</label>
                                 <select name="previous_attendance" required class="@error('previous_attendance') is-invalid @enderror">
                                     <option value="" disabled {{ old('previous_attendance') ? '' : 'selected' }}>Select response</option>
                                     <option value="First Time" {{ old('previous_attendance') == 'First Time' ? 'selected' : '' }}>No, this is my first time</option>
@@ -562,8 +562,8 @@
                                     <option value="Nanotechnology" {{ old('thematic_area') == 'Nanotechnology' ? 'selected' : '' }}>Nanotechnology</option>
                                     <option value="Materials Science & Engineering" {{ old('thematic_area') == 'Materials Science & Engineering' ? 'selected' : '' }}>Materials Science & Engineering</option>
                                     <option value="Reverse Engineering" {{ old('thematic_area') == 'Reverse Engineering' ? 'selected' : '' }}>Reverse Engineering</option>
-                                    <option value="Computational Science" {{ old('thematic_area') == 'Computational Science' ? 'selected' : '' }}>Computational Science</option>
-                                    <option value="Genomics & Bioinformatics" {{ old('thematic_area') == 'Genomics & Bioinformatics' ? 'selected' : '' }}>Genomics & Bioinformatics</option>
+                                    <option value="Computational Science and Intelligent Systems" {{ old('thematic_area') == 'Computational Science and Intelligent Systems' ? 'selected' : '' }}>Computational Science and Intelligent Systems</option>
+                                    <option value="Bioinformatics and Genomics" {{ old('thematic_area') == 'Bioinformatics and Genomics' ? 'selected' : '' }}>Bioinformatics and Genomics</option>
                                 </select>
                                 @error('thematic_area')<div class="error-msg"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm.5 13.5h-1v-4h1v4zm0-5.5h-1V8h1v2z"/></svg>{{ $message }}</div>@enderror
                             </div>

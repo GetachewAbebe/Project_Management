@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8<sup>th</sup> National Review 2026 | Bio and Emerging Technology Institute</title>
-    <meta name="description" content="Join the 8th BETIn National Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
+    <title>8<sup>th</sup> National Research Review 2026 | Bio and Emerging Technology Institute</title>
+    <meta name="description" content="Join the 8th BETIn National Research Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -201,7 +201,7 @@
             white-space: nowrap;
         }
 
-        /* National Review 2026 */
+        /* National Research Review 2026 */
         .nav-title-sub {
             order: 2;
             font-size: 1.1rem; /* SCALED UP */
@@ -1052,16 +1052,16 @@
                 </div>
                 <div class="nav-title">
                     <div class="nav-title-main">Bio and Emerging Technology Institute</div>
-                    <div class="nav-title-sub">National Review 2026</div>
+                    <div class="nav-title-sub">National Research Review 2026</div>
                 </div>
             </div>
         </nav>
 
         <div class="hero-body">
             <div class="hero-left">
-                <div class="hero-edition">8<sup>th</sup> National Review</div>
+                <div class="hero-edition">8<sup>th</sup> National Research Review</div>
                 <h1 class="hero-title">
-                    BETin National Review on<br>
+                    BETin National Research Review on<br>
                     <span class="typewriter-container" style="color: var(--emerald); display: block; margin-top: 0.5rem; font-size: 0.75em;">
                         <span id="typewriter" class="typewrite"></span>
                     </span>
@@ -1181,10 +1181,10 @@
     {{-- ══════════ ABOUT ══════════ --}}
     <section class="section" id="about">
         <div class="about-header">
-            <div class="section-tag">National Review Thematic Areas</div>
+            <div class="section-tag">National Research Review Thematic Areas</div>
             <h2 class="section-title">Driving Innovation through <span class="em">Advanced Research</span></h2>
             <p class="section-desc">
-                The Thematic Areas of the National Review represent specialized focuses of excellence dedicated to solving Ethiopia's most critical challenges through biotechnology and emerging sciences.
+                The Thematic Areas of the National Research Review represent specialized focuses of excellence dedicated to solving Ethiopia's most critical challenges through biotechnology and emerging sciences.
             </p>
         </div>
 
@@ -1231,7 +1231,7 @@
                 <div class="pillar pillar-tech">
                     <div class="pillar-icon">🧬</div>
                     <div>
-                        <div class="pillar-title">Genomics & Bioinformatics</div>
+                        <div class="pillar-title">Bioinformatics and Genomics</div>
                         <div class="pillar-desc">Decoding complex biological data to drive insights across all life science fields via high-throughput sequencing.</div>
                     </div>
                 </div>
@@ -1252,7 +1252,7 @@
                 <div class="pillar pillar-tech">
                     <div class="pillar-icon">🤖</div>
                     <div>
-                        <div class="pillar-title">Computational & Intelligent Systems</div>
+                        <div class="pillar-title">Computational Science and Intelligent Systems</div>
                         <div class="pillar-desc">Scaling research through AI, data science, and advanced computational modeling for predictive analysis.</div>
                     </div>
                 </div>
@@ -1319,7 +1319,7 @@
     {{-- ══════════ FOOTER ══════════ --}}
     <footer class="hero-footer">
         <div class="footer-tiny">
-            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved. &bull; <a href="mailto:nationareview@betin.gov.et" style="color: inherit; text-decoration: none;">nationareview@betin.gov.et</a>
+            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved. &bull; For registration enquiries, contact: <a href="mailto:nationareview@betin.gov.et" style="color: inherit; text-decoration: none; font-weight: 600;">nationareview@betin.gov.et</a>
         </div>
     </footer>
 
@@ -1377,8 +1377,8 @@
                 "Nanotechnology",
                 "Materials Science & Engineering",
                 "Reverse Engineering",
-                "Computational Science",
-                "Genomics & Bioinformatics"
+                "Computational Science and Intelligent Systems",
+                "Bioinformatics and Genomics"
             ];
             for (var i=0; i<elements.length; i++) {
                 new TxtType(elements[i], toRotate, 2500);

@@ -326,7 +326,7 @@
                 <span style="height: 20px; width: 1.5px; background: rgba(255,255,255,0.1); box-shadow: 0 0 10px rgba(255,255,255,0.05);"></span>
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
                     <div style="width: 8px; height: 8px; background: var(--brand-green); border-radius: 50%; box-shadow: 0 0 15px var(--brand-green); animation: pulse 2s infinite;"></div>
-                    <span style="font-weight: 600; color: var(--brand-green); font-size: 0.9em; letter-spacing: 0.02em; text-shadow: 0 0 20px rgba(0, 139, 75, 0.3);">BETin National Review System</span>
+                    <span style="font-weight: 600; color: var(--brand-green); font-size: 0.9em; letter-spacing: 0.02em; text-shadow: 0 0 20px rgba(0, 139, 75, 0.3);">BETin National Research Review System</span>
                 </div>
             </h1>
         </div>
@@ -420,7 +420,7 @@
                     <div style="width: 40px; height: 40px; background: {{ (request()->routeIs('event.landing') || request()->is('national-review-2026')) && !request()->routeIs('event.results') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.08)' }}; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
                         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     </div>
-                    <span style="flex: 1;">National Review 2026</span>
+                    <span style="flex: 1;">National Research Review 2026</span>
                     <div style="background: rgba(0, 163, 108, 0.2); color: #00a36c; padding: 0.2rem 0.5rem; border-radius: 5px; font-size: 0.65rem; font-weight: 900; border: 1px solid rgba(0, 163, 108, 0.3);">LIVE</div>
                 </a>
 

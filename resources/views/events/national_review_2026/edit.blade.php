@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Scientific Profile | 8<sup>th</sup> National Review</title>
+    <title>Update Scientific Profile | 8<sup>th</sup> National Research Review</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -167,7 +167,7 @@
             @endif
 
             <p style="color: var(--slate); margin-bottom: 3rem; font-size: 1rem; font-weight: 500;">
-                Hello <strong>{{ $registration->full_name }}</strong>, you can use this portal to upload or replace your official documents for the 8<sup>th</sup> National Review.
+                Hello <strong>{{ $registration->full_name }}</strong>, you can use this portal to upload or replace your official documents for the 8<sup>th</sup> National Research Review.
             </p>
 
             <form action="{{ url('/national-review-2026/registration/' . $registration->reference_code) }}" method="POST" enctype="multipart/form-data">
