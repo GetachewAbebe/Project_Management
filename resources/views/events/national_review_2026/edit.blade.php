@@ -43,26 +43,48 @@
 
         .header-box {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            text-align: center;
+            gap: 1.25rem;
+            margin-bottom: 4rem;
         }
 
         .logo-wrapper {
             background: white;
-            padding: 0.75rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 31, 49, 0.08);
-            width: 80px;
+            padding: 1rem;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0, 31, 49, 0.12);
+            width: 100px;
             border: 1px solid var(--border);
+            transition: transform 0.4s var(--ease);
+        }
+
+        .logo-wrapper:hover {
+            transform: translateY(-5px) scale(1.05);
         }
 
         .edit-card {
             background: white;
             padding: 4rem;
-            border-radius: 32px;
+            border-radius: 40px;
             box-shadow: var(--shadow-deep);
             border: 1px solid var(--border);
+            border-top: 6px solid var(--emerald);
+            border-bottom: 4px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .edit-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.5;
         }
 
         .alert-success {
@@ -133,8 +155,9 @@
                 <x-logo width="100%" height="auto" />
             </div>
             <div>
-                <div style="font-size: 0.7rem; font-weight: 900; color: var(--slate); text-transform: uppercase; letter-spacing: 0.1em;">Secure Update Portal</div>
-                <h2 style="font-size: 1.5rem; font-weight: 900;">Complete Your Submission</h2>
+                <div style="font-size: 0.75rem; font-weight: 950; color: var(--gold); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 0.5rem;">Systems Genesis</div>
+                <h2 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1.1;">Participant <span style="color: var(--emerald);">Dashboard</span></h2>
+                <div style="width: 40px; height: 3px; background: var(--emerald); margin: 1.5rem auto 0; border-radius: 100px; opacity: 0.5;"></div>
             </div>
         </header>
 
