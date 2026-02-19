@@ -386,11 +386,12 @@
         }
 
         .typewriter-container {
-            display: inline-block; /* SEAMLESS INLINE */
+            display: block; /* Consistent block display */
             color: var(--emerald);
-            margin-left: 0.35rem;
-            font-size: 0.9em; /* Balanced for inline flow */
-            vertical-align: bottom;
+            margin-top: 0.5rem;
+            font-size: 0.75em;
+            min-height: 1.5em; /* RESERVES SPACE: Prevents jumping! */
+            line-height: 1.5;
         }
 
         .typewrite > .wrap {
@@ -1143,7 +1144,7 @@
                 <div class="hero-edition">8<sup>th</sup> National Research Review</div>
                 <h1 class="hero-title">
                     BETin National Research Review on<br>
-                    <span class="typewriter-container" style="color: var(--emerald); display: block; margin-top: 0.5rem; font-size: 0.75em;">
+                    <span class="typewriter-container">
                         <span id="typewriter" class="typewrite"></span>
                     </span>
                 </h1>
