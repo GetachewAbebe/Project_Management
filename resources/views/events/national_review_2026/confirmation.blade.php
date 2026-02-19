@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Confirmed | 8<sup>th</sup> Annual Review</title>
-    <meta http-equiv="refresh" content="5;url={{ route('event.registration.show', $registration->reference_code) }}">
+    <meta http-equiv="refresh" content="5;url={{ url('/national-review-2026/registration/' . $registration->reference_code) }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -203,7 +203,7 @@
             </div>
 
             <div style="text-align: center;">
-                <a href="{{ route('event.registration.show', $registration->reference_code) }}" class="btn-portal">Access Participant Dashboard</a>
+                <a href="{{ url('/national-review-2026/registration/' . $registration->reference_code) }}" class="btn-portal">Access Participant Dashboard</a>
                 <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--slate); font-weight: 600;">Redirecting to dashboard in <span id="countdown">5</span> seconds...</div>
             </div>
         </div>

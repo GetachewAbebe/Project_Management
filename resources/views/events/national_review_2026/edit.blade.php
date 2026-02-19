@@ -150,7 +150,7 @@
                 Hello <strong>{{ $registration->full_name }}</strong>, you can use this portal to upload or replace your official documents for the 8<sup>th</sup> Annual Review.
             </p>
 
-            <form action="{{ route('event.registration.update', $registration->reference_code) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('/national-review-2026/registration/' . $registration->reference_code) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -195,7 +195,7 @@
         </div>
 
         <div style="text-align: center; margin-top: 2rem;">
-            <a href="{{ route('event.registration.show', $registration->reference_code) }}" style="color: var(--slate); text-decoration: none; font-weight: 700; font-size: 0.85rem;">← Back to Profile</a>
+            <a href="{{ url('/national-review-2026/registration/' . $registration->reference_code) }}" style="color: var(--slate); text-decoration: none; font-weight: 700; font-size: 0.85rem;">← Back to Profile</a>
         </div>
     </div>
 

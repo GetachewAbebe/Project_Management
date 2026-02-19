@@ -241,7 +241,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 3rem;">
-                <a href="{{ route('event.registration.edit', $registration->reference_code) }}" class="btn-edit">
+                <a href="{{ url('/national-review-2026/registration/' . $registration->reference_code . '/edit') }}" class="btn-edit">
                     <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                     Update My Documents
                 </a>
@@ -249,7 +249,7 @@
         </div>
 
         <div style="text-align: center;">
-            <a href="{{ route('event.landing') }}" style="color: var(--slate); text-decoration: none; font-weight: 700; font-size: 0.85rem;">← Back to Event Portal</a>
+            <a href="{{ url('/national-review-2026') }}" style="color: var(--slate); text-decoration: none; font-weight: 700; font-size: 0.85rem;">← Back to Event Portal</a>
         </div>
     </div>
 </body>
