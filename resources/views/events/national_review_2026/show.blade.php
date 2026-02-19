@@ -41,11 +41,9 @@
 
         .header-box {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
-            gap: 1.25rem;
-            margin-bottom: 4rem;
+            gap: 2rem;
+            margin-bottom: 3.5rem;
         }
 
         .logo-wrapper {
@@ -172,8 +170,7 @@
                 <x-logo width="100%" height="auto" />
             </div>
             <div>
-                <h2 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1.1;">Participant <span style="color: var(--emerald);">Dashboard</span></h2>
-                <div style="width: 40px; height: 3px; background: var(--emerald); margin: 1.5rem auto 0; border-radius: 100px; opacity: 0.5;"></div>
+                <h2 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1.1;">Participant <span style="color: var(--emerald);">Dashboard</span></h2>
             </div>
         </header>
 
