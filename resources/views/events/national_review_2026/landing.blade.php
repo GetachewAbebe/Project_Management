@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8<sup>th</sup> National Research Review 2026 | Bio and Emerging Technology Institute</title>
+    <title>8th National Research Review 2026 | Bio and Emerging Technology Institute</title>
     <meta name="description" content="Join the 8th BETIn National Research Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>

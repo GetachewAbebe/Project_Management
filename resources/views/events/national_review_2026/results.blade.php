@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', '8<sup>th</sup> National Research Review | Production Registry')
-@section('header_title', '8<sup>th</sup> National Research Review')
+@section('title', '8th National Research Review | Production Registry')
+@section('header_title', '8th National Research Review')
 
 @section('content')
 <div style="max-width: 1600px; margin: 0 auto; padding-bottom: 5rem; animation: fadeIn 0.8s ease-out;">
