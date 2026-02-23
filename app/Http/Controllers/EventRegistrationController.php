@@ -150,18 +150,38 @@ class EventRegistrationController extends Controller
      */
     public function dashboard()
     {
-        $total      = ReviewRegistration::count();
-        $today      = ReviewRegistration::whereDate('created_at', now()->toDateString())->count();
-        $thisWeek   = ReviewRegistration::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
-        $thisMonth  = ReviewRegistration::whereMonth('created_at', now()->month)->count();
+        $query = ReviewRegistration::query();
 
-        $male       = ReviewRegistration::where('gender', 'Male')->count();
-        $female     = ReviewRegistration::where('gender', 'Female')->count();
-        $pending    = ReviewRegistration::where('status', 'pending')->count();
-        $confirmed  = ReviewRegistration::where('status', 'confirmed')->count();
+        // Apply dynamic filters
+        if (request()->filled('status') && request('status') !== 'all') {
+            $query->where('status', request('status'));
+        }
+
+        if (request()->filled('thematic_area') && request('thematic_area') !== 'all') {
+            $query->where('thematic_area', request('thematic_area'));
+        }
+
+        if (request()->filled('date_from')) {
+            $query->whereDate('created_at', '>=', request('date_from'));
+        }
+
+        if (request()->filled('date_to')) {
+            $query->whereDate('created_at', '<=', request('date_to'));
+        }
+
+        // Global stats based on filtered query
+        $total      = (clone $query)->count();
+        $today      = (clone $query)->whereDate('created_at', now()->toDateString())->count();
+        $thisWeek   = (clone $query)->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
+        $thisMonth  = (clone $query)->whereMonth('created_at', now()->month)->count();
+
+        $male       = (clone $query)->where('gender', 'Male')->count();
+        $female     = (clone $query)->where('gender', 'Female')->count();
+        $pending    = (clone $query)->where('status', 'pending')->count();
+        $confirmed  = (clone $query)->where('status', 'confirmed')->count();
 
         // Thematic Area breakdown
-        $byThematicArea = ReviewRegistration::selectRaw('thematic_area, count(*) as total')
+        $byThematicArea = (clone $query)->selectRaw('thematic_area, count(*) as total')
             ->whereNotNull('thematic_area')
             ->groupBy('thematic_area')
             ->orderByDesc('total')
@@ -170,7 +190,7 @@ class EventRegistrationController extends Controller
 
         // Registrations per day – last 30 days
         $startDate = now()->subDays(29)->startOfDay();
-        $rawDailyData = ReviewRegistration::selectRaw('DATE(created_at) as day, count(*) as total')
+        $rawDailyData = (clone $query)->selectRaw('DATE(created_at) as day, count(*) as total')
             ->where('created_at', '>=', $startDate)
             ->groupBy('day')
             ->orderBy('day')
@@ -185,7 +205,7 @@ class EventRegistrationController extends Controller
         }
 
         // Project Status breakdown (New / Ongoing / Completed)
-        $projectStatusCounts = ReviewRegistration::selectRaw('project_status, count(*) as total')
+        $projectStatusCounts = (clone $query)->selectRaw('project_status, count(*) as total')
             ->whereNotNull('project_status')
             ->groupBy('project_status')
             ->pluck('total', 'project_status')
@@ -206,7 +226,7 @@ class EventRegistrationController extends Controller
         }
 
         // Qualification breakdown
-        $byQualification = ReviewRegistration::selectRaw('qualification, count(*) as total')
+        $byQualification = (clone $query)->selectRaw('qualification, count(*) as total')
             ->whereNotNull('qualification')
             ->groupBy('qualification')
             ->orderByDesc('total')
@@ -214,7 +234,7 @@ class EventRegistrationController extends Controller
             ->toArray();
 
         // Top cities
-        $byCity = ReviewRegistration::selectRaw('city, count(*) as total')
+        $byCity = (clone $query)->selectRaw('city, count(*) as total')
             ->whereNotNull('city')
             ->groupBy('city')
             ->orderByDesc('total')
@@ -223,7 +243,7 @@ class EventRegistrationController extends Controller
             ->toArray();
 
         // Discovery source
-        $byDiscoverySource = ReviewRegistration::selectRaw('discovery_source, count(*) as total')
+        $byDiscoverySource = (clone $query)->selectRaw('discovery_source, count(*) as total')
             ->whereNotNull('discovery_source')
             ->groupBy('discovery_source')
             ->orderByDesc('total')
@@ -231,7 +251,7 @@ class EventRegistrationController extends Controller
             ->toArray();
 
         // Recent registrations
-        $recentRegistrations = ReviewRegistration::latest()->take(6)->get();
+        $recentRegistrations = (clone $query)->latest()->take(6)->get();
 
         return view('events.national_review_2026.dashboard', compact(
             'total', 'today', 'thisWeek', 'thisMonth',

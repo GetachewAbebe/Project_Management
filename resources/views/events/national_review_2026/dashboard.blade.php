@@ -32,6 +32,55 @@
         </div>
     </div>
 
+    {{-- ══════════ FILTER BAR ══════════ --}}
+    <form method="GET" action="{{ route('event.dashboard') }}" class="filter-bar no-print" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; background: white; padding: 1.25rem 1.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; margin-bottom: 2rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.35rem; flex: 1; min-width: 150px;">
+            <label style="font-size: 0.72rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Status</label>
+            <select name="status" class="filter-input" onchange="this.form.submit()">
+                <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>All Statuses</option>
+                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+            </select>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.35rem; flex: 1.5; min-width: 180px;">
+            <label style="font-size: 0.72rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Thematic Area</label>
+            <select name="thematic_area" class="filter-input" onchange="this.form.submit()">
+                <option value="all" {{ request('thematic_area') == 'all' ? 'selected' : '' }}>All Areas</option>
+                <option value="Digital Technologies" {{ request('thematic_area') == 'Digital Technologies' ? 'selected' : '' }}>Digital Technologies</option>
+                <option value="Agriculture" {{ request('thematic_area') == 'Agriculture' ? 'selected' : '' }}>Agriculture</option>
+                <option value="Health" {{ request('thematic_area') == 'Health' ? 'selected' : '' }}>Health</option>
+                <option value="Manufacturing" {{ request('thematic_area') == 'Manufacturing' ? 'selected' : '' }}>Manufacturing</option>
+                <option value="Water and Energy" {{ request('thematic_area') == 'Water and Energy' ? 'selected' : '' }}>Water and Energy</option>
+                <option value="Construction" {{ request('thematic_area') == 'Construction' ? 'selected' : '' }}>Construction</option>
+                <option value="Artificial Intelligence" {{ request('thematic_area') == 'Artificial Intelligence' ? 'selected' : '' }}>Artificial Intelligence</option>
+                <option value="Environment and Climate Change" {{ request('thematic_area') == 'Environment and Climate Change' ? 'selected' : '' }}>Environment and Climate Change</option>
+                <option value="Space Science" {{ request('thematic_area') == 'Space Science' ? 'selected' : '' }}>Space Science</option>
+                <option value="Indigenous Knowledge" {{ request('thematic_area') == 'Indigenous Knowledge' ? 'selected' : '' }}>Indigenous Knowledge</option>
+                <option value="Policy" {{ request('thematic_area') == 'Policy' ? 'selected' : '' }}>Policy</option>
+                <option value="Other" {{ request('thematic_area') == 'Other' ? 'selected' : '' }}>Other</option>
+            </select>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.35rem; flex: 1; min-width: 130px;">
+            <label style="font-size: 0.72rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Date From</label>
+            <input type="date" name="date_from" value="{{ request('date_from') }}" class="filter-input" onchange="this.form.submit()">
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.35rem; flex: 1; min-width: 130px;">
+            <label style="font-size: 0.72rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Date To</label>
+            <input type="date" name="date_to" value="{{ request('date_to') }}" class="filter-input" onchange="this.form.submit()">
+        </div>
+
+        <div style="display: flex; gap: 0.5rem;">
+            @if(request()->anyFilled(['status', 'thematic_area', 'date_from', 'date_to']) && (request('status') !== 'all' || request('thematic_area') !== 'all'))
+            <a href="{{ route('event.dashboard') }}" style="display: inline-flex; align-items: center; justify-content: center; height: 42px; padding: 0 1rem; border-radius: 10px; font-weight: 800; font-size: 0.85rem; color: #ef4444; background: rgba(239, 68, 68, 0.1); text-decoration: none; transition: all 0.2s;">
+                Clear
+            </a>
+            @endif
+        </div>
+    </form>
+
     <div class="kpi-grid" style="margin-bottom: 3rem;">
 
         {{-- Total --}}
@@ -466,6 +515,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* Empty state */
     .empty-chart { text-align: center; padding: 3rem 1rem; color: #cbd5e1; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* Filter Inputs */
+    .filter-input { width: 100%; height: 42px; border-radius: 10px; border: 1.5px solid #e2e8f0; padding: 0 1rem; font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 700; color: #0f172a; background: #f8fafc; transition: all 0.2s cubic-bezier(0.16,1,0.3,1); box-sizing: border-box; outline: none; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+    select.filter-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%2364748b' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 14px; padding-right: 2.5rem; }
+    .filter-input:focus, .filter-input:hover { border-color: var(--brand-blue); background: white; box-shadow: 0 0 0 3px rgba(0,59,92,0.08); }
 
     /* Responsive Grid Architecture */
     .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem; }
