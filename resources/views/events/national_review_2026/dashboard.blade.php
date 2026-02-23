@@ -47,18 +47,16 @@
             <label style="font-size: 0.72rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Thematic Area</label>
             <select name="thematic_area" class="filter-input" onchange="this.form.submit()">
                 <option value="all" {{ request('thematic_area') == 'all' ? 'selected' : '' }}>All Areas</option>
-                <option value="Digital Technologies" {{ request('thematic_area') == 'Digital Technologies' ? 'selected' : '' }}>Digital Technologies</option>
-                <option value="Agriculture" {{ request('thematic_area') == 'Agriculture' ? 'selected' : '' }}>Agriculture</option>
-                <option value="Health" {{ request('thematic_area') == 'Health' ? 'selected' : '' }}>Health</option>
-                <option value="Manufacturing" {{ request('thematic_area') == 'Manufacturing' ? 'selected' : '' }}>Manufacturing</option>
-                <option value="Water and Energy" {{ request('thematic_area') == 'Water and Energy' ? 'selected' : '' }}>Water and Energy</option>
-                <option value="Construction" {{ request('thematic_area') == 'Construction' ? 'selected' : '' }}>Construction</option>
-                <option value="Artificial Intelligence" {{ request('thematic_area') == 'Artificial Intelligence' ? 'selected' : '' }}>Artificial Intelligence</option>
-                <option value="Environment and Climate Change" {{ request('thematic_area') == 'Environment and Climate Change' ? 'selected' : '' }}>Environment and Climate Change</option>
-                <option value="Space Science" {{ request('thematic_area') == 'Space Science' ? 'selected' : '' }}>Space Science</option>
-                <option value="Indigenous Knowledge" {{ request('thematic_area') == 'Indigenous Knowledge' ? 'selected' : '' }}>Indigenous Knowledge</option>
-                <option value="Policy" {{ request('thematic_area') == 'Policy' ? 'selected' : '' }}>Policy</option>
-                <option value="Other" {{ request('thematic_area') == 'Other' ? 'selected' : '' }}>Other</option>
+                <option value="Health Biotechnology" {{ request('thematic_area') == 'Health Biotechnology' ? 'selected' : '' }}>Health Biotechnology</option>
+                <option value="Plant Biotechnology" {{ request('thematic_area') == 'Plant Biotechnology' ? 'selected' : '' }}>Plant Biotechnology</option>
+                <option value="Animal Biotechnology" {{ request('thematic_area') == 'Animal Biotechnology' ? 'selected' : '' }}>Animal Biotechnology</option>
+                <option value="Environmental Biotechnology" {{ request('thematic_area') == 'Environmental Biotechnology' ? 'selected' : '' }}>Environmental Biotechnology</option>
+                <option value="Industrial Biotechnology" {{ request('thematic_area') == 'Industrial Biotechnology' ? 'selected' : '' }}>Industrial Biotechnology</option>
+                <option value="Nanotechnology" {{ request('thematic_area') == 'Nanotechnology' ? 'selected' : '' }}>Nanotechnology</option>
+                <option value="Materials Science & Engineering" {{ request('thematic_area') == 'Materials Science & Engineering' ? 'selected' : '' }}>Materials Science & Engineering</option>
+                <option value="Reverse Engineering" {{ request('thematic_area') == 'Reverse Engineering' ? 'selected' : '' }}>Reverse Engineering</option>
+                <option value="Computational Science and Intelligent Systems" {{ request('thematic_area') == 'Computational Science and Intelligent Systems' ? 'selected' : '' }}>Computational Science and Intelligent Systems</option>
+                <option value="Bioinformatics and Genomics" {{ request('thematic_area') == 'Bioinformatics and Genomics' ? 'selected' : '' }}>Bioinformatics and Genomics</option>
             </select>
         </div>
 
