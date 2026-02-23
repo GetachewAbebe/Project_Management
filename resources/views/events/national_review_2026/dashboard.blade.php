@@ -25,15 +25,14 @@
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
                 Participant List
             </a>
-            <a href="{{ route('event.register') }}" class="dash-btn primary">
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                Register New
-            </a>
+            <button onclick="window.print()" class="dash-btn primary" style="cursor: pointer; border: none; font-family: 'Outfit', sans-serif;">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2-2v4h10z"/></svg>
+                Print PDF Report
+            </button>
         </div>
     </div>
 
-    {{-- ══════════ KPI CARDS (Top Row) ══════════ --}}
-    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem; margin-bottom: 3rem;">
+    <div class="kpi-grid" style="margin-bottom: 3rem;">
 
         {{-- Total --}}
         <div class="kpi-card" style="border-top: 3px solid var(--brand-blue);">
@@ -41,8 +40,11 @@
                 <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             </div>
             <div class="kpi-label">Total Registered</div>
-            <div class="kpi-value" style="color: var(--brand-blue);">{{ $total }}</div>
-            <div class="kpi-sub">All time</div>
+            <div class="kpi-value" style="color: var(--brand-blue);">{{ number_format($total) }}</div>
+            <div class="kpi-sub" style="display: flex; align-items: center; gap: 4px;">
+                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Updated {{ now()->format('H:i') }}
+            </div>
         </div>
 
         {{-- Today --}}
@@ -51,7 +53,7 @@
                 <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             </div>
             <div class="kpi-label">Today</div>
-            <div class="kpi-value" style="color: var(--brand-green);">{{ $today }}</div>
+            <div class="kpi-value" style="color: var(--brand-green);">{{ number_format($today) }}</div>
             <div class="kpi-sub">{{ now()->format('M d, Y') }}</div>
         </div>
 
@@ -61,7 +63,7 @@
                 <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
             </div>
             <div class="kpi-label">This Week</div>
-            <div class="kpi-value" style="color: #6366f1;">{{ $thisWeek }}</div>
+            <div class="kpi-value" style="color: #6366f1;">{{ number_format($thisWeek) }}</div>
             <div class="kpi-sub">{{ now()->startOfWeek()->format('M d') }} – {{ now()->endOfWeek()->format('M d') }}</div>
         </div>
 
@@ -71,7 +73,7 @@
                 <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
             </div>
             <div class="kpi-label">Male</div>
-            <div class="kpi-value" style="color: #2563eb;">{{ $male }}</div>
+            <div class="kpi-value" style="color: #2563eb;">{{ number_format($male) }}</div>
             <div class="kpi-sub">{{ $total > 0 ? round(($male / $total) * 100) : 0 }}% of total</div>
         </div>
 
@@ -80,7 +82,7 @@
                 <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
             </div>
             <div class="kpi-label">Female</div>
-            <div class="kpi-value" style="color: #db2777;">{{ $female }}</div>
+            <div class="kpi-value" style="color: #db2777;">{{ number_format($female) }}</div>
             <div class="kpi-sub">{{ $total > 0 ? round(($female / $total) * 100) : 0 }}% of total</div>
         </div>
 
@@ -90,14 +92,14 @@
                 <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div class="kpi-label">Confirmed</div>
-            <div class="kpi-value" style="color: #f59e0b;">{{ $confirmed }}</div>
-            <div class="kpi-sub">{{ $pending }} pending</div>
+            <div class="kpi-value" style="color: #f59e0b;">{{ number_format($confirmed) }}</div>
+            <div class="kpi-sub">{{ number_format($pending) }} pending</div>
         </div>
 
     </div>
 
     {{-- ══════════ ROW 2: Daily Trend + Thematic Areas ══════════ --}}
-    <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+    <div class="chart-row-2">
 
         {{-- Daily Trend Chart --}}
         <div class="dash-panel">
@@ -133,7 +135,7 @@
     </div>
 
     {{-- ══════════ ROW 3: Research Status + Qualification + Discovery ══════════ --}}
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+    <div class="chart-row-3">
 
         {{-- Research Status Donut --}}
         <div class="dash-panel">
@@ -219,7 +221,7 @@
     </div>
 
     {{-- ══════════ ROW 4: City Map + Recent Registrants ══════════ --}}
-    <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem;">
+    <div class="chart-row-2">
 
         {{-- City Distribution --}}
         <div class="dash-panel">
@@ -464,5 +466,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* Empty state */
     .empty-chart { text-align: center; padding: 3rem 1rem; color: #cbd5e1; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* Responsive Grid Architecture */
+    .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem; }
+    .chart-row-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+    .chart-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem; }
+
+    @media (max-width: 1400px) {
+        .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    
+    @media (max-width: 1024px) {
+        .chart-row-2 { grid-template-columns: 1fr; }
+        .chart-row-3 { grid-template-columns: 1fr; }
+        
+        .dash-panel { overflow-x: auto; }
+        .kpi-grid { gap: 1rem; margin-bottom: 2rem !important; }
+    }
+
+    @media (max-width: 640px) {
+        .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+        h1 { font-size: 2.2rem !important; }
+        
+        /* Stack header actions */
+        .dash-btn { padding: 0.6rem 1.2rem; font-size: 0.8rem; }
+        .chart-row-2, .chart-row-3 { gap: 1rem; }
+    }
+    
+    @media print {
+        @page { size: landscape; margin: 10mm; }
+        body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .dash-btn { display: none !important; }
+        .kpi-card { box-shadow: none !important; border-color: #e2e8f0 !important; break-inside: avoid; }
+        .dash-panel { box-shadow: none !important; border-color: #e2e8f0 !important; break-inside: avoid; margin-bottom: 1rem !important; }
+        .kpi-grid { gap: 0.75rem !important; }
+        
+        /* Strip background on wrapper */
+        div[style*="max-width: 1600px"] { padding-bottom: 0 !important; }
+    }
 </style>
 @endsection
