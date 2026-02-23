@@ -146,6 +146,103 @@ class EventRegistrationController extends Controller
     }
 
     /**
+     * Show the Registration Analytics Dashboard (Admin only).
+     */
+    public function dashboard()
+    {
+        $total      = ReviewRegistration::count();
+        $today      = ReviewRegistration::whereDate('created_at', now()->toDateString())->count();
+        $thisWeek   = ReviewRegistration::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
+        $thisMonth  = ReviewRegistration::whereMonth('created_at', now()->month)->count();
+
+        $male       = ReviewRegistration::where('gender', 'Male')->count();
+        $female     = ReviewRegistration::where('gender', 'Female')->count();
+        $pending    = ReviewRegistration::where('status', 'pending')->count();
+        $confirmed  = ReviewRegistration::where('status', 'confirmed')->count();
+
+        // Thematic Area breakdown
+        $byThematicArea = ReviewRegistration::selectRaw('thematic_area, count(*) as total')
+            ->whereNotNull('thematic_area')
+            ->groupBy('thematic_area')
+            ->orderByDesc('total')
+            ->pluck('total', 'thematic_area')
+            ->toArray();
+
+        // Registrations per day – last 30 days
+        $startDate = now()->subDays(29)->startOfDay();
+        $rawDailyData = ReviewRegistration::selectRaw('DATE(created_at) as day, count(*) as total')
+            ->where('created_at', '>=', $startDate)
+            ->groupBy('day')
+            ->orderBy('day')
+            ->pluck('total', 'day')
+            ->toArray();
+
+        // Fill all 30 days (so chart has no gaps)
+        $dailyTrend = [];
+        for ($i = 29; $i >= 0; $i--) {
+            $day = now()->subDays($i)->format('Y-m-d');
+            $dailyTrend[$day] = $rawDailyData[$day] ?? 0;
+        }
+
+        // Project Status breakdown (New / Ongoing / Completed)
+        $projectStatusCounts = ReviewRegistration::selectRaw('project_status, count(*) as total')
+            ->whereNotNull('project_status')
+            ->groupBy('project_status')
+            ->pluck('total', 'project_status')
+            ->toArray();
+
+        // Normalise into 3 buckets
+        $statusBuckets = ['New Research' => 0, 'Ongoing Research' => 0, 'Completed Research' => 0];
+        foreach ($projectStatusCounts as $status => $count) {
+            $upper = strtoupper($status);
+            if (str_contains($upper, 'COMPLET')) {
+                $statusBuckets['Completed Research'] += $count;
+            } elseif (str_contains($upper, 'ONGOING') || str_contains($upper, 'ON GOING')) {
+                $statusBuckets['Ongoing Research'] += $count;
+            } else {
+                // New, Draft, etc.
+                $statusBuckets['New Research'] += $count;
+            }
+        }
+
+        // Qualification breakdown
+        $byQualification = ReviewRegistration::selectRaw('qualification, count(*) as total')
+            ->whereNotNull('qualification')
+            ->groupBy('qualification')
+            ->orderByDesc('total')
+            ->pluck('total', 'qualification')
+            ->toArray();
+
+        // Top cities
+        $byCity = ReviewRegistration::selectRaw('city, count(*) as total')
+            ->whereNotNull('city')
+            ->groupBy('city')
+            ->orderByDesc('total')
+            ->limit(8)
+            ->pluck('total', 'city')
+            ->toArray();
+
+        // Discovery source
+        $byDiscoverySource = ReviewRegistration::selectRaw('discovery_source, count(*) as total')
+            ->whereNotNull('discovery_source')
+            ->groupBy('discovery_source')
+            ->orderByDesc('total')
+            ->pluck('total', 'discovery_source')
+            ->toArray();
+
+        // Recent registrations
+        $recentRegistrations = ReviewRegistration::latest()->take(6)->get();
+
+        return view('events.national_review_2026.dashboard', compact(
+            'total', 'today', 'thisWeek', 'thisMonth',
+            'male', 'female', 'pending', 'confirmed',
+            'byThematicArea', 'dailyTrend', 'statusBuckets',
+            'byQualification', 'byCity', 'byDiscoverySource',
+            'recentRegistrations'
+        ));
+    }
+
+    /**
      * Show the results page (Admin only).
      */
     public function results()

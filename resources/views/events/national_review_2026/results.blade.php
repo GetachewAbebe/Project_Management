@@ -19,7 +19,11 @@
             <p style="color: #64748b; font-weight: 600; font-size: 1.1rem; margin-top: 0.75rem;">March 11 - 13, 2026 | Official Participant Intelligence for National Research Review</p>
         </div>
 
-        <div style="display: flex; gap: 1rem;">
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="{{ route('event.dashboard') }}" style="display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.5rem; background:var(--brand-green); color:white; border-radius:16px; font-weight:900; font-size:0.9rem; text-decoration:none; box-shadow:0 8px 20px rgba(0,139,75,0.2); transition:all 0.3s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 28px rgba(0,139,75,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 20px rgba(0,139,75,0.2)'">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                Analytics Dashboard
+            </a>
             <div class="glass-stat">
                 <div class="stat-label">Total Valid Registry</div>
                 <div class="stat-value">{{ $registrations->count() }}</div>

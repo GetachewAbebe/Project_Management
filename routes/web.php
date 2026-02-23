@@ -75,8 +75,9 @@ Route::prefix('national-review-2026')->group(function () {
     Route::get('/registration/{reference}/edit', [EventRegistrationController::class, 'edit'])->name('event.registration.edit');
     Route::put('/registration/{reference}', [EventRegistrationController::class, 'update'])->name('event.registration.update');
 
-    // Protected Admin Routes (Results)
+    // Protected Admin Routes
     Route::middleware(['auth'])->group(function () {
         Route::get('/results', [EventRegistrationController::class, 'results'])->name('event.results');
+        Route::get('/dashboard', [EventRegistrationController::class, 'dashboard'])->name('event.dashboard');
     });
 });
