@@ -297,4 +297,27 @@ class EventRegistrationController extends Controller
 
         return back()->with('success', 'Documents updated successfully! Reference: '.$reference);
     }
+
+    /**
+     * Delete a participant registration and associated files (Admin only).
+     */
+    public function destroy($id)
+    {
+        $registration = ReviewRegistration::findOrFail($id);
+
+        // Delete associated files from storage
+        if ($registration->abstract_file_path) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($registration->abstract_file_path);
+        }
+        if ($registration->presentation_ppt_path) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($registration->presentation_ppt_path);
+        }
+        if ($registration->support_letter_path) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($registration->support_letter_path);
+        }
+
+        $registration->delete();
+
+        return redirect()->route('event.results')->with('success', 'Participant registration and associated files have been deleted successfully.');
+    }
 }

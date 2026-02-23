@@ -170,11 +170,23 @@
                                                 <div style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Full Participant Record — {{ $reg->reference_code }}</div>
                                             </div>
                                         </div>
-                                        <a href="{{ url('/national-review-2026/registration/' . $reg->reference_code) }}" target="_blank"
-                                           class="cyber-link blue" style="font-size: 0.75rem;" onclick="event.stopPropagation()">
-                                            <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                                            Open Full Profile
-                                        </a>
+                                        <div style="display: flex; gap: 0.75rem; align-items: center;">
+                                            <a href="{{ url('/national-review-2026/registration/' . $reg->reference_code) }}" target="_blank"
+                                               class="cyber-link blue" style="font-size: 0.75rem;" onclick="event.stopPropagation()">
+                                                <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                                Open Full Profile
+                                            </a>
+                                            
+                                            {{-- Delete Button/Form --}}
+                                            <form action="{{ route('event.registration.destroy', $reg->id) }}" method="POST" id="delete-form-{{ $reg->id }}" style="margin: 0;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="cyber-link red" style="font-size: 0.75rem; border: none; cursor: pointer;" onclick="event.stopPropagation(); confirmDeletion({{ $reg->id }})">
+                                                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                    Revoke & Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
 
                                     <div class="detail-grid">
@@ -481,6 +493,7 @@
     .cyber-link.blue   { background: rgba(0,59,92,0.05); color: var(--brand-blue); }
     .cyber-link.green  { background: rgba(0,139,75,0.05); color: var(--brand-green); }
     .cyber-link.orange { background: rgba(234,88,12,0.05); color: #ea580c; }
+    .cyber-link.red    { background: rgba(239,68,68,0.05); color: #ef4444; }
     .cyber-link:hover  { background: white; transform: scale(1.04); box-shadow: 0 10px 25px rgba(0,0,0,0.07); border-color: currentColor; }
 
     @media print {
@@ -496,7 +509,38 @@
     }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    // ── Flash Messages ──
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Operation Successful',
+            text: "{{ session('success') }}",
+            confirmButtonColor: '#008B4B',
+            customClass: { popup: 'rounded-2xl' }
+        });
+    @endif
+    
+    // ── Delete Confirmation ──
+    function confirmDeletion(id) {
+        Swal.fire({
+            title: 'Revoke Registration?',
+            text: 'This will permanently delete the participant record and all uploaded files (Abstracts, Presentations). This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#94a3b8',
+            confirmButtonText: 'Yes, Revoke & Delete',
+            reverseButtons: true,
+            customClass: { popup: 'rounded-2xl' }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        });
+    }
+
     // ── Expand / Collapse Row ──
     function toggleDetails(id) {
         const detailRow = document.getElementById('details-' + id);

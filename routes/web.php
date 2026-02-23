@@ -1,4 +1,4 @@
-<?php
+cd <?php
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DirectorateController;
@@ -79,5 +79,6 @@ Route::prefix('national-review-2026')->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::get('/results', [EventRegistrationController::class, 'results'])->name('event.results');
         Route::get('/dashboard', [EventRegistrationController::class, 'dashboard'])->name('event.dashboard');
+        Route::delete('/registration/{id}', [EventRegistrationController::class, 'destroy'])->name('event.registration.destroy');
     });
 });
