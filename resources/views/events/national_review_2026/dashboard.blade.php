@@ -25,6 +25,10 @@
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
                 Participant List
             </a>
+            <button type="button" onclick="dashExport()" class="dash-btn primary" style="cursor: pointer; border: none; font-family: 'Outfit', sans-serif; background: #16a34a; box-shadow: 0 8px 20px rgba(22,163,74,0.2);">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Export
+            </button>
             <button onclick="window.print()" class="dash-btn primary" style="cursor: pointer; border: none; font-family: 'Outfit', sans-serif;">
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2-2v4h10z"/></svg>
                 Print PDF Report
@@ -33,7 +37,9 @@
     </div>
 
     {{-- ══════════ FILTER BAR ══════════ --}}
-    <form method="GET" action="{{ route('event.dashboard') }}" class="filter-bar no-print" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; background: white; padding: 1.25rem 1.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; margin-bottom: 2rem;">
+    <form method="GET" action="{{ route('event.dashboard') }}" id="dashFilterForm"
+          class="filter-bar no-print" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; background: white; padding: 1.25rem 1.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; margin-bottom: 2rem;"
+          data-export-url="{{ route('event.results.export') }}">
         <div style="display: flex; flex-direction: column; gap: 0.35rem; flex: 1; min-width: 150px;">
             <label style="font-size: 0.72rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Status</label>
             <select name="status" class="filter-input" onchange="this.form.submit()">
@@ -470,6 +476,15 @@ document.addEventListener('DOMContentLoaded', function () {
     @endif
 
 });
+
+// ── Export: submit dashboard filters to the export route ──
+function dashExport() {
+    const form = document.getElementById('dashFilterForm');
+    const original = form.action;
+    form.action = form.dataset.exportUrl;
+    form.submit();
+    setTimeout(() => { form.action = original; }, 500);
+}
 </script>
 
 {{-- ══════════ STYLES ══════════ --}}

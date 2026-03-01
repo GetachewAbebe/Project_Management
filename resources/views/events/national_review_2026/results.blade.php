@@ -29,23 +29,7 @@
                 <div class="stat-value">{{ $registrations->count() }}</div>
             </div>
 
-            {{-- Export Filtered --}}
-            <a href="{{ route('event.results.export', request()->query()) }}"
-               style="display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.5rem; background:#16a34a; color:white; border-radius:16px; font-weight:900; font-size:0.88rem; text-decoration:none; box-shadow:0 8px 20px rgba(22,163,74,0.2); transition:all 0.3s;"
-               onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 28px rgba(22,163,74,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 20px rgba(22,163,74,0.2)'"
-               title="Export currently filtered results to Excel">
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                Export Filtered
-            </a>
 
-            {{-- Export All --}}
-            <a href="{{ route('event.results.export') }}"
-               style="display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.5rem; background:var(--brand-blue); color:white; border-radius:16px; font-weight:900; font-size:0.88rem; text-decoration:none; box-shadow:0 8px 20px rgba(0,59,92,0.2); transition:all 0.3s;"
-               onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 28px rgba(0,59,92,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 20px rgba(0,59,92,0.2)'"
-               title="Export all registrations to Excel">
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                Export All
-            </a>
 
             <button onclick="window.print()" class="btn-print">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2-2v4h10z"/></svg>
@@ -56,7 +40,8 @@
 
     {{-- Server-Side Power Search & Filter --}}
     <div style="margin-bottom: 3rem; background: white; padding: 2rem; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02);">
-        <form method="GET" action="{{ route('event.results') }}" id="filterForm">
+        <form method="GET" action="{{ route('event.results') }}" id="filterForm"
+              data-export-url="{{ route('event.results.export') }}">
 
             {{-- Row 1: Keyword + Quick Filters --}}
             <div style="display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.25rem;">
