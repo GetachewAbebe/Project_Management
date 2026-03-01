@@ -2,13 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\UploadedFile;
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\ReviewRegistration;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Tests\TestCase;
 
 class EventRegistrationTest extends TestCase
 {
@@ -24,7 +23,7 @@ class EventRegistrationTest extends TestCase
     public function test_authenticated_admin_can_view_dashboard(): void
     {
         $admin = User::factory()->create();
-        
+
         // Create some fake registrations
         ReviewRegistration::factory()->count(5)->create();
 
@@ -55,7 +54,7 @@ class EventRegistrationTest extends TestCase
         Storage::fake('public');
 
         $admin = User::factory()->create();
-        
+
         // Mock files
         $abstract = UploadedFile::fake()->create('abstract.pdf', 100);
         $support = UploadedFile::fake()->create('support.pdf', 100);
@@ -93,7 +92,6 @@ class EventRegistrationTest extends TestCase
     /** ───────────────────────────────────────────
      *  Excel Export Tests
      * ─────────────────────────────────────────── */
-
     public function test_export_requires_authentication(): void
     {
         $response = $this->get(route('event.results.export'));

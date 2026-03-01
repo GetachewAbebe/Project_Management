@@ -172,15 +172,15 @@ class EventRegistrationController extends Controller
         }
 
         // Global stats based on filtered query
-        $total      = (clone $query)->count();
-        $today      = (clone $query)->whereDate('created_at', now()->toDateString())->count();
-        $thisWeek   = (clone $query)->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
-        $thisMonth  = (clone $query)->whereMonth('created_at', now()->month)->count();
+        $total = (clone $query)->count();
+        $today = (clone $query)->whereDate('created_at', now()->toDateString())->count();
+        $thisWeek = (clone $query)->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
+        $thisMonth = (clone $query)->whereMonth('created_at', now()->month)->count();
 
-        $male       = (clone $query)->where('gender', 'Male')->count();
-        $female     = (clone $query)->where('gender', 'Female')->count();
-        $pending    = (clone $query)->where('status', 'pending')->count();
-        $confirmed  = (clone $query)->where('status', 'confirmed')->count();
+        $male = (clone $query)->where('gender', 'Male')->count();
+        $female = (clone $query)->where('gender', 'Female')->count();
+        $pending = (clone $query)->where('status', 'pending')->count();
+        $confirmed = (clone $query)->where('status', 'confirmed')->count();
 
         // Thematic Area breakdown
         $byThematicArea = (clone $query)->selectRaw('thematic_area, count(*) as total')
@@ -276,12 +276,12 @@ class EventRegistrationController extends Controller
         if ($request->filled('search')) {
             $term = $request->input('search');
             $query->where(function ($q) use ($term) {
-                $q->where('full_name',         'like', "%{$term}%")
-                  ->orWhere('email',            'like', "%{$term}%")
-                  ->orWhere('organization',     'like', "%{$term}%")
-                  ->orWhere('thematic_area',    'like', "%{$term}%")
-                  ->orWhere('city',             'like', "%{$term}%")
-                  ->orWhere('presentation_title', 'like', "%{$term}%");
+                $q->where('full_name', 'like', "%{$term}%")
+                    ->orWhere('email', 'like', "%{$term}%")
+                    ->orWhere('organization', 'like', "%{$term}%")
+                    ->orWhere('thematic_area', 'like', "%{$term}%")
+                    ->orWhere('city', 'like', "%{$term}%")
+                    ->orWhere('presentation_title', 'like', "%{$term}%");
             });
         }
 
@@ -346,11 +346,11 @@ class EventRegistrationController extends Controller
         $registrations = $query->latest()->get();
 
         $hasFilters = collect(['search', 'qualification', 'status', 'thematic_area', 'gender', 'city', 'date_from', 'date_to'])
-            ->contains(fn($k) => $request->filled($k) && $request->input($k) !== 'all');
+            ->contains(fn ($k) => $request->filled($k) && $request->input($k) !== 'all');
 
         $filename = $hasFilters
-            ? 'registrations-filtered-' . now()->format('Ymd-His') . '.xlsx'
-            : 'registrations-all-'      . now()->format('Ymd-His') . '.xlsx';
+            ? 'registrations-filtered-'.now()->format('Ymd-His').'.xlsx'
+            : 'registrations-all-'.now()->format('Ymd-His').'.xlsx';
 
         return Excel::download(new ReviewRegistrationExport($registrations), $filename);
     }

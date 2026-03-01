@@ -4,15 +4,14 @@ namespace App\Exports;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithTitle;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ReviewRegistrationExport implements FromCollection, WithHeadings, WithStyles, WithColumnWidths, WithTitle
+class ReviewRegistrationExport implements FromCollection, WithColumnWidths, WithHeadings, WithStyles, WithTitle
 {
     protected Collection $registrations;
 
@@ -37,9 +36,9 @@ class ReviewRegistrationExport implements FromCollection, WithHeadings, WithStyl
         return $this->registrations->map(function ($reg) {
             // Build extra projects summary string
             $extraProjects = '';
-            if (!empty($reg->extra_projects) && is_array($reg->extra_projects)) {
+            if (! empty($reg->extra_projects) && is_array($reg->extra_projects)) {
                 $extraProjects = collect($reg->extra_projects)
-                    ->map(fn($p) => ($p['title'] ?? '') . ' [' . ($p['status'] ?? '') . ']')
+                    ->map(fn ($p) => ($p['title'] ?? '').' ['.($p['status'] ?? '').']')
                     ->implode('; ');
             }
 
@@ -65,7 +64,7 @@ class ReviewRegistrationExport implements FromCollection, WithHeadings, WithStyl
                 $reg->inviter_name ?? '',
                 $reg->previous_attendance,
                 $reg->abstract_text ? mb_substr($reg->abstract_text, 0, 500) : '',
-                !empty($reg->extra_projects) ? count($reg->extra_projects) : 0,
+                ! empty($reg->extra_projects) ? count($reg->extra_projects) : 0,
                 $extraProjects,
                 ucfirst($reg->status),
                 $reg->created_at ? $reg->created_at->format('Y-m-d H:i') : '',
@@ -115,12 +114,12 @@ class ReviewRegistrationExport implements FromCollection, WithHeadings, WithStyl
         return [
             1 => [
                 'font' => [
-                    'bold'  => true,
+                    'bold' => true,
                     'color' => ['argb' => 'FFFFFFFF'],
-                    'size'  => 11,
+                    'size' => 11,
                 ],
                 'fill' => [
-                    'fillType'   => Fill::FILL_SOLID,
+                    'fillType' => Fill::FILL_SOLID,
                     'startColor' => ['argb' => 'FF003B5C'],
                 ],
             ],
