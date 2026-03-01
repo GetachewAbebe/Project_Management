@@ -78,6 +78,7 @@ Route::prefix('national-review-2026')->group(function () {
     // Protected Admin Routes
     Route::middleware(['auth'])->group(function () {
         Route::get('/results', [EventRegistrationController::class, 'results'])->name('event.results');
+        Route::get('/results/export', [EventRegistrationController::class, 'exportResults'])->name('event.results.export');
         Route::get('/dashboard', [EventRegistrationController::class, 'dashboard'])->name('event.dashboard');
         Route::delete('/registration/{id}', [EventRegistrationController::class, 'destroy'])->name('event.registration.destroy');
     });

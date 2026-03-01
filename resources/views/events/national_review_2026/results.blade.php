@@ -28,6 +28,25 @@
                 <div class="stat-label">Total Valid Registry</div>
                 <div class="stat-value">{{ $registrations->count() }}</div>
             </div>
+
+            {{-- Export Filtered --}}
+            <a href="{{ route('event.results.export', request()->query()) }}"
+               style="display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.5rem; background:#16a34a; color:white; border-radius:16px; font-weight:900; font-size:0.88rem; text-decoration:none; box-shadow:0 8px 20px rgba(22,163,74,0.2); transition:all 0.3s;"
+               onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 28px rgba(22,163,74,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 20px rgba(22,163,74,0.2)'"
+               title="Export currently filtered results to Excel">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Export Filtered
+            </a>
+
+            {{-- Export All --}}
+            <a href="{{ route('event.results.export') }}"
+               style="display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.5rem; background:var(--brand-blue); color:white; border-radius:16px; font-weight:900; font-size:0.88rem; text-decoration:none; box-shadow:0 8px 20px rgba(0,59,92,0.2); transition:all 0.3s;"
+               onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 28px rgba(0,59,92,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 20px rgba(0,59,92,0.2)'"
+               title="Export all registrations to Excel">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Export All
+            </a>
+
             <button onclick="window.print()" class="btn-print">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2-2v4h10z"/></svg>
                 Generate Dossiers
@@ -35,26 +54,94 @@
         </div>
     </div>
 
-    {{-- Live Power Search --}}
+    {{-- Server-Side Power Search & Filter --}}
     <div style="margin-bottom: 3rem; background: white; padding: 2rem; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02);">
-        <div style="display: flex; gap: 2rem; align-items: center;">
-            <div style="flex: 1; position: relative;">
-                <input type="text" id="attendeeSearch" placeholder="Search registrants by name, organization, email, or thematic area..."
-                       style="width: 100%; padding: 1.25rem 1.5rem 1.25rem 3.5rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 600; transition: all 0.3s ease;">
-                <svg style="position: absolute; left: 1.25rem; top: 1.15rem; color: #94a3b8;" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <form method="GET" action="{{ route('event.results') }}" id="filterForm">
+
+            {{-- Row 1: Keyword + Quick Filters --}}
+            <div style="display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.25rem;">
+
+                {{-- Keyword --}}
+                <div style="flex: 2; min-width: 260px; position: relative;">
+                    <input type="text" name="search" id="attendeeSearch"
+                           value="{{ request('search') }}"
+                           placeholder="Search by name, email, organization, city, thematic area..."
+                           style="width: 100%; padding: 1.1rem 1.5rem 1.1rem 3.25rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease; box-sizing: border-box;">
+                    <svg style="position: absolute; left: 1.1rem; top: 1.1rem; color: #94a3b8;" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+
+                {{-- Qualification --}}
+                <select name="qualification" style="padding: 1.1rem 1.25rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 700; color: #475569; min-width: 200px;">
+                    <option value="all">All Qualifications</option>
+                    <option value="PhD"  {{ request('qualification') === 'PhD'  ? 'selected' : '' }}>PhD</option>
+                    <option value="MSc"  {{ request('qualification') === 'MSc'  ? 'selected' : '' }}>MSc</option>
+                    <option value="BSc"  {{ request('qualification') === 'BSc'  ? 'selected' : '' }}>BSc</option>
+                </select>
+
+                {{-- Status --}}
+                <select name="status" style="padding: 1.1rem 1.25rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 700; color: #475569; min-width: 180px;">
+                    <option value="all">All Statuses</option>
+                    <option value="pending"   {{ request('status') === 'pending'   ? 'selected' : '' }}>Pending</option>
+                    <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                </select>
+
+                {{-- Gender --}}
+                <select name="gender" style="padding: 1.1rem 1.25rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 700; color: #475569; min-width: 160px;">
+                    <option value="all">All Genders</option>
+                    <option value="Male"   {{ request('gender') === 'Male'   ? 'selected' : '' }}>Male</option>
+                    <option value="Female" {{ request('gender') === 'Female' ? 'selected' : '' }}>Female</option>
+                </select>
             </div>
-            <select id="qualificationFilter" style="padding: 1.25rem 1.5rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 750; color: #475569; width: 250px;">
-                <option value="all">All Qualifications</option>
-                <option value="PhD">Doctor of Philosophy (PhD)</option>
-                <option value="MSc">Master of Science (MSc)</option>
-                <option value="BSc">Bachelor of Science (BSc)</option>
-            </select>
-            <select id="statusFilter" style="padding: 1.25rem 1.5rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 750; color: #475569; width: 200px;">
-                <option value="all">All Statuses</option>
-                <option value="pending">Pending</option>
-                <option value="confirmed">Confirmed</option>
-            </select>
-        </div>
+
+            {{-- Row 2: Thematic Area + City + Date Range + Buttons --}}
+            <div style="display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap;">
+
+                {{-- Thematic Area --}}
+                <select name="thematic_area" style="padding: 1.1rem 1.25rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 700; color: #475569; flex: 1; min-width: 200px;">
+                    <option value="all">All Thematic Areas</option>
+                    @foreach($thematicAreas as $area)
+                        <option value="{{ $area }}" {{ request('thematic_area') === $area ? 'selected' : '' }}>{{ $area }}</option>
+                    @endforeach
+                </select>
+
+                {{-- City --}}
+                <select name="city" style="padding: 1.1rem 1.25rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 700; color: #475569; flex: 1; min-width: 160px;">
+                    <option value="all">All Cities</option>
+                    @foreach($cities as $city)
+                        <option value="{{ $city }}" {{ request('city') === $city ? 'selected' : '' }}>{{ $city }}</option>
+                    @endforeach
+                </select>
+
+                {{-- Date From --}}
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                    <label style="font-size:0.75rem; font-weight:800; color:#94a3b8; text-transform:uppercase; white-space:nowrap;">From</label>
+                    <input type="date" name="date_from" value="{{ request('date_from') }}"
+                           style="padding: 1.1rem 1rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 700; color: #475569;">
+                </div>
+
+                {{-- Date To --}}
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                    <label style="font-size:0.75rem; font-weight:800; color:#94a3b8; text-transform:uppercase; white-space:nowrap;">To</label>
+                    <input type="date" name="date_to" value="{{ request('date_to') }}"
+                           style="padding: 1.1rem 1rem; border-radius: 20px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: 'Outfit'; font-weight: 700; color: #475569;">
+                </div>
+
+                {{-- Apply Button --}}
+                <button type="submit"
+                        style="padding: 1.1rem 2rem; background: var(--brand-blue); color: white; border: none; border-radius: 20px; font-family: 'Outfit'; font-weight: 900; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; white-space:nowrap;"
+                        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 25px rgba(0,59,92,0.25)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                    Apply Filters
+                </button>
+
+                @if(request()->hasAny(['search','qualification','status','thematic_area','gender','city','date_from','date_to']))
+                <a href="{{ route('event.results') }}"
+                   style="padding: 1.1rem 1.5rem; background: #f1f5f9; color: #64748b; border-radius: 20px; font-family: 'Outfit'; font-weight: 900; font-size: 0.88rem; text-decoration: none; white-space:nowrap; transition: all 0.3s;"
+                   onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
+                    Clear Filters
+                </a>
+                @endif
+            </div>
+        </form>
     </div>
 
     {{-- Results Table --}}
@@ -552,42 +639,5 @@
         mainRow.classList.toggle('expanded', !isOpen);
     }
 
-    // ── Filtering ──
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput     = document.getElementById('attendeeSearch');
-        const qualFilter      = document.getElementById('qualificationFilter');
-        const statusFilter    = document.getElementById('statusFilter');
-        const rows            = document.querySelectorAll('.attendee-row');
-
-        function filterTable() {
-            const searchTerm  = searchInput.value.toLowerCase();
-            const qualTerm    = qualFilter.value;
-            const statusTerm  = statusFilter.value;
-
-            rows.forEach(row => {
-                const name     = row.querySelector('.searchable-name')?.textContent.toLowerCase()   || '';
-                const email    = row.querySelector('.searchable-email')?.textContent.toLowerCase()  || '';
-                const org      = row.querySelector('.searchable-org')?.textContent.toLowerCase()    || '';
-                const thematic = row.querySelector('.searchable-thematic')?.textContent.toLowerCase() || '';
-                const qual     = row.dataset.qualification;
-                const status   = row.dataset.status;
-
-                const matchesSearch = name.includes(searchTerm) || email.includes(searchTerm) || org.includes(searchTerm) || thematic.includes(searchTerm);
-                const matchesQual   = qualTerm   === 'all' || qual   === qualTerm;
-                const matchesStatus = statusTerm === 'all' || status === statusTerm;
-
-                const visible = matchesSearch && matchesQual && matchesStatus;
-                row.style.display = visible ? '' : 'none';
-
-                // Also hide detail row if parent is hidden
-                const detailRow = document.getElementById('details-' + row.querySelector('.expand-icon')?.id?.replace('icon-',''));
-                if (detailRow) detailRow.style.display = visible && row.classList.contains('expanded') ? 'table-row' : 'none';
-            });
-        }
-
-        searchInput.addEventListener('input', filterTable);
-        qualFilter.addEventListener('change', filterTable);
-        statusFilter.addEventListener('change', filterTable);
-    });
 </script>
 @endsection

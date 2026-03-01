@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReviewRegistrationExport;
 use App\Mail\RegistrationConfirmed;
 use App\Models\ReviewRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EventRegistrationController extends Controller
 {
@@ -263,13 +265,94 @@ class EventRegistrationController extends Controller
     }
 
     /**
-     * Show the results page (Admin only).
+     * Build a filtered query from the current request parameters.
+     * Shared between results() and exportResults().
      */
-    public function results()
+    private function buildFilteredQuery(Request $request)
     {
-        $registrations = ReviewRegistration::latest()->get();
+        $query = ReviewRegistration::query();
 
-        return view('events.national_review_2026.results', compact('registrations'));
+        // Keyword search: name, email, organization, thematic area, city, presentation title
+        if ($request->filled('search')) {
+            $term = $request->input('search');
+            $query->where(function ($q) use ($term) {
+                $q->where('full_name',         'like', "%{$term}%")
+                  ->orWhere('email',            'like', "%{$term}%")
+                  ->orWhere('organization',     'like', "%{$term}%")
+                  ->orWhere('thematic_area',    'like', "%{$term}%")
+                  ->orWhere('city',             'like', "%{$term}%")
+                  ->orWhere('presentation_title', 'like', "%{$term}%");
+            });
+        }
+
+        if ($request->filled('qualification') && $request->input('qualification') !== 'all') {
+            $query->where('qualification', $request->input('qualification'));
+        }
+
+        if ($request->filled('status') && $request->input('status') !== 'all') {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('thematic_area') && $request->input('thematic_area') !== 'all') {
+            $query->where('thematic_area', $request->input('thematic_area'));
+        }
+
+        if ($request->filled('gender') && $request->input('gender') !== 'all') {
+            $query->where('gender', $request->input('gender'));
+        }
+
+        if ($request->filled('city') && $request->input('city') !== 'all') {
+            $query->where('city', $request->input('city'));
+        }
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->input('date_from'));
+        }
+
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->input('date_to'));
+        }
+
+        return $query;
+    }
+
+    /**
+     * Show the results page (Admin only) — with server-side filtering.
+     */
+    public function results(Request $request)
+    {
+        $query = $this->buildFilteredQuery($request);
+        $registrations = $query->latest()->get();
+
+        // Distinct values for dropdowns
+        $thematicAreas = ReviewRegistration::select('thematic_area')
+            ->distinct()->orderBy('thematic_area')->pluck('thematic_area');
+        $cities = ReviewRegistration::select('city')
+            ->distinct()->orderBy('city')->pluck('city');
+
+        return view('events.national_review_2026.results', compact(
+            'registrations',
+            'thematicAreas',
+            'cities'
+        ));
+    }
+
+    /**
+     * Export filtered (or all) registrations as an Excel file (Admin only).
+     */
+    public function exportResults(Request $request)
+    {
+        $query = $this->buildFilteredQuery($request);
+        $registrations = $query->latest()->get();
+
+        $hasFilters = collect(['search', 'qualification', 'status', 'thematic_area', 'gender', 'city', 'date_from', 'date_to'])
+            ->contains(fn($k) => $request->filled($k) && $request->input($k) !== 'all');
+
+        $filename = $hasFilters
+            ? 'registrations-filtered-' . now()->format('Ymd-His') . '.xlsx'
+            : 'registrations-all-'      . now()->format('Ymd-His') . '.xlsx';
+
+        return Excel::download(new ReviewRegistrationExport($registrations), $filename);
     }
 
     /**
