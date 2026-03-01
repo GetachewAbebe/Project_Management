@@ -13,7 +13,7 @@ class ReviewRegistrationFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      *
-     * @var string
+     * @var class-string<\App\Models\ReviewRegistration>
      */
     protected $model = ReviewRegistration::class;
 
