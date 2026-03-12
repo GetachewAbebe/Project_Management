@@ -82,4 +82,8 @@ Route::prefix('national-review-2026')->group(function () {
         Route::get('/dashboard', [EventRegistrationController::class, 'dashboard'])->name('event.dashboard');
         Route::delete('/registration/{id}', [EventRegistrationController::class, 'destroy'])->name('event.registration.destroy');
     });
+
+    // Participant Feedback
+    Route::get('/feedback', [\App\Http\Controllers\ReviewFeedbackController::class, 'create'])->name('review.feedback');
+    Route::post('/feedback', [\App\Http\Controllers\ReviewFeedbackController::class, 'store'])->name('review.feedback.store');
 });

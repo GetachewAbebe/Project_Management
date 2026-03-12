@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8th National Research Review 2026 | Bio and Emerging Technology Institute</title>
+    <title>BETin Review Hub | Bio and Emerging Technology Institute</title>
     <meta name="description" content="Join the 8th BETIn National Research Review — Ethiopia's premier scientific gathering for bio and emerging technology research.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -145,6 +145,11 @@
             padding-top: 1.8rem;
             padding-bottom: 1.8rem;
             background: linear-gradient(135deg, #131d35 30%, #1a7a3c 100%);
+        }
+
+        .hero-nav .nav-title-sub {
+            color: var(--emerald);
+            content: "Review Hub";
         }
 
         .nav-brand {
@@ -340,6 +345,15 @@
         @keyframes ring-pulse-emerald {
             0% { transform: scale(1); opacity: 1; }
             100% { transform: scale(3.5); opacity: 0; }
+        }
+
+        .status-text-prime {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--emerald);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            line-height: 1;
         }
 
         .status-text-prime {
@@ -1167,8 +1181,8 @@
 
 
                 <div class="hero-cta-group">
-                    <a href="{{ route('event.register') }}" class="cta-primary">
-                        Review Portal
+                    <a href="{{ route('review.feedback') }}" class="cta-primary">
+                        Share Review Feedback
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
@@ -1209,47 +1223,8 @@
                     </div>
                 </div>
 
-                <div class="info-card" style="animation: revealUp 0.8s var(--ease) 0.3s both;">
-                    <div class="info-icon">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="info-label">Eligibility</div>
-                        <div class="info-value">Researchers, PhD & MSc Scholars</div>
-                    </div>
-                </div>
-                <div class="info-card" style="animation: revealUp 0.8s var(--ease) 0.4s both;">
-                    <div class="info-icon">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="info-label">Submission Deadline</div>
-                        <div class="info-value">February 27, 2026</div>
-                    </div>
-                </div>
-
-                <div class="registration-status-banner" style="animation: revealUp 0.8s var(--ease) 0.5s both;">
-                    <div class="status-banner-main">
                         <div class="status-dot-large"></div>
-                        <div class="status-text-sub">8th National Research Review Live</div>
-                    </div>
-                    @php
-                        $deadline = \Carbon\Carbon::create(2026, 2, 27, 23, 59, 59);
-                        $now = now();
-                        $daysRemaining = $now->diffInDays($deadline, false);
-                    @endphp
-                    <div class="status-text-sub">
-                        @if($daysRemaining > 0)
-                            {{ (int)$daysRemaining }} DAYS REMAINING
-                        @elseif($daysRemaining == 0)
-                            CLOSING TODAY
-                        @else
-                            REGISTRATION CLOSED
-                        @endif
+                        <div class="status-text-sub">BETin National Review Hub</div>
                     </div>
                 </div>
 
@@ -1371,7 +1346,7 @@
                     <div class="vc-label">Event Status</div>
                     <h3 class="vc-title">Shaping the <span>Future</span> of Research</h3>
                     <p class="vc-desc">
-                        Register today to be part of Ethiopia's most influential scientific gathering. Call for papers is now active.
+                        Engage with the Review Hub to be part of Ethiopia's most influential scientific gathering. Institutional reviews are now in session.
                     </p>
                     <div class="vc-stats">
                         <div class="vc-stat">
@@ -1380,7 +1355,7 @@
                         </div>
                         <div class="vc-stat">
                             <div class="vc-stat-num">2026</div>
-                            <div class="vc-stat-label">Review Year</div>
+                            <div class="status-text-prime">Scientific Excellence</div>
                         </div>
                     </div>
 
@@ -1392,19 +1367,19 @@
     {{-- ══════════ CTA SECTION ══════════ --}}
     <section class="cta-section">
         <div class="cta-content">
-            <h2 class="cta-title">Review in <span>Session</span></h2>
+            <h2 class="cta-title">Scientific <span>Impact</span></h2>
             <p class="cta-desc">
-                Submit your research abstract today and join the elite scientific community at BETIn.
+                Your feedback drives our scientific mission. Help us evolve the national research landscape at BETIn.
             </p>
             <div class="hero-cta-group" style="justify-content: center; margin-bottom: 2rem;">
-                <a href="{{ route('event.register') }}" class="cta-primary">
-                    Visit Review Portal
+                <a href="{{ route('review.feedback') }}" class="cta-primary">
+                    Provide Feedback Now
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </a>
             </div>
 
             <div class="enquiry-container">
-                <div class="enquiry-label">For Registration & Technical Enquiries, please reach out via email:</div>
+                <div class="enquiry-label">For Scientific Coordination & Technical Enquiries:</div>
                 <a href="mailto:nationalreview@betin.gov.et" class="enquiry-link">
                     <div class="enquiry-icon">
                         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
