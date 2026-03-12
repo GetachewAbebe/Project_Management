@@ -301,7 +301,7 @@
 
     <header class="page-header">
         <h1 class="header-title">8th National Research Review Feedback</h1>
-        <p class="header-subtitle">Your insights fuel our scientific progress. Please share your experience to help us refine future reviews.</p>
+        <p class="header-subtitle">Your insights help us refine future scientific reviews.</p>
     </header>
 
     <main class="form-container">
