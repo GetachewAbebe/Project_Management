@@ -1423,7 +1423,7 @@
     {{-- ══════════ FOOTER ══════════ --}}
     <footer class="hero-footer">
         <div class="footer-tiny">
-            &copy; {{ date('Y') }} <span>Bio and Emerging Technology Institute</span>. All rights reserved.
+            &copy; {{ date('Y') }} <span>BETIn Project Management System</span>. All rights reserved.
         </div>
     </footer>
 

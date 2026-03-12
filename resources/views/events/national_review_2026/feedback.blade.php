@@ -411,7 +411,7 @@
     </main>
 
     <footer class="footer">
-        &copy; 2026 Bio and Emerging Technology Institute. All Rights Reserved.
+        &copy; {{ date('Y') }} BETIn Project Management System. All Rights Reserved.
     </footer>
 
 </body>

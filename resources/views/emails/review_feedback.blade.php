@@ -90,8 +90,7 @@
             <!-- Footer -->
             <div class="footer">
                 <div class="footer-text">
-                    <strong>Bio and Emerging Technology Institute (BETIn)</strong><br>
-                    © {{ date('Y') }} Project Management System. All Rights Reserved.
+                    © {{ date('Y') }} BETIn Project Management System. All Rights Reserved.
                     <div class="motto">Transforming Ideas into Impacts</div>
                 </div>
             </div>
