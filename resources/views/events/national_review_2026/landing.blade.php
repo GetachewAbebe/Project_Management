@@ -1355,6 +1355,17 @@
     <style>
         @keyframes slideInRight { from { transform: translateX(100%) scale(0.9); opacity: 0; } to { transform: translateX(0) scale(1); opacity: 1; } }
     </style>
+    <script>
+        setTimeout(() => {
+            const toast = document.querySelector('.feedback-success-toast');
+            if (toast) {
+                toast.style.transition = 'opacity 0.5s var(--ease), transform 0.5s var(--ease)';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 500);
+            }
+        }, 5000);
+    </script>
     @endif
 
         <div class="visual-container">
