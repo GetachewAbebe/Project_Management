@@ -386,7 +386,7 @@
                 </div>
 
                 <div class="submission-window">
-                    <div class="window-header">Deadline Countdown</div>
+                    <div class="window-header">Review Status</div>
                     <div class="window-timer" id="pathfinderTimer">
                         00<span class="timer-unit">d</span> 00<span class="timer-unit">h</span> 00<span class="timer-unit">m</span>
                     </div>
@@ -745,7 +745,8 @@
                 const d = Math.floor(diff / 86400000);
                 const h = Math.floor((diff % 86400000) / 3600000);
                 const m = Math.floor((diff % 3600000) / 60000);
-                timerEl.innerHTML = `${String(d).padStart(2,'0')}<span class="timer-unit">d</span> ${String(h).padStart(2,'0')}<span class="timer-unit">h</span> ${String(m).padStart(2,'0')}<span class="timer-unit">m</span>`;
+                // The Review is LIVE NOW (March 11-13)
+                timerEl.innerHTML = `<span style="color:var(--emerald); text-shadow: 0 0 10px var(--emerald-glow);">LIVE NOW</span>`;
             };
             setInterval(update, 60000); update();
         }

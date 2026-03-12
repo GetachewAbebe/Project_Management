@@ -1168,7 +1168,7 @@
 
                 <div class="hero-cta-group">
                     <a href="{{ route('event.register') }}" class="cta-primary">
-                        Register to Present
+                        Review Portal
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
@@ -1235,7 +1235,7 @@
                 <div class="registration-status-banner" style="animation: revealUp 0.8s var(--ease) 0.5s both;">
                     <div class="status-banner-main">
                         <div class="status-dot-large"></div>
-                        <div class="status-text-prime">Registration Open</div>
+                        <div class="status-text-sub">8th National Research Review Live</div>
                     </div>
                     @php
                         $deadline = \Carbon\Carbon::create(2026, 2, 27, 23, 59, 59);
@@ -1392,13 +1392,13 @@
     {{-- ══════════ CTA SECTION ══════════ --}}
     <section class="cta-section">
         <div class="cta-content">
-            <h2 class="cta-title">Ready to <span>Present?</span></h2>
+            <h2 class="cta-title">Review in <span>Session</span></h2>
             <p class="cta-desc">
                 Submit your research abstract today and join the elite scientific community at BETIn.
             </p>
             <div class="hero-cta-group" style="justify-content: center; margin-bottom: 2rem;">
                 <a href="{{ route('event.register') }}" class="cta-primary">
-                    Start Registration Now
+                    Visit Review Portal
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </a>
             </div>
