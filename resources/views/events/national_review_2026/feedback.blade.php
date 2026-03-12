@@ -300,8 +300,7 @@
     </nav>
 
     <header class="page-header">
-        <div class="header-badge">8th National Research Review</div>
-        <h1 class="header-title">Participant Feedback</h1>
+        <h1 class="header-title">8th National Research Review Participant Feedback</h1>
         <p class="header-subtitle">Your insights fuel our scientific progress. Please share your experience to help us refine future reviews.</p>
     </header>
 
