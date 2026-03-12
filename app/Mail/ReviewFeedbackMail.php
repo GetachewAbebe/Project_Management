@@ -39,7 +39,7 @@ class ReviewFeedbackMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.review_feedback',
+            view: 'emails.review_feedback',
         );
     }
 
