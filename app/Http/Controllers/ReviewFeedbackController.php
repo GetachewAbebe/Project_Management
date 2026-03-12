@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class ReviewFeedbackController extends Controller
 {
+    public function index()
+    {
+        $feedbacks = \App\Models\ReviewFeedback::latest()->paginate(20);
+        return view('events.national_review_2026.feedback_results', compact('feedbacks'));
+    }
+
     /**
      * Show the feedback form.
      */
@@ -31,8 +37,14 @@ class ReviewFeedbackController extends Controller
             'future_attendance' => 'nullable|string|max:255',
         ]);
 
-        \App\Models\ReviewFeedback::create($validated);
+        $feedback = \App\Models\ReviewFeedback::create($validated);
 
-        return redirect()->route('event.landing')->with('success', 'Thank you for your valuable feedback! Your submission helps us improve the National Research Review.');
+        try {
+            \Illuminate\Support\Facades\Mail::to($feedback->email)->send(new \App\Mail\ReviewFeedbackMail($feedback));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Feedback Mail Error: ' . $e->getMessage());
+        }
+
+        return redirect()->route('event.landing')->with('feedback_success', true);
     }
 }

@@ -424,14 +424,20 @@
                     <div style="background: rgba(0, 163, 108, 0.2); color: #00a36c; padding: 0.2rem 0.5rem; border-radius: 5px; font-size: 0.65rem; font-weight: 900; border: 1px solid rgba(0, 163, 108, 0.3);">LIVE</div>
                 </a>
 
-                @if(auth()->user()->isAdmin())
                 <a href="{{ route('event.results') }}" class="nav-item {{ request()->routeIs('event.results') ? 'active' : '' }}" style="margin-left: 1rem; border-left: 2px solid rgba(255,255,255,0.1); border-radius: 0 12px 12px 0;">
                     <div style="width: 32px; height: 32px; background: {{ request()->routeIs('event.results') ? 'rgba(0, 163, 108, 0.2)' : 'rgba(255, 255, 255, 0.05)' }}; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
                         <svg class="nav-icon" style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                     </div>
-                    <span style="flex: 1; font-size: 0.85rem;">Registration Dashboard</span>
+                    <span style="flex: 1; font-size: 0.85rem;">Registration Data</span>
                 </a>
-                @endif
+
+                <a href="{{ route('review.feedback.results') }}" class="nav-item {{ request()->routeIs('review.feedback.results') ? 'active' : '' }}" style="margin-left: 1rem; border-left: 2px solid rgba(255,255,255,0.1); border-radius: 0 12px 12px 0;">
+                    <div style="width: 32px; height: 32px; background: {{ request()->routeIs('review.feedback.results') ? 'rgba(0, 163, 108, 0.2)' : 'rgba(255, 255, 255, 0.05)' }}; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                        <svg class="nav-icon" style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+                    </div>
+                    <span style="flex: 1; font-size: 0.85rem;">Feedback Dashboard</span>
+                </a>
+
             </div>
         </nav>
 

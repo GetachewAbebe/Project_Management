@@ -1335,11 +1335,28 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
     {{-- ══════════ VISUAL STATUS ══════════ --}}
     <section class="visual-section">
+        @if(session('feedback_success'))
+    <div class="feedback-success-toast" style="position: fixed; top: 2rem; right: 2rem; z-index: 10000; animation: slideInRight 0.5s var(--ease) both;">
+        <div style="background: rgba(16, 185, 129, 0.95); backdrop-filter: blur(20px); padding: 1.5rem 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.3); color: white; display: flex; align-items: center; gap: 1.5rem;">
+            <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+                <div style="font-weight: 900; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em;">Feedback Received!</div>
+                <div style="opacity: 0.9; font-size: 0.9rem; font-weight: 500;">Thank you for contributing to scientific excellence.</div>
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; opacity: 0.5; cursor: pointer; padding: 0.5rem; margin-left: 1rem;">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+    </div>
+    <style>
+        @keyframes slideInRight { from { transform: translateX(100%) scale(0.9); opacity: 0; } to { transform: translateX(0) scale(1); opacity: 1; } }
+    </style>
+    @endif
+
         <div class="visual-container">
             <div class="visual-card">
                 <div class="visual-card-content">
