@@ -44,10 +44,7 @@
     <div class="wrapper">
         <div class="main">
             <!-- Header -->
-            <div class="header">
-                <div class="logo-box">
-                    <img src="{{ config('app.url') }}/logo.png" alt="BETin Logo" style="width: 80px; height: auto;">
-                </div>
+            <div class="header" style="padding: 40px;">
                 <div class="badge-live">Scientific Contribution Logged</div>
             </div>
 
@@ -94,8 +91,7 @@
             <div class="footer">
                 <div class="footer-text">
                     <strong>Bio and Emerging Technology Institute (BETIn)</strong><br>
-                    © {{ date('Y') }} Project Management System. All Rights Reserved.<br>
-                    Transforming biological and emerging technology landscapes in Ethiopia.
+                    © {{ date('Y') }} Project Management System. All Rights Reserved.
                     <div class="motto">Transforming Ideas into Impacts</div>
                 </div>
             </div>
