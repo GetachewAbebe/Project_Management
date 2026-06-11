@@ -26,8 +26,15 @@
             justify-content: space-between;
             padding: 0 2rem;
             z-index: 1001;
-            box-shadow: 0 2px 24px rgba(0,0,0,0.35), 0 1px 0 rgba(0,200,100,0.2);
-            border-bottom: 1px solid rgba(0,200,100,0.2);
+            box-shadow: 0 4px 32px rgba(0,0,0,0.45);
+        }
+
+        .topbar::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(0,212,122,0.25) 15%, rgba(0,212,122,0.65) 50%, rgba(0,212,122,0.25) 85%, transparent 100%);
         }
 
         .topbar-logo {
@@ -333,25 +340,26 @@
 
 <!-- Topbar -->
 <header class="topbar">
-    <div class="topbar-logo" style="width: 120px; justify-content: center;">
+
+    <!-- Logo -->
+    <div class="topbar-logo" style="width: 48px; height: 48px; padding: 6px; justify-content: center; flex-shrink: 0;">
         <x-logo width="100%" height="auto" />
     </div>
 
-    <div class="topbar-center">
-        <span class="topbar-pulse"></span>
-        <span class="topbar-title">Bio and Emerging Technology Institute</span>
-        <div class="topbar-divider"></div>
-        <span class="topbar-subtitle">Research PMS &nbsp;·&nbsp; Est. 2016</span>
+    <!-- Title -->
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+        <span style="font-size: 1rem; font-weight: 800; color: rgba(255,255,255,0.95); letter-spacing: 0.01em; white-space: nowrap;">
+            Bio &amp; Emerging Technology Institute
+            <span style="color: rgba(0,212,122,0.7); font-weight: 400; margin: 0 0.4rem;">—</span>
+            Project Management System
+        </span>
     </div>
 
-    <div style="width: 140px; display: flex; justify-content: flex-end;">
-        <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 0.45rem 0.9rem; backdrop-filter: blur(8px);">
-            <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #00c96e, #008B4B); border-radius: 7px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 950; font-size: 0.82rem; box-shadow: 0 2px 8px rgba(0,139,75,0.45);">
-                {{ substr(auth()->user()->name, 0, 1) }}
-            </div>
-            <span style="font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.88); white-space: nowrap; max-width: 80px; overflow: hidden; text-overflow: ellipsis;">{{ auth()->user()->name }}</span>
-        </div>
+    <!-- Logo (right) -->
+    <div class="topbar-logo" style="width: 48px; height: 48px; padding: 6px; justify-content: center; flex-shrink: 0; transform: scaleX(-1);">
+        <x-logo width="100%" height="auto" />
     </div>
+
 </header>
 
 <!-- Sidebar -->
