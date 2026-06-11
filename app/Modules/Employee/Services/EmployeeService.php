@@ -7,7 +7,6 @@ use App\Models\Employee;
 use App\Models\Invitation;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -75,14 +74,6 @@ class EmployeeService
             ]
         );
 
-        try {
-            Mail::to($employee->email)->send(new DirectorInvitation($invitation));
-        } catch (\Exception $e) {
-            Log::error('Invitation email dispatch failed', [
-                'employee_id' => $employee->id,
-                'email' => $employee->email,
-                'error' => $e->getMessage(),
-            ]);
-        }
+        Mail::to($employee->email)->send(new DirectorInvitation($invitation));
     }
 }
