@@ -97,12 +97,6 @@ parameters:
 			path: app/Modules/Employee/Policies/EmployeePolicy.php
 
 		-
-			message: '#^Cannot access property \$user on object\|string\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: app/Modules/Employee/Requests/StoreEmployeeRequest.php
-
-		-
 			message: '#^Access to an undefined property App\\Models\\Employee\:\:\$user\.$#'
 			identifier: property.notFound
 			count: 1
