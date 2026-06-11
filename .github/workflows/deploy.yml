@@ -54,8 +54,30 @@ jobs:
       - name: 🚀 Call Deployment Webhook
         run: |
           if [ -z "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}" ]; then
-            echo "❌ Error: CPANEL_DEPLOY_WEBHOOK secret is not set in GitHub Settings."
+            echo "❌ CPANEL_DEPLOY_WEBHOOK secret is not set. Add it under Settings → Secrets → Actions."
             exit 1
           fi
-          curl -X GET "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}"
+
+          echo "📡 Calling cPanel deployment webhook..."
+
+          HTTP_STATUS=$(curl \
+            --silent \
+            --show-error \
+            --fail \
+            --location \
+            --max-time 60 \
+            --write-out "%{http_code}" \
+            --output /tmp/cpanel_response.txt \
+            -X GET "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}" \
+          )
+
+          echo "📄 cPanel response (HTTP $HTTP_STATUS):"
+          cat /tmp/cpanel_response.txt
+
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "❌ Webhook returned HTTP $HTTP_STATUS. Deployment may not have triggered."
+            exit 1
+          fi
+
+          echo "✅ Webhook accepted (HTTP $HTTP_STATUS). Deployment triggered on cPanel."
 
