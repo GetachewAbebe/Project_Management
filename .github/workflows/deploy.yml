@@ -54,15 +54,18 @@ jobs:
     steps:
       - name: 🚀 Trigger cPanel Deployment
         run: |
-          echo "📡 Pulling latest code on cPanel..."
-          curl --silent --show-error --fail \
+          echo "🚀 Triggering deployment..."
+          RESPONSE=$(curl --silent --show-error \
             -H "Authorization: cpanel betingovet:${{ secrets.CPANEL_API_TOKEN }}" \
-            "https://betin.gov.et:2083/execute/VersionControl/update?repository_root=%2Fhome%2Fbetingovet%2Frepositories%2FProject_Management"
+            "https://betin.gov.et:2083/execute/VersionControlDeployment/create?repository_root=%2Fhome%2Fbetingovet%2Frepositories%2FProject_Management")
 
-          echo "🚀 Running deployment tasks..."
-          curl --silent --show-error --fail \
-            -H "Authorization: cpanel betingovet:${{ secrets.CPANEL_API_TOKEN }}" \
-            "https://betin.gov.et:2083/execute/VersionControlDeployment/create?repository_root=%2Fhome%2Fbetingovet%2Frepositories%2FProject_Management"
+          echo "📄 cPanel response: $RESPONSE"
 
-          echo "✅ Deployment triggered."
+          STATUS=$(echo "$RESPONSE" | grep -o '"status":[0-9]*' | grep -o '[0-9]*')
+          if [ "$STATUS" != "1" ]; then
+            echo "❌ Deployment failed. See response above."
+            exit 1
+          fi
+
+          echo "✅ Deployment triggered successfully."
 
