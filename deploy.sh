@@ -7,7 +7,7 @@ export HOME="/home/betingovet"
 export COMPOSER_HOME="$HOME/.composer"
 
 # SIMPLIFIED SINGLE FOLDER SETUP
-APP_DIR="/home/betingovet/apps/project_management/repo"
+APP_DIR="/home/betingovet/apps/project_management"
 PHP82="/opt/alt/php82/usr/bin/php"
 COMPOSER="/home/betingovet/bin/composer"
 BRANCH="main"

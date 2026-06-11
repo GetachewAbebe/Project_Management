@@ -47,38 +47,22 @@ jobs:
       - name: 🔍 Static Analysis (PHPStan)
         run: composer phpstan
 
-  trigger-deployment:
-    name: Trigger cPanel Deployment
+  deploy:
+    name: Deploy via cPanel API
     runs-on: ubuntu-latest
     needs: [quality-check]
     steps:
-      - name: 🚀 Call Deployment Webhook
+      - name: 🚀 Trigger cPanel Deployment
         run: |
-          if [ -z "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}" ]; then
-            echo "❌ CPANEL_DEPLOY_WEBHOOK secret is not set. Add it under Settings → Secrets → Actions."
-            exit 1
-          fi
+          echo "📡 Pulling latest code on cPanel..."
+          curl --silent --show-error --fail \
+            -H "Authorization: cpanel betingovet:${{ secrets.CPANEL_API_TOKEN }}" \
+            "https://betin.gov.et:2083/execute/VersionControl/update?repository_root=%2Fhome%2Fbetingovet%2Frepositories%2FProject_Management"
 
-          echo "📡 Calling cPanel deployment webhook..."
+          echo "🚀 Running deployment tasks..."
+          curl --silent --show-error --fail \
+            -H "Authorization: cpanel betingovet:${{ secrets.CPANEL_API_TOKEN }}" \
+            "https://betin.gov.et:2083/execute/VersionControlDeployment/create?repository_root=%2Fhome%2Fbetingovet%2Frepositories%2FProject_Management"
 
-          HTTP_STATUS=$(curl \
-            --silent \
-            --show-error \
-            --fail \
-            --location \
-            --max-time 60 \
-            --write-out "%{http_code}" \
-            --output /tmp/cpanel_response.txt \
-            -X GET "${{ secrets.CPANEL_DEPLOY_WEBHOOK }}" \
-          )
-
-          echo "📄 cPanel response (HTTP $HTTP_STATUS):"
-          cat /tmp/cpanel_response.txt
-
-          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
-            echo "❌ Webhook returned HTTP $HTTP_STATUS. Deployment may not have triggered."
-            exit 1
-          fi
-
-          echo "✅ Webhook accepted (HTTP $HTTP_STATUS). Deployment triggered on cPanel."
+          echo "✅ Deployment triggered."
 

@@ -1,4 +1,4 @@
 ---
 deployment:
   tasks:
-    - /bin/bash /home/betingovet/apps/project_management/repo/deploy.sh
+    - /bin/bash /home/betingovet/apps/project_management/deploy.sh
