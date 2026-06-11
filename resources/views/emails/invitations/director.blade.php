@@ -3,7 +3,7 @@
 
 Dear **{{ $invitation->employee->full_name }}**,
 
-As part of our commitment to institutional research excellence and digital governance, you have been enrolled as a **Director** in the **{{ config('app.name') }}**.
+As part of our commitment to institutional research excellence and digital governance, you have been enrolled as a **Director** in the **BETin Project Management System**.
 
 To manage your directorate's research portfolio and projects, please complete your secure account registration by establishing your private institutional password.
 
@@ -18,5 +18,5 @@ If you did not expect this invitation, please contact the CSIS Department immedi
 
 Institutional Regards,<br>
 **The CSIS Team**<br>
-{{ config('app.name') }}
+BETin Project Management System
 </x-mail::message>
