@@ -65,6 +65,9 @@ class EmployeeService
             throw new \RuntimeException('This employee already has an active verified account.');
         }
 
+        // Clear any leftover unverified user so the fresh invitation can be used.
+        User::where('email', $employee->email)->whereNull('email_verified_at')->delete();
+
         $invitation = Invitation::updateOrCreate(
             ['email' => $employee->email],
             [

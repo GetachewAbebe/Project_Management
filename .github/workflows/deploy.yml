@@ -55,9 +55,13 @@ jobs:
       - name: 🚀 Trigger cPanel Deployment
         run: |
           echo "🚀 Triggering deployment..."
-          RESPONSE=$(curl --silent --show-error \
-            -H "Authorization: cpanel betingovet:${{ secrets.CPANEL_API_TOKEN }}" \
-            "https://betin.gov.et:2083/execute/VersionControlDeployment/create?repository_root=%2Fhome%2Fbetingovet%2Frepositories%2FProject_Management")
+          for attempt in 1 2 3; do
+            RESPONSE=$(curl --silent --show-error --max-time 60 --retry 2 \
+              -H "Authorization: cpanel betingovet:${{ secrets.CPANEL_API_TOKEN }}" \
+              "https://betin.gov.et:2083/execute/VersionControlDeployment/create?repository_root=%2Fhome%2Fbetingovet%2Frepositories%2FProject_Management") && break
+            echo "⚠️ Attempt $attempt failed, retrying in 15s..."
+            sleep 15
+          done
 
           echo "📄 cPanel response: $RESPONSE"
 
