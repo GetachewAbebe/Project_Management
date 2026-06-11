@@ -44,6 +44,7 @@ class InvitationController extends Controller
             'password' => Hash::make($request->password),
             'role' => $employee->system_role,
             'directorate_id' => $invitation->directorate_id,
+            'email_verified_at' => now(),
         ]);
 
         $invitation->delete();

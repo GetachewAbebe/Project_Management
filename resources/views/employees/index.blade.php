@@ -73,11 +73,17 @@
             <tbody>
                 @forelse($employees as $emp)
                 @php
+                    $isVerified   = $emp->user !== null && $emp->user->email_verified_at !== null;
+                    $isUnverified = $emp->user !== null && $emp->user->email_verified_at === null;
+                    $canResend    = in_array($emp->system_role, ['director', 'evaluator'])
+                                    && !$isVerified
+                                    && ($isUnverified || $emp->invitation !== null || $emp->user === null);
                     $accountStatus = match(true) {
-                        $emp->user !== null                                                   => ['label' => 'ACTIVE',      'bg' => '#ecfdf5', 'text' => '#059669', 'dot' => '#059669'],
-                        $emp->invitation !== null && !$emp->invitation->isExpired()           => ['label' => 'INVITED',     'bg' => '#fffbeb', 'text' => '#d97706', 'dot' => '#f59e0b'],
-                        $emp->invitation !== null                                             => ['label' => 'LINK EXPIRED','bg' => '#fff1f2', 'text' => '#e11d48', 'dot' => '#fca5a5'],
-                        default                                                               => ['label' => 'NO ACCOUNT',  'bg' => '#f8fafc', 'text' => '#94a3b8', 'dot' => '#cbd5e1'],
+                        $isVerified                                                           => ['label' => 'ACTIVE',       'bg' => '#ecfdf5', 'text' => '#059669', 'dot' => '#059669'],
+                        $isUnverified                                                         => ['label' => 'UNVERIFIED',   'bg' => '#fff7ed', 'text' => '#ea580c', 'dot' => '#fb923c'],
+                        $emp->invitation !== null && !$emp->invitation->isExpired()           => ['label' => 'INVITED',      'bg' => '#fffbeb', 'text' => '#d97706', 'dot' => '#f59e0b'],
+                        $emp->invitation !== null                                             => ['label' => 'LINK EXPIRED', 'bg' => '#fff1f2', 'text' => '#e11d48', 'dot' => '#fca5a5'],
+                        default                                                               => ['label' => 'NO ACCOUNT',   'bg' => '#f8fafc', 'text' => '#94a3b8', 'dot' => '#cbd5e1'],
                     };
                 @endphp
                 <tr class="premium-row">
@@ -122,6 +128,14 @@
                             @can('update', $emp)
                             <a href="{{ route('employees.edit', $emp->id) }}" class="btn-secondary" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; text-decoration: none;">Update Info</a>
                             @endcan
+                            @if($canResend)
+                            @can('update', $emp)
+                            <form action="{{ route('employees.resend-invitation', $emp->id) }}" method="POST" onsubmit="return confirm('Re-send registration invitation to {{ $emp->email }}?');">
+                                @csrf
+                                <button type="submit" style="background: rgba(0,139,75,0.06); color: #008B4B; border: 1px solid rgba(0,139,75,0.25); padding: 0.6rem 1.25rem; border-radius: 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap;">Resend Invite</button>
+                            </form>
+                            @endcan
+                            @endif
                             @can('delete', $emp)
                             <form action="{{ route('employees.destroy', $emp->id) }}" method="POST" onsubmit="return confirm('Archive this staff record? Their login access will be suspended.');">
                                 @csrf

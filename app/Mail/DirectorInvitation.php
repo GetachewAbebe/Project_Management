@@ -39,7 +39,7 @@ class DirectorInvitation extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.invitations.director',
+            view: 'emails.invitations.director',
         );
     }
 

@@ -5,6 +5,7 @@ namespace App\Modules\Employee\Services;
 use App\Mail\DirectorInvitation;
 use App\Models\Employee;
 use App\Models\Invitation;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -38,8 +39,32 @@ class EmployeeService
         });
     }
 
+    public function resendInvitation(Employee $employee): void
+    {
+        $verified = User::where('email', $employee->email)
+            ->whereNotNull('email_verified_at')
+            ->exists();
+
+        if ($verified) {
+            throw new \RuntimeException('This employee already has an active verified account.');
+        }
+
+        // Remove any unverified user record so the invite can be used fresh.
+        User::where('email', $employee->email)->whereNull('email_verified_at')->delete();
+
+        $this->sendDirectorInvitation($employee);
+    }
+
     protected function sendDirectorInvitation(Employee $employee): void
     {
+        $verified = User::where('email', $employee->email)
+            ->whereNotNull('email_verified_at')
+            ->exists();
+
+        if ($verified) {
+            throw new \RuntimeException('This employee already has an active verified account.');
+        }
+
         $invitation = Invitation::updateOrCreate(
             ['email' => $employee->email],
             [

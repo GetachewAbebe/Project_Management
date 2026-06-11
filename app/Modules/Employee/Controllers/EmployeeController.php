@@ -60,7 +60,12 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $this->authorize('create', Employee::class);
-        $this->employeeService->createEmployee($request->validated());
+
+        try {
+            $this->employeeService->createEmployee($request->validated());
+        } catch (\RuntimeException $e) {
+            return back()->withInput()->withErrors(['email' => $e->getMessage()]);
+        }
 
         $needsInvite = in_array($request->system_role, ['director', 'evaluator']);
         $msg = 'Employee registered successfully.'
@@ -80,13 +85,31 @@ class EmployeeController extends Controller
     public function update(StoreEmployeeRequest $request, Employee $employee)
     {
         $this->authorize('update', $employee);
-        $this->employeeService->updateEmployee($employee, $request->validated());
+
+        try {
+            $this->employeeService->updateEmployee($employee, $request->validated());
+        } catch (\RuntimeException $e) {
+            return back()->withInput()->withErrors(['email' => $e->getMessage()]);
+        }
 
         $needsInvite = in_array($request->system_role, ['director', 'evaluator']) && ! $employee->user;
         $msg = 'Employee information updated.'
             .($needsInvite ? ' A registration invitation has been queued for their email.' : '');
 
         return redirect()->route('employees.index')->with('success', $msg);
+    }
+
+    public function resendInvitation(Employee $employee)
+    {
+        $this->authorize('update', $employee);
+
+        try {
+            $this->employeeService->resendInvitation($employee);
+        } catch (\RuntimeException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return back()->with('success', 'Invitation re-sent to '.$employee->email.'.');
     }
 
     public function destroy(Employee $employee)
