@@ -66,6 +66,12 @@ class ProjectController extends Controller
         if ($user->isDirector()) {
             $summaryQuery->where('directorate_id', $user->directorate_id);
         }
+        if ($request->filled('directorate_id')) {
+            $summaryQuery->where('directorate_id', $request->directorate_id);
+        }
+        if ($request->filled('research_center')) {
+            $summaryQuery->whereHas('directorate', fn ($q) => $q->where('research_center', $request->research_center));
+        }
         $portfolioSummary = $summaryQuery->selectRaw("
             COUNT(*) as total,
             COUNT(*) FILTER (WHERE status = 'ONGOING') as ongoing,
