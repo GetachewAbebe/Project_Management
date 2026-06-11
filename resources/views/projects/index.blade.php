@@ -34,13 +34,13 @@
                     <div style="display:flex;align-items:center;gap:0.4rem;background:rgba(251,191,36,0.18);border:1px solid rgba(251,191,36,0.35);border-radius:8px;padding:0.28rem 0.8rem;">
                         <svg width="11" height="11" fill="none" stroke="#fbbf24" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
                         <span style="font-size:0.63rem;font-weight:900;color:#fbbf24;text-transform:uppercase;letter-spacing:0.12em;">{{ $activeDirectorate->name }}</span>
-                        <a href="{{ route('projects.index') }}" style="color:rgba(251,191,36,0.6);line-height:1;margin-left:2px;text-decoration:none;" title="Clear filter">✕</a>
+                        <a href="{{ route('dashboard') }}" style="color:rgba(251,191,36,0.6);line-height:1;margin-left:2px;text-decoration:none;" title="Back to dashboard">✕</a>
                     </div>
                     @elseif($centerLabel)
                     <div style="display:flex;align-items:center;gap:0.4rem;background:rgba(251,191,36,0.18);border:1px solid rgba(251,191,36,0.35);border-radius:8px;padding:0.28rem 0.8rem;">
                         <svg width="11" height="11" fill="none" stroke="#fbbf24" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
                         <span style="font-size:0.63rem;font-weight:900;color:#fbbf24;text-transform:uppercase;letter-spacing:0.12em;">{{ $centerLabel }}</span>
-                        <a href="{{ route('projects.index') }}" style="color:rgba(251,191,36,0.6);line-height:1;margin-left:2px;text-decoration:none;" title="Clear filter">✕</a>
+                        <a href="{{ route('dashboard') }}" style="color:rgba(251,191,36,0.6);line-height:1;margin-left:2px;text-decoration:none;" title="Back to dashboard">✕</a>
                     </div>
                     @endif
                 </div>
