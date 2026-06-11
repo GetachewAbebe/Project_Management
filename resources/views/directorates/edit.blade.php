@@ -13,6 +13,16 @@
             <input type="text" name="name" value="{{ old('name', $directorate->name) }}" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem;">
             @error('name')<span style="color: #b91c1c; font-size: 0.8rem;">{{ $message }}</span>@enderror
         </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Research Center</label>
+            <select name="research_center" style="width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; font-family: 'Outfit', sans-serif;">
+                <option value="">— Not assigned —</option>
+                <option value="biotech" {{ old('research_center', $directorate->research_center) === 'biotech' ? 'selected' : '' }}>Biotech Research Center</option>
+                <option value="emtech"  {{ old('research_center', $directorate->research_center) === 'emtech'  ? 'selected' : '' }}>EmTech Research Center</option>
+            </select>
+            @error('research_center')<span style="color: #b91c1c; font-size: 0.8rem;">{{ $message }}</span>@enderror
+        </div>
         
         <div style="display: flex; gap: 1rem; margin-top: 2rem;">
             <button type="submit" class="btn btn-primary">Update Directorate</button>

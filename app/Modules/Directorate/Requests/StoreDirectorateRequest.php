@@ -17,6 +17,7 @@ class StoreDirectorateRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255|unique:directorates,name'.($directorateId ? ",$directorateId" : ''),
+            'research_center' => 'nullable|in:biotech,emtech',
         ];
     }
 }

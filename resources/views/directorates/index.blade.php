@@ -33,6 +33,7 @@
                 <tr>
                     <th style="padding-left: 1.5rem;">Unit Identifier</th>
                     <th>Directorate Name</th>
+                    <th>Research Center</th>
                     <th>Date Established</th>
                     <th style="text-align: right; padding-right: 1.5rem;">Management Actions</th>
                 </tr>
@@ -58,6 +59,19 @@
                         </div>
                     </td>
                     <td>
+                        @if($dir->research_center === 'biotech')
+                            <span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.72rem;font-weight:800;color:#1e40af;background:#dbeafe;border:1px solid #bfdbfe;padding:0.3rem 0.8rem;border-radius:7px;">
+                                <span style="width:7px;height:7px;background:#2563eb;border-radius:50%;display:inline-block;"></span>Biotech
+                            </span>
+                        @elseif($dir->research_center === 'emtech')
+                            <span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.72rem;font-weight:800;color:#15803d;background:#dcfce7;border:1px solid #bbf7d0;padding:0.3rem 0.8rem;border-radius:7px;">
+                                <span style="width:7px;height:7px;background:#16a34a;border-radius:50%;display:inline-block;"></span>EmTech
+                            </span>
+                        @else
+                            <span style="font-size:0.72rem;font-weight:700;color:#94a3b8;">— Not assigned</span>
+                        @endif
+                    </td>
+                    <td>
                         <div style="display: flex; flex-direction: column;">
                             <div style="font-weight: 800; color: #475569; font-size: 1rem;">{{ $dir->created_at->format('M d, Y') }}</div>
                             <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em;">Registry Date</div>
@@ -65,7 +79,7 @@
                     </td>
                     <td style="text-align: right; padding-right: 1.5rem;">
                         <div style="display: flex; gap: 1rem; justify-content: flex-end; align-items: center;">
-                            <a href="{{ route('directorates.edit', $dir->id) }}" class="btn-secondary" style="padding: 0.65rem 1.4rem; font-size: 0.85rem; text-decoration: none;">Rename</a>
+                            <a href="{{ route('directorates.edit', $dir->id) }}" class="btn-secondary" style="padding: 0.65rem 1.4rem; font-size: 0.85rem; text-decoration: none;">Edit</a>
                             <form action="{{ route('directorates.destroy', $dir->id) }}" method="POST" onsubmit="return confirm('Completely remove this directorate? This may affect associated personnel and projects.');">
                                 @csrf
                                 @method('DELETE')

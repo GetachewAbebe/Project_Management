@@ -193,12 +193,12 @@ $firstName = explode(' ', auth()->user()->name)[0];
                 <h3 style="font-size:1.05rem;font-weight:900;color:var(--text-primary);margin:0;letter-spacing:-0.02em;">Directorate Performance</h3>
             </div>
             <div style="display:flex;gap:0.5rem;">
-                <span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.63rem;font-weight:800;color:#1e40af;background:#dbeafe;border:1px solid #bfdbfe;padding:0.2rem 0.6rem;border-radius:6px;">
+                <a href="{{ route('projects.index', ['research_center' => 'biotech']) }}" style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.63rem;font-weight:800;color:#1e40af;background:#dbeafe;border:1px solid #bfdbfe;padding:0.2rem 0.6rem;border-radius:6px;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.background='#bfdbfe'" onmouseout="this.style.background='#dbeafe'">
                     <span style="width:6px;height:6px;background:#2563eb;border-radius:1px;display:inline-block;"></span>Biotech
-                </span>
-                <span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.63rem;font-weight:800;color:#15803d;background:#dcfce7;border:1px solid #bbf7d0;padding:0.2rem 0.6rem;border-radius:6px;">
+                </a>
+                <a href="{{ route('projects.index', ['research_center' => 'emtech']) }}" style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.63rem;font-weight:800;color:#15803d;background:#dcfce7;border:1px solid #bbf7d0;padding:0.2rem 0.6rem;border-radius:6px;text-decoration:none;transition:all 0.15s;" onmouseover="this.style.background='#bbf7d0'" onmouseout="this.style.background='#dcfce7'">
                     <span style="width:6px;height:6px;background:var(--brand-green);border-radius:1px;display:inline-block;"></span>EmTech
-                </span>
+                </a>
             </div>
         </div>
 
@@ -212,7 +212,7 @@ $firstName = explode(' ', auth()->user()->name)[0];
                 ];
                 $rankStyle = $rankColors[$index] ?? ['bg'=>'linear-gradient(135deg,var(--brand-blue),var(--brand-green))','shadow'=>'rgba(0,59,92,0.2)'];
             @endphp
-            <div style="display:flex;align-items:center;gap:1rem;padding:0.85rem 1rem;background:var(--bg-surface);border-radius:12px;border:1px solid var(--glass-border);transition:all 0.2s;" onmouseover="this.style.background='white';this.style.borderColor='rgba(0,139,75,0.2)';this.style.boxShadow='0 4px 14px rgba(0,59,92,0.07)'" onmouseout="this.style.background='var(--bg-surface)';this.style.borderColor='var(--glass-border)';this.style.boxShadow='none'">
+            <a href="{{ route('projects.index', ['directorate_id' => $d['id']]) }}" style="display:flex;align-items:center;gap:1rem;padding:0.85rem 1rem;background:var(--bg-surface);border-radius:12px;border:1px solid var(--glass-border);transition:all 0.2s;text-decoration:none;cursor:pointer;" onmouseover="this.style.background='white';this.style.borderColor='rgba(0,139,75,0.2)';this.style.boxShadow='0 4px 14px rgba(0,59,92,0.07)';this.style.transform='translateX(3px)'" onmouseout="this.style.background='var(--bg-surface)';this.style.borderColor='var(--glass-border)';this.style.boxShadow='none';this.style.transform=''">
 
                 {{-- Rank badge --}}
                 <div style="width:32px;height:32px;background:{{ $rankStyle['bg'] }};color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:950;font-size:0.78rem;flex-shrink:0;box-shadow:0 3px 10px {{ $rankStyle['shadow'] }};">
@@ -232,7 +232,10 @@ $firstName = explode(' ', auth()->user()->name)[0];
 
                 {{-- Percent --}}
                 <div style="font-size:1.3rem;font-weight:950;color:var(--brand-green);letter-spacing:-0.03em;flex-shrink:0;min-width:44px;text-align:right;">{{ $d['percentage'] }}<span style="font-size:0.65rem;opacity:0.65;">%</span></div>
-            </div>
+
+                {{-- Arrow indicator --}}
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:rgba(0,139,75,0.4);flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </a>
             @empty
             <div style="text-align:center;padding:3rem;color:var(--text-muted);">
                 <svg width="44" height="44" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin:0 auto 0.75rem;opacity:0.3;display:block;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg>

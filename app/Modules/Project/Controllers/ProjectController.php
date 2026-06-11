@@ -48,6 +48,10 @@ class ProjectController extends Controller
             $query->where('directorate_id', $request->directorate_id);
         }
 
+        if ($request->filled('research_center')) {
+            $query->whereHas('directorate', fn ($q) => $q->where('research_center', $request->research_center));
+        }
+
         if ($request->filled('year')) {
             $query->where('start_year', $request->year);
         }

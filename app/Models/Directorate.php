@@ -9,7 +9,7 @@ class Directorate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'research_center'];
 
     public function employees()
     {

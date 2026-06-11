@@ -17,7 +17,12 @@
 
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;position:relative;z-index:1;">
             <div>
-                <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.9rem;">
+                @php
+                    $activeDirectorate = request('directorate_id') ? $directorates->firstWhere('id', request('directorate_id')) : null;
+                    $activeCenter = request('research_center');
+                    $centerLabel = $activeCenter === 'biotech' ? 'Biotech Research Center' : ($activeCenter === 'emtech' ? 'EmTech Research Center' : null);
+                @endphp
+                <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.9rem;flex-wrap:wrap;">
                     <div style="display:flex;align-items:center;gap:0.4rem;background:rgba(0,200,100,0.2);border:1px solid rgba(0,200,100,0.35);border-radius:8px;padding:0.28rem 0.8rem;">
                         <div style="width:6px;height:6px;background:#00d47a;border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 6px rgba(0,212,122,0.8);"></div>
                         <span style="font-size:0.63rem;font-weight:900;color:#00d47a;text-transform:uppercase;letter-spacing:0.15em;">Live Registry</span>
@@ -25,12 +30,36 @@
                     <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.28rem 0.8rem;">
                         <span style="font-size:0.63rem;font-weight:800;color:rgba(255,255,255,0.45);letter-spacing:0.1em;">BETin · Est. 2016</span>
                     </div>
+                    @if($activeDirectorate)
+                    <div style="display:flex;align-items:center;gap:0.4rem;background:rgba(251,191,36,0.18);border:1px solid rgba(251,191,36,0.35);border-radius:8px;padding:0.28rem 0.8rem;">
+                        <svg width="11" height="11" fill="none" stroke="#fbbf24" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
+                        <span style="font-size:0.63rem;font-weight:900;color:#fbbf24;text-transform:uppercase;letter-spacing:0.12em;">{{ $activeDirectorate->name }}</span>
+                        <a href="{{ route('projects.index') }}" style="color:rgba(251,191,36,0.6);line-height:1;margin-left:2px;text-decoration:none;" title="Clear filter">✕</a>
+                    </div>
+                    @elseif($centerLabel)
+                    <div style="display:flex;align-items:center;gap:0.4rem;background:rgba(251,191,36,0.18);border:1px solid rgba(251,191,36,0.35);border-radius:8px;padding:0.28rem 0.8rem;">
+                        <svg width="11" height="11" fill="none" stroke="#fbbf24" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
+                        <span style="font-size:0.63rem;font-weight:900;color:#fbbf24;text-transform:uppercase;letter-spacing:0.12em;">{{ $centerLabel }}</span>
+                        <a href="{{ route('projects.index') }}" style="color:rgba(251,191,36,0.6);line-height:1;margin-left:2px;text-decoration:none;" title="Clear filter">✕</a>
+                    </div>
+                    @endif
                 </div>
                 <h1 style="font-size:2.4rem;font-weight:950;letter-spacing:-0.045em;margin:0 0 0.45rem;line-height:1.05;">
-                    <span style="color:white;">Research </span><span style="background:linear-gradient(135deg,#00d47a 0%,#4ade80 50%,#22d3ee 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Portfolio</span>
+                    <span style="color:white;">Research </span><span style="background:linear-gradient(135deg,#00d47a 0%,#4ade80 50%,#22d3ee 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+                        {{ $activeDirectorate ? $activeDirectorate->name : ($centerLabel ?? 'Portfolio') }}
+                    </span>
                 </h1>
                 <p style="color:rgba(255,255,255,0.42);font-size:0.88rem;font-weight:600;margin:0;">
-                    Institutional registry across 2 research centers &amp; 10 directorates
+                    @if($activeDirectorate)
+                        Projects registered under {{ $activeDirectorate->name }}
+                        @if($activeDirectorate->research_center)
+                            · {{ ucfirst($activeDirectorate->research_center) }} Research Center
+                        @endif
+                    @elseif($activeCenter)
+                        All projects under {{ $centerLabel }}
+                    @else
+                        Institutional registry across 2 research centers &amp; 10 directorates
+                    @endif
                 </p>
             </div>
             @can('create', App\Models\Project::class)

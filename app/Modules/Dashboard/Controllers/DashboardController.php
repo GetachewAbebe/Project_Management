@@ -62,7 +62,9 @@ class DashboardController extends Controller
         $directorateStats = $directorateStatsQuery->get()
             ->map(function ($d) use ($totalProjects) {
                 return [
+                    'id' => $d->id,
                     'name' => $d->name,
+                    'research_center' => $d->research_center,
                     'count' => $d->projects_count,
                     'percentage' => $totalProjects > 0 ? round(($d->projects_count / $totalProjects) * 100, 1) : 0,
                 ];
