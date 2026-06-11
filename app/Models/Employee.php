@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = ['full_name', 'directorate_id', 'institutional_id', 'email', 'position', 'system_role'];
 
@@ -40,8 +41,9 @@ class Employee extends Model
     {
         parent::boot();
 
-        static::deleting(function ($employee) {
-            // Purge related identity records
+        // Only clean up identity records on a permanent (force) delete.
+        // Soft deletes are reversible — leave the User and Invitation intact.
+        static::forceDeleting(function ($employee) {
             $employee->user()->delete();
             $employee->invitation()->delete();
         });

@@ -102,6 +102,12 @@
                 </tbody>
             </table>
         </div>
+
+        @if($assignments->hasPages())
+        <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
+            {{ $assignments->links() }}
+        </div>
+        @endif
     </div>
 </div>
 

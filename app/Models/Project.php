@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'research_title',
@@ -34,6 +35,21 @@ class Project extends Model
     public function evaluations()
     {
         return $this->hasMany(Evaluation::class);
+    }
+
+    public function scopeByStatus($query, string $status)
+    {
+        return $query->where('status', strtoupper($status));
+    }
+
+    public function scopeForDirectorate($query, int $directorateId)
+    {
+        return $query->where('directorate_id', $directorateId);
+    }
+
+    public function scopePendingEvaluation($query)
+    {
+        return $query->where('status', 'REGISTERED');
     }
 
     public function getStatusDetailsAttribute(): array

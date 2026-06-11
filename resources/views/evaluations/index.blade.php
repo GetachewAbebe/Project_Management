@@ -214,6 +214,12 @@
                 </tbody>
             </table>
         </div>
+
+        @if($evaluatedProjects->hasPages())
+        <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
+            {{ $evaluatedProjects->links() }}
+        </div>
+        @endif
     </div>
     <!-- Helpful Workflow Tip -->
     <div style="margin-top: 2rem; background: #fffbeb; border: 1px solid #fef3c7; border-radius: 16px; padding: 1.5rem; display: flex; gap: 1.25rem; align-items: center;">

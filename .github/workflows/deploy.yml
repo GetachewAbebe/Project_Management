@@ -17,10 +17,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, hash, pdo_mysql
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, hash
 
-      - name: 🔨 Install Dependencies (Update)
-        run: composer update --no-ansi --no-interaction --no-scripts --optimize-autoloader
+      - name: 🔨 Install Dependencies
+        run: composer install --no-ansi --no-interaction --no-scripts --optimize-autoloader
 
       - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v4

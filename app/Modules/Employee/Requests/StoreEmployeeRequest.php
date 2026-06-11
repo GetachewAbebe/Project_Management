@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Modules\Employee\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreEmployeeRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        $employeeId = $this->route('employee') ? $this->route('employee')->id : null;
+        $user = $this->route('employee') ? $this->route('employee')->user : null;
+
+        return [
+            'full_name' => 'required|string|max:255',
+            'directorate_id' => 'required|exists:directorates,id',
+            'institutional_id' => 'nullable|string|max:255|unique:employees,institutional_id'.($employeeId ? ",$employeeId" : ''),
+            'email' => 'required_if:system_role,director,evaluator|nullable|email|max:255'
+                                  .'|unique:employees,email'.($employeeId ? ",$employeeId" : '')
+                                  .'|unique:users,email'.($user ? ",$user->id" : ''),
+            'position' => 'nullable|string|max:255',
+            'system_role' => 'required|string|in:employee,director,evaluator',
+        ];
+    }
+}

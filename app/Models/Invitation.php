@@ -25,8 +25,8 @@ class Invitation extends Model
         return $this->belongsTo(Directorate::class);
     }
 
-    public function isExpired()
+    public function isExpired(): bool
     {
-        return $this->expires_at->isPast();
+        return $this->expires_at !== null && $this->expires_at->isPast();
     }
 }

@@ -1,90 +1,23 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DirectorateController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\EvaluationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
-// Redirect root to Dashboard (protected by middleware inside group)
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-// Secure Invitation & Registration
-Route::get('/register/invited/{token}', [App\Http\Controllers\InvitationController::class, 'showRegistrationForm'])->name('register.invited');
-Route::post('/register/invited', [App\Http\Controllers\InvitationController::class, 'register'])->name('register.invited.submit');
+// Public module routes (manage their own middleware internally)
+require __DIR__.'/modules/invitations.php';
+require __DIR__.'/modules/evaluations.php';
 
-// Public Evaluation Access
-Route::get('/evaluate/{token}', [App\Http\Controllers\PublicEvaluationController::class, 'show'])->name('evaluate.public');
-Route::post('/evaluate/{token}', [App\Http\Controllers\PublicEvaluationController::class, 'store'])->name('evaluate.public.submit');
-
+// Authenticated module routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Official Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Institutional Modules
-    Route::resource('directorates', DirectorateController::class);
-    Route::resource('employees', EmployeeController::class);
-    Route::resource('projects', ProjectController::class);
-
-    // Evaluation Module
-    Route::get('/evaluations', [EvaluationController::class, 'index'])->name('evaluations.index');
-    Route::get('/evaluations/summary', [EvaluationController::class, 'summary'])->name('evaluations.summary');
-    Route::get('/evaluations/summary/export', [EvaluationController::class, 'exportSummary'])->name('evaluations.summary.export');
-    Route::get('/evaluations/create', [EvaluationController::class, 'create'])->name('evaluations.create');
-    Route::get('/evaluations/{evaluation}', [EvaluationController::class, 'show'])->name('evaluations.show');
-    Route::post('/evaluations', [EvaluationController::class, 'store'])->name('evaluations.store');
-
-    // NEW: Evaluation Assignments (Admin-only managed via Policy)
-    Route::resource('evaluation-assignments', App\Http\Controllers\EvaluationAssignmentController::class);
-
-    // Database Backups (Admin-only)
-    Route::get('/backups', [App\Http\Controllers\BackupController::class, 'index'])->name('backups.index');
-    Route::post('/backups', [App\Http\Controllers\BackupController::class, 'create'])->name('backups.create');
-    Route::get('/backups/download/{filename}', [App\Http\Controllers\BackupController::class, 'download'])->name('backups.download');
-    Route::delete('/backups/{filename}', [App\Http\Controllers\BackupController::class, 'destroy'])->name('backups.destroy');
-
-    // Profile Management
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    require __DIR__.'/modules/dashboard.php';
+    require __DIR__.'/modules/directorates.php';
+    require __DIR__.'/modules/employees.php';
+    require __DIR__.'/modules/projects.php';
+    require __DIR__.'/modules/backups.php';
+    require __DIR__.'/modules/profile.php';
 });
 
 require __DIR__.'/auth.php';
-
-use App\Http\Controllers\EventRegistrationController;
-
-// National Research Review 2026 - bare path (no trailing slash) for cPanel/Apache compatibility
-Route::get('/national-review-2026', [EventRegistrationController::class, 'landing']);
-
-// National Research Review 2026 - Isolated Registration Module
-Route::prefix('national-review-2026')->group(function () {
-    // Landing Page (with trailing slash)
-    Route::get('/', [EventRegistrationController::class, 'landing'])->name('event.landing');
-
-    // Registration Form
-    Route::get('/register', [EventRegistrationController::class, 'create'])->name('event.register');
-    Route::post('/register', [EventRegistrationController::class, 'store'])->name('event.register.store');
-    Route::get('/confirmation/{reference}', [EventRegistrationController::class, 'confirmation'])->name('event.confirmation');
-
-    // Participant Portal (Self-Service)
-    Route::get('/registration/{reference}', [EventRegistrationController::class, 'show'])->name('event.registration.show');
-    Route::get('/registration/{reference}/edit', [EventRegistrationController::class, 'edit'])->name('event.registration.edit');
-    Route::put('/registration/{reference}', [EventRegistrationController::class, 'update'])->name('event.registration.update');
-
-    // Protected Admin Routes
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/results', [EventRegistrationController::class, 'results'])->name('event.results');
-        Route::get('/results/export', [EventRegistrationController::class, 'exportResults'])->name('event.results.export');
-        Route::get('/dashboard', [EventRegistrationController::class, 'dashboard'])->name('event.dashboard');
-        Route::get('/dashboard/feedback', [\App\Http\Controllers\ReviewFeedbackController::class, 'index'])->name('review.feedback.results');
-        Route::delete('/registration/{id}', [EventRegistrationController::class, 'destroy'])->name('event.registration.destroy');
-    });
-
-    // Participant Feedback
-    Route::get('/feedback', [\App\Http\Controllers\ReviewFeedbackController::class, 'create'])->name('review.feedback');
-    Route::post('/feedback', [\App\Http\Controllers\ReviewFeedbackController::class, 'store'])->name('review.feedback.store');
-});

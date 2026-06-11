@@ -27,16 +27,18 @@ class EvaluationFeatureTest extends TestCase
 
     public function test_evaluator_can_submit_evaluation()
     {
-        $directorate = Directorate::factory()->create();
+        $projectDirectorate = Directorate::factory()->create();
+        $evaluatorDirectorate = Directorate::factory()->create();
+
         $evaluator = User::factory()->create(['role' => UserRole::EVALUATOR]);
         $employee = Employee::factory()->create([
             'email' => $evaluator->email,
-            'directorate_id' => $directorate->id,
+            'directorate_id' => $evaluatorDirectorate->id,
         ]);
 
         $project = Project::factory()->create([
             'status' => 'REGISTERED',
-            'directorate_id' => $directorate->id,
+            'directorate_id' => $projectDirectorate->id,
         ]);
 
         $evaluationData = [
