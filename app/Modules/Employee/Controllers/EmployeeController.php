@@ -65,13 +65,11 @@ class EmployeeController extends Controller
             $this->employeeService->createEmployee($request->validated());
         } catch (\RuntimeException $e) {
             return back()->withInput()->withErrors(['email' => $e->getMessage()]);
-        } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['email' => 'Invitation email could not be sent: '.$e->getMessage()]);
         }
 
         $needsInvite = in_array($request->system_role, ['director', 'evaluator']);
         $msg = 'Employee registered successfully.'
-            .($needsInvite ? ' Invitation email sent.' : '');
+            .($needsInvite ? ' A registration invitation has been queued for their email.' : '');
 
         return redirect()->route('employees.index')->with('success', $msg);
     }
@@ -92,13 +90,11 @@ class EmployeeController extends Controller
             $this->employeeService->updateEmployee($employee, $request->validated());
         } catch (\RuntimeException $e) {
             return back()->withInput()->withErrors(['email' => $e->getMessage()]);
-        } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['email' => 'Invitation email could not be sent: '.$e->getMessage()]);
         }
 
         $needsInvite = in_array($request->system_role, ['director', 'evaluator']) && ! $employee->user;
         $msg = 'Employee information updated.'
-            .($needsInvite ? ' Invitation email sent.' : '');
+            .($needsInvite ? ' A registration invitation has been queued for their email.' : '');
 
         return redirect()->route('employees.index')->with('success', $msg);
     }
